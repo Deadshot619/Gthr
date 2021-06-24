@@ -25,7 +25,7 @@ abstract class BaseFragment<VM : ViewModel, VB : ViewBinding> : Fragment() {
 
         mViewBinding = getViewBinding()
 
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return mViewBinding.root
     }
     /**
      * It returns [VB] which is assigned to [mViewBinding] and used in [onCreate]

@@ -18,6 +18,7 @@ abstract class BaseActivity<VM : ViewModel, VB : ViewBinding> : AppCompatActivit
         super.onCreate(savedInstanceState)
 
         mViewBinding = getViewBinding()
+        setContentView(mViewBinding.root)
     }
 
     /**
