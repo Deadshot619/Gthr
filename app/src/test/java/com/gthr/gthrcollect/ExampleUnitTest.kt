@@ -1,4 +1,4 @@
-package com.example.samplebasestructure
+package com.gthr.gthrcollect
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.samplebasestructure.utils.extensions
+package com.gthr.gthrcollect.utils.extensions
 
 import android.view.View
 

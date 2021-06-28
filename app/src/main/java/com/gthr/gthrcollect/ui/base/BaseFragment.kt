@@ -1,12 +1,9 @@
-package com.example.samplebasestructure.ui.base
+package com.gthr.gthrcollect.ui.base
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding

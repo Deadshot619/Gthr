@@ -1,4 +1,4 @@
-package com.example.samplebasestructure.model
+package com.gthr.gthrcollect.model
 
 class Event<T>(private val content: T) {
     private var hasBeenHandled = false

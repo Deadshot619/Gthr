@@ -1,4 +1,4 @@
-package com.example.samplebasestructure.ui.base
+package com.gthr.gthrcollect.ui.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
