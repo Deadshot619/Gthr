@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Gthr</string>
+    <string name="app_name_lowercase">gthr</string>
+    <string name="app_name_subtitle">The Only Place For Your Collection</string>
 </resources>

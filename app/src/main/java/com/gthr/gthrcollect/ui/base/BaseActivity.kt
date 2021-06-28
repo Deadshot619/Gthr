@@ -19,10 +19,14 @@ abstract class BaseActivity<VM : ViewModel, VB : ViewBinding> : AppCompatActivit
 
         mViewBinding = getViewBinding()
         setContentView(mViewBinding.root)
+
+        onBinding()
     }
 
     /**
      * It returns [VB] which is assigned to [mViewBinding] and used in [onCreate]
      */
     abstract fun getViewBinding(): VB
+
+    abstract fun onBinding()
 }
