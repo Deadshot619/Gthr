@@ -1,14 +1,15 @@
 package com.gthr.gthrcollect.ui.splash
 
+import androidx.activity.viewModels
 import com.gthr.gthrcollect.databinding.ActivitySplashBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
-import com.gthr.gthrcollect.ui.main.MainActivity
+import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 
 class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
-    override val mViewModel = SplashViewModel()
+    override val mViewModel: SplashViewModel by viewModels()
     override fun getViewBinding(): ActivitySplashBinding =
         ActivitySplashBinding.inflate(layoutInflater)
 
@@ -31,7 +32,7 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
     }
 
     private fun goToHomeScreen() {
-        startActivity(MainActivity.getInstance(this))
+        startActivity(EditAccountInfoActivity.getInstance(this))
         finish()
     }
 

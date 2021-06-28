@@ -10,9 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GthrCollect">
+        <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity" />
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:theme="@style/Theme.GthrCollectNoActionBar">
+            android:theme="@style/GthrCollectFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
