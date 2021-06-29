@@ -13,6 +13,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.gthr.gthrcollect.utils.customviews.CustomEmailEditText
+            android:id="@+id/et_custom_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             is_selected="@{true}"
             android:id="@+id/ll_Email"
@@ -26,7 +31,7 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 is_selected="@{true}"
-                android:id="@+id/ivEmail"
+                android:id="@+id/iv_email"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="@drawable/state_iv_auth"
