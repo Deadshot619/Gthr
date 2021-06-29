@@ -7,5 +7,21 @@
     <fragment
         android:id="@+id/eaProfileFragment"
         android:name="com.gthr.gthrcollect.ui.eaprofile.EaProfileFragment"
-        android:label="EaProfileFragment" />
+        android:label="EaProfileFragment">
+        <action
+            android:id="@+id/action_eaProfileFragment_to_eaUserInfoFragment"
+            app:destination="@id/eaUserInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eaUserInfoFragment"
+        android:name="com.gthr.gthrcollect.ui.eauserinfo.EaUserInfoFragment"
+        android:label="EaUserInfoFragment">
+        <action
+            android:id="@+id/action_eaUserInfoFragment_to_eaIdVerificationFragment"
+            app:destination="@id/eaIdVerificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eaIdVerificationFragment"
+        android:name="com.gthr.gthrcollect.ui.eaidverification.EaIdVerificationFragment"
+        android:label="EaIdVerificationFragment" />
 </navigation>

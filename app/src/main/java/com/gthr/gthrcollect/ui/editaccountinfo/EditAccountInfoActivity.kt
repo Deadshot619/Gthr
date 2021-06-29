@@ -29,26 +29,47 @@ class EditAccountInfoActivity :
     override fun onBinding() {
         setSupportActionBar(mViewBinding.toolbar)
 
+        setUpNavigationAndActionBar()
+    }
+
+    private fun setUpNavigationAndActionBar() {
         navController = this.findNavController(R.id.nav_host_fragment)
-        NavigationUI.setupActionBarWithNavController(this, navController)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
+        appBarConfiguration = /*AppBarConfiguration(navController.graph)*/
+            AppBarConfiguration.Builder().build()
+
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
 
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
-            mViewBinding.toolbar.title = ""
+            mViewBinding.toolbar.title = ""     //Set Title as empty as we have used custom title
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_up_button) //Set up button as <
+
             when (nd.id) {
                 R.id.eaProfileFragment -> {
                     setSectionSelection(EditAccountSection.PROFILE)
+                }
+                R.id.eaUserInfoFragment -> {
+                    setSectionSelection(EditAccountSection.USER_INFO)
+                }
+                R.id.eaIdVerificationFragment -> {
+                    setSectionSelection(EditAccountSection.ID_VERIFICATION)
                 }
             }
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = this.findNavController(R.id.nav_host_fragment)
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
+        return if (NavigationUI.navigateUp(navController, appBarConfiguration))
+            true
+        else {
+            finish()
+            false
+        }
     }
 
-    private fun setSectionSelection(sectionType: EditAccountSection) {
+    /**
+     * Method to indicate which section is currently selected
+     */
+    private fun setSectionSelection(sectionType: EditAccountSection?) {
         mViewBinding.layoutSectionSelection.run {
             when (sectionType) {
                 EditAccountSection.PROFILE -> {
@@ -63,11 +84,14 @@ class EditAccountInfoActivity :
                     tvTwo.setTextColor(getResolvedColor(R.color.white))
                     tvUserInfo.setTextColor(getResolvedColor(R.color.text_color_black))
                 }
-                else -> {
+                EditAccountSection.ID_VERIFICATION -> {
                     resetSection()
                     tvThree.background = getBackgroundDrawable(R.drawable.ic_round_yellow_bg)
                     tvThree.setTextColor(getResolvedColor(R.color.white))
                     tvIdVerification.setTextColor(getResolvedColor(R.color.text_color_black))
+                }
+                else -> {
+
                 }
             }
         }

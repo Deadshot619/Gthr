@@ -10,12 +10,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.eaprofile.EaProfileFragment">
+        tools:context=".ui.eauserinfo.EaUserInfoFragment">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/profile_text" />
+            android:text="@string/user_info_text" />
 
         <Button
             android:id="@+id/btn_next"
