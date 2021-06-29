@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.customviews.CustomViewsActivity">
+
+    <data>
+        <import type="com.gthr.gthrcollect.ui.customviews.CustomViewBindingAdaptersKt"/>
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            is_selected="@{true}"
+            android:id="@+id/ll_Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/state_ll_auth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                is_selected="@{true}"
+                android:id="@+id/ivEmail"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/state_iv_auth"
+                android:padding="14dp"
+                android:src="@drawable/ic_email"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                is_selected="@{true}"
+                android:inputType="textEmailAddress"
+                android:id="@+id/et_Email"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:fontFamily="@font/lato"
+                android:paddingHorizontal="18dp"
+                android:textSize="14sp"
+                android:hint="@string/email_address"
+                android:textColorHint="@color/hint_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            is_selected="@{true}"
+            android:id="@+id/ll_Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/state_ll_auth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_Email">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                is_selected="@{true}"
+                android:id="@+id/ivPassword"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/state_iv_auth"
+                android:padding="14dp"
+                android:src="@drawable/ic_password"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                is_selected="@{true}"
+                android:padding="2dp"
+                android:background="@android:color/transparent"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                android:id="@+id/til_Password"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:passwordToggleEnabled="true"
+                android:hint=" "
+                app:passwordToggleDrawable="@drawable/state_show_password"
+                app:passwordToggleTint="@drawable/state_show_password_color"
+                >
+
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="textPassword"
+                    android:id="@+id/et_Password"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:background="@null"
+                    android:fontFamily="@font/lato"
+                    android:padding="10dp"
+                    android:textSize="14sp"
+                    android:hint="@string/password"
+                    android:textColorHint="@color/hint_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_margin="40dp"
+            android:background="@drawable/bg_btn_gradient"
+            android:id="@+id/btn_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign In"
+            android:fontFamily="@font/lato"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"/>
+
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            is_selected="true"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="48dp"
+            android:inputType="textEmailAddress"
+            android:id="@+id/etDisplayNameWithIcon"
+            android:drawableEnd="@drawable/ic_right"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/state_acount_info"
+            android:fontFamily="@font/lato"
+            android:drawablePadding="12dp"
+            android:padding="12dp"
+            android:textSize="16sp"
+            />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            is_selected="true"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:inputType="textEmailAddress"
+            android:id="@+id/etDisplayNameFalse"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/state_acount_info"
+            android:fontFamily="@font/lato"
+            android:padding="12dp"
+            android:textSize="16sp"
+            />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:inputType="textEmailAddress"
+            android:id="@+id/etDisplayNameTrue"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/state_acount_info"
+            android:fontFamily="@font/lato"
+            android:padding="12dp"
+            android:textSize="16sp"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -2,4 +2,6 @@
     <string name="app_name">Gthr</string>
     <string name="app_name_lowercase">gthr</string>
     <string name="app_name_subtitle">The Only Place For Your Collection</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
 </resources>

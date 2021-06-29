@@ -14,4 +14,11 @@
     <!--Main Gradient-->
     <color name="main_gradient_start_color">#3C92F1</color>
     <color name="main_gradient_end_color">#1574E3</color>
+
+    <!--Custom Views-->
+    <color name="red">#D74343</color>
+    <color name="blue">#1574E3</color>
+    <color name="light_blue">#3C92F1</color>
+    <color name="background">#F4F4F4</color>
+    <color name="hint_color">#626668</color>
 </resources>
