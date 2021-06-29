@@ -2,4 +2,13 @@
     <string name="app_name">Gthr</string>
     <string name="app_name_lowercase">gthr</string>
     <string name="app_name_subtitle">The Only Place For Your Collection</string>
+
+    <!--Edit Account Info-->
+    <string name="edit_account_info_title">Edit Account Info</string>
+    <string name="profile_text">Profile</string>
+    <string name="user_info_text">User Info</string>
+    <string name="id_verification_text">ID Verification</string>
+    <string name="ea_one_text">1</string>
+    <string name="ea_two_text">2</string>
+    <string name="ea_three_text">3</string>
 </resources>

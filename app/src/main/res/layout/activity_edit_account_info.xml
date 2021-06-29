@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -11,5 +12,49 @@
         android:layout_height="match_parent"
         tools:context=".ui.editaccountinfo.EditAccountInfoActivity">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/toolbar_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!--Title-->
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/edit_account_info_title"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="@dimen/text_size_normal" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <include
+            android:id="@+id/layout_section_selection"
+            layout="@layout/layout_ea_section_selection"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra_small"
+            app:layout_constraintEnd_toEndOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+
+        <fragment
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_normal"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_section_selection"
+            app:navGraph="@navigation/edit_account_info_nav_graph" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

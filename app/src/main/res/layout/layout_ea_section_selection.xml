@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Profile-->
+        <LinearLayout
+            android:id="@+id/ll_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/iv_three_dots_first"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_round_grey_bg"
+                android:gravity="center"
+                android:text="@string/ea_one_text"
+                android:textSize="@dimen/text_size_small"
+                tools:background="@drawable/ic_round_blue_bg"
+                tools:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_small"
+                android:text="@string/profile_text"
+                android:textSize="@dimen/text_size_semi_small" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_three_dots_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            app:layout_constraintEnd_toStartOf="@+id/ll_user_info"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ll_profile"
+            app:layout_constraintTop_toTopOf="@id/ll_profile"
+            app:srcCompat="@drawable/ic_round_three_dots" />
+
+        <!--User Info-->
+        <LinearLayout
+            android:id="@+id/ll_user_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/ll_profile"
+            app:layout_constraintEnd_toStartOf="@+id/iv_three_dots_second"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_three_dots_first"
+            app:layout_constraintTop_toTopOf="@id/ll_profile">
+
+            <TextView
+                android:id="@+id/tv_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_round_grey_bg"
+                android:gravity="center"
+                android:text="@string/ea_two_text"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/tv_user_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_small"
+                android:text="@string/user_info_text"
+                android:textSize="@dimen/text_size_semi_small" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_three_dots_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            app:layout_constraintEnd_toStartOf="@+id/ll_id_verification"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ll_user_info"
+            app:layout_constraintTop_toTopOf="@id/ll_profile"
+            app:srcCompat="@drawable/ic_round_three_dots" />
+
+        <!--ID Verification-->
+        <LinearLayout
+            android:id="@+id/ll_id_verification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/ll_user_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_three_dots_second"
+            app:layout_constraintTop_toTopOf="@id/ll_user_info">
+
+            <TextView
+                android:id="@+id/tv_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_round_grey_bg"
+                android:gravity="center"
+                android:text="@string/ea_three_text"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/tv_id_verification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_small"
+                android:text="@string/id_verification_text"
+                android:textSize="@dimen/text_size_semi_small" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@color/view_stroke_color_grey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/ll_id_verification"
+            app:layout_constraintStart_toStartOf="@id/ll_profile"
+            app:layout_constraintTop_toBottomOf="@id/ll_profile" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

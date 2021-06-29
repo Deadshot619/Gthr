@@ -24,6 +24,15 @@ abstract class BaseFragment<VM : ViewModel, VB : ViewBinding> : Fragment() {
 
         return mViewBinding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        onBinding()
+    }
+
+    abstract fun onBinding()
+
     /**
      * It returns [VB] which is assigned to [mViewBinding] and used in [onCreate]
      */

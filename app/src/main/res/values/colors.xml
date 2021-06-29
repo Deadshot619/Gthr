@@ -11,7 +11,16 @@
     <color name="colorPrimary">#3C92F1</color>
     <color name="colorPrimaryVariant">#1D83F4</color>
 
+    <color name="toolbar_color">#3C92F1</color>
+
+    <color name="view_stroke_color_grey">#B8BDC0</color>
+
     <!--Main Gradient-->
     <color name="main_gradient_start_color">#3C92F1</color>
     <color name="main_gradient_end_color">#1574E3</color>
+
+    <!--Text Colors-->
+    <color name="text_color_dark_grey">#626668</color>
+    <color name="text_color_black">#181818</color>
+
 </resources>
