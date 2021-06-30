@@ -57,54 +57,67 @@
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/cet_email" />
 
-        <!--Forgot Password-->
-        <TextView
-            android:id="@+id/tv_forgot_password"
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_extra_small"
-            android:text="@string/forgot_password_text"
-            android:textColor="@color/text_color_light_blue"
-            android:textSize="@dimen/text_size_small"
-            app:layout_constraintEnd_toEndOf="@id/cet_password"
-            app:layout_constraintTop_toBottomOf="@id/cet_password" />
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="@dimen/margin_extra_small"
+            app:layout_constraintEnd_toStartOf="@id/tv_password_info"
+            app:layout_constraintTop_toTopOf="@id/tv_password_info"
+            app:srcCompat="@drawable/ic_info" />
 
-        <!--Sign in button-->
-        <com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
-            android:id="@+id/btn_sign_in"
+        <!--Password Info-->
+        <TextView
+            android:id="@+id/tv_password_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/signup_btn_margin_top"
-            android:text="@string/sign_in_text"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/tv_forgot_password"
+            android:layout_marginTop="@dimen/margin_extra_small"
+            android:text="@string/password_info_text"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="@id/cet_password"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="@id/cet_password"
+            app:layout_constraintTop_toBottomOf="@id/cet_password"
             app:layout_constraintWidth_percent="0.75" />
 
-        <!--Create account-->
+        <!--Sign up button-->
+        <com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
+            android:id="@+id/btn_sign_up"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="@string/sign_up_text"
+            app:auth_btn_enable="true"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_password_info"
+            app:layout_constraintWidth_percent="0.75" />
+
+        <!--Sign in-->
         <TextView
-            android:id="@+id/tv_create_account"
+            android:id="@+id/tv_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_large"
-            android:text="@string/create_account_text"
+            android:text="@string/sign_in_underline_text"
             android:textColor="@color/text_color_light_blue"
             android:textSize="@dimen/text_size_medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintTop_toBottomOf="@id/btn_sign_in"
+            app:layout_constraintTop_toBottomOf="@id/btn_sign_up"
             app:layout_constraintVertical_bias="1" />
 
-        <!--Dont have account-->
+        <!--Already have account-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_extra_small"
-            android:text="@string/dont_have_account_text"
+            android:text="@string/already_have_account_text"
             android:textColor="@color/text_color_black"
             android:textSize="@dimen/text_size_medium"
-            app:layout_constraintBottom_toBottomOf="@id/tv_create_account"
-            app:layout_constraintEnd_toStartOf="@id/tv_create_account"
-            app:layout_constraintTop_toTopOf="@id/tv_create_account" />
+            app:layout_constraintBottom_toBottomOf="@id/tv_sign_in"
+            app:layout_constraintEnd_toStartOf="@id/tv_sign_in"
+            app:layout_constraintTop_toTopOf="@id/tv_sign_in" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

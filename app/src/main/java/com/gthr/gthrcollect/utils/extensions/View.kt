@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
@@ -21,6 +22,8 @@ fun View.gone() {
 }
 
 fun View.getImageDrawable(@DrawableRes id: Int): Drawable? = ContextCompat.getDrawable(context, id)
+
+fun View.getResolvedColor(@ColorRes id: Int): Int = ContextCompat.getColor(context, id)
 
 fun AppCompatEditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {

@@ -3,8 +3,6 @@ package com.gthr.gthrcollect.ui.customviews
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.gthr.gthrcollect.databinding.ActivityCustomViewsBinding
-import com.gthr.gthrcollect.utils.extensions.afterTextChanged
-import com.gthr.gthrcollect.utils.extensions.isValidEmail
 
 class CustomViewsActivity : AppCompatActivity() {
 
@@ -15,8 +13,8 @@ class CustomViewsActivity : AppCompatActivity() {
         binding = ActivityCustomViewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btn.setAuthBtnEnable()
-        binding.btn.setAuthBtnText("text")
+        binding.btn.enableAuthButton()
+        binding.btn.text = "text"
 
         binding.btnMain.setOnClickListener {
             if (binding.etCustomEmail.isErrorEnabled)

@@ -13,6 +13,12 @@
     <!--SignIn/SignUp-->
     <string name="sign_in_text">Sign In</string>
     <string name="sign_up_text">Sign Up</string>
+    <string name="forgot_password_text"><u>Forgot Password?</u></string>
+    <string name="create_account_text"><u>Create an Account</u></string>
+    <string name="dont_have_account_text">Don’t have an account yet?</string>
+    <string name="password_info_text">(Password must include Six Characters, One Number, and One Symbol)</string>
+    <string name="already_have_account_text">Already have an account?</string>
+    <string name="sign_in_underline_text"><u>Sign In</u></string>
 
     <!--Edit Account Info-->
     <string name="edit_account_info_title">Edit Account Info</string>

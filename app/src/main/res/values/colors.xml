@@ -22,7 +22,7 @@
     <!--Text Colors-->
     <color name="text_color_dark_grey">#626668</color>
     <color name="text_color_black">#181818</color>
-
+    <color name="text_color_light_blue">#3C92F1</color>
 
     <!--Custom Views-->
     <color name="red">#D74343</color>

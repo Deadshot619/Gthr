@@ -34,13 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
-            app:auth_btn_enable="true"
-            app:auth_btn_text="Sign in"
-            android:layout_marginHorizontal="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
        <Button
            android:visibility="gone"
            android:layout_marginHorizontal="20dp"
