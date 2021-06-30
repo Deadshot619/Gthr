@@ -17,4 +17,7 @@
 
     <!--Padding-->
     <dimen name="padding_normal">16dp</dimen>
+
+    <dimen name="edit_text_corner_radius">4dp</dimen>
+    <dimen name="edit_text_stroke_width">1dp</dimen>
 </resources>

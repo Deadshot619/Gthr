@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.customviews.CustomViewsActivity">
+
+    <data>
+
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <com.gthr.gthrcollect.utils.customviews.CustomEmailEditText
+            android:layout_margin="20dp"
+            android:id="@+id/et_custom_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.gthr.gthrcollect.utils.customviews.CustomPasswordEditText
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/et_custom_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
+            android:id="@+id/btn"
+            app:auth_btn_enable="false"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
+            app:auth_btn_enable="true"
+            app:auth_btn_text="Sign in"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+       <Button
+           android:visibility="gone"
+           android:layout_marginHorizontal="20dp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/btn_main"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="GthrAuthButton">
+        <attr name="gthr_auth_text" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="GthrPublicProfileButton">
+        <attr name="gthr_pp_text" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomAuthenticationButton">
+        <attr name="auth_btn_text" format="string" />
+        <attr name="auth_btn_enable" format="boolean" />
+    </declare-styleable>
+
+
+</resources>
