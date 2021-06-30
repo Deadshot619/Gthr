@@ -10,7 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GthrCollect">
-        4
         <activity android:name=".ui.customviews.CustomViewsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -15,9 +15,53 @@
 
         <com.gthr.gthrcollect.customview.GthrEmailEditText
             android:id="@+id/customEmail"
+        <com.gthr.gthrcollect.utils.customviews.CustomEmailEditText
+            android:id="@+id/et_custom_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            is_selected="@{true}"
+            android:id="@+id/ll_Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+            android:background="@drawable/state_ll_auth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                is_selected="@{true}"
+                android:id="@+id/iv_email"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/state_iv_auth"
+                android:padding="14dp"
+                android:src="@drawable/ic_email"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                is_selected="@{true}"
+                android:inputType="textEmailAddress"
+                android:id="@+id/et_Email"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:fontFamily="@font/lato"
+                android:paddingHorizontal="18dp"
+                android:textSize="14sp"
+                android:hint="@string/email_address"
+                android:textColorHint="@color/hint_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
         <com.gthr.gthrcollect.customview.GthrPasswordEditText
             android:id="@+id/customPassword"
