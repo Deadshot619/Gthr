@@ -5,6 +5,15 @@
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
 
+    <!--Home Bottom Menu-->
+    <string name="menu_feed_title">Feed</string>
+    <string name="menu_search_title">Search</string>
+    <string name="menu_profile_title">Profile</string>
+
+    <!--SignIn/SignUp-->
+    <string name="sign_in_text">Sign In</string>
+    <string name="sign_up_text">Sign Up</string>
+
     <!--Edit Account Info-->
     <string name="edit_account_info_title">Edit Account Info</string>
     <string name="profile_text">Profile</string>

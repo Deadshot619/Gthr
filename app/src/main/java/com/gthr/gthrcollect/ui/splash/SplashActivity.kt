@@ -3,7 +3,7 @@ package com.gthr.gthrcollect.ui.splash
 import androidx.activity.viewModels
 import com.gthr.gthrcollect.databinding.ActivitySplashBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
-import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
+import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
@@ -32,7 +32,7 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
     }
 
     private fun goToHomeScreen() {
-        startActivity(EditAccountInfoActivity.getInstance(this))
+        startActivity(HomeBottomNavActivity.getInstance(this))
         finish()
     }
 

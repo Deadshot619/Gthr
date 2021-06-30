@@ -9,7 +9,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GthrCollect">
+        android:theme="@style/GthrCollectFullScreen">
+        <activity android:name=".ui.homebottomnav.HomeBottomNavActivity" />
         <activity android:name=".ui.customviews.CustomViewsActivity">
 
         </activity>

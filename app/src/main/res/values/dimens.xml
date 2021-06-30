@@ -3,8 +3,16 @@
 
     <dimen name="app_name_text_size">55sp</dimen>
 
+    <!--SignIn/SignUp-->
+    <dimen name="header_app_title_size">36sp</dimen>
+    <dimen name="header_title_margin_top">28dp</dimen>
+
     <!--Toolbar-->
     <dimen name="toolbar_radius">12dp</dimen>
+
+    <!--Bottom Nav-->
+    <dimen name="bottom_nav_icon_size">18dp</dimen>
+    <dimen name="bottom_nav_padding">8dp</dimen>
 
     <!--Text Size-->
     <dimen name="text_size_semi_small">11sp</dimen>
@@ -14,6 +22,8 @@
     <!--Margin-->
     <dimen name="margin_extra_small">8dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_large">20dp</dimen>
+
 
     <!--Padding-->
     <dimen name="padding_normal">16dp</dimen>
