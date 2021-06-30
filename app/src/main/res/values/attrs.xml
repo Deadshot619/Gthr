@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GthrEmailEditText">
+        <attr name="gthr_email_error_text" format="string" />
+        <attr name="gthr_email_hint_text" format="string" />
+        <attr name="gthr_email_text" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="GthrPasswordEditText">
+        <attr name="gthr_password_error_text" format="string" />
+        <attr name="gthr_password_hint_text" format="string" />
+        <attr name="gthr_password_text" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="GthrAuthButton">
+        <attr name="gthr_auth_text" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="GthrPublicProfileButton">
+        <attr name="gthr_pp_text" format="string" />
+    </declare-styleable>
+
+
+</resources>
