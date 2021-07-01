@@ -1,6 +1,8 @@
 package com.gthr.gthrcollect.utils.customviews
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +37,7 @@ class CustomPasswordEditText @JvmOverloads constructor(
         mIvPassword = view.findViewById(R.id.iv_password)
         mEtPassword = view.findViewById(R.id.et_Password)
         mTilPassword = view.findViewById(R.id.til_password)
+        setCustomTextChangeListener()
     }
 
     fun showError(errorMsg: String) {
@@ -51,6 +54,19 @@ class CustomPasswordEditText @JvmOverloads constructor(
         mLlPassword.background = getImageDrawable(R.drawable.edit_text_password_blue_outline_bg)
         mTilPassword.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
         mEtPassword.error = null
+    }
+
+    private fun setCustomTextChangeListener() {
+        mEtPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (isErrorEnabled)
+                    hideError()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
 }

@@ -19,6 +19,8 @@
     <string name="password_info_text">(Password must include Six Characters, One Number, and One Symbol)</string>
     <string name="already_have_account_text">Already have an account?</string>
     <string name="sign_in_underline_text"><u>Sign In</u></string>
+    <string name="enter_valid_email_error_text">Please enter valid Email</string>
+    <string name="enter_valid_password_error_text">Please enter valid Password</string>
 
     <!--Edit Account Info-->
     <string name="edit_account_info_title">Edit Account Info</string>
@@ -28,6 +30,14 @@
     <string name="ea_one_text">1</string>
     <string name="ea_two_text">2</string>
     <string name="ea_three_text">3</string>
+
+    <!--Forgot Password-->
+    <string name="forgot_password_title_text">Forgot Password</string>
+    <string name="forgot_password_enter_email_text">Please enter the email address that is associated with your gthr account.</string>
+    <string name="password_reset_sent_text">Password Reset Sent</string>
+    <string name="password_instructions_text">You will receive reset instructions if there is an email associated with the provided email.</string>
+    <string name="reset_password_text">Reset Password</string>
+    <string name="finish_text">Finish</string>
 
     <!--Camera Labels-->
     <string name="take_a_pict">Take a picture of the front of your ID</string>

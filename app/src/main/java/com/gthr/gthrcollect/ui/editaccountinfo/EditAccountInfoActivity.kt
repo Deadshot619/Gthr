@@ -22,13 +22,12 @@ class EditAccountInfoActivity :
     override fun getViewBinding(): ActivityEditAccountInfoBinding =
         ActivityEditAccountInfoBinding.inflate(layoutInflater)
 
-    private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var mNavController: NavController
+    private lateinit var mAppBarConfiguration: AppBarConfiguration
 
 
     override fun onBinding() {
         setSupportActionBar(mViewBinding.toolbar)
-
         setUpNavigationAndActionBar()
 
 
@@ -38,13 +37,13 @@ class EditAccountInfoActivity :
     }
 
     private fun setUpNavigationAndActionBar() {
-        navController = this.findNavController(R.id.nav_host_fragment)
-        appBarConfiguration = /*AppBarConfiguration(navController.graph)*/
+        mNavController = this.findNavController(R.id.nav_host_fragment)
+        mAppBarConfiguration = /*AppBarConfiguration(navController.graph)*/
             AppBarConfiguration.Builder().build()
 
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
+        NavigationUI.setupActionBarWithNavController(this, mNavController, mAppBarConfiguration)
 
-        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
+        mNavController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
             mViewBinding.toolbar.title = ""     //Set Title as empty as we have used custom title
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_up_button) //Set up button as <
 
@@ -63,7 +62,7 @@ class EditAccountInfoActivity :
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return if (NavigationUI.navigateUp(navController, appBarConfiguration))
+        return if (NavigationUI.navigateUp(mNavController, mAppBarConfiguration))
             true
         else {
             finish()

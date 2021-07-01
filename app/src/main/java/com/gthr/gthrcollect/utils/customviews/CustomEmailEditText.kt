@@ -1,6 +1,8 @@
 package com.gthr.gthrcollect.utils.customviews
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +34,7 @@ class CustomEmailEditText @JvmOverloads constructor(
         mMainLayout = view.findViewById(R.id.ll_main_layout)
         mIvEmail = view.findViewById(R.id.iv_email)
         mEtEmail = view.findViewById(R.id.et_email)
+        setCustomTextChangeListener()
     }
 
     fun showError(errorMsg: String) {
@@ -46,5 +49,18 @@ class CustomEmailEditText @JvmOverloads constructor(
         mIvEmail.background = getImageDrawable(R.drawable.edit_text_image_bg)
         mEtEmail.background = getImageDrawable(R.drawable.edit_text_blue_outline_bg)
         mEtEmail.error = null
+    }
+
+    private fun setCustomTextChangeListener() {
+        mEtEmail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (isErrorEnabled)
+                    hideError()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 }
