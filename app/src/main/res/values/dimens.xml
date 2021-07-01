@@ -33,10 +33,30 @@
 
     <!--Padding-->
     <dimen name="padding_normal">16dp</dimen>
+    <dimen name="padding_vertical">12dp</dimen>
+    <dimen name="padding_large">20dp</dimen>
 
     <!--Guidelines-->
     <dimen name="guideline_normal">16dp</dimen>
 
     <dimen name="edit_text_corner_radius">4dp</dimen>
     <dimen name="edit_text_stroke_width">1dp</dimen>
+
+
+    <!--CustomPinView-->
+    <dimen name="itemRadius">4dp</dimen>
+    <dimen name="itemSpacing">5dp</dimen>
+    <dimen name="itemWidth">44dp</dimen>
+    <dimen name="itemHeight">44dp</dimen>
+    <dimen name="cursorWidth">2dp</dimen>
+    <dimen name="lineWidth">1dp</dimen>
+    <dimen name="errorWidth">30dp</dimen>
+    <dimen name="errorHeight">30dp</dimen>
+
+    <!--CustomSecondaryButton-->
+    <dimen name="custom_secondary_button_border_width">1dp</dimen>
+    <dimen name="custom_secondary_button_border_radius">20dp</dimen>
+
+
+
 </resources>

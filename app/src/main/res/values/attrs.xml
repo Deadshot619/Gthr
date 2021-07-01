@@ -2,16 +2,72 @@
 <resources>
 
 
-    <declare-styleable name="GthrAuthButton">
-        <attr name="gthr_auth_text" format="string" />
-    </declare-styleable>
-
-    <declare-styleable name="GthrPublicProfileButton">
-        <attr name="gthr_pp_text" format="string" />
-    </declare-styleable>
 
     <declare-styleable name="CustomAuthenticationButton">
         <attr name="auth_btn_enable" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomSecondaryButton">
+        <attr name="secondary_button_state" format="enum">
+            <enum name="DISABLE" value="0"/>
+            <enum name="BLUE" value="1"/>
+            <enum name="YELLOW" value="2"/>
+            <enum name="GREEN" value="3"/>
+            <enum name="WHITE_WITH_BLUE_BORDER" value="4"/>
+            <enum name="BLACK_WITH_BLUE_BORDER" value="5"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="CustomPhoneNoEditText">
+        <attr name="phone_no_initial_state" format="enum">
+            <enum name="GRAY" value="0"/>
+            <enum name="RED" value="2"/>
+            <enum name="BLUE" value="3"/>
+        </attr>
+        <attr name="phone_no_error_state" format="enum">
+            <enum name="GRAY" value="0"/>
+            <enum name="GREEN" value="1"/>
+            <enum name="RED" value="2"/>
+            <enum name="BLUE" value="3"/>
+        </attr>
+        <attr name="phone_no_success_state" format="enum">
+            <enum name="GRAY" value="0"/>
+            <enum name="GREEN" value="1"/>
+            <enum name="RED" value="2"/>
+            <enum name="BLUE" value="3"/>
+        </attr>
+        <attr name="phone_no_current_state" format="enum">
+            <enum name="INITIAL" value="0"/>
+            <enum name="ERROR" value="1"/>
+            <enum name="SUCCESS" value="2"/>
+        </attr>
+        <attr name="phone_no_hint" format="string" />
+        <attr name="phone_no_error_text" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomEditText">
+        <attr name="edit_initial_state" format="enum">
+            <enum name="GRAY" value="0"/>
+            <enum name="GREEN" value="1"/>
+            <enum name="RED" value="2"/>
+            <enum name="BLUE" value="3"/>
+        </attr>
+        <attr name="edit_error_state" format="enum">
+            <enum name="GRAY" value="0"/>
+            <enum name="GREEN" value="1"/>
+            <enum name="RED" value="2"/>
+            <enum name="BLUE" value="3"/>
+        </attr>
+        <attr name="edit_success_state" format="enum">
+            <enum name="GRAY" value="0"/>
+            <enum name="GREEN" value="1"/>
+            <enum name="RED" value="2"/>
+            <enum name="BLUE" value="3"/>
+        </attr>
+
+        <attr name="edit_hint" format="string" />
+        <attr name="edit_error_text" format="string" />
+        <attr name="android:src"/>
     </declare-styleable>
 
 

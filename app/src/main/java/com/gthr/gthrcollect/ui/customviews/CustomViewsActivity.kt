@@ -16,19 +16,25 @@ class CustomViewsActivity : AppCompatActivity() {
         binding.btn.enableAuthButton()
         binding.btn.text = "text"
 
+        binding.customOtp1.setInitial()
+        binding.customOtp2.setSuccess()
+        binding.customOtp3.setError("Please Enter otp!")
+
+
+
+
         binding.btnMain.setOnClickListener {
             if (binding.etCustomEmail.isErrorEnabled)
                 binding.etCustomEmail.hideError()
             else
-                binding.etCustomEmail.showError("Holaaaaa")
+                binding.etCustomEmail.showError("Please Enter email")
 
             if (binding.etCustomPassword.isErrorEnabled) {
                 binding.etCustomPassword.hideError()
             }
             else{
-                binding.etCustomPassword.showError("Holaaaaa")
+                binding.etCustomPassword.showError("Please Enter password")
             }
-
         }
 
 

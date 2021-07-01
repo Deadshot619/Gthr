@@ -77,4 +77,10 @@ dependencies {
 
     //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //Country Code Picker
+    implementation 'com.hbb20:ccp:2.5.3'
+
+    //Pinview
+    implementation 'io.github.chaosleung:pinview:1.4.4'
 }

@@ -16,7 +16,7 @@
         android:theme="@style/GthrCollectFullScreen">
         <activity android:name=".ui.forgotpassword.ForgotPasswordActivity"></activity>
         <activity android:name=".ui.homebottomnav.HomeBottomNavActivity" />
-        <activity android:name=".ui.customviews.CustomViewsActivity"></activity>
+        <activity android:name=".ui.customviews.CustomViewsActivity" />
         <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity" />
         <activity
             android:name=".ui.splash.SplashActivity"

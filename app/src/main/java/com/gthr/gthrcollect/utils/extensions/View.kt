@@ -1,11 +1,14 @@
 package com.gthr.gthrcollect.utils.extensions
 
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 
@@ -38,3 +41,5 @@ fun AppCompatEditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
         }
     })
 }
+
+

@@ -15,6 +15,8 @@
         android:src="@drawable/ic_email" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:maxLines="1"
+        android:ellipsize="end"
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="48dp"

@@ -16,30 +16,138 @@
 
 
         <com.gthr.gthrcollect.utils.customviews.CustomEmailEditText
+            android:visibility="gone"
             android:layout_margin="20dp"
             android:id="@+id/et_custom_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <com.gthr.gthrcollect.utils.customviews.CustomPasswordEditText
+            android:visibility="gone"
             android:layout_marginHorizontal="20dp"
             android:id="@+id/et_custom_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
+            android:visibility="gone"
             android:id="@+id/btn"
-            app:auth_btn_enable="false"
+            app:auth_btn_enable="true"
+            android:text="Sign in"
             android:layout_margin="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+
+        <com.gthr.gthrcollect.utils.customviews.CustomPhoneNoEditText
+            android:visibility="gone"
+            app:phone_no_hint="Enter phone no"
+            app:phone_no_error_text="Please enter phone no"
+            app:phone_no_current_state="INITIAL"
+            app:phone_no_initial_state="GRAY"
+            app:phone_no_success_state="GREEN"
+            app:phone_no_error_state="RED"
+            android:id="@+id/et_custom_phone_no"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginHorizontal="20dp"/>
+
+        <com.gthr.gthrcollect.utils.customviews.CustomEditText
+            android:visibility="gone"
+            android:src="@drawable/ic_right"
+            app:edit_initial_state="GRAY"
+            app:edit_success_state="GREEN"
+            app:edit_hint="Enter name"
+            app:edit_error_text="Please enter name "
+            android:id="@+id/et_custom_main"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_margin="20dp"/>
+
+        <com.gthr.gthrcollect.utils.customviews.CustomPinView
+            android:layout_marginTop="20dp"
+            android:id="@+id/custom_otp1"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.gthr.gthrcollect.utils.customviews.CustomPinView
+            android:id="@+id/custom_otp2"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.gthr.gthrcollect.utils.customviews.CustomPinView
+            android:layout_marginTop="20dp"
+            android:id="@+id/custom_otp3"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
        <Button
            android:visibility="gone"
-           android:layout_marginHorizontal="20dp"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
+          android:drawableTint="@color/black"
+           android:textAllCaps="false"
+           android:text="Edit user info"
+           android:background="@drawable/bg_btn_secondary_blue"
+           android:drawableEnd="@drawable/ic_next_arrow"
+           android:layout_margin="16dp"
+           android:layout_width="200dp"
+           android:layout_height="35dp"
            android:id="@+id/btn_main"/>
+
+        <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+            app:secondary_button_state="WHITE_WITH_BLUE_BORDER"
+            android:text="Edit user info"
+            android:drawableRight="@drawable/ic_next_arrow"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"/>
+
+        <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+            app:secondary_button_state="BLUE"
+            android:text="Edit user info"
+            android:drawableRight="@drawable/ic_next_arrow"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"/>
+
+        <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+            app:secondary_button_state="GREEN"
+            android:text="Edit user info"
+            android:drawableRight="@drawable/ic_next_arrow"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"/>
+
+        <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+            app:secondary_button_state="YELLOW"
+            android:text="Edit user info"
+            android:drawableRight="@drawable/ic_next_arrow"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"/>
+
+        <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+            app:secondary_button_state="WHITE_WITH_BLUE_BORDER"
+            android:text="Edit user info"
+            android:drawableRight="@drawable/ic_next_arrow"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"/>
+        <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+            app:secondary_button_state="BLACK_WITH_BLUE_BORDER"
+            android:text="Edit user info"
+            android:drawableLeft="@drawable/ic_retack"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"/>
+
+
+
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:gravity="center"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.chaos.view.PinView
+        android:id="@+id/otp"
+        style="@style/PinWidget.PinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:cursorVisible="true"
+        android:inputType="number"
+        android:itemBackground="@color/white"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/lato"
+        app:cursorColor="@color/black"
+        app:itemCount="6"
+        app:itemRadius="@dimen/itemRadius"
+        app:itemSpacing="@dimen/itemSpacing"
+        app:itemWidth="@dimen/itemWidth"
+        app:itemHeight="@dimen/itemHeight"
+        app:cursorWidth="@dimen/cursorWidth"
+        app:lineWidth="@dimen/lineWidth"
+        app:lineColor="@color/disable"
+        app:viewType="rectangle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
+        android:focusable="true"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/et_error"
+        android:layout_width="@dimen/errorWidth"
+        android:layout_height="@dimen/errorHeight"
+        />
+
+
+
+
+</LinearLayout>
