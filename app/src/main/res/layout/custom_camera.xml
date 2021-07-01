@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:focusable="false"
-    tools:context=".ui.activities.CustomCamera">
+    tools:context=".ui.customcameraactivities.CustomCamera">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,8 +15,7 @@
         <TextureView
             android:id="@+id/textureView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
 
 
         <androidx.appcompat.widget.AppCompatImageView

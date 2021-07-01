@@ -7,8 +7,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.viewModels
 import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.databinding.EaIdVerificationFragmentBinding
-import com.gthr.gthrcollect.ui.activities.CustomCamera
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.customcameraactivities.CustomCamera
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
 
@@ -48,7 +48,10 @@ class EaIdVerificationFragment :
     private fun addListners() {
 
         mFrontIdCapture.setOnClickListener(View.OnClickListener {
-            startActivityForResult(Intent(activity, CustomCamera::class.java), REQUEST_CODE_FRONT_ID)
+            startActivityForResult(
+                CustomCamera.getInstance(requireContext()),
+                REQUEST_CODE_FRONT_ID
+            )
         })
 
 

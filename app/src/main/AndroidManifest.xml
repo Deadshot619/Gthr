@@ -18,8 +18,7 @@
         <activity android:name=".ui.customviews.CustomViewsActivity">
 
         </activity>
-        <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity"
-            />
+        <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/GthrCollectFullScreen">
@@ -29,8 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.activities.CustomCamera" />
-        <activity android:name=".ui.activities.ImagePreview" />
+        <activity android:name=".ui.customcameraactivities.CustomCamera" />
+        <activity android:name=".ui.customcameraactivities.ImagePreview" />
     </application>
 
 </manifest>

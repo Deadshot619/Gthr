@@ -1,11 +1,10 @@
-package com.gthr.gthrcollect.ui.activities
+package com.gthr.gthrcollect.ui.customcameraactivities
 
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView

@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.ui.activities
+package com.gthr.gthrcollect.ui.customcameraactivities
 
 import android.Manifest
 import android.content.Context
@@ -29,7 +29,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.gthr.gthrcollect.R
-import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import java.io.File
 import java.io.FileOutputStream
