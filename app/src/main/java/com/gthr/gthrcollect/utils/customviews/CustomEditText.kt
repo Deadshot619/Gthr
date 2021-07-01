@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.utils.extensions.getImageDrawable
@@ -21,7 +23,14 @@ class CustomEditText @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    private var mLlMain: LinearLayout
+    private var mLlMain: LinearLayoutCompat
+    private var mIvInfo : AppCompatImageView
+    private var mLlInfo : LinearLayoutCompat
+
+    private var mTvTitle : AppCompatTextView
+        private set
+    private var mTvInfo : AppCompatTextView
+        private set
     private var mEtMain: AppCompatEditText
         private set
     private var mIvMain: AppCompatImageView
@@ -46,12 +55,19 @@ class CustomEditText @JvmOverloads constructor(
         mLlMain = view.findViewById(R.id.ll_main)
         mEtMain = view.findViewById(R.id.et_main)
         mIvMain = view.findViewById(R.id.iv_main)
+        mTvInfo = view.findViewById(R.id.tv_info)
+        mIvInfo = view.findViewById(R.id.iv_info)
+        mTvTitle = view.findViewById(R.id.tv_title)
+        mLlInfo = view.findViewById(R.id.ll_info)
 
         val attrs = getContext().obtainStyledAttributes(attrs, R.styleable.CustomEditText)
 
-        attrs.getString(R.styleable.CustomPhoneNoEditText_phone_no_hint)?.let { mEtMain.hint = it }
-        attrs.getString(R.styleable.CustomPhoneNoEditText_phone_no_error_text)
-            ?.let { mErrorText = it }
+        attrs.getString(R.styleable.CustomEditText_edit_hint)?.let { mEtMain.hint = it }
+        attrs.getString(R.styleable.CustomEditText_edit_error_text)?.let { mErrorText = it }
+
+
+
+
         attrs.getResourceId(R.styleable.CustomEditText_android_src, -1).let {
             if (it != -1) {
                 mImageFlag = true
@@ -60,15 +76,22 @@ class CustomEditText @JvmOverloads constructor(
             }
         }
 
-        mInitialState =
-            ColorState.values()[attrs.getInt(R.styleable.CustomEditText_edit_initial_state, 0)]
+        mInitialState = ColorState.values()[attrs.getInt(R.styleable.CustomEditText_edit_initial_state, 0)]
         mErrorState = ColorState.values()[attrs.getInt(R.styleable.CustomEditText_edit_error_state, 2)]
-        mSuccessState =
-            ColorState.values()[attrs.getInt(R.styleable.CustomEditText_edit_success_state, 1)]
+        mSuccessState = ColorState.values()[attrs.getInt(R.styleable.CustomEditText_edit_success_state, 1)]
 
-
+        attrs.getString(R.styleable.CustomEditText_edit_info)?.let {
+            mLlInfo.visible()
+            mTvInfo.text = it
+            setInfoColor()
+        }
+        attrs.getString(R.styleable.CustomEditText_edit_title)?.let {
+            mTvTitle.visible()
+            mTvTitle.text = it
+        }
 
         setCurrentState(CurrentState.INITIAL)
+
 
 
     }
@@ -104,18 +127,22 @@ class CustomEditText @JvmOverloads constructor(
     }
 
     fun setError(text: String) {
+        mCurrentState = CurrentState.ERROR
         mIvMain.gone()
         mEtMain.error = text
         setState(mErrorState)
     }
 
     fun setSuccess() {
+        mCurrentState = CurrentState.SUCCESS
         if (mImageFlag) mIvMain.visible() else mIvMain.gone()
         mEtMain.error = null
         setState(mSuccessState)
+        setInfoColor()
     }
 
     fun setInitial() {
+        mCurrentState = CurrentState.ERROR
         mIvMain.gone()
         mEtMain.error = null
         setState(mInitialState)
@@ -134,6 +161,14 @@ class CustomEditText @JvmOverloads constructor(
         setCurrentState(CurrentState.INITIAL)
     }
 
+    fun setInfoColor(){
+        mIvInfo.setColorFilter(when(mSuccessState){
+            ColorState.BLUE -> ContextCompat.getColor(context, R.color.blue)
+            ColorState.GRAY -> ContextCompat.getColor(context, R.color.disable)
+            ColorState.GREEN -> ContextCompat.getColor(context, R.color.green)
+            ColorState.RED -> ContextCompat.getColor(context, R.color.red)
+        })
+    }
 
     enum class ColorState {
         GRAY, GREEN, RED, BLUE

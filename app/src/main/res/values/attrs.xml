@@ -36,13 +36,10 @@
             <enum name="RED" value="2"/>
             <enum name="BLUE" value="3"/>
         </attr>
-        <attr name="phone_no_current_state" format="enum">
-            <enum name="INITIAL" value="0"/>
-            <enum name="ERROR" value="1"/>
-            <enum name="SUCCESS" value="2"/>
-        </attr>
         <attr name="phone_no_hint" format="string" />
         <attr name="phone_no_error_text" format="string" />
+
+
     </declare-styleable>
 
     <declare-styleable name="CustomEditText">
@@ -65,6 +62,8 @@
             <enum name="BLUE" value="3"/>
         </attr>
 
+        <attr name="edit_title" format="string" />
+        <attr name="edit_info" format="string" />
         <attr name="edit_hint" format="string" />
         <attr name="edit_error_text" format="string" />
         <attr name="android:src"/>

@@ -27,6 +27,7 @@
     <!--Margin-->
     <dimen name="margin_extra_small">8dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_medium">10dp</dimen>
     <dimen name="margin_large">20dp</dimen>
     <dimen name="margin_extra_large">24dp</dimen>
 
@@ -35,10 +36,10 @@
     <dimen name="padding_normal">16dp</dimen>
     <dimen name="padding_vertical">12dp</dimen>
     <dimen name="padding_large">20dp</dimen>
+    <dimen name="padding_medium">14dp</dimen>
 
     <!--Guidelines-->
     <dimen name="guideline_normal">16dp</dimen>
-
     <dimen name="edit_text_corner_radius">4dp</dimen>
     <dimen name="edit_text_stroke_width">1dp</dimen>
 
@@ -52,6 +53,24 @@
     <dimen name="lineWidth">1dp</dimen>
     <dimen name="errorWidth">30dp</dimen>
     <dimen name="errorHeight">30dp</dimen>
+
+    <!--CustomEditText-->
+    <dimen name="info_size">12dp</dimen>
+    <dimen name="info_margin_top">1dp</dimen>
+
+    <!--CustomEmailEditText-->
+    <dimen name="email_image_size">48dp</dimen>
+    <dimen name="email_edittext_height">48dp</dimen>
+
+    <!--CustomPasswordEditText-->
+    <dimen name="password_image_size">48dp</dimen>
+    <dimen name="password_edittext_height">44dp</dimen>
+    <dimen name="password_input_height">48dp</dimen>
+
+    <!--CustomPhoneEditText-->
+    <dimen name="ccp_marginVertical">5.5dp</dimen>
+    <dimen name="ccp_marginLeft">5dp</dimen>
+    <dimen name="view_width">1dp</dimen>
 
     <!--CustomSecondaryButton-->
     <dimen name="custom_secondary_button_border_width">1dp</dimen>

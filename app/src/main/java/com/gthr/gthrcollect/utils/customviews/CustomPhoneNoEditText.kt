@@ -9,8 +9,6 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatEditText
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.utils.extensions.getImageDrawable
-import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.visible
 import com.hbb20.CountryCodePicker
 
 
@@ -27,13 +25,13 @@ class CustomPhoneNoEditText @JvmOverloads constructor(
         private set
     private var mEtPhoneNo: AppCompatEditText
         private set
-    var mState = State.GRAY
+    var mState = ColorState.GRAY
         private set
 
-    var mInitialState : State
-    var mErrorState : State
-    var mSuccessState : State
-    var mCurrentState : CurrentState
+    private var mInitialState : ColorState
+    private var mErrorState : ColorState
+    private var mSuccessState : ColorState
+    private var mCurrentState : CurrentState = CurrentState.INITIAL
 
     var mErrorText: String = ""
 
@@ -48,24 +46,24 @@ class CustomPhoneNoEditText @JvmOverloads constructor(
 
         attrs.getString(R.styleable.CustomPhoneNoEditText_phone_no_hint)?.let { mEtPhoneNo.hint = it }
         attrs.getString(R.styleable.CustomPhoneNoEditText_phone_no_error_text)?.let { mErrorText = it }
-        mInitialState = State.values()[attrs.getInt(R.styleable.CustomPhoneNoEditText_phone_no_initial_state, 0)]
-        mErrorState = State.values()[attrs.getInt(R.styleable.CustomPhoneNoEditText_phone_no_error_state, 2)]
-        mSuccessState = State.values()[attrs.getInt(R.styleable.CustomPhoneNoEditText_phone_no_success_state, 1)]
-        mCurrentState = CurrentState.values()[attrs.getInt(R.styleable.CustomPhoneNoEditText_phone_no_current_state, 0)]
+        mInitialState = ColorState.values()[attrs.getInt(R.styleable.CustomPhoneNoEditText_phone_no_initial_state, 0)]
+        mErrorState = ColorState.values()[attrs.getInt(R.styleable.CustomPhoneNoEditText_phone_no_error_state, 2)]
+        mSuccessState = ColorState.values()[attrs.getInt(R.styleable.CustomPhoneNoEditText_phone_no_success_state, 1)]
 
-        setCurrentState(mCurrentState)
+        setCurrentState(CurrentState.INITIAL)
     }
 
-    fun setState(state : State) {
+    private fun setState(state : ColorState) {
         mState = state
         mLlPhoneNo.background =  when(state){
-            State.GRAY -> getImageDrawable(R.drawable.edit_text_gray_bg)
-            State.GREEN -> getImageDrawable(R.drawable.edit_text_green_outline_bg)
-            State.RED -> getImageDrawable(R.drawable.edit_text_red_outline_bg)
+            ColorState.GRAY -> getImageDrawable(R.drawable.edit_text_gray_bg)
+            ColorState.GREEN -> getImageDrawable(R.drawable.edit_text_green_outline_bg)
+            ColorState.RED -> getImageDrawable(R.drawable.edit_text_red_outline_bg)
         }
     }
 
     private fun setCurrentState(state: CurrentState) {
+        mCurrentState = state
         when (state) {
            CurrentState.INITIAL -> setInitial()
            CurrentState.SUCCESS -> setSuccess()
@@ -73,28 +71,40 @@ class CustomPhoneNoEditText @JvmOverloads constructor(
         }
     }
 
-    fun showError(text : String){
-        mLlPhoneNo.background = getImageDrawable(R.drawable.edit_text_red_outline_bg)
-        mEtPhoneNo.error = text
-    }
+
 
     fun setError(text: String) {
+        mCurrentState = CurrentState.ERROR
         mEtPhoneNo.error = text
         setState(mErrorState)
     }
 
     fun setSuccess() {
+        mCurrentState = CurrentState.SUCCESS
         mEtPhoneNo.error = null
         setState(mSuccessState)
     }
 
     fun setInitial() {
+        mCurrentState = CurrentState.INITIAL
         mEtPhoneNo.error = null
         setState(mInitialState)
     }
 
+    fun setEditTextStates(
+        mInitialState: ColorState = ColorState.GRAY,
+        mSuccessState: ColorState = ColorState.GRAY,
+        mErrorState: ColorState = ColorState.RED
+    ) {
+        this.mErrorState = mErrorState
+        this.mSuccessState = mSuccessState
+        this.mInitialState = mInitialState
 
-    enum class State{
+        setCurrentState(CurrentState.INITIAL)
+    }
+
+
+    enum class ColorState{
         GRAY,GREEN,RED
     }
 

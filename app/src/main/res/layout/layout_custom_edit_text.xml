@@ -1,35 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:background="@drawable/edit_text_gray_bg"
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ll_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:layout_gravity="center_vertical"
-        android:id="@+id/et_main"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@null"
-        android:fontFamily="@font/lato"
-        android:inputType="textEmailAddress"
-        android:paddingHorizontal="@dimen/padding_normal"
-        android:textColorHint="@color/hint_color"
-        android:textSize="14sp" />
-
-    <androidx.appcompat.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatTextView
         android:visibility="gone"
-        android:id="@+id/iv_main"
-        android:layout_margin="10dp"
-        android:layout_gravity="center_vertical"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:src="@drawable/ic_right"/>
+        android:id="@+id/tv_title"
+        android:layout_marginBottom="@dimen/margin_medium"
+        tools:text="Phone no*"
+        android:textSize="@dimen/text_size_medium"
+        android:textAllCaps="true"
+        android:fontFamily="@font/lato"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-</LinearLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:background="@drawable/edit_text_gray_bg"
+        android:id="@+id/ll_main"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:paddingVertical="@dimen/padding_vertical"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/et_main"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:fontFamily="@font/lato"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:textColorHint="@color/hint_color"
+            android:textSize="@dimen/text_size_medium" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:visibility="gone"
+            android:id="@+id/iv_main"
+            android:layout_margin="@dimen/margin_medium"
+            android:layout_gravity="center_vertical"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_right"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_info"
+        android:visibility="gone"
+        android:layout_marginHorizontal="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_marginTop="@dimen/info_margin_top"
+            android:id="@+id/iv_info"
+            android:layout_width="@dimen/info_size"
+            android:layout_height="@dimen/info_size"
+            android:src="@drawable/ic_info"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:textSize="@dimen/text_size_small"
+            android:id="@+id/tv_info"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Users must be 18 or older to register.Users must be 18 or older to register"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

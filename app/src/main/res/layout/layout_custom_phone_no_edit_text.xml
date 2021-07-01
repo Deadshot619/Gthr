@@ -9,21 +9,22 @@
     android:layout_height="match_parent">
 
     <com.hbb20.CountryCodePicker
+        android:layout_marginVertical="@dimen/ccp_marginVertical"
         app:ccp_defaultNameCode="US"
-        app:ccp_textSize="14sp"
+        app:ccp_textSize="@dimen/text_size_medium"
         app:ccp_showFlag="false"
         app:ccp_showNameCode="false"
         android:layout_gravity="center_vertical"
         android:id="@+id/ccp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="@dimen/ccp_marginLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <View
-        android:layout_width="1dp"
+        android:layout_width="@dimen/view_width"
         android:layout_height="match_parent"
         android:background="@color/black"
-        android:layout_marginVertical="10dp"/>
+        android:layout_marginVertical="@dimen/margin_medium"/>
 
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -36,9 +37,9 @@
         android:background="@null"
         android:fontFamily="@font/lato"
         android:hint="@string/phone_no"
-        android:inputType="textEmailAddress"
+        android:inputType="phone"
         android:paddingHorizontal="@dimen/padding_normal"
         android:textColorHint="@color/hint_color"
-        android:textSize="14sp" />
+        android:textSize="@dimen/text_size_medium" />
 
 </LinearLayout>

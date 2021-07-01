@@ -17,7 +17,7 @@
         android:itemBackground="@color/white"
         android:layout_gravity="center"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="@dimen/text_size_medium"
         android:textStyle="bold"
         android:fontFamily="@font/lato"
         app:cursorColor="@color/black"
