@@ -13,8 +13,9 @@
     <dimen name="toolbar_radius">12dp</dimen>
 
     <!--Bottom Nav-->
-    <dimen name="bottom_nav_icon_size">18dp</dimen>
-    <dimen name="bottom_nav_padding">8dp</dimen>
+    <dimen name="bottom_nav_icon_size">42dp</dimen>
+    <dimen name="bottom_nav_padding_top">4dp</dimen>
+    <dimen name="bottom_nav_padding_bottom">12dp</dimen>
 
     <!--Text Size-->
     <dimen name="text_size_semi_small">11sp</dimen>
