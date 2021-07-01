@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gthr.gthrcollect">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".GthrCollect"
         android:allowBackup="true"
@@ -14,7 +18,8 @@
         <activity android:name=".ui.customviews.CustomViewsActivity">
 
         </activity>
-        <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity" />
+        <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity"
+            />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/GthrCollectFullScreen">
@@ -24,6 +29,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.activities.CustomCamera" />
+        <activity android:name=".ui.activities.ImagePreview" />
     </application>
 
 </manifest>

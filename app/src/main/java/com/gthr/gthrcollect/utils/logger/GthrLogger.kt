@@ -2,6 +2,7 @@ package com.gthr.gthrcollect.utils.logger
 
 import timber.log.Timber
 
+
 object GthrLogger {
     private const val TAG = "GTHR_Application"
 

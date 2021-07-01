@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edit_account_info_nav_graph.xml"
     app:startDestination="@id/eaProfileFragment">
 
@@ -23,5 +24,13 @@
     <fragment
         android:id="@+id/eaIdVerificationFragment"
         android:name="com.gthr.gthrcollect.ui.eaidverification.EaIdVerificationFragment"
-        android:label="EaIdVerificationFragment" />
+        android:label="EaIdVerificationFragment" >
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <argument
+            android:name="camera_side"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

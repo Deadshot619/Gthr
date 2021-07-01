@@ -30,6 +30,11 @@ class EditAccountInfoActivity :
         setSupportActionBar(mViewBinding.toolbar)
 
         setUpNavigationAndActionBar()
+
+
+
+
+
     }
 
     private fun setUpNavigationAndActionBar() {
@@ -119,4 +124,6 @@ class EditAccountInfoActivity :
     companion object {
         fun getInstance(context: Context) = Intent(context, EditAccountInfoActivity::class.java)
     }
+
+
 }

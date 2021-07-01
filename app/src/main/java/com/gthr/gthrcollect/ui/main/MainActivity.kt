@@ -17,4 +17,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     companion object {
         fun getInstance(context: Context) = Intent(context, MainActivity::class.java)
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+
+    }
 }

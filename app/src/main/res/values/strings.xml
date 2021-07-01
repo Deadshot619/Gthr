@@ -28,4 +28,20 @@
     <string name="ea_one_text">1</string>
     <string name="ea_two_text">2</string>
     <string name="ea_three_text">3</string>
+
+    <!--Camera Labels-->
+    <string name="take_a_pict">Take a picture of the front of your ID</string>
+    <string name="secure">Secure</string>
+    <string name="congratulat"><![CDATA[Verified Buyers & Sellers]]></string>
+    <string name="take_back">Replace picture of the back</string>
+    <string name="id_note">A government ID helps us check that you’re really you. It also helps us keep secure, fight fraud, and more.</string>
+    <string name="id_verification">ID Verification</string>
+    <string name="preview_note">Placing your ID in the frame with the front facing the camera</string>
+    <string name="saved">Saved</string>
+    <string name="change">Changed</string>
+    <string name="error">Error!</string>
+    <string name="permission_denied">Permission to use device Camera denied! Cannot proceed ahead!</string>
+    <string name="not_exist">Not exist :</string>
+
+
 </resources>

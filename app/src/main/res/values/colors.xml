@@ -24,6 +24,10 @@
     <color name="text_color_black">#181818</color>
     <color name="text_color_light_blue">#3C92F1</color>
 
+    <color name="coloBlue">#3C92F1</color>
+    <color name="grey_color">#F4F4F4</color>
+    <color name="button_color_yello">#FBB500</color>
+
     <!--Custom Views-->
     <color name="red">#D74343</color>
     <color name="blue">#1574E3</color>
