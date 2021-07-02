@@ -18,39 +18,43 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_end="@dimen/guideline_normal" />
+            app:layout_constraintGuide_end="@dimen/guideline_edit_account_info" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/guideline_normal"
+            app:layout_constraintGuide_begin="@dimen/guideline_edit_account_info"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/guideline_normal"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_public_profile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:fontFamily="@font/lato"
-            android:text="@string/public_profile"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_normal"
-            android:textStyle="bold"
+            style="@style/EditAccountPageTitle"
+            android:text="@string/personal_info_text"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
 
         <com.gthr.gthrcollect.utils.customviews.CustomEditText
             android:id="@+id/et_first_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/name_margin_top"
+            android:layout_marginTop="@dimen/margin_large"
             android:layout_marginEnd="@dimen/margin_medium"
             android:src="@drawable/ic_right"
+            android:nextFocusForward="@id/et_last_name"
             app:edit_hint="@string/name"
             app:edit_success_state="GREEN"
             app:edit_title="@string/first_name"
@@ -220,10 +224,9 @@
             android:padding="@dimen/terms_and_conditions_padding"
             android:layout_marginTop="@dimen/margin_extra_small"
             android:src="@drawable/ic_terms_and_conditions"
-            android:layout_marginStart="@dimen/margin_extra_small"
             app:layout_constraintEnd_toStartOf="@+id/tv_agree_to"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@+id/tv_info" />
 
         <androidx.appcompat.widget.AppCompatTextView

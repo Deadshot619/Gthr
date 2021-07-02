@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:background="@drawable/edit_text_gray_bg"
+<LinearLayout android:background="@drawable/edit_text_gray_bg"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_phone_no"
     android:layout_width="match_parent"
@@ -38,6 +36,7 @@
         android:fontFamily="@font/lato"
         android:hint="@string/phone_no"
         android:inputType="phone"
+        android:maxLength="10"
         android:paddingHorizontal="@dimen/padding_normal"
         android:textColorHint="@color/hint_color"
         android:textSize="@dimen/text_size_medium" />
