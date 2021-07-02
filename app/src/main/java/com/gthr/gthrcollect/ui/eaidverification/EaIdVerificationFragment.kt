@@ -3,7 +3,6 @@ package com.gthr.gthrcollect.ui.eaidverification
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -37,12 +36,12 @@ class EaIdVerificationFragment :
     private lateinit var mSkipBtn: CustomSecondaryButton
     private lateinit var mCompleteAccBtn: CustomSecondaryButton
 
-    lateinit var mfrontLable:TextView
-    lateinit var mBackLable:TextView
-    lateinit var mFront_repls:LinearLayout
-    lateinit var mBack_repls:LinearLayout
+    lateinit var mfrontLable: TextView
+    lateinit var mBackLable: TextView
+    lateinit var mFront_repls: LinearLayout
+    lateinit var mBack_repls: LinearLayout
 
-    lateinit var mIdScanner:AppCompatImageView
+    lateinit var mIdScanner: AppCompatImageView
 
     override fun onBinding() {
 
@@ -79,25 +78,22 @@ class EaIdVerificationFragment :
     }
 
     private fun addListners() {
-        mFrontIdCapture.setOnClickListener(View.OnClickListener {
+        mFrontIdCapture.setOnClickListener {
             startActivityForResult(
                 CustomCamera.getInstance(requireContext())
-                    .putExtra(CustomCamera.CAMERA_VIEW,
-                        CameraViews.ID_VERIFICATION.toString()
-                    ),
+                    .putExtra(CustomCamera.CAMERA_VIEW, CameraViews.ID_VERIFICATION.toString()),
                 REQUEST_CODE_FRONT_ID
             )
-        })
+        }
 
 
-        mBackIdCapture.setOnClickListener(View.OnClickListener {
+        mBackIdCapture.setOnClickListener {
             startActivityForResult(
                 CustomCamera.getInstance(requireContext()).putExtra(
-                    CustomCamera.CAMERA_VIEW,
-                    CameraViews.CARDS.toString()
+                    CustomCamera.CAMERA_VIEW, CameraViews.ID_VERIFICATION.toString()
                 ), REQUEST_CODE_BACK_ID
             )
-        })
+        }
 
         mCompleteAccBtn.setOnClickListener {
             findNavController().navigate(EaIdVerificationFragmentDirections.actionEaIdVerificationFragmentToWelcomeFragment())
@@ -116,31 +112,31 @@ class EaIdVerificationFragment :
                 mIvFrontImage.visible()
                 mIvFrontImage.setImageBitmap(bitmap)
 
-                mfrontLable.text=getString(R.string.replae_front)
+                mfrontLable.text = getString(R.string.replae_front)
 
-                mFront_repls.background=resources.getDrawable(R.drawable.rectangle_5)
+                mFront_repls.background = resources.getDrawable(R.drawable.rectangle_5)
 
 
             } else {
                 mIvBackImage.visible()
                 mIvBackImage.setImageBitmap(bitmap)
 
-                mBackLable.text=getString(R.string.replace_back)
+                mBackLable.text = getString(R.string.replace_back)
 
                 mSkipBtn.gone()
                 mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
 
-                mBack_repls.background=resources.getDrawable(R.drawable.rectangle_5)
+                mBack_repls.background = resources.getDrawable(R.drawable.rectangle_5)
             }
         }
 
 
     }
 
-    companion object{
+    companion object {
 
-        const val REQUEST_CODE_FRONT_ID=1
-        const val REQUEST_CODE_BACK_ID=2
+        const val REQUEST_CODE_FRONT_ID = 1
+        const val REQUEST_CODE_BACK_ID = 2
 
 
     }

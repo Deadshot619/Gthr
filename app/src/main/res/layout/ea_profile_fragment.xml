@@ -85,7 +85,7 @@
             android:maxLines="5"
             android:gravity="top"
             android:layout_height="wrap_content"
-            android:hint="@string/bio"
+            android:hint="@string/bio_hint_text"
             android:background="@drawable/edit_text_gray_bg"
             android:fontFamily="@font/lato"
             android:inputType="textMultiLine"

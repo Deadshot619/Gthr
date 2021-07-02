@@ -64,6 +64,7 @@
             android:layout_marginEnd="@dimen/margin_extra_small"
             app:layout_constraintEnd_toStartOf="@id/tv_password_info"
             app:layout_constraintTop_toTopOf="@id/tv_password_info"
+            android:tint="@color/text_color_light_blue"
             app:srcCompat="@drawable/ic_info" />
 
         <!--Password Info-->

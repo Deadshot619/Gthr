@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/edit_account_info_title"
+                tools:text="@string/edit_account_info_title"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="@dimen/text_size_normal" />
 

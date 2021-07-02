@@ -52,12 +52,8 @@
     <string name="secure">Secure</string>
     <string name="congratulat"><![CDATA[Verified Buyers & Sellers]]></string>
     <string name="take_back">Take a picture of the back of your ID</string>
-
     <string name="replae_front">Replace picture of the front</string>
     <string name="replace_back">Replace picture of the back</string>
-
-
-
     <string name="id_note">A government ID helps us check that you’re really you. It also helps us keep secure, fight fraud, and more.</string>
     <string name="id_verification">ID Verification</string>
     <string name="preview_note">Placing your ID in the frame with the front facing the camera</string>
@@ -68,7 +64,6 @@
     <string name="not_exist">Not exist :</string>
     <string name="next">Next</string>
     <string name="otp_verification">OTP Verification</string>
-
     <string name="compete_account_setup">Compete Account Setup</string>
     <string name="skip_id_verification">Skip ID Verification</string>
     <string name="retake">Retake</string>
@@ -77,15 +72,13 @@
     <!--    public profile-->
     <string name="display_name_info">Username is limited to 24 characters and must contain only letters, numbers, periods, and underscores.</string>
     <string name="display_name">DISPLAY NAME*</string>
-    <string name="display_name_hint">Display Name</string>
+    <string name="display_name_hint">24 characters</string>
     <string name="public_profile">Public Profile</string>
     <string name="bio_title">BIO</string>
-    <string name="bio">bio</string>
+    <string name="bio_hint_text">150 characters</string>
     <string name="edit_user_info">Edit User Info</string>
     <string name="display_name_error_msg">Username contains illegal character.</string>
 
-
-    s
     <!--Welcome-->
     <string name="btn_welcome_text">Welcome!</string>
     <string name="secure_text">Secure</string>
@@ -94,4 +87,5 @@
     <string name="welcome_buy_and_sell_text">Buy &amp; Sell from over 1,000,000 Cards &amp; Toys</string>
     <string name="understand_text">Understand</string>
     <string name="track_value_of_text">Track the value of your entire collection instantly</string>
+    <string name="welcome_screen_title">Create Account</string>
 </resources>

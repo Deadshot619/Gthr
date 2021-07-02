@@ -2,8 +2,6 @@ package com.gthr.gthrcollect.utils.customviews
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.util.AttributeSet
 import android.view.View
@@ -73,14 +71,16 @@ class CustomSecondaryButton @JvmOverloads constructor(
             }
             State.WHITE_WITH_BLUE_BORDER -> {
                 this.isEnabled = true
-                this.setTextColor(getResolvedColor(R.color.blue))
-                this.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.blue))
+                this.setTextColor(getResolvedColor(R.color.light_blue))
+                this.compoundDrawableTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.light_blue))
                 getImageDrawable(R.drawable.bg_btn_secondary_white_with_blue_border)
             }
             State.BLACK_WITH_BLUE_BORDER -> {
                 this.isEnabled = true
-                this.setTextColor(getResolvedColor(R.color.blue))
-                this.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.blue))
+                this.setTextColor(getResolvedColor(R.color.light_blue))
+                this.compoundDrawableTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.light_blue))
                 getImageDrawable(R.drawable.bg_btn_secondary_black_with_blue_border)
             }
 

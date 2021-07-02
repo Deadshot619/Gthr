@@ -100,9 +100,10 @@
                 android:text="@string/track_value_of_text" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_extra_large"
+                android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_welcome_page_bg" />
         </LinearLayout>
 
@@ -115,6 +116,7 @@
             android:layout_marginTop="@dimen/margin_extra_large"
             android:gravity="bottom"
             android:text="@string/btn_welcome_text"
+            android:textSize="@dimen/text_size_extra_large"
             app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start" />

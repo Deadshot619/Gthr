@@ -42,20 +42,24 @@ class EditAccountInfoActivity :
 
         mNavController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
             mViewBinding.toolbar.title = ""     //Set Title as empty as we have used custom title
+            setToolbarTitle(getString(R.string.edit_account_info_title))
+            upButtonVisibility(isVisible = true)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_up_button) //Set up button as <
 
             when (nd.id) {
                 R.id.eaProfileFragment -> {
                     setSectionSelection(EditAccountSection.PROFILE)
                 }
-                R.id.eaUserInfoFragment -> {
-                    setSectionSelection(EditAccountSection.USER_INFO)
-                }
-                R.id.eaOtpFragment -> {
+                R.id.eaUserInfoFragment, R.id.eaOtpFragment -> {
                     setSectionSelection(EditAccountSection.USER_INFO)
                 }
                 R.id.eaIdVerificationFragment -> {
                     setSectionSelection(EditAccountSection.ID_VERIFICATION)
+                }
+                R.id.welcomeFragment -> {
+                    upButtonVisibility(isVisible = false)
+                    setToolbarTitle(getString(R.string.welcome_screen_title))
+                    setSectionSelection(null)
                 }
             }
         }
@@ -130,9 +134,16 @@ class EditAccountInfoActivity :
             mViewBinding.layoutSectionSelection.clMainLayout.gone()
     }
 
+    private fun setToolbarTitle(title: String) {
+        mViewBinding.toolbarTitle.text = title
+    }
+
+    private fun upButtonVisibility(isVisible: Boolean) {
+        supportActionBar?.setDisplayShowHomeEnabled(isVisible)
+        supportActionBar?.setDisplayHomeAsUpEnabled(isVisible)
+    }
+
     companion object {
         fun getInstance(context: Context) = Intent(context, EditAccountInfoActivity::class.java)
     }
-
-
 }
