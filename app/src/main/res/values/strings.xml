@@ -44,7 +44,13 @@
     <string name="take_a_pict">Take a picture of the front of your ID</string>
     <string name="secure">Secure</string>
     <string name="congratulat"><![CDATA[Verified Buyers & Sellers]]></string>
-    <string name="take_back">Replace picture of the back</string>
+    <string name="take_back">Take a picture of the back of your ID</string>
+
+    <string name="replae_front">Replace picture of the front</string>
+    <string name="replace_back">Replace picture of the back</string>
+
+
+
     <string name="id_note">A government ID helps us check that you’re really you. It also helps us keep secure, fight fraud, and more.</string>
     <string name="id_verification">ID Verification</string>
     <string name="preview_note">Placing your ID in the frame with the front facing the camera</string>
@@ -53,6 +59,9 @@
     <string name="error">Error!</string>
     <string name="permission_denied">Permission to use device Camera denied! Cannot proceed ahead!</string>
     <string name="not_exist">Not exist :</string>
+    <string name="compete_account_setup">Compete Account Setup</string>
+    <string name="skip_id_verification">Skip ID Verification</string>
+    <string name="retake">Retake</string>
 
 
 </resources>

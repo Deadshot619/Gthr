@@ -29,6 +29,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.utils.enums.CameraViews
+import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import java.io.File
 import java.io.FileOutputStream
@@ -38,7 +41,8 @@ import java.util.*
 
 class CustomCamera : AppCompatActivity() {
 
-    lateinit var mCropedLayout: View
+    lateinit var mIdLayout: View
+    private lateinit var mCardLayout:View
     lateinit var mPreview_layout: RelativeLayout
     lateinit var  mBtn_camera:ImageView
     private var mTextureView: TextureView? = null
@@ -53,6 +57,8 @@ class CustomCamera : AppCompatActivity() {
     private var mBackgroundHandler: Handler? = null
     var mStateCallback: CameraDevice.StateCallback? = null
     var mFile: File? = null
+
+    var mCameraViews:String?=null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,10 +80,25 @@ class CustomCamera : AppCompatActivity() {
         }
         mTextureView = findViewById(R.id.textureView)
         mTextureView?.setSurfaceTextureListener(textureListener)
-        mCropedLayout = findViewById(R.id.cropedLayout)
+        mIdLayout = findViewById(R.id.id_layout)
+        mCardLayout=findViewById(R.id.card_layout)
         mPreview_layout = findViewById(R.id.preview_layout)
         
         mBtn_camera = findViewById(R.id.btn_camera)
+
+        mCameraViews=intent.getStringExtra(CAMERA_VIEW)
+
+        if (mCameraViews!!.equals(CameraViews.ID_VERIFICATION.toString())){
+
+            mIdLayout.visible()
+            mCardLayout.gone()
+        }
+        else{
+            mIdLayout.gone()
+            mCardLayout.visible()
+
+        }
+
         mBtn_camera.setOnClickListener { takePicture() }
     }
 
@@ -142,15 +163,32 @@ class CustomCamera : AppCompatActivity() {
 
                         //calculate aspect ratio
                         val koefX = rotatedBitmap.width
-                            .toFloat() / mPreview_layout!!.width.toFloat()
+                            .toFloat() / mPreview_layout.width.toFloat()
                         val koefY = rotatedBitmap.height
-                            .toFloat() / mPreview_layout!!.height
+                            .toFloat() / mPreview_layout.height
+
+
+                        var x1=0
+                        var y1=0
+                        var x2=0
+                        var y2=0
 
                         //get viewfinder border size and position on the screen
-                        val x1 =  mCropedLayout!!.left - mCropedLayout.paddingLeft - mCropedLayout.paddingRight
-                        val y1 =  mCropedLayout!!.top - mCropedLayout!!.paddingTop - mCropedLayout.paddingBottom
-                        val x2 = mCropedLayout!!.width
-                        val y2 = mCropedLayout!!.height
+
+
+                        if (mCameraViews!!.equals(CameraViews.ID_VERIFICATION.toString())){
+
+                            x1 =  mIdLayout.left - mIdLayout.paddingLeft - mIdLayout.paddingRight
+                            y1 =  mIdLayout.top - mIdLayout.paddingTop - mIdLayout.paddingBottom
+                            x2 = mIdLayout.width
+                            y2 = mIdLayout.height
+                        }
+                        else{
+                            x1 =  mCardLayout.left - mCardLayout.paddingLeft - mCardLayout.paddingRight
+                            y1 =  mCardLayout.top - mCardLayout.paddingTop - mCardLayout.paddingBottom
+                            x2 = mCardLayout.width
+                            y2 = mCardLayout.height
+                        }
 
                         //calculate position and size for cropping
                         val cropStartX = Math.round(x1 * koefX)
@@ -405,7 +443,7 @@ class CustomCamera : AppCompatActivity() {
 
 
             startActivityForResult(
-              ImagePreview.getInstance(this,mFile.path), REQUEST_CODE_PREVIEW )
+              ImagePreview.getInstance(this,mFile.path,mCameraViews!!), REQUEST_CODE_PREVIEW )
         } catch (e: Exception) {
             e.printStackTrace()
             // Unable to create mFile, likely because external storage is
@@ -430,6 +468,8 @@ class CustomCamera : AppCompatActivity() {
         const val INTENT_KEY_URL="url"
         const val MY_PERMISSIONS_REQUEST_CAMERA = 102
         const val HANDLER_NAME="Camera Background"
+
+        const val CAMERA_VIEW="camera_view"
 
         init {
             ORIENTATIONS.append(Surface.ROTATION_0, 90)
