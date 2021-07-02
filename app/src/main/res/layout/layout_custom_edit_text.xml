@@ -37,7 +37,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:fontFamily="@font/lato"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:paddingHorizontal="@dimen/padding_normal"
             android:textColorHint="@color/hint_color"
             android:textSize="@dimen/text_size_medium" />

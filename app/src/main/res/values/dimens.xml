@@ -111,5 +111,12 @@
 
     <!--Edit Account Info-->
     <dimen name="otp_margin_top">64dp</dimen>
+    <!--UserInfo-->
+    <dimen name="terms_and_conditions_marginStart">5dp</dimen>
+    <dimen name="name_margin_top">28dp</dimen>
+    <dimen name="birthday_phone_no_margin_top">24dp</dimen>
+    <dimen name="image_size">40dp</dimen>
+    <dimen name="terms_and_conditions_padding">10dp</dimen>
+
 
 </resources>
