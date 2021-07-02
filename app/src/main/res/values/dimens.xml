@@ -111,6 +111,8 @@
 
     <!--Edit Account Info-->
     <dimen name="otp_margin_top">64dp</dimen>
+    <dimen name="dp_60">60dp</dimen>
+    <dimen name="sp_25">25sp</dimen>
     <!--UserInfo-->
     <dimen name="terms_and_conditions_marginStart">5dp</dimen>
     <dimen name="name_margin_top">28dp</dimen>

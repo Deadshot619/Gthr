@@ -86,6 +86,11 @@
     <string name="welcome_buy_and_sell_text">Buy &amp; Sell from over 1,000,000 Cards &amp; Toys</string>
     <string name="understand_text">Understand</string>
     <string name="track_value_of_text">Track the value of your entire collection instantly</string>
+    <string name="please_enter">Please enter the email address that is associated with your gthr account.</string>
+    <string name="email">EMAIL</string>
+    <string name="finish">Finish</string>
+    <string name="reset_instruction">You will receive reset instructions if there is an email associated with the provided email.</string>
+    <string name="password_reset_sent">Password Reset Sent</string>
     <string name="welcome_screen_title">Create Account</string>
     <!--user info-->
     <string name="birthday_name">BIRTHDAY*</string>
