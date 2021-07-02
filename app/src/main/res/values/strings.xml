@@ -21,6 +21,7 @@
     <string name="sign_in_underline_text"><u>Sign In</u></string>
     <string name="enter_valid_email_error_text">Please enter valid Email</string>
     <string name="enter_valid_password_error_text">Please enter valid Password</string>
+    <string name="btn_next_text">Next</string>
 
     <!--Edit Account Info-->
     <string name="edit_account_info_title">Edit Account Info</string>
@@ -31,6 +32,12 @@
     <string name="ea_two_text">2</string>
     <string name="ea_three_text">3</string>
     <string name="phone_no">xxx-xxx-xxxx</string>
+
+    <!--OTP-->
+    <string name="otp_verification_text">OTP Verification</string>
+    <string name="enter_otp_text">Enter OTP sent to </string>
+    <string name="otp_not_received_text">Didn’t receive message?</string>
+    <string name="otp_send_again_text"><u>Send Again</u></string>
 
     <!--Forgot Password-->
     <string name="forgot_password_title_text">Forgot Password</string>

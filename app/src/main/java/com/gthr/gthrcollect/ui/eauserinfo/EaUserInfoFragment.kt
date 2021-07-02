@@ -14,7 +14,7 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
 
     private fun setUpClickListeners() {
         mViewBinding.btnNext.setOnClickListener {
-            findNavController().navigate(EaUserInfoFragmentDirections.actionEaUserInfoFragmentToEaIdVerificationFragment("",""))
+            findNavController().navigate(EaUserInfoFragmentDirections.actionEaUserInfoFragmentToEaOtpFragment())
         }
     }
 }

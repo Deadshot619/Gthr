@@ -40,6 +40,9 @@
 
     <!--Guidelines-->
     <dimen name="guideline_normal">16dp</dimen>
+    <dimen name="guideline_edit_account_info">32dp</dimen>
+
+
     <dimen name="edit_text_corner_radius">4dp</dimen>
     <dimen name="edit_text_stroke_width">1dp</dimen>
 
@@ -76,6 +79,7 @@
     <dimen name="custom_secondary_button_border_width">1dp</dimen>
     <dimen name="custom_secondary_button_border_radius">20dp</dimen>
 
-
+    <!--Edit Account Info-->
+    <dimen name="otp_margin_top">64dp</dimen>
 
 </resources>
