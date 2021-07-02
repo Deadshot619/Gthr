@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.eauserinfo.EaUserInfoFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.eauserinfo.EaUserInfoFragment">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_end"
@@ -30,63 +28,234 @@
             app:layout_constraintGuide_begin="@dimen/guideline_normal"
             app:layout_constraintStart_toStartOf="parent" />
 
+
         <TextView
-            android:id="@+id/tv_personal_info"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/lato"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size_normal"
-            android:textColor="@color/black"
-            android:text="@string/personal_info"
+            android:id="@+id/tv_public_profile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:fontFamily="@font/lato"
+            android:text="@string/public_profile"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_normal"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"/>
-
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <com.gthr.gthrcollect.utils.customviews.CustomEditText
             android:id="@+id/et_first_name"
-            android:layout_marginTop="28dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_personal_info"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:edit_title="@string/display_name"
-            app:edit_hint="@string/display_name_hint"
-            app:edit_success_state="BLUE"
-            android:src="@drawable/ic_right"
-            app:edit_info="@string/display_name_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            />
+            android:layout_marginTop="@dimen/name_margin_top"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:src="@drawable/ic_right"
+            app:edit_hint="@string/name"
+            app:edit_success_state="GREEN"
+            app:edit_title="@string/first_name"
+            app:layout_constraintEnd_toStartOf="@+id/et_last_name"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_public_profile" />
 
         <com.gthr.gthrcollect.utils.customviews.CustomEditText
             android:id="@+id/et_last_name"
-            android:layout_marginTop="28dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_personal_info"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:edit_title="@string/display_name"
-            app:edit_hint="@string/display_name_hint"
-            app:edit_success_state="BLUE"
-            android:src="@drawable/ic_right"
-            app:edit_info="@string/display_name_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            />
+            android:layout_marginTop="@dimen/name_margin_top"
+            android:src="@drawable/ic_right"
+            app:edit_hint="@string/name"
+            app:edit_success_state="GREEN"
+            app:edit_title="@string/last_name"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/et_first_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_public_profile" />
 
+
+        <com.gthr.gthrcollect.utils.customviews.CustomEditText
+            android:id="@+id/et_mm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/birthday_phone_no_margin_top"
+            android:layout_marginEnd="@dimen/margin_medium"
+            app:edit_hint="@string/mm"
+            app:edit_success_state="GREEN"
+            app:edit_title="@string/birthday_name"
+            app:layout_constraintEnd_toStartOf="@+id/et_dd"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/et_first_name" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_birthday_info"
+            android:layout_width="@dimen/info_size"
+            android:layout_height="@dimen/info_size"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:src="@drawable/ic_info"
+            app:layout_constraintEnd_toStartOf="@+id/tv_info"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/et_mm" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_birthday_info"
+            android:layout_width="0dp"
+            android:fontFamily="@font/lato"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_info"
+            app:layout_constraintTop_toBottomOf="@+id/et_mm"
+            android:text="@string/birthday_info" />
+
+
+
+        <com.gthr.gthrcollect.utils.customviews.CustomEditText
+            android:id="@+id/et_dd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_medium"
+            app:edit_hint="@string/dd"
+            app:edit_success_state="GREEN"
+            app:layout_constraintBottom_toBottomOf="@+id/et_mm"
+            app:layout_constraintEnd_toStartOf="@+id/et_year"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/et_mm" />
+
+        <com.gthr.gthrcollect.utils.customviews.CustomEditText
+            android:id="@+id/et_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:edit_hint="@string/yyyy"
+            app:edit_success_state="GREEN"
+            app:layout_constraintBottom_toBottomOf="@+id/et_dd"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/et_dd" />
 
         <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-            app:secondary_button_state="DISABLE"
-            android:drawableEnd="@drawable/ic_next_arrow"
             android:id="@+id/btn_next"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:drawableEnd="@drawable/ic_next_arrow"
             android:text="@string/otp_verification"
+            app:layout_constraintWidth_percent="0.45"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:secondary_button_state="DISABLE" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_phone_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/birthday_phone_no_margin_top"
+            android:fontFamily="@font/lato"
+            android:text="@string/phone_number"
+            android:textAllCaps="true"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_birthday_info" />
+
+
+        <com.gthr.gthrcollect.utils.customviews.CustomPhoneNoEditText
+            android:id="@+id/et_custom_phone_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_phone_no"
+            app:phone_no_error_state="RED"
+            app:phone_no_error_text="Please enter phone no"
+            app:phone_no_hint="@string/phone_no_hint"
+            app:phone_no_initial_state="GRAY"
+            app:phone_no_success_state="GREEN" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_info"
+            android:layout_width="@dimen/info_size"
+            android:layout_height="@dimen/info_size"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:src="@drawable/ic_info"
+            app:layout_constraintEnd_toStartOf="@+id/tv_info"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/et_custom_phone_no" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_info"
+            android:layout_width="0dp"
+            android:fontFamily="@font/lato"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_info"
+            app:layout_constraintTop_toBottomOf="@+id/et_custom_phone_no"
+            android:text="@string/phone_no_info" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:id="@+id/iv_terms_and_conditions"
+            android:layout_width="@dimen/image_size"
+            android:layout_height="@dimen/image_size"
+            android:padding="@dimen/terms_and_conditions_padding"
+            android:layout_marginTop="@dimen/margin_extra_small"
+            android:src="@drawable/ic_terms_and_conditions"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            app:layout_constraintEnd_toStartOf="@+id/tv_agree_to"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_info" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_agree_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_terms_and_conditions"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintEnd_toStartOf="@+id/tv_terms_and_conditions"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_terms_and_conditions"
+            app:layout_constraintTop_toTopOf="@+id/iv_terms_and_conditions"
+            android:text="@string/agree_to" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_terms_and_conditions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/terms_and_conditions_marginStart"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/green"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_terms_and_conditions"
+            app:layout_constraintStart_toEndOf="@+id/tv_agree_to"
+            app:layout_constraintTop_toTopOf="@+id/iv_terms_and_conditions"
+            android:text="@string/terms_conditions" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

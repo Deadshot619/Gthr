@@ -14,6 +14,8 @@ fun String.isValidPassword(): Boolean {
     return !TextUtils.isEmpty(this) && length >= 6 && contains(Regex("[0-9]"))
 }
 
+fun String.isValidPhoneNumber():Boolean = length==10
+
 fun String.isValidDisplayName(): Boolean {
     val regex = "^[\\p{L} 0-9._]+$"
     val p: Pattern = Pattern.compile(regex)

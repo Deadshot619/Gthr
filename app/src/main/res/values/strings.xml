@@ -54,11 +54,11 @@
     <string name="permission_denied">Permission to use device Camera denied! Cannot proceed ahead!</string>
     <string name="not_exist">Not exist :</string>
     <string name="next">Next</string>
-    <string name="otp_verification">OTP Verification</string>
 
 
 
-    <!--    public profile-->
+
+    <!--public profile-->
     <string name="display_name_info">Username is limited to 24 characters and must contain only letters, numbers, periods, and underscores.</string>
     <string name="display_name">DISPLAY NAME*</string>
     <string name="display_name_hint">Display Name</string>
@@ -67,6 +67,22 @@
     <string name="bio">bio</string>
     <string name="edit_user_info">Edit User Info</string>
     <string name="display_name_error_msg">Username contains illegal character.</string>
+
+    <!--user info-->
+    <string name="birthday_name">BIRTHDAY*</string>
+    <string name="mm">MM</string>
+    <string name="dd">DD</string>
+    <string name="yyyy">YYYY</string>
+    <string name="phone_number">PHONE NUMBER*</string>
+    <string name="phone_no_info"><![CDATA[An SMS may be sent to your phone. Message & data rates may apply.]]></string>
+    <string name="phone_no_hint">xxx-xxx-xxxx</string>
+    <string name="agree_to">Agree to </string>
+    <string name="terms_conditions"><u><![CDATA[Terms & Conditions]]></u></string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="first_name">FIRST NAME*</string>
+    <string name="name">Name</string>
+    <string name="last_name">LAST NAME*</string>
+    <string name="birthday_info">Users must be 18 or older to register.</string>
 
 
 </resources>

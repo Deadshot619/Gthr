@@ -21,9 +21,9 @@ class CustomPhoneNoEditText @JvmOverloads constructor(
 
     private var mLlPhoneNo: LinearLayout
 
-    private var mCcp: CountryCodePicker
+   var mCcp: CountryCodePicker
         private set
-    private var mEtPhoneNo: AppCompatEditText
+   var mEtPhoneNo: AppCompatEditText
         private set
     var mState = ColorState.GRAY
         private set
