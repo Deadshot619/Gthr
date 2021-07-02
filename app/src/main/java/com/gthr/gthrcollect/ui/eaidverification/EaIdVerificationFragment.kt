@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
@@ -58,18 +59,18 @@ class EaIdVerificationFragment :
         mIvFrontImage = mViewBinding.ivFrontImage
         mFrontIdCapture = mViewBinding.frontIdCapture
         mBackIdCapture = mViewBinding.backIdCapture
-        mIdScanner=mViewBinding.ivIdScanner
-        mSkipBtn=mViewBinding.skipIdbtn
-        mCompleteAccBtn=mViewBinding.completeAccountBtn
+        mIdScanner = mViewBinding.ivIdScanner
+        mSkipBtn = mViewBinding.btnSkipId
+        mCompleteAccBtn = mViewBinding.btnCompleteAccount
 
-        mfrontLable=mViewBinding.tvFrontLable
-        mBackLable=mViewBinding.tvBackLable
+        mfrontLable = mViewBinding.tvFrontLable
+        mBackLable = mViewBinding.tvBackLable
 
-        mFront_repls=mViewBinding.frontRepls
-        mBack_repls=mViewBinding.backRepls
+        mFront_repls = mViewBinding.frontRepls
+        mBack_repls = mViewBinding.backRepls
 
-        mFront_repls.background=null
-        mBack_repls.background=null
+        mFront_repls.background = null
+        mBack_repls.background = null
 
         Glide.with(this).load(R.drawable.id_scanner).into(mIdScanner)
 
@@ -78,21 +79,29 @@ class EaIdVerificationFragment :
     }
 
     private fun addListners() {
-
         mFrontIdCapture.setOnClickListener(View.OnClickListener {
             startActivityForResult(
                 CustomCamera.getInstance(requireContext())
                     .putExtra(CustomCamera.CAMERA_VIEW,
-                    CameraViews.ID_VERIFICATION.toString()),
+                        CameraViews.ID_VERIFICATION.toString()
+                    ),
                 REQUEST_CODE_FRONT_ID
             )
         })
 
 
         mBackIdCapture.setOnClickListener(View.OnClickListener {
-            startActivityForResult(CustomCamera.getInstance(requireContext()).putExtra(CustomCamera.CAMERA_VIEW,
-                CameraViews.CARDS.toString()), REQUEST_CODE_BACK_ID)
+            startActivityForResult(
+                CustomCamera.getInstance(requireContext()).putExtra(
+                    CustomCamera.CAMERA_VIEW,
+                    CameraViews.CARDS.toString()
+                ), REQUEST_CODE_BACK_ID
+            )
         })
+
+        mCompleteAccBtn.setOnClickListener {
+            findNavController().navigate(EaIdVerificationFragmentDirections.actionEaIdVerificationFragmentToWelcomeFragment())
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
