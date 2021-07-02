@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/guideline_normal"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintGuide_end="@dimen/guideline_normal" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_end="@dimen/guideline_edit_account_info" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideline_edit_account_info"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toTopOf="@id/guideline_top"
+            tools:context=".ui.welcome.WelcomeFragment">
+
+            <!--Secure-->
+            <TextView
+                style="@style/WelcomePageTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/secure_text" />
+
+            <!--Secure subtitle-->
+            <TextView
+                style="@style/WelcomePageSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_small"
+                android:text="@string/verified_buyers_text" />
+
+            <!-- Discover -->
+            <TextView
+                style="@style/WelcomePageTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                android:text="@string/discover_text" />
+
+            <!--Discover subtitle-->
+            <TextView
+                style="@style/WelcomePageSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_small"
+                android:text="@string/welcome_buy_and_sell_text" />
+
+            <!-- Understand -->
+            <TextView
+                style="@style/WelcomePageTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                android:text="@string/understand_text" />
+
+            <!--Understand subtitle-->
+            <TextView
+                style="@style/WelcomePageSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_small"
+                android:text="@string/track_value_of_text" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                app:srcCompat="@drawable/ic_welcome_page_bg" />
+        </LinearLayout>
+
+        <!--Welcome Button-->
+        <com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
+            android:id="@+id/btn_welcome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/margin_extra_large"
+            android:gravity="bottom"
+            android:text="@string/btn_welcome_text"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

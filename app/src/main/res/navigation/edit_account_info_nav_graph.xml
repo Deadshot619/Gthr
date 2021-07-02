@@ -23,7 +23,11 @@
     <fragment
         android:id="@+id/eaIdVerificationFragment"
         android:name="com.gthr.gthrcollect.ui.eaidverification.EaIdVerificationFragment"
-        android:label="EaIdVerificationFragment" />
+        android:label="EaIdVerificationFragment">
+        <action
+            android:id="@+id/action_eaIdVerificationFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/eaOtpFragment"
         android:name="com.gthr.gthrcollect.ui.eaotp.EaOtpFragment"
@@ -32,5 +36,9 @@
             android:id="@+id/action_eaOtpFragment_to_eaIdVerificationFragment"
             app:destination="@id/eaIdVerificationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.gthr.gthrcollect.ui.welcome.WelcomeFragment"
+        android:label="WelcomeFragment" />
 
 </navigation>

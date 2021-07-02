@@ -33,4 +33,14 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/text_color_black</item>
     </style>
+
+    <style name="WelcomePageTitle" parent="WelcomePageSubTitle">
+        <item name="android:textSize">@dimen/text_size_extra_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WelcomePageSubTitle">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>
