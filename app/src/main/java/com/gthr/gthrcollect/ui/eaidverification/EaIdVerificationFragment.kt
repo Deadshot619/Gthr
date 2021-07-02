@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.EaIdVerificationFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
@@ -98,6 +99,20 @@ class EaIdVerificationFragment :
         mCompleteAccBtn.setOnClickListener {
             findNavController().navigate(EaIdVerificationFragmentDirections.actionEaIdVerificationFragmentToWelcomeFragment())
         }
+
+        mSkipBtn.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.dialog_skip_verification_title))
+                .setMessage(getString(R.string.dialog_skip_verification_subtitle))
+                .setPositiveButton(getString(R.string.dialog_skip_verification_yes)) { dialog, _ ->
+                    findNavController().navigate(EaIdVerificationFragmentDirections.actionEaIdVerificationFragmentToWelcomeFragment())
+                    dialog.dismiss()
+                }
+                .setNegativeButton(getString(R.string.dialog_skip_verification_no)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -123,7 +138,6 @@ class EaIdVerificationFragment :
 
                 mBackLable.text = getString(R.string.replace_back)
 
-                mSkipBtn.gone()
                 mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
 
                 mBack_repls.background = resources.getDrawable(R.drawable.rectangle_5)

@@ -6,7 +6,7 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ForgotPasswordFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
-import com.gthr.gthrcollect.utils.customviews.CustomEmailEditText
+import com.gthr.gthrcollect.utils.customviews.CustomEditText
 import com.gthr.gthrcollect.utils.extensions.isValidEmail
 
 class ForgotPasswordFragment :
@@ -15,7 +15,7 @@ class ForgotPasswordFragment :
     override fun getViewBinding() = ForgotPasswordFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mBtnForgotPassword: CustomAuthenticationButton
-    private lateinit var mCetEmail: CustomEmailEditText
+    private lateinit var mCetEmail: CustomEditText
 
 
     override fun onBinding() {
@@ -39,11 +39,11 @@ class ForgotPasswordFragment :
 
     private fun validate(): Boolean {
         var isValid = true
-        if (!mCetEmail.mEtEmail.text.toString().trim().isValidEmail()) {
-            mCetEmail.showError(getString(R.string.enter_valid_email_error_text))
+        if (!mCetEmail.mEtMain.text.toString().trim().isValidEmail()) {
+            mCetEmail.setError(getString(R.string.enter_valid_email_error_text))
             isValid = false
         } else
-            mCetEmail.hideError()
+            mCetEmail.setInitial()
 
         return isValid
     }

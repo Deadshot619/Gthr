@@ -1,6 +1,9 @@
 package com.gthr.gthrcollect.ui.eaotp
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.gthr.gthrcollect.databinding.EaOtpFragmentBinding
@@ -31,5 +34,22 @@ class EaOtpFragment : BaseFragment<EaOtpViewModel, EaOtpFragmentBinding>() {
         mTvSendAgain.setOnClickListener {
             findNavController().navigate(EaOtpFragmentDirections.actionEaOtpFragmentToEaIdVerificationFragment())
         }
+
+        mPinView.mPinView.doOnTextChanged { text, start, before, count ->
+        }
+
+        mPinView.mPinView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s?.length == 6) {
+                    mPinView.mPinView.setText("")
+                    findNavController().navigate(EaOtpFragmentDirections.actionEaOtpFragmentToEaIdVerificationFragment())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
     }
 }

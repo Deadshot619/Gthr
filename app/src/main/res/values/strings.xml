@@ -16,7 +16,7 @@
     <string name="forgot_password_text"><u>Forgot Password?</u></string>
     <string name="create_account_text"><u>Create an Account</u></string>
     <string name="dont_have_account_text">Don’t have an account yet?</string>
-    <string name="password_info_text">(Password must include Six Characters, One Number, and One Symbol)</string>
+    <string name="password_info_text">(Password must include at least 8 Characters, 1 Number, 1 Symbol (@, #, $, &amp;, !, etc), at least 1 Upper Case, and at least 1 Lower Case)</string>
     <string name="already_have_account_text">Already have an account?</string>
     <string name="sign_in_underline_text"><u>Sign In</u></string>
     <string name="enter_valid_email_error_text">Please enter valid Email</string>
@@ -66,6 +66,10 @@
     <string name="compete_account_setup">Compete Account Setup</string>
     <string name="skip_id_verification">Skip ID Verification</string>
     <string name="retake">Retake</string>
+    <string name="dialog_skip_verification_title">Skip Verification</string>
+    <string name="dialog_skip_verification_subtitle">ID verification is required to Buy/Sell. You can do this at a later time. Do you want to skip this step for now?</string>
+    <string name="dialog_skip_verification_yes">Yes, skip</string>
+    <string name="dialog_skip_verification_no">No</string>
 
 
     <!--public profile-->
@@ -91,7 +95,7 @@
     <string name="finish">Finish</string>
     <string name="reset_instruction">You will receive reset instructions if there is an email associated with the provided email.</string>
     <string name="password_reset_sent">Password Reset Sent</string>
-    <string name="welcome_screen_title">Create Account</string>
+    <string name="welcome_screen_title">Congratulations!</string>
     <!--user info-->
     <string name="birthday_name">BIRTHDAY*</string>
     <string name="personal_info_text">Personal Info</string>

@@ -66,11 +66,21 @@ class EditAccountInfoActivity :
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return if (NavigationUI.navigateUp(mNavController, mAppBarConfiguration))
-            true
-        else {
-            finish()
-            false
+        return when {
+            NavigationUI.navigateUp(mNavController, mAppBarConfiguration) -> true
+            else -> {
+                finish()
+                false
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        return when {
+            mNavController.currentDestination?.id == R.id.welcomeFragment -> {
+                finish()
+            }
+            else -> super.onBackPressed()
         }
     }
 

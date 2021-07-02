@@ -209,7 +209,7 @@
                 android:textSize="@dimen/text_size_small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:secondary_button_state="WHITE_WITH_BLUE_BORDER" />
+                app:secondary_button_state="BLUE" />
 
             <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
                 android:id="@+id/btn_complete_account"

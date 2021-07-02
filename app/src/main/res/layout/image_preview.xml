@@ -78,7 +78,7 @@
             android:id="@+id/retake"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:secondary_button_state="BLACK_WITH_BLUE_BORDER"
+            app:secondary_button_state="BLUE"
             android:layout_margin="3dp"
             android:layout_weight="1"
             android:drawableStart="@drawable/ic_retack"
