@@ -14,21 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/GthrCollectFullScreen">
-        <activity android:name=".ui.forgotpassword.ForgotPasswordActivity">
-
-        </activity>
+        <activity android:name=".ui.forgotpassword.ForgotPasswordActivity" />
         <activity android:name=".ui.homebottomnav.HomeBottomNavActivity" />
         <activity android:name=".ui.customviews.CustomViewsActivity" />
-        <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity">
+        <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity" />
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:theme="@style/GthrCollectFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.splash.SplashActivity"
-            android:theme="@style/GthrCollectFullScreen">
-
         </activity>
         <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.customcameraactivities.CustomCamera" />

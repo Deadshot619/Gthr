@@ -18,24 +18,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_end="@dimen/guideline_normal" />
+            app:layout_constraintGuide_end="@dimen/guideline_edit_account_info" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/guideline_normal"
+            app:layout_constraintGuide_begin="@dimen/guideline_edit_account_info"
             app:layout_constraintStart_toStartOf="parent" />
 
 
 
         <TextView
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/lato"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size_normal"
-            android:textColor="@color/black"
+            style="@style/EditAccountPageTitle"
             android:text="@string/public_profile"
             android:id="@+id/tv_public_profile"
             android:layout_width="0dp"

@@ -8,10 +8,11 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:visibility="gone"
+        android:textSize="@dimen/text_size_small"
         android:id="@+id/tv_title"
         android:layout_marginBottom="@dimen/margin_medium"
         tools:text="Phone no*"
-        android:textSize="@dimen/text_size_medium"
+        tools:visibility="visible"
         android:textAllCaps="true"
         android:fontFamily="@font/lato"
         android:layout_width="match_parent"
