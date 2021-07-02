@@ -34,6 +34,7 @@ class CustomEmailEditText @JvmOverloads constructor(
         mMainLayout = view.findViewById(R.id.ll_main_layout)
         mIvEmail = view.findViewById(R.id.iv_email)
         mEtEmail = view.findViewById(R.id.et_email)
+
         setCustomTextChangeListener()
     }
 
@@ -63,4 +64,6 @@ class CustomEmailEditText @JvmOverloads constructor(
             override fun afterTextChanged(s: Editable?) {}
         })
     }
+
+
 }

@@ -2,6 +2,8 @@ package com.gthr.gthrcollect.utils.customviews
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -27,13 +29,13 @@ class CustomEditText @JvmOverloads constructor(
     private var mIvInfo : AppCompatImageView
     private var mLlInfo : LinearLayoutCompat
 
-    private var mTvTitle : AppCompatTextView
+    var mTvTitle : AppCompatTextView
         private set
-    private var mTvInfo : AppCompatTextView
+    var mTvInfo : AppCompatTextView
         private set
-    private var mEtMain: AppCompatEditText
+    var mEtMain: AppCompatEditText
         private set
-    private var mIvMain: AppCompatImageView
+    var mIvMain: AppCompatImageView
         private set
 
     private var mInitialState: ColorState
@@ -91,8 +93,7 @@ class CustomEditText @JvmOverloads constructor(
         }
 
         setCurrentState(CurrentState.INITIAL)
-
-
+        setCustomTextChangeListener()
 
     }
 
@@ -167,6 +168,19 @@ class CustomEditText @JvmOverloads constructor(
             ColorState.GRAY -> ContextCompat.getColor(context, R.color.disable)
             ColorState.GREEN -> ContextCompat.getColor(context, R.color.green)
             ColorState.RED -> ContextCompat.getColor(context, R.color.red)
+        })
+    }
+
+    private fun setCustomTextChangeListener() {
+        mEtMain.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (mCurrentState==CurrentState.ERROR)
+                    setInitial()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
         })
     }
 
