@@ -64,8 +64,8 @@
     <string name="permission_denied">Permission to use device Camera denied! Cannot proceed ahead!</string>
     <string name="not_exist">Not exist :</string>
     <string name="next">Next</string>
-    <string name="compete_account_setup">Compete Account Setup</string>
-    <string name="skip_id_verification">Skip ID Verification</string>
+    <string name="compete_account_setup">Compete</string>
+    <string name="skip_id_verification">Skip</string>
     <string name="retake">Retake</string>
     <string name="dialog_skip_verification_title">Skip Verification</string>
     <string name="dialog_skip_verification_subtitle">ID verification is required to Buy/Sell. You can do this at a later time. Do you want to skip this step for now?</string>
@@ -97,6 +97,7 @@
     <string name="reset_instruction">You will receive reset instructions if there is an email associated with the provided email.</string>
     <string name="password_reset_sent">Password Reset Sent</string>
     <string name="welcome_screen_title">Congratulations!</string>
+
     <!--user info-->
     <string name="birthday_name">BIRTHDAY*</string>
     <string name="personal_info_text">Personal Info</string>
@@ -113,7 +114,7 @@
     <string name="name">Name</string>
     <string name="last_name">LAST NAME*</string>
     <string name="birthday_info">Users must be 18 or older to register.</string>
-
+    <string name="birthday_error_text">Users must be 18 or older to register.</string>
 
 
 </resources>

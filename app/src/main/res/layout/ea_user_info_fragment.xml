@@ -167,7 +167,7 @@
             android:fontFamily="@font/lato"
             android:text="@string/phone_number"
             android:textAllCaps="true"
-            android:textSize="@dimen/text_size_medium"
+            android:textSize="@dimen/text_size_small"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@+id/tv_birthday_info" />

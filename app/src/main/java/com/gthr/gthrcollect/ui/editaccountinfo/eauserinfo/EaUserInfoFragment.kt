@@ -13,13 +13,10 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomEditText
 import com.gthr.gthrcollect.utils.customviews.CustomPhoneNoEditText
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-import com.gthr.gthrcollect.utils.extensions.afterTextChanged
 import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants.DATE
 import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants.MONTH
 import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants.YEAR
-import com.gthr.gthrcollect.utils.extensions.isValidBirthDayDate
-import com.gthr.gthrcollect.utils.extensions.isValidPhoneNumber
-import com.gthr.gthrcollect.utils.extensions.showBirthDayPicker
+import com.gthr.gthrcollect.utils.extensions.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -97,9 +94,10 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
                 if (validate()) mBtnNext.setState(CustomSecondaryButton.State.GREEN)
             }
             else{
-                mEtMM.setInitial()
-                mEtDD.setInitial()
-                mEtYYYY.setInitial()
+                mEtMM.setError(null)
+                mEtDD.setError(null)
+                mEtYYYY.setError(null)
+                showToast(getString(R.string.birthday_error_text))
                 mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
             }
         }

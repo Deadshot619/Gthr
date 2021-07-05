@@ -127,7 +127,7 @@ class CustomEditText @JvmOverloads constructor(
         }
     }
 
-    fun setError(text: String) {
+    fun setError(text: String?) {
         mCurrentState = CurrentState.ERROR
         mIvMain.gone()
         mEtMain.error = text
