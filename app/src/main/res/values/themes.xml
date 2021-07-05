@@ -43,4 +43,9 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="AddressViewStyle">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/text_color_black</item>
+    </style>
 </resources>

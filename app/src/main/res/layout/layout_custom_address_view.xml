@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/address_view_unselected_bg">
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_end="@dimen/guideline_normal" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/guideline_normal"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_begin="@dimen/guideline_normal" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/guideline_normal"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!--Check-->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toTopOf="@id/guideline_top"
+        app:srcCompat="@drawable/ic_circular_check_unselected" />
+
+    <!--Edit-->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_normal"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintTop_toTopOf="@id/guideline_top"
+        app:srcCompat="@drawable/ic_pencil_unselected" />
+
+    <View
+        android:id="@+id/view_horizontal"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/view_stroke_color_grey"
+        app:layout_constraintEnd_toEndOf="@id/iv_edit"
+        app:layout_constraintStart_toStartOf="@id/iv_edit"
+        app:layout_constraintTop_toBottomOf="@id/iv_edit" />
+
+    <!--Delete-->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_normal"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintEnd_toEndOf="@id/iv_edit"
+        app:layout_constraintStart_toStartOf="@id/iv_edit"
+        app:layout_constraintTop_toBottomOf="@id/view_horizontal"
+        app:srcCompat="@drawable/ic_delete" />
+
+    <View
+        android:id="@+id/view_vertical"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/margin_extra_small"
+        android:background="@color/view_stroke_color_grey"
+        app:layout_constraintBottom_toBottomOf="@id/iv_delete"
+        app:layout_constraintEnd_toStartOf="@id/iv_edit"
+        app:layout_constraintTop_toTopOf="@id/iv_edit" />
+
+    <!--FullName-->
+    <TextView
+        android:id="@+id/tv_full_name"
+        style="@style/AddressViewStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginEnd="@dimen/margin_normal"
+        app:layout_constraintEnd_toStartOf="@id/view_vertical"
+        app:layout_constraintStart_toEndOf="@id/iv_check"
+        app:layout_constraintTop_toTopOf="@id/guideline_top"
+        tools:text="Naruto Uzumaki" />
+
+    <!--ShippingAddress 1-->
+    <TextView
+        android:id="@+id/tv_address_1"
+        style="@style/AddressViewStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_extra_small"
+        app:layout_constraintEnd_toEndOf="@id/tv_full_name"
+        app:layout_constraintStart_toStartOf="@id/tv_full_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_full_name"
+        tools:text="855 W Peachtress Street NW" />
+
+    <!--ShippingAddress 2-->
+    <TextView
+        android:id="@+id/tv_address_2"
+        style="@style/AddressViewStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_extra_small"
+        app:layout_constraintEnd_toEndOf="@id/tv_address_1"
+        app:layout_constraintStart_toStartOf="@id/tv_address_1"
+        app:layout_constraintTop_toBottomOf="@id/tv_address_1"
+        tools:text="Unit 1534" />
+
+    <!--City-->
+    <TextView
+        android:id="@+id/tv_city"
+        style="@style/AddressViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_extra_small"
+        app:layout_constraintStart_toStartOf="@id/tv_address_2"
+        app:layout_constraintTop_toBottomOf="@id/tv_address_2"
+        tools:text="Atalanta," />
+
+    <!--State & Pincode-->
+    <TextView
+        android:id="@+id/tv_state_pin"
+        style="@style/AddressViewStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_extra_small"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintEnd_toStartOf="@id/view_vertical"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/tv_city"
+        app:layout_constraintTop_toTopOf="@id/tv_city"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="GA 30308" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

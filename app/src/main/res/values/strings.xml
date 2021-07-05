@@ -134,5 +134,8 @@
     <string name="btn_faq_and_help">FAQ and help</string>
     <string name="logout_text">Log Out</string>
 
-
+    <!--Settings Address-->
+    <string name="full_name_builder">%s %s</string>
+    <string name="city_builder">%s,</string>
+    <string name="state_pincode_builder">%s %s</string>
 </resources>

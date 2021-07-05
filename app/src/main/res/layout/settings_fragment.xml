@@ -26,7 +26,7 @@
                 app:citb_btn_title="@string/btn_edit_account_info"
                 app:citb_src="@drawable/ic_menu_profile" />
 
-            <!--Shipping Address-->
+            <!--Shipping ShippingAddress-->
             <com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
                 android:id="@+id/btn_shipping_address"
                 android:layout_width="match_parent"
