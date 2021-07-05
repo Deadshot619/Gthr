@@ -134,6 +134,35 @@
     <string name="btn_faq_and_help">FAQ and help</string>
     <string name="logout_text">Log Out</string>
 
+
+    <!--Edit Account Info-->
+    <string name="ea_birthday_name">BIRTHDAY</string>
+    <string name="ea_personal_info_text">Personal Info</string>
+    <string name="ea_mm">MM</string>
+    <string name="ea_dd">DD</string>
+    <string name="ea_yyyy">YYYY</string>
+    <string name="ea_phone_number">PHONE NUMBER</string>
+    <string name="ea_phone_no_hint">xxx-xxx-xxxx</string>
+    <string name="ea_agree_to">Agree to </string>
+    <string name="ea_terms_conditions"><u><![CDATA[Terms & Conditions]]></u></string>
+    <string name="ea_otp_verification">OTP Verification</string>
+    <string name="ea_first_name">FIRST NAME</string>
+    <string name="ea_name">Name</string>
+    <string name="ea_last_name">LAST NAME</string>
+    <string name="ea_email">Email</string>
+    <string name="ea_delete_account"><u>Delete Account</u></string>
+    <string name="ea_save_changes">Save Changes</string>
+    <string name="ea_birthday_info">Users must be 18 or older</string>
+    <string name="edit_acc_name_error">Enter first name</string>
+    <string name="edit_acc_last_error">Enter last name</string>
+    <string name="edit_acc_phone_no_error">Incomplete phone number</string>
+    <string name="edit_acc_empty_email_error">Enter email</string>
+    <string name="edit_acc_email_error">Enter valid email</string>
+    <string name="delete_acc_title_msg">Type ‘Delete’ to Delete\n Your Account</string>
+    <string name="acc_delete">Delete</string>
+    <string name="edit_acc_birthday_error">Users must be 18 or older.</string>
+
+
     <!--Settings Address-->
     <string name="full_name_builder">%s %s</string>
     <string name="city_builder">%s,</string>

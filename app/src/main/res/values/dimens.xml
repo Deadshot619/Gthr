@@ -91,6 +91,7 @@
     <!--CustomEditText-->
     <dimen name="info_size">12dp</dimen>
     <dimen name="info_margin_top">1dp</dimen>
+    <dimen name="custom_edit_text_height">42dp</dimen>
 
     <!--CustomEmailEditText-->
     <dimen name="email_image_size">48dp</dimen>
@@ -105,6 +106,7 @@
     <dimen name="ccp_marginVertical">5.5dp</dimen>
     <dimen name="ccp_marginLeft">5dp</dimen>
     <dimen name="view_width">1dp</dimen>
+    <dimen name="phone_edit_text_height">42dp</dimen>
 
     <!--CustomSecondaryButton-->
     <dimen name="custom_secondary_button_border_width">1dp</dimen>
@@ -117,7 +119,7 @@
     <!--UserInfo-->
     <dimen name="terms_and_conditions_marginStart">5dp</dimen>
     <dimen name="name_margin_top">28dp</dimen>
-    <dimen name="birthday_phone_no_margin_top">24dp</dimen>
+    <dimen name="user_info_et_margin_top">24dp</dimen>
     <dimen name="image_size">40dp</dimen>
     <dimen name="terms_and_conditions_padding">10dp</dimen>
 

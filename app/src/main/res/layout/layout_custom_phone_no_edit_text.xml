@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_phone_no"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <com.hbb20.CountryCodePicker
         android:layout_marginVertical="@dimen/ccp_marginVertical"
@@ -31,7 +31,7 @@
         android:layout_gravity="center_vertical"
         android:id="@+id/et_phone_no"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/phone_edit_text_height"
         android:background="@null"
         android:fontFamily="@font/lato"
         android:hint="@string/phone_no"

@@ -27,14 +27,14 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:paddingVertical="@dimen/padding_small"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:ellipsize="end"
             android:layout_gravity="center_vertical"
             android:id="@+id/et_main"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/custom_edit_text_height"
             android:background="@null"
             android:fontFamily="@font/lato"
             android:inputType="text"

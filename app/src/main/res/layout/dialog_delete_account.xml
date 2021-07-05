@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/margin_extra_large"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:text="Delete account?"
+            android:textColor="@color/black"
+            android:textSize="@dimen/margin_normal"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_main"
+            android:visibility="gone"
+            android:layout_marginHorizontal="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_extra_large"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/custom_edit_text_height"
+            android:background="@drawable/edit_text_gray_outline_bg"
+            android:fontFamily="@font/lato"
+            android:inputType="text"
+            android:paddingHorizontal="@dimen/padding_normal"
+            android:textColorHint="@color/hint_color"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+
+
+        <View
+            android:alpha="0.5"
+            android:id="@+id/horizontal_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_extra_large"
+            android:background="@color/disable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_main" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/negative"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:paddingVertical="@dimen/padding_normal"
+            android:text="No"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_size_normal"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/view"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontal_line" />
+
+        <View
+            android:alpha="0.5"
+            android:id="@+id/view"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/disable"
+            app:layout_constraintBottom_toBottomOf="@+id/negative"
+            app:layout_constraintEnd_toStartOf="@+id/positive"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/negative"
+            app:layout_constraintTop_toBottomOf="@+id/horizontal_line" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/positive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:paddingVertical="@dimen/padding_normal"
+            android:text="Delete"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_normal"
+            android:textStyle="bold"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/horizontal_line" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

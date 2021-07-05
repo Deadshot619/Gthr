@@ -59,6 +59,7 @@ class CustomPhoneNoEditText @JvmOverloads constructor(
             ColorState.GRAY -> getImageDrawable(R.drawable.edit_text_gray_bg)
             ColorState.GREEN -> getImageDrawable(R.drawable.edit_text_green_outline_bg)
             ColorState.RED -> getImageDrawable(R.drawable.edit_text_red_outline_bg)
+            ColorState.BLUE -> getImageDrawable(R.drawable.blue_bg_outline)
         }
     }
 
@@ -105,7 +106,7 @@ class CustomPhoneNoEditText @JvmOverloads constructor(
 
 
     enum class ColorState{
-        GRAY,GREEN,RED
+        GRAY,GREEN,RED,BLUE
     }
 
     enum class CurrentState {

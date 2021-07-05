@@ -12,6 +12,8 @@ import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityEditAccountInfoBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
+import com.gthr.gthrcollect.utils.customviews.CustomEditText
+import com.gthr.gthrcollect.utils.customviews.CustomPhoneNoEditText
 import com.gthr.gthrcollect.utils.enums.EditAccountSection
 import com.gthr.gthrcollect.utils.extensions.getBackgroundDrawable
 import com.gthr.gthrcollect.utils.extensions.getResolvedColor
@@ -28,10 +30,14 @@ class EditAccountInfoActivity :
     private lateinit var mAppBarConfiguration: AppBarConfiguration
 
 
+
+
     override fun onBinding() {
         setSupportActionBar(mViewBinding.toolbar)
         setUpNavigationAndActionBar()
     }
+
+
 
     private fun setUpNavigationAndActionBar() {
         mNavController = this.findNavController(R.id.nav_host_fragment)

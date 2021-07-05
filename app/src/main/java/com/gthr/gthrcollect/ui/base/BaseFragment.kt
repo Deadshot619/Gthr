@@ -37,4 +37,5 @@ abstract class BaseFragment<VM : ViewModel, VB : ViewBinding> : Fragment() {
      * It returns [VB] which is assigned to [mViewBinding] and used in [onCreate]
      */
     abstract fun getViewBinding(): VB
+
 }
