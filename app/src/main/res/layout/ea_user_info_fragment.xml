@@ -51,7 +51,7 @@
             android:id="@+id/et_first_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginTop="@dimen/name_margin_top"
             android:layout_marginEnd="@dimen/margin_medium"
             android:src="@drawable/ic_right"
             android:nextFocusForward="@id/et_last_name"

@@ -14,7 +14,15 @@ import com.gthr.gthrcollect.utils.customviews.CustomEditText
 import com.gthr.gthrcollect.utils.customviews.CustomPhoneNoEditText
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.extensions.afterTextChanged
+import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants.DATE
+import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants.MONTH
+import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants.YEAR
+import com.gthr.gthrcollect.utils.extensions.isValidBirthDayDate
 import com.gthr.gthrcollect.utils.extensions.isValidPhoneNumber
+import com.gthr.gthrcollect.utils.extensions.showBirthDayPicker
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 @RequiresApi(Build.VERSION_CODES.M)
 class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentBinding>() {
@@ -31,12 +39,73 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
     private lateinit var mIvTermsAndConditions: AppCompatImageView
 
     private var isTermsAndConditionsChecked = false
+    private var selectedDate = Calendar.getInstance()
 
     override fun onBinding() {
         initValue()
         setUpClickListeners()
         setInputType()
+        setUpBirthdayEditText()
         setTextChangeListeners()
+    }
+
+    private fun setUpBirthdayEditText() {
+        mEtMM.mEtMain.isClickable = false
+        mEtMM.mEtMain.isCursorVisible = false
+        mEtMM.mEtMain.isFocusable = false
+        mEtMM.mEtMain.isFocusableInTouchMode = false
+
+        mEtDD.mEtMain.isClickable = false
+        mEtDD.mEtMain.isCursorVisible = false
+        mEtDD.mEtMain.isFocusable = false
+        mEtDD.mEtMain.isFocusableInTouchMode = false
+
+        mEtYYYY.mEtMain.isClickable = false
+        mEtYYYY.mEtMain.isCursorVisible = false
+        mEtYYYY.mEtMain.isFocusable = false
+        mEtYYYY.mEtMain.isFocusableInTouchMode = false
+
+        mEtMM.mEtMain.setOnClickListener {
+            showDatePicker()
+        }
+
+        mEtDD.mEtMain.setOnClickListener {
+            showDatePicker()
+        }
+
+        mEtYYYY.mEtMain.setOnClickListener {
+            showDatePicker()
+        }
+
+    }
+
+    private fun showDatePicker() {
+
+        showBirthDayPicker(selectedDate.timeInMillis){
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = it
+            selectedDate = cal
+
+            mEtMM.mEtMain.setText(SimpleDateFormat(MONTH).format(cal.time))
+            mEtDD.mEtMain.setText(SimpleDateFormat(DATE).format(cal.time))
+            mEtYYYY.mEtMain.setText(SimpleDateFormat(YEAR).format(cal.time))
+
+            if(cal.isValidBirthDayDate()){
+                mEtMM.setSuccess()
+                mEtDD.setSuccess()
+                mEtYYYY.setSuccess()
+                if (validate()) mBtnNext.setState(CustomSecondaryButton.State.GREEN)
+            }
+            else{
+                mEtMM.setInitial()
+                mEtDD.setInitial()
+                mEtYYYY.setInitial()
+                mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
+            }
+        }
+
+
+
     }
 
     private fun setInputType() {
@@ -103,38 +172,7 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
 
         }
 
-        mEtMM.mEtMain.afterTextChanged {
-            if (it.length == 2) {
-                mEtMM.setSuccess()
-                if (validate()) mBtnNext.setState(CustomSecondaryButton.State.GREEN)
-            } else {
-                mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
-                mEtMM.setInitial()
-            }
 
-        }
-
-        mEtDD.mEtMain.afterTextChanged {
-            if (it.length == 2) {
-                mEtDD.setSuccess()
-                if (validate()) mBtnNext.setState(CustomSecondaryButton.State.GREEN)
-            } else {
-                mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
-                mEtDD.setInitial()
-            }
-
-        }
-
-        mEtYYYY.mEtMain.afterTextChanged {
-            if (it.length == 4) {
-                mEtYYYY.setSuccess()
-                if (validate()) mBtnNext.setState(CustomSecondaryButton.State.GREEN)
-            } else {
-                mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
-                mEtYYYY.setInitial()
-            }
-
-        }
 
         mEtPhoneNo.mEtPhoneNo.afterTextChanged {
             if (it.isValidPhoneNumber()) {
@@ -150,11 +188,10 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
     fun validate(): Boolean = when {
         mEtFirstName.mEtMain.text.toString().isEmpty() -> false
         mEtLastName.mEtMain.text.toString().isEmpty() -> false
-        mEtMM.mEtMain.text.toString().length != 2 -> false
-        mEtDD.mEtMain.text.toString().length != 2 -> false
-        mEtYYYY.mEtMain.text.toString().length != 4 -> false
+        !selectedDate.isValidBirthDayDate() -> false
         !isTermsAndConditionsChecked -> false
         else -> mEtPhoneNo.mEtPhoneNo.text.toString().length == 10
     }
+
 
 }

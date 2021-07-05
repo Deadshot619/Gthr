@@ -2,6 +2,7 @@ package com.gthr.gthrcollect.utils.extensions
 
 import android.text.TextUtils
 import android.util.Patterns
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -21,4 +22,12 @@ fun String.isValidDisplayName(): Boolean {
     if (this.isEmpty()) return false
     val m: Matcher = p.matcher(this)
     return if(!m.matches()) false else this.length < 25
+}
+
+fun Calendar.isValidBirthDayDate():Boolean{
+    val today = Calendar.getInstance()
+    today.add(Calendar.YEAR, -18)
+    val year16Ago =  today.time
+    val selectedDate = this.time
+    return selectedDate<year16Ago
 }

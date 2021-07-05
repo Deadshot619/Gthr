@@ -4,6 +4,7 @@
     <string name="app_name_subtitle">The Only Place For Your Collection</string>
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
+    <string name="birth_day_dialog_title">Select date</string>
 
     <!--Home Bottom Menu-->
     <string name="menu_feed_title">Feed</string>
@@ -112,6 +113,7 @@
     <string name="name">Name</string>
     <string name="last_name">LAST NAME*</string>
     <string name="birthday_info">Users must be 18 or older to register.</string>
+
 
 
 </resources>
