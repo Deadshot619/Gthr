@@ -59,14 +59,19 @@
             <enum name="GRAY" value="0"/>
             <enum name="GREEN" value="1"/>
             <enum name="RED" value="2"/>
-            <enum name="BLUE" value="3"/>
+            <enum name="BLUE" value="3" />
         </attr>
 
         <attr name="edit_title" format="string" />
         <attr name="edit_info" format="string" />
         <attr name="edit_hint" format="string" />
         <attr name="edit_error_text" format="string" />
-        <attr name="android:src"/>
+        <attr name="android:src" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomImageTextButton">
+        <attr name="citb_src" format="reference" />
+        <attr name="citb_btn_title" format="string" />
     </declare-styleable>
 
 

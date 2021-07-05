@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_extra_large"
+            tools:context=".ui.settings.settingsscreen.SettingsFragment">
+
+            <!--Edit Account Info-->
+            <com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
+                android:id="@+id/btn_edit_account_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:citb_btn_title="@string/btn_edit_account_info"
+                app:citb_src="@drawable/ic_menu_profile" />
+
+            <!--Shipping Address-->
+            <com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
+                android:id="@+id/btn_shipping_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                app:citb_btn_title="@string/btn_shipping_address"
+                app:citb_src="@drawable/ic_location" />
+
+            <!--Active Offers-->
+            <com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
+                android:id="@+id/btn_active_offers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                app:citb_btn_title="@string/btn_active_offers"
+                app:citb_src="@drawable/ic_active_info" />
+
+            <!--Edit Account Info-->
+            <com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
+                android:id="@+id/btn_payout_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                app:citb_btn_title="@string/btn_payout_info"
+                app:citb_src="@drawable/ic_payout_info" />
+
+            <!--T&C-->
+            <com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
+                android:id="@+id/btn_terms_conditions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                app:citb_btn_title="@string/btn_terms_and_conditions"
+                app:citb_src="@drawable/ic_password" />
+
+            <!--FAQ-->
+            <com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
+                android:id="@+id/btn_faq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_extra_large"
+                app:citb_btn_title="@string/btn_faq_and_help"
+                app:citb_src="@drawable/ic_faq" />
+
+            <!--Logout-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_marginTop="@dimen/logout_margin_top"
+                android:padding="@dimen/padding_normal"
+                android:text="@string/logout_text"
+                android:textColor="@color/text_color_light_blue"
+                android:textSize="@dimen/text_size_normal" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

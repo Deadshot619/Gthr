@@ -124,5 +124,15 @@
     <!--Permissions-->
     <string name="permission_needed_text">App needs Camera &amp; Storage permissions to capture photo</string>
     <string name="settings_text">Settings</string>
+    <!--Settings-->
+    <string name="settings_text">Settings</string>
+    <string name="btn_edit_account_info">Edit Account Info</string>
+    <string name="btn_shipping_address">Shipping Address</string>
+    <string name="btn_active_offers">Active Offers</string>
+    <string name="btn_payout_info">Payout Info</string>
+    <string name="btn_terms_and_conditions">Terms &amp; Conditions</string>
+    <string name="btn_faq_and_help">FAQ and help</string>
+    <string name="logout_text">Log Out</string>
+
 
 </resources>

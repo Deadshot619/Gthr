@@ -118,7 +118,7 @@ class CustomEditText @JvmOverloads constructor(
             }
             ColorState.BLUE -> {
                 mIvMain.setColorFilter(ContextCompat.getColor(context, R.color.blue))
-                getImageDrawable(R.drawable.edit_text_blue_bg_outline)
+                getImageDrawable(R.drawable.blue_bg_outline)
             }
             ColorState.RED -> {
                 mIvMain.setColorFilter(ContextCompat.getColor(context, R.color.red))
