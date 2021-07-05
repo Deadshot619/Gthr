@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/sign_in"
-        android:name="com.gthr.gthrcollect.ui.signin.SignInFragment"
+        android:name="com.gthr.gthrcollect.ui.homebottomnav.signin.SignInFragment"
         android:label="SignInFragment">
         <action
             android:id="@+id/action_sign_in_to_signUpFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.gthr.gthrcollect.ui.signup.SignUpFragment"
+        android:name="com.gthr.gthrcollect.ui.homebottomnav.signup.SignUpFragment"
         android:label="SignUpFragment">
         <action
             android:id="@+id/action_signUpFragment_to_sign_in"

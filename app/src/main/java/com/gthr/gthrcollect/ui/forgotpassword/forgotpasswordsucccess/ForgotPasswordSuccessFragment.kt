@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.ui.forgotpasswordsucccess
+package com.gthr.gthrcollect.ui.forgotpassword.forgotpasswordsucccess
 
 import androidx.fragment.app.activityViewModels
 import com.gthr.gthrcollect.databinding.ForgotPasswordSuccessFragmentBinding

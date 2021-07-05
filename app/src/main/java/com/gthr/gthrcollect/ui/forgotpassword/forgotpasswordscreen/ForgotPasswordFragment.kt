@@ -1,10 +1,11 @@
-package com.gthr.gthrcollect.ui.forgotpassword
+package com.gthr.gthrcollect.ui.forgotpassword.forgotpasswordscreen
 
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ForgotPasswordFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.forgotpassword.ForgotPasswordViewModel
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
 import com.gthr.gthrcollect.utils.customviews.CustomEditText
 import com.gthr.gthrcollect.utils.extensions.isValidEmail

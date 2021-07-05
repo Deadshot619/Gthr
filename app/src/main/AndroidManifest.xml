@@ -16,7 +16,6 @@
         android:theme="@style/GthrCollectFullScreen">
         <activity android:name=".ui.forgotpassword.ForgotPasswordActivity" />
         <activity android:name=".ui.homebottomnav.HomeBottomNavActivity" />
-        <activity android:name=".ui.customviews.CustomViewsActivity" />
         <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity" />
         <activity
             android:name=".ui.splash.SplashActivity"
@@ -26,7 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.customcameraactivities.CustomCamera" />
         <activity android:name=".ui.customcameraactivities.ImagePreview" />
     </application>

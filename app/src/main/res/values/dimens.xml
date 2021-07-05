@@ -60,17 +60,17 @@
     <dimen name="dp_380">380dp</dimen>
 
 
-
-
     <!--Padding-->
-    <dimen name="padding_normal">16dp</dimen>
-    <dimen name="padding_vertical">12dp</dimen>
-    <dimen name="padding_large">20dp</dimen>
+    <dimen name="padding_extra_small">8dp</dimen>
+    <dimen name="padding_small">12dp</dimen>
     <dimen name="padding_medium">14dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+    <dimen name="padding_large">20dp</dimen>
 
     <!--Guidelines-->
     <dimen name="guideline_normal">16dp</dimen>
-    <dimen name="guideline_edit_account_info">32dp</dimen>
+    <dimen name="guideline_extra_large">24dp</dimen>
+    <dimen name="guideline_edit_account_info">24dp</dimen>
 
 
     <dimen name="edit_text_corner_radius">4dp</dimen>

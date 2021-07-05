@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.ui.eauserinfo
+package com.gthr.gthrcollect.ui.editaccountinfo.eauserinfo
 
 import android.os.Build
 import android.text.InputFilter

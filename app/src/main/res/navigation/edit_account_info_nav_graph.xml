@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/eaProfileFragment"
-        android:name="com.gthr.gthrcollect.ui.eaprofile.EaProfileFragment"
+        android:name="com.gthr.gthrcollect.ui.editaccountinfo.eaprofile.EaProfileFragment"
         android:label="EaProfileFragment">
         <action
             android:id="@+id/action_eaProfileFragment_to_eaUserInfoFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/eaUserInfoFragment"
-        android:name="com.gthr.gthrcollect.ui.eauserinfo.EaUserInfoFragment"
+        android:name="com.gthr.gthrcollect.ui.editaccountinfo.eauserinfo.EaUserInfoFragment"
         android:label="EaUserInfoFragment">
         <action
             android:id="@+id/action_eaUserInfoFragment_to_eaOtpFragment"
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/eaIdVerificationFragment"
-        android:name="com.gthr.gthrcollect.ui.eaidverification.EaIdVerificationFragment"
+        android:name="com.gthr.gthrcollect.ui.editaccountinfo.eaidverification.EaIdVerificationFragment"
         android:label="EaIdVerificationFragment">
         <action
             android:id="@+id/action_eaIdVerificationFragment_to_welcomeFragment"
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/eaOtpFragment"
-        android:name="com.gthr.gthrcollect.ui.eaotp.EaOtpFragment"
+        android:name="com.gthr.gthrcollect.ui.editaccountinfo.eaotp.EaOtpFragment"
         android:label="EaOtpFragment">
         <action
             android:id="@+id/action_eaOtpFragment_to_eaIdVerificationFragment"
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.gthr.gthrcollect.ui.welcome.WelcomeFragment"
+        android:name="com.gthr.gthrcollect.ui.editaccountinfo.welcome.WelcomeFragment"
         android:label="WelcomeFragment" />
 
 </navigation>

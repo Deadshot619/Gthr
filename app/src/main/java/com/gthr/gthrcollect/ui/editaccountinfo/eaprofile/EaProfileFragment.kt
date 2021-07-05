@@ -1,8 +1,6 @@
-package com.gthr.gthrcollect.ui.eaprofile
+package com.gthr.gthrcollect.ui.editaccountinfo.eaprofile
 
 import android.os.Build
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels

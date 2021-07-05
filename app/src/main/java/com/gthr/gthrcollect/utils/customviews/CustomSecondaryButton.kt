@@ -33,7 +33,7 @@ class CustomSecondaryButton @JvmOverloads constructor(
 
         this.textAlignment = View.TEXT_ALIGNMENT_CENTER
         val padding = resources.getDimensionPixelOffset(R.dimen.padding_large)
-        val paddingVertical = resources.getDimensionPixelOffset(R.dimen.padding_vertical)
+        val paddingVertical = resources.getDimensionPixelOffset(R.dimen.padding_small)
         this.setPadding(padding, paddingVertical, padding, paddingVertical)
 
 

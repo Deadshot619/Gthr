@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.ui.eaotp
+package com.gthr.gthrcollect.ui.editaccountinfo.eaotp
 
 import android.text.Editable
 import android.text.TextWatcher

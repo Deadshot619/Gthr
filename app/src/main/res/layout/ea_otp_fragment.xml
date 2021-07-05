@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.eaotp.EaOtpFragment">
+        tools:context=".ui.editaccountinfo.eaotp.EaOtpFragment">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_top"

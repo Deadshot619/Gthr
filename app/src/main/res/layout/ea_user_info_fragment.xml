@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.eauserinfo.EaUserInfoFragment">
+        tools:context=".ui.editaccountinfo.eauserinfo.EaUserInfoFragment">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_end"

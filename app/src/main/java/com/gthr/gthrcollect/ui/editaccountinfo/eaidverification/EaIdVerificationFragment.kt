@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.ui.eaidverification
+package com.gthr.gthrcollect.ui.editaccountinfo.eaidverification
 
 import android.content.Intent
 import android.graphics.BitmapFactory

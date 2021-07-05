@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.ui.welcome
+package com.gthr.gthrcollect.ui.editaccountinfo.welcome
 
 import androidx.fragment.app.viewModels
 import com.gthr.gthrcollect.databinding.WelcomeFragmentBinding

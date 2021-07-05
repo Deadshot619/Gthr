@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.ui.signup
+package com.gthr.gthrcollect.ui.homebottomnav.signup
 
 import android.widget.TextView
 import androidx.fragment.app.viewModels
