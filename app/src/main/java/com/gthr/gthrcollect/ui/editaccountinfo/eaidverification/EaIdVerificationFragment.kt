@@ -2,37 +2,53 @@ package com.gthr.gthrcollect.ui.editaccountinfo.eaidverification
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Build
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.EditAccountInfoRepository
 import com.gthr.gthrcollect.databinding.EaIdVerificationFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.customcameraactivities.CustomCamera
+import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModel
+import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModelFactory
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.CameraViews
-import com.gthr.gthrcollect.utils.extensions.getBackgroundDrawable
-import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.showPermissionSnackBar
-import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.extensions.*
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
 
 
 class EaIdVerificationFragment :
-    BaseFragment<EaIdVerificationViewModel, EaIdVerificationFragmentBinding>() {
-    override val mViewModel: EaIdVerificationViewModel by viewModels()
+    BaseFragment<EditAccountInfoViewModel, EaIdVerificationFragmentBinding>() {
+    private val TAG: String = this.javaClass.name
+    private val repository = EditAccountInfoRepository()
+
+    override val mViewModel: EditAccountInfoViewModel by activityViewModels {
+        EditAccountInfoViewModelFactory(
+            repository
+        )
+    }
 
     override fun getViewBinding() = EaIdVerificationFragmentBinding.inflate(layoutInflater)
 
@@ -51,9 +67,17 @@ class EaIdVerificationFragment :
 
     lateinit var mIdScanner: AppCompatImageView
 
+    val storage = Firebase.storage("gs://dlc-db-staging.appspot.com")
+    var storageRef = storage.reference
+    var spaceRef = storageRef.child("images")
+
+
+    //gs://dlc-db-staging.appspot.com/images/region_0707_131746981.jpg
+
     override fun onBinding() {
         initViews()
         addListeners()
+        deleteImages()
     }
 
     private fun initViews() {
@@ -100,7 +124,8 @@ class EaIdVerificationFragment :
                     CustomCamera.getInstance(
                         requireContext(),
                         CameraViews.ID_VERIFICATION,
-                        isFront = false),
+                        isFront = false
+                    ),
                     REQUEST_CODE_BACK_ID
                 )
             }
@@ -140,6 +165,9 @@ class EaIdVerificationFragment :
                 mfrontLable.text = getString(R.string.replae_front)
 
                 mFront_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)
+
+                uploadUsingURL(data.getStringExtra(CustomCamera.INTENT_KEY_URL).toString())
+
             } else if (requestCode == Companion.REQUEST_CODE_BACK_ID) {
                 mIvBackImage.visible()
                 mIvBackImage.setImageBitmap(bitmap)
@@ -149,8 +177,81 @@ class EaIdVerificationFragment :
                 mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
 
                 mBack_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)
+
+                uploadUsingURL(data.getStringExtra(CustomCamera.INTENT_KEY_URL).toString())
             }
         }
+    }
+
+
+    private fun uploadImageToFb(url: String) {
+
+        val stream = FileInputStream(File(url))
+        val bitmap = (mIvFrontImage.drawable as BitmapDrawable).bitmap
+
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        var uploadTask = spaceRef.putBytes(data)
+
+        uploadTask = spaceRef.putStream(stream)
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+
+            activity?.showToast("addOnFailureListener")
+
+        }.addOnSuccessListener { taskSnapshot ->
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+
+
+            activity?.showToast("addOnSuccessListener")
+        }
+
+    }
+
+    private fun uploadUsingURL(url: String) {
+
+        var file = Uri.fromFile(File(url))
+        val riversRef = storageRef.child("images/${file.lastPathSegment}")
+        val uploadTask = riversRef.putFile(file)
+
+// Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+
+            activity?.showToast("Error")
+
+        }.addOnSuccessListener { taskSnapshot ->
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+            // ...
+
+            activity?.showToast("successfully")
+
+
+        }
+
+    }
+
+
+    private fun deleteImages() {
+        GthrLogger.e("Ref", spaceRef.path)
+        spaceRef.child("region_0708_162844190.jpg").delete().addOnSuccessListener {
+            activity?.showToast("deleted successfully")
+        }.addOnFailureListener {
+            // Uh-oh, an error occurred!
+            activity?.showToast("Uh-oh, an error occurred!")
+        }
+
+/*
+        spaceRef.delete().addOnSuccessListener(OnSuccessListener<Void?> { // File deleted successfully
+
+                GthrLogger.d(TAG, "onSuccess: deleted file")
+
+            }).addOnFailureListener(OnFailureListener { // Uh-oh, an error occurred!
+                GthrLogger.d(TAG, "onFailure: did not delete file")
+            })
+*/
     }
 
     private fun checkMultiplePermissions(onPermissionGranted: () -> Unit) {

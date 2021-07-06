@@ -10,10 +10,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.EditAccountInfoRepository
 import com.gthr.gthrcollect.databinding.ActivityEditAccountInfoBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
-import com.gthr.gthrcollect.utils.customviews.CustomEditText
-import com.gthr.gthrcollect.utils.customviews.CustomPhoneNoEditText
 import com.gthr.gthrcollect.utils.enums.EditAccountSection
 import com.gthr.gthrcollect.utils.extensions.getBackgroundDrawable
 import com.gthr.gthrcollect.utils.extensions.getResolvedColor
@@ -22,22 +21,25 @@ import com.gthr.gthrcollect.utils.extensions.visible
 
 class EditAccountInfoActivity :
     BaseActivity<EditAccountInfoViewModel, ActivityEditAccountInfoBinding>() {
-    override val mViewModel: EditAccountInfoViewModel by viewModels()
+
+    private val repository = EditAccountInfoRepository()
+
+    override val mViewModel: EditAccountInfoViewModel by viewModels {
+        EditAccountInfoViewModelFactory(
+            repository
+        )
+    }
+
     override fun getViewBinding(): ActivityEditAccountInfoBinding =
         ActivityEditAccountInfoBinding.inflate(layoutInflater)
 
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration
 
-
-
-
     override fun onBinding() {
         setSupportActionBar(mViewBinding.toolbar)
         setUpNavigationAndActionBar()
     }
-
-
 
     private fun setUpNavigationAndActionBar() {
         mNavController = this.findNavController(R.id.nav_host_fragment)
@@ -73,6 +75,10 @@ class EditAccountInfoActivity :
 
     override fun onSupportNavigateUp(): Boolean {
         return when {
+            mNavController.currentDestination?.id == R.id.eaIdVerificationFragment -> {
+                finish()
+                false
+            }
             NavigationUI.navigateUp(mNavController, mAppBarConfiguration) -> true
             else -> {
                 finish()
@@ -82,8 +88,8 @@ class EditAccountInfoActivity :
     }
 
     override fun onBackPressed() {
-        return when {
-            mNavController.currentDestination?.id == R.id.welcomeFragment -> {
+        return when (mNavController.currentDestination?.id) {
+            R.id.welcomeFragment, R.id.eaIdVerificationFragment -> {
                 finish()
             }
             else -> super.onBackPressed()

@@ -1,6 +1,9 @@
 package com.gthr.gthrcollect.ui.splash
 
 import androidx.activity.viewModels
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.databinding.ActivitySplashBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
@@ -9,7 +12,11 @@ import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 
 class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
+
+
     override val mViewModel: SplashViewModel by viewModels()
+
+
     override fun getViewBinding(): ActivitySplashBinding =
         ActivitySplashBinding.inflate(layoutInflater)
 
@@ -32,6 +39,10 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
     }
 
     private fun goToHomeScreen() {
+
+
+
+
         startActivity(HomeBottomNavActivity.getInstance(this))
         finish()
     }

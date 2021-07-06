@@ -7,11 +7,16 @@ import android.text.InputType
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.EditAccountInfoRepository
 import com.gthr.gthrcollect.databinding.EaUserInfoFragmentBinding
+import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModel
+import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModelFactory
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants.DATE
 import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants.MONTH
@@ -26,10 +31,16 @@ import java.util.*
 
 
 @RequiresApi(Build.VERSION_CODES.M)
-class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentBinding>() {
-    override val mViewModel: EaUserInfoViewModel by viewModels()
-    override fun getViewBinding() = EaUserInfoFragmentBinding.inflate(layoutInflater)
+class EaUserInfoFragment : BaseFragment<EditAccountInfoViewModel, EaUserInfoFragmentBinding>() {
+    private val repository = EditAccountInfoRepository()
 
+    override val mViewModel: EditAccountInfoViewModel by activityViewModels {
+        EditAccountInfoViewModelFactory(
+            repository
+        )
+    }
+
+    override fun getViewBinding() = EaUserInfoFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mEtFirstName: CustomEditText
     private lateinit var mEtLastName: CustomEditText
@@ -79,22 +90,16 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
 
         mEtDD.mEtMain.setOnClickListener {
             showDatePicker()
-
         }
 
         mEtYYYY.mEtMain.setOnClickListener {
             showDatePicker()
         }
-
     }
-
 
     @SuppressLint("SimpleDateFormat")
     private fun showDatePicker() {
-
-
         showBirthDayPicker(selectedDate.timeInMillis) {
-
             val cal = Calendar.getInstance()
             cal.timeInMillis = it
             selectedDate = cal
@@ -107,7 +112,7 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
                 mEtMM.setSuccess()
                 mEtDD.setSuccess()
                 mEtYYYY.setSuccess()
-                if (validate()) mBtnNext.setState(CustomSecondaryButton.State.GREEN)
+                validate()
             } else {
                 mEtMM.setError(null)
                 mEtDD.setError(null)
@@ -142,28 +147,35 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
     }
 
     private fun setUpClickListeners() {
-
         mViewBinding.btnNext.setOnClickListener {
-
-            val userModel = UserInfoModel(
-                mEtFirstName.mEtMain.text.toString().trim(),
-                mEtLastName.mEtMain.text.toString().trim(),
-                mEtDD.mEtMain.text.toString().trim(),
-                mEtMM.mEtMain.text.toString().trim(),
-                mEtYYYY.mEtMain.text.toString().trim(),
-                mEtPhoneNo.mEtPhoneNo.text.toString().trim(),
-                mEtPhoneNo.mCcp.selectedCountryCode,
-                true
-            )
+            val userModel = mViewModel.userInfoLiveData.value?.apply {
+                firstName = mEtFirstName.mEtMain.text.toString().trim()
+                lastName = mEtLastName.mEtMain.text.toString().trim()
+                dd = mEtDD.mEtMain.text.toString().trim()
+                mm = mEtMM.mEtMain.text.toString().trim()
+                yyyy = mEtYYYY.mEtMain.text.toString().trim()
+                mobile = mEtPhoneNo.mEtPhoneNo.text.toString().trim()
+                countryCode = mEtPhoneNo.mCcp.selectedCountryCode
+                tnc = true
+                emailId = GthrCollect.prefs?.signUpCred?.email ?: ""
+            } ?: UserInfoDomainModel()
 
             mViewModel.setUserInfo(userModel)
-            findNavController().navigate(EaUserInfoFragmentDirections.actionEaUserInfoFragmentToEaOtpFragment())
+            findNavController().navigate(
+                EaUserInfoFragmentDirections.actionEaUserInfoFragmentToEaOtpFragment(
+                    phoneNumber = getString(
+                        R.string.otp_phone_no_text,
+                        mViewModel.userInfoLiveData.value?.countryCode.toString(),
+                        mViewModel.userInfoLiveData.value?.mobile.toString()
+                    )
+                )
+            )
         }
 
         mIvTermsAndConditions.setOnClickListener {
             if (!isTnCCheked) {
                 isTnCCheked = !isTnCCheked
-                if (validate()) mBtnNext.setState(CustomSecondaryButton.State.GREEN)
+                validate()
                 toggleTnC(true)
             } else {
                 isTnCCheked = !isTnCCheked
@@ -192,16 +204,17 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
 
     private fun setUpObservers() {
         mViewModel.userInfoLiveData.observe(viewLifecycleOwner, {
-
-            if (it != null) {
-
-                mEtFirstName.mEtMain.setText(it.fName)
-                mEtLastName.mEtMain.setText(it.lName)
+            if (it != null && it.firstName.isNotEmpty() && it.lastName.isNotEmpty() &&
+                it.mm.isNotEmpty() && it.dd.isNotEmpty() && it.yyyy.isNotEmpty() &&
+                it.mobile.isNotEmpty() && it.countryCode.isNotEmpty()
+            ) {
+                mEtFirstName.mEtMain.setText(it.firstName)
+                mEtLastName.mEtMain.setText(it.lastName)
                 mEtMM.mEtMain.setText(it.mm)
                 mEtDD.mEtMain.setText(it.dd)
                 mEtYYYY.mEtMain.setText(it.yyyy)
                 mEtPhoneNo.mEtPhoneNo.setText(it.mobile)
-                mEtPhoneNo.mCcp.setCountryForPhoneCode(it.country.toInt())
+                mEtPhoneNo.mCcp.setCountryForPhoneCode(it.countryCode.toInt())
                 isTnCCheked = it.tnc
 
                 toggleTnC(isTnCCheked)
@@ -209,11 +222,10 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
                 mEtMM.setSuccess()
                 mEtDD.setSuccess()
                 mEtYYYY.setSuccess()
+
+                validate()
             }
-
-
         })
-
     }
 
 
@@ -222,22 +234,18 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
         mEtFirstName.mEtMain.afterTextChanged {
             if (it.isNotEmpty()) {
                 mEtFirstName.setSuccess()
-
-
-                if (validate()) mBtnNext.setState(CustomSecondaryButton.State.GREEN)
-
+                validate()
             } else {
                 mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
                 mEtFirstName.setInitial()
             }
-
         }
 
         mEtLastName.mEtMain.afterTextChanged {
             if (it.isNotEmpty()) {
                 mEtLastName.setSuccess()
                 //    mEtLastName.mEtMain.setText(it.toString().trim())
-                if (validate()) mBtnNext.setState(CustomSecondaryButton.State.GREEN)
+                validate()
             } else {
                 mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
                 mEtLastName.setInitial()
@@ -245,14 +253,12 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
 
         }
 
-
-
         mEtPhoneNo.mEtPhoneNo.afterTextChanged {
             if (it.isValidPhoneNumber()) {
                 mEtPhoneNo.setSuccess()
                 //   mEtPhoneNo.mEtPhoneNo.setText(it.toString().trim())
 
-                if (validate()) mBtnNext.setState(CustomSecondaryButton.State.GREEN)
+                validate()
             } else {
                 mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
                 mEtPhoneNo.setInitial()
@@ -262,11 +268,14 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
 
     fun validate(): Boolean = when {
         mEtFirstName.mEtMain.text.toString().trim().isEmpty() -> false
-
         mEtLastName.mEtMain.text.toString().trim().isEmpty() -> false
         !selectedDate.isValidBirthDayDate() -> false
         !isTnCCheked -> false
-        else -> mEtPhoneNo.mEtPhoneNo.text.toString().length == 10
+        mEtPhoneNo.mEtPhoneNo.text.toString().length < 10 -> false
+        else -> {
+            mBtnNext.setState(CustomSecondaryButton.State.GREEN)
+            true
+        }
     }
 }
 

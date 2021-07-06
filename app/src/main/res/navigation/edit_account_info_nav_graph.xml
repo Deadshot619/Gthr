@@ -37,7 +37,11 @@
         android:label="EaOtpFragment">
         <action
             android:id="@+id/action_eaOtpFragment_to_eaIdVerificationFragment"
-            app:destination="@id/eaIdVerificationFragment" />
+            app:destination="@id/eaIdVerificationFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"

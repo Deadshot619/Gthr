@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "100558314645",
+    "firebase_url": "https://dlc-db-staging-default-rtdb.firebaseio.com",
+    "project_id": "dlc-db-staging",
+    "storage_bucket": "dlc-db-staging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100558314645:android:97a519998e06985c618f9c",
+        "android_client_info": {
+          "package_name": "com.gthr.gthrcollect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100558314645-lnnj4s59e5q36q5ul95t7b2ac7vcltj7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj3hgK2DizHPLMWRzgKsNwMKds4vbrbps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100558314645-lnnj4s59e5q36q5ul95t7b2ac7vcltj7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "100558314645-g9lhvcaf136popi0r2q6ef0221c7jp02.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dlc.coreapp.coreapp-dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

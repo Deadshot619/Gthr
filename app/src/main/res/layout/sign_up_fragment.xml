@@ -120,5 +120,12 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_sign_in"
             app:layout_constraintEnd_toStartOf="@id/tv_sign_in"
             app:layout_constraintTop_toTopOf="@id/tv_sign_in" />
+
+        <!--Progress Bar-->
+        <include
+            android:id="@+id/layout_progress"
+            layout="@layout/layout_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

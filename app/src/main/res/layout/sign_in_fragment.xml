@@ -107,5 +107,12 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_create_account"
             app:layout_constraintEnd_toStartOf="@id/tv_create_account"
             app:layout_constraintTop_toTopOf="@id/tv_create_account" />
+
+        <!--Progress Bar-->
+        <include
+            android:id="@+id/layout_progress"
+            layout="@layout/layout_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

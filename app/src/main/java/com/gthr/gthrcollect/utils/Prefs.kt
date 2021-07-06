@@ -2,6 +2,11 @@ package com.gthr.gthrcollect.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.gthr.gthrcollect.model.domain.SignUpAuthCred
+import com.gthr.gthrcollect.model.domain.User
+import com.gthr.gthrcollect.utils.extensions.fromJsonString
+import com.gthr.gthrcollect.utils.extensions.gson
+import com.gthr.gthrcollect.utils.extensions.toJsonString
 
 class Prefs(mContext: Context) {
     private val sharedPreferences: SharedPreferences =
@@ -11,9 +16,22 @@ class Prefs(mContext: Context) {
         set(value) = sharedPreferences.edit().putString(SHIPPING_ADDRESS_LIST, value).apply()
         get() = sharedPreferences.getString(SHIPPING_ADDRESS_LIST, "[]") ?: "[]"
 
+    var signedInUser: User?
+        set(value) = sharedPreferences.edit().putString(SIGNED_IN_USER, gson.toJsonString(value))
+            .apply()
+        get() = gson.fromJsonString(sharedPreferences.getString(SIGNED_IN_USER, "") ?: "")
+
+
+    var signUpCred: SignUpAuthCred?
+        set(value) = sharedPreferences.edit().putString(SIGN_UP_CRED, gson.toJsonString(value))
+            .apply()
+        get() = gson.fromJsonString(sharedPreferences.getString(SIGN_UP_CRED, "") ?: "")
+
 
     companion object {
         private const val DEFAULT_SHARED_PREFERENCE = "default_shared_preference"
         private const val SHIPPING_ADDRESS_LIST = "shipping_address_list"
+        private const val SIGN_UP_CRED = "sign_up_cred"
+        private const val SIGNED_IN_USER = "signed_in_user"
     }
 }

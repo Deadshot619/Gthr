@@ -38,9 +38,10 @@
 
     <!--OTP-->
     <string name="otp_verification_text">OTP Verification</string>
-    <string name="enter_otp_text">Enter OTP sent to </string>
+    <string name="enter_otp_text">Enter OTP sent to</string>
     <string name="otp_not_received_text">Didn’t receive message?</string>
     <string name="otp_send_again_text"><u>Send Again</u></string>
+    <string name="otp_phone_no_text">+%s%s</string>
 
     <!--Forgot Password-->
     <string name="forgot_password_title_text">Forgot Password</string>
@@ -117,7 +118,22 @@
     <string name="name">Name</string>
     <string name="last_name">LAST NAME*</string>
     <string name="birthday_info">Users must be 18 or older to register.</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="resend_otp">Resending OTP....</string>
+    <string name="sending_otp">Sending OTP...</string>
+    <string name="sms_limit_exceed">The SMS quota for the project has been exceeded</string>
+    <string name="varification_fails">On verification faild</string>
+    <string name="verification_complere">onVerification Completed</string>
+    <string name="invalid_request">Invalid request</string>
+    <string name="otp_sent">OTP Sent</string>
+    <string name="otp_verified">OTP verified</string>
+    <string name="invalid_code">Invalid code.</string>
+    <string name="sign_successfully">Sign successfully</string>
+    <string name="auth_fail">Authentication failed.</string>
+    <string name="register_successfully">Registered successfully</string>
+    <string name="registration_failed">Registration failed.</string>
     <string name="birthday_error_text">Users must be 18 or older to register.</string>
+    <string name="password_link_sent">Password reset link sent on mail</string>
     <string name="storage_permission">Allow storage permission</string>
     <string name="must_be_4_char">Must be atleast 4 characters</string>
     <string name="cannot_empty">Can not be empty</string>

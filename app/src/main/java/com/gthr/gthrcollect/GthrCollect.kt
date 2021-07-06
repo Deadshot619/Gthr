@@ -23,5 +23,6 @@ class GthrCollect: Application() {
 
     companion object {
         var prefs: Prefs? = null
+            private set
     }
 }
