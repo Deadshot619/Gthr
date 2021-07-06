@@ -11,9 +11,23 @@
         <action
             android:id="@+id/action_settingsFragment_to_editAccountInfoFragment"
             app:destination="@id/editAccountInfoFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_activeOffersFragment"
+            app:destination="@id/activeOffersFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_editShippingAddressFragment"
+            app:destination="@id/editShippingAddressFragment" />
     </fragment>
     <fragment
         android:id="@+id/editAccountInfoFragment"
         android:name="com.gthr.gthrcollect.ui.settings.editaccountinfo.EditAccountInfoFragment"
         android:label="EditAccountInfoFragment" />
+    <fragment
+        android:id="@+id/activeOffersFragment"
+        android:name="com.gthr.gthrcollect.ui.settings.activeoffers.ActiveOffersFragment"
+        android:label="ActiveOffersFragment" />
+    <fragment
+        android:id="@+id/editShippingAddressFragment"
+        android:name="com.gthr.gthrcollect.ui.settings.editshippingaddress.EditShippingAddressFragment"
+        android:label="EditShippingAddressFragment" />
 </navigation>

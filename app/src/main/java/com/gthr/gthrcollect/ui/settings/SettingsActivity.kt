@@ -42,6 +42,15 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
                 R.id.settingsFragment -> {
                     setToolbarTitle(getString(R.string.settings_text))
                 }
+                R.id.editAccountInfoFragment -> {
+                    setToolbarTitle(getString(R.string.edit_account_info_title))
+                }
+                R.id.activeOffersFragment -> {
+                    setToolbarTitle(getString(R.string.active_offers_text))
+                }
+                R.id.editShippingAddressFragment -> {
+                    setToolbarTitle(getString(R.string.edit_shipping_address_text))
+                }
             }
         }
     }

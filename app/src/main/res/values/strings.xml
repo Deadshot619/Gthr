@@ -167,4 +167,11 @@
     <string name="full_name_builder">%s %s</string>
     <string name="city_builder">%s,</string>
     <string name="state_pincode_builder">%s %s</string>
+
+    <!--Edit Shipping Address-->
+    <string name="edit_shipping_address_text">Edit Shipping Address</string>
+    <string name="add_new_address_text">Add New Address</string>
+
+    <!--Active Offers-->
+    <string name="active_offers_text">Active Offers</string>
 </resources>

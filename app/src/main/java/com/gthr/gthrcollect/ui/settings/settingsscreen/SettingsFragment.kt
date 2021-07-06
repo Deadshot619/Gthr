@@ -12,6 +12,11 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
     override val mViewModel: SettingsViewModel by activityViewModels()
 
     private lateinit var mBtnEditAccountInfo: CustomImageTextButton
+    private lateinit var mBtnShippingAddress: CustomImageTextButton
+    private lateinit var mBtnActiveOffers: CustomImageTextButton
+    private lateinit var mBtnPayoutInfo: CustomImageTextButton
+    private lateinit var mBtnTermsAndConditions: CustomImageTextButton
+    private lateinit var mBtnFaqAndHelp: CustomImageTextButton
 
     override fun onBinding() {
         initViews()
@@ -21,12 +26,29 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
     private fun initViews() {
         mViewBinding.run {
             mBtnEditAccountInfo = btnEditAccountInfo
+            mBtnShippingAddress = btnShippingAddress
+            mBtnActiveOffers = btnActiveOffers
+            mBtnPayoutInfo = btnPayoutInfo
+            mBtnTermsAndConditions = btnTermsConditions
+            mBtnFaqAndHelp = btnFaq
         }
     }
 
     private fun setUpClickListeners() {
         mBtnEditAccountInfo.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToEditAccountInfoFragment())
+        }
+        mBtnShippingAddress.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToEditShippingAddressFragment())
+        }
+        mBtnActiveOffers.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToActiveOffersFragment())
+        }
+        mBtnPayoutInfo.setOnClickListener {
+        }
+        mBtnTermsAndConditions.setOnClickListener {
+        }
+        mBtnFaqAndHelp.setOnClickListener {
         }
     }
 
