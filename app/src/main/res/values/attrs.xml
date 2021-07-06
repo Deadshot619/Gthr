@@ -125,7 +125,6 @@
         </attr>
     </declare-styleable>
 
-
     <declare-styleable name="CustomDeliveryButton">
         <attr name="cdb_type" format="enum">
             <enum name="PRICE" value="0"/>
@@ -134,6 +133,4 @@
             <enum name="DELIVERED" value="3"/>
         </attr>
     </declare-styleable>
-
-
 </resources>

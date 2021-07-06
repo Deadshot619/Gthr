@@ -269,3 +269,8 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
         else -> mEtPhoneNo.mEtPhoneNo.text.toString().length == 10
     }
 }
+
+
+
+
+

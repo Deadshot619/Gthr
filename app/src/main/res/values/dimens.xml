@@ -139,5 +139,8 @@
     <!--Custom delivery view-->
     <dimen name="width_delivery_view">200dp</dimen>
 
+    <!--Custom search view-->
+    <dimen name="radius_search">10dp</dimen>
+
 
 </resources>
