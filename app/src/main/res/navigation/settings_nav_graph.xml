@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_termsAndConditionsFragment"
             app:destination="@id/termsAndConditionsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_addNewAddressFragment"
+            app:destination="@id/addNewAddressFragment" />
     </fragment>
     <fragment
         android:id="@+id/editAccountInfoFragment"
@@ -44,4 +47,8 @@
         android:id="@+id/termsAndConditionsFragment"
         android:name="com.gthr.gthrcollect.ui.settings.termsandconditions.TermsAndConditionsFragment"
         android:label="TermsAndConditionsFragment" />
+    <fragment
+        android:id="@+id/addNewAddressFragment"
+        android:name="com.gthr.gthrcollect.ui.settings.addnewaddress.AddNewAddressFragment"
+        android:label="AddNewAddressFragment" />
 </navigation>

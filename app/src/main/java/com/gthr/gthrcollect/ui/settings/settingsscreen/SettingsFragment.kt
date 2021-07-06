@@ -45,6 +45,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToActiveOffersFragment())
         }
         mBtnPayoutInfo.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToAddNewAddressFragment())
         }
         mBtnTermsAndConditions.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToTermsAndConditionsFragment())

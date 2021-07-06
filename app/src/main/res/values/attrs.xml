@@ -79,4 +79,31 @@
     </declare-styleable>
 
 
+    <declare-styleable name="CustomSpinner">
+        <attr name="cs_initial_state" format="enum">
+            <enum name="GRAY" value="0"/>
+            <enum name="GREEN" value="1"/>
+            <enum name="RED" value="2"/>
+            <enum name="BLUE" value="3" />
+        </attr>
+        <attr name="cs_success_state" format="enum">
+            <enum name="GRAY" value="0"/>
+            <enum name="GREEN" value="1"/>
+            <enum name="RED" value="2"/>
+            <enum name="BLUE" value="3" />
+        </attr>
+        <attr name="cs_error_state" format="enum">
+            <enum name="GRAY" value="0"/>
+            <enum name="GREEN" value="1"/>
+            <enum name="RED" value="2"/>
+            <enum name="BLUE" value="3" />
+        </attr>
+
+        <attr name="cs_title" format="string" />
+
+
+
+    </declare-styleable>
+
+
 </resources>

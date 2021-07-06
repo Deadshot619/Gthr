@@ -50,8 +50,7 @@ class CustomEditText @JvmOverloads constructor(
     private var mImageFlag = false
 
 
-    private val view: View =
-        LayoutInflater.from(context).inflate(R.layout.layout_custom_edit_text, this, true)
+    private val view: View = LayoutInflater.from(context).inflate(R.layout.layout_custom_edit_text, this, true)
 
     init {
         mLlMain = view.findViewById(R.id.ll_main)
@@ -143,7 +142,7 @@ class CustomEditText @JvmOverloads constructor(
     }
 
     fun setInitial() {
-        mCurrentState = CurrentState.ERROR
+        mCurrentState = CurrentState.INITIAL
         mIvMain.gone()
         mEtMain.error = null
         setState(mInitialState)

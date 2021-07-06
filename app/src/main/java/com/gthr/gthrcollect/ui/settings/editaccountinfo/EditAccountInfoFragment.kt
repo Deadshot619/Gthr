@@ -13,6 +13,7 @@ import com.gthr.gthrcollect.databinding.DialogDeleteAccountBinding
 import com.gthr.gthrcollect.databinding.EditAccountInfoFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editaccountinfo.eauserinfo.EaUserInfoFragmentDirections
+import com.gthr.gthrcollect.ui.settings.settingsscreen.SettingsFragmentDirections
 import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
 import com.gthr.gthrcollect.utils.customviews.CustomEditText
@@ -22,8 +23,8 @@ import com.gthr.gthrcollect.utils.extensions.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EditAccountInfoFragment :
-    BaseFragment<EditAccountInfoViewModel, EditAccountInfoFragmentBinding>() {
+class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccountInfoFragmentBinding>() {
+
     override fun getViewBinding() = EditAccountInfoFragmentBinding.inflate(layoutInflater)
     override val mViewModel: EditAccountInfoViewModel by viewModels()
 
@@ -113,8 +114,10 @@ class EditAccountInfoFragment :
 
     private fun setUpClickListeners() {
         mBtnSaveChanges.setOnClickListener {
-            if (validate())
-                showToast("Done.")
+            if (validate()){
+
+            }
+
         }
 
         mTvDeleteAccount.setOnClickListener{
