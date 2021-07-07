@@ -1,6 +1,7 @@
 package com.gthr.gthrcollect.ui.settings.editshippingaddress
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.gthr.gthrcollect.databinding.EditShippingAddressFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
@@ -26,7 +27,7 @@ class EditShippingAddressFragment :
 
     private fun setUpClickListeners() {
         mBtnAddNewAddress.setOnClickListener {
-//            findNavController().navigate()
+            findNavController().navigate(EditShippingAddressFragmentDirections.actionEditShippingAddressFragmentToAddNewAddressFragment())
         }
     }
 }

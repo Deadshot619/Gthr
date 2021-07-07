@@ -54,6 +54,9 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
                 R.id.editShippingAddressFragment -> {
                     setToolbarTitle(getString(R.string.edit_shipping_address_text))
                 }
+                R.id.addNewAddressFragment -> {
+                    setToolbarTitle(getString(R.string.add_new_address_text))
+                }
                 R.id.termsAndConditionsFragment, R.id.faqAndHelpFragment -> {
                     mViewBinding.toolbar.gone()
                 }
