@@ -72,6 +72,10 @@
     <declare-styleable name="CustomImageTextButton">
         <attr name="citb_src" format="reference" />
         <attr name="citb_btn_title" format="string" />
+        <attr name="citb_btn_type" format="enum">
+            <enum name="IMAGE" value="0" />
+            <enum name="NO_IMAGE_GREY" value="1" />
+        </attr>
     </declare-styleable>
 
 

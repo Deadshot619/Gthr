@@ -12,6 +12,8 @@ import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivitySettingsBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
+import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.visible
 
 class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding>() {
     override val mViewModel: SettingsViewModel by viewModels()
@@ -41,6 +43,7 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
             when (nd.id) {
                 R.id.settingsFragment -> {
                     setToolbarTitle(getString(R.string.settings_text))
+                    mViewBinding.toolbar.visible()
                 }
                 R.id.editAccountInfoFragment -> {
                     setToolbarTitle(getString(R.string.edit_account_info_title))
@@ -50,6 +53,9 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
                 }
                 R.id.editShippingAddressFragment -> {
                     setToolbarTitle(getString(R.string.edit_shipping_address_text))
+                }
+                R.id.termsAndConditionsFragment, R.id.faqAndHelpFragment -> {
+                    mViewBinding.toolbar.gone()
                 }
             }
         }
