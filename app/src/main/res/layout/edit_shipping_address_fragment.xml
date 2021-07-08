@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.gthr.gthrcollect.ui.settings.editshippingaddress.EditShippingAddressViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,11 +51,13 @@
             android:id="@+id/rv_shipping_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:listShippingAddress="@{viewModel.MShippingAddressList}"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toTopOf="@id/guideline_top"
             tools:itemCount="2"
-            tools:listitem="@layout/layout_custom_address_view" />
+            tools:listitem="@layout/layout_shipping_address" />
 
         <!--Add new address-->
         <TextView

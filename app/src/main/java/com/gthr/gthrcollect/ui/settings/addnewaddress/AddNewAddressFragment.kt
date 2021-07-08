@@ -1,23 +1,20 @@
 package com.gthr.gthrcollect.ui.settings.addnewaddress
 
-import android.text.InputFilter
 import android.text.InputType
-import android.view.View
-import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AddNewAddressFragmentBinding
+import com.gthr.gthrcollect.model.domain.ShippingAddress
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.settings.addnewaddress.adapter.SpinnerAdapter
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
 import com.gthr.gthrcollect.utils.customviews.CustomEditText
-import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSpinner
 import com.gthr.gthrcollect.utils.extensions.afterTextChanged
 import com.gthr.gthrcollect.utils.extensions.selected
 
 
-class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddressFragmentBinding>(){
+class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddressFragmentBinding>() {
 
     override fun getViewBinding() = AddNewAddressFragmentBinding.inflate(layoutInflater)
     override val mViewModel: AddNewAddressViewModel by viewModels()
@@ -32,7 +29,7 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
     private lateinit var mSpnState: CustomSpinner
     private lateinit var mBtnAddNewAdd: CustomAuthenticationButton
 
-    private var mSpnCountryFirstTimeFlag  = true
+    private var mSpnCountryFirstTimeFlag = true
     private var mSpnStateFirstTimeFlag = true
 
 
@@ -64,13 +61,12 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
         mEtPostalCode.mEtMain.inputType = InputType.TYPE_CLASS_NUMBER
     }
 
-    private fun setUpTextChangeListeners(){
+    private fun setUpTextChangeListeners() {
         mEtFirstName.mEtMain.afterTextChanged {
             if (it.isNotEmpty()) {
                 mEtFirstName.setSuccess()
-                if(validate(false)) mBtnAddNewAdd.enableAuthButton()  else mBtnAddNewAdd.disableAuthButton()
-            }
-            else{
+                if (validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
+            } else {
                 mEtFirstName.setInitial()
                 mBtnAddNewAdd.disableAuthButton()
             }
@@ -79,9 +75,8 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
         mEtLastName.mEtMain.afterTextChanged {
             if (it.isNotEmpty()) {
                 mEtLastName.setSuccess()
-                if(validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
-            }
-            else{
+                if (validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
+            } else {
                 mEtLastName.setInitial()
                 mBtnAddNewAdd.disableAuthButton()
             }
@@ -90,21 +85,9 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
         mEtAdd1.mEtMain.afterTextChanged {
             if (it.isNotEmpty()) {
                 mEtAdd1.setSuccess()
-                if(validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
-            }
-            else{
+                if (validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
+            } else {
                 mEtAdd1.setInitial()
-                mBtnAddNewAdd.disableAuthButton()
-            }
-        }
-
-        mEtAdd2.mEtMain.afterTextChanged {
-            if (it.isNotEmpty()) {
-                mEtAdd2.setSuccess()
-                if(validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
-            }
-            else{
-                mEtAdd2.setInitial()
                 mBtnAddNewAdd.disableAuthButton()
             }
         }
@@ -112,19 +95,18 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
         mEtCity.mEtMain.afterTextChanged {
             if (it.isNotEmpty()) {
                 mEtCity.setSuccess()
-                if(validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
-            }
-            else{
+                if (validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
+            } else {
                 mEtCity.setInitial()
                 mBtnAddNewAdd.disableAuthButton()
             }
         }
+
         mEtPostalCode.mEtMain.afterTextChanged {
             if (it.isNotEmpty()) {
                 mEtPostalCode.setSuccess()
-                if(validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
-            }
-            else{
+                if (validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
+            } else {
                 mEtPostalCode.setInitial()
                 mBtnAddNewAdd.disableAuthButton()
             }
@@ -134,13 +116,12 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
 
     private fun setUpOnItemSelectedListeners() {
         mSpnState.mSpnMain.selected {
-            if(it!=0){
+            if (it != 0) {
                 mSpnState.setSuccess()
-                if(validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
-            }
-            else{
+                if (validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
+            } else {
                 mSpnState.setInitial()
-                if(mSpnStateFirstTimeFlag)
+                if (mSpnStateFirstTimeFlag)
                     mSpnStateFirstTimeFlag = false
                 else
                     mBtnAddNewAdd.disableAuthButton()
@@ -149,13 +130,12 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
         }
 
         mSpnCountry.mSpnMain.selected {
-            if(it!=0){
+            if (it != 0) {
                 mSpnCountry.setSuccess()
-                if(validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
-            }
-            else{
+                if (validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
+            } else {
                 mSpnCountry.setInitial()
-                if(mSpnCountryFirstTimeFlag)
+                if (mSpnCountryFirstTimeFlag)
                     mSpnCountryFirstTimeFlag = false
                 else
                     mBtnAddNewAdd.disableAuthButton()
@@ -178,51 +158,60 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
 
     private fun setUpClickListeners() {
         mBtnAddNewAdd.setOnClickListener {
-            if (validate(true)){
-
+            if (validate(true)) {
+                mViewModel.setShippingAddress(
+                    ShippingAddress(
+                        id = 0,
+                        firstName = mEtFirstName.mEtMain.text.toString().trim(),
+                        lastName = mEtLastName.mEtMain.text.toString().trim(),
+                        addressLine1 = mEtAdd1.mEtMain.text.toString().trim(),
+                        addressLine2 = mEtAdd2.mEtMain.text.toString().trim(),
+                        country = mSpnCountry.mSpnMain.selectedItem.toString(),
+                        state = mSpnState.mSpnMain.selectedItem.toString(),
+                        city = mEtCity.mEtMain.text.toString().trim(),
+                        postalCode = mEtPostalCode.mEtMain.text.toString().trim(),
+                        isSelected = false
+                    )
+                )
+                activity?.onBackPressed()
             }
         }
     }
 
-    private fun validate(isSetError: Boolean) : Boolean{
+    private fun validate(isSetError: Boolean): Boolean {
         var isValidate = true
         if (mEtFirstName.mEtMain.text.toString().isEmpty()) {
-            if(isSetError) mEtFirstName.setError(getString(R.string.add_new_address_name_error))
+            if (isSetError) mEtFirstName.setError(getString(R.string.add_new_address_name_error))
             mBtnAddNewAdd.disableAuthButton()
             isValidate = false
         }
         if (mEtLastName.mEtMain.text.toString().isEmpty()) {
-            if(isSetError)mEtLastName.setError(getString(R.string.add_new_address_last_error))
+            if (isSetError) mEtLastName.setError(getString(R.string.add_new_address_last_error))
             mBtnAddNewAdd.disableAuthButton()
             isValidate = false
         }
         if (mEtAdd1.mEtMain.text.toString().isEmpty()) {
-            if(isSetError)mEtAdd1.setError(getString(R.string.add_new_address_add1_error))
-            mBtnAddNewAdd.disableAuthButton()
-            isValidate = false
-        }
-        if (mEtAdd2.mEtMain.text.toString().isEmpty()) {
-            if(isSetError)mEtAdd2.setError(getString(R.string.add_new_address_add12error))
+            if (isSetError) mEtAdd1.setError(getString(R.string.add_new_address_add1_error))
             mBtnAddNewAdd.disableAuthButton()
             isValidate = false
         }
         if (mEtCity.mEtMain.text.toString().isEmpty()) {
-            if(isSetError)mEtCity.setError(getString(R.string.add_new_address_city_error))
+            if (isSetError) mEtCity.setError(getString(R.string.add_new_address_city_error))
             mBtnAddNewAdd.disableAuthButton()
             isValidate = false
         }
-        if (mSpnState.mSpnMain.selectedItemPosition==0) {
-            if(isSetError)mSpnState.setError()
+        if (mSpnState.mSpnMain.selectedItemPosition == 0) {
+            if (isSetError) mSpnState.setError()
             mBtnAddNewAdd.disableAuthButton()
             isValidate = false
         }
-        if (mSpnCountry.mSpnMain.selectedItemPosition==0) {
-            if(isSetError)mSpnCountry.setError()
+        if (mSpnCountry.mSpnMain.selectedItemPosition == 0) {
+            if (isSetError) mSpnCountry.setError()
             mBtnAddNewAdd.disableAuthButton()
             isValidate = false
         }
         if (mEtPostalCode.mEtMain.text.toString().isEmpty()) {
-            if(isSetError)mEtPostalCode.setError(getString(R.string.add_new_address_postal_code_error))
+            if (isSetError) mEtPostalCode.setError(getString(R.string.add_new_address_postal_code_error))
             mBtnAddNewAdd.disableAuthButton()
             isValidate = false
         }

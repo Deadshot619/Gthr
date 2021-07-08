@@ -56,8 +56,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_normal"
+        app:layout_constraintBottom_toTopOf="@+id/view_horizontal"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintTop_toTopOf="@id/guideline_top"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_pencil_unselected" />
 
     <View
@@ -65,9 +66,11 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/view_stroke_color_grey"
+        app:layout_constraintBottom_toTopOf="@+id/iv_delete"
         app:layout_constraintEnd_toEndOf="@id/iv_edit"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@id/iv_edit"
-        app:layout_constraintTop_toBottomOf="@id/iv_edit" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_edit" />
 
     <!--Delete-->
     <androidx.appcompat.widget.AppCompatImageView
@@ -75,10 +78,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_normal"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/iv_edit"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@id/iv_edit"
-        app:layout_constraintTop_toBottomOf="@id/view_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/view_horizontal"
         app:srcCompat="@drawable/ic_delete" />
 
     <View

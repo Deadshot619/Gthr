@@ -1,13 +1,14 @@
 package com.gthr.gthrcollect.model.domain
 
 data class ShippingAddress(
-    val firstName: String,
-    val lastName: String,
-    val addressLine1: String,
-    val addressLine2: String,
-    val city: String,
-    val state: String,
-    val country: String,
-    val postalCode: String,
-    val isSelected: Boolean
+    val id: Int,
+    var firstName: String,
+    var lastName: String,
+    var addressLine1: String,
+    var addressLine2: String,
+    var city: String,
+    var state: String,
+    var country: String,
+    var postalCode: String,
+    var isSelected: Boolean
 )

@@ -87,4 +87,16 @@ class CustomAddressView @JvmOverloads constructor(
                 setUnselected()
         }
     }
+
+    fun onEditClick(onClick: () -> Unit) {
+        mIvEdit?.setOnClickListener {
+            onClick()
+        }
+    }
+
+    fun onDeleteClick(onClick: () -> Unit) {
+        mIvDelete?.setOnClickListener {
+            onClick()
+        }
+    }
 }
