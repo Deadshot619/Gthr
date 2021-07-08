@@ -57,7 +57,8 @@
     <string name="replace_back">Replace picture of the back</string>
     <string name="id_note">A government ID helps us check that you’re really you. It also helps us keep secure, fight fraud, and more.</string>
     <string name="id_verification">ID Verification</string>
-    <string name="preview_note">Placing your ID in the frame with the front facing the camera</string>
+    <string name="preview_note_front">Place your ID in the frame with the front facing the camera</string>
+    <string name="preview_note_back">Place your ID in the frame with the back facing the camera</string>
     <string name="saved">Saved</string>
     <string name="change">Changed</string>
     <string name="error">Error!</string>
@@ -115,6 +116,13 @@
     <string name="last_name">LAST NAME*</string>
     <string name="birthday_info">Users must be 18 or older to register.</string>
     <string name="birthday_error_text">Users must be 18 or older to register.</string>
+    <string name="storage_permission">Allow storage permission</string>
+    <string name="must_be_4_char">Must be atleast 4 characters</string>
+    <string name="cannot_empty">Can not be empty</string>
+    <string name="settings_permissing">Allow permissions from settings</string>
 
+    <!--Permissions-->
+    <string name="permission_needed_text">App needs Camera &amp; Storage permissions to capture photo</string>
+    <string name="settings_text">Settings</string>
 
 </resources>

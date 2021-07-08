@@ -24,6 +24,7 @@ import android.view.*
 import android.view.TextureView.SurfaceTextureListener
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -42,9 +43,9 @@ import java.util.*
 class CustomCamera : AppCompatActivity() {
 
     lateinit var mIdLayout: View
-    private lateinit var mCardLayout:View
+    private lateinit var mCardLayout: View
     lateinit var mPreview_layout: RelativeLayout
-    lateinit var  mBtn_camera:ImageView
+    lateinit var mBtn_camera: ImageView
     private var mTextureView: TextureView? = null
     private var mCameraDevice: CameraDevice? = null
     private var cameraId: String? = null
@@ -57,12 +58,16 @@ class CustomCamera : AppCompatActivity() {
     private var mBackgroundHandler: Handler? = null
     var mStateCallback: CameraDevice.StateCallback? = null
     var mFile: File? = null
+    private var mPreviewTextView: TextView? = null
 
-    var mCameraViews:String?=null;
+
+    var mCameraViews: String? = null;
+    var mIsFrontView: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.custom_camera)
+
         mStateCallback = object : CameraDevice.StateCallback() {
             override fun onOpened(camera: CameraDevice) {
                 mCameraDevice = camera
@@ -81,22 +86,23 @@ class CustomCamera : AppCompatActivity() {
         mTextureView = findViewById(R.id.textureView)
         mTextureView?.setSurfaceTextureListener(textureListener)
         mIdLayout = findViewById(R.id.id_layout)
-        mCardLayout=findViewById(R.id.card_layout)
+        mCardLayout = findViewById(R.id.card_layout)
         mPreview_layout = findViewById(R.id.preview_layout)
-        
+        mPreviewTextView = findViewById(R.id.tv_preview_text)
+
         mBtn_camera = findViewById(R.id.btn_camera)
 
-        mCameraViews=intent.getStringExtra(CAMERA_VIEW)
+        mCameraViews = intent.getStringExtra(CAMERA_VIEW)
+        mIsFrontView = intent.getBooleanExtra(IS_FRONT, false)
 
-        if (mCameraViews!!.equals(CameraViews.ID_VERIFICATION.toString())){
-
+        if (mCameraViews!!.equals(CameraViews.ID_VERIFICATION.toString())) {
+            mPreviewTextView?.text =
+                if (mIsFrontView) getString(R.string.preview_note_front) else getString(R.string.preview_note_back)
             mIdLayout.visible()
             mCardLayout.gone()
-        }
-        else{
+        } else {
             mIdLayout.gone()
             mCardLayout.visible()
-
         }
 
         mBtn_camera.setOnClickListener { takePicture() }
@@ -168,24 +174,25 @@ class CustomCamera : AppCompatActivity() {
                             .toFloat() / mPreview_layout.height
 
 
-                        var x1=0
-                        var y1=0
-                        var x2=0
-                        var y2=0
+                        var x1 = 0
+                        var y1 = 0
+                        var x2 = 0
+                        var y2 = 0
 
                         //get viewfinder border size and position on the screen
 
 
-                        if (mCameraViews!!.equals(CameraViews.ID_VERIFICATION.toString())){
+                        if (mCameraViews!!.equals(CameraViews.ID_VERIFICATION.toString())) {
 
-                            x1 =  mIdLayout.left - mIdLayout.paddingLeft - mIdLayout.paddingRight
-                            y1 =  mIdLayout.top - mIdLayout.paddingTop - mIdLayout.paddingBottom
+                            x1 = mIdLayout.left - mIdLayout.paddingLeft - mIdLayout.paddingRight
+                            y1 = mIdLayout.top - mIdLayout.paddingTop - mIdLayout.paddingBottom
                             x2 = mIdLayout.width
                             y2 = mIdLayout.height
-                        }
-                        else{
-                            x1 =  mCardLayout.left - mCardLayout.paddingLeft - mCardLayout.paddingRight
-                            y1 =  mCardLayout.top - mCardLayout.paddingTop - mCardLayout.paddingBottom
+                        } else {
+                            x1 =
+                                mCardLayout.left - mCardLayout.paddingLeft - mCardLayout.paddingRight
+                            y1 =
+                                mCardLayout.top - mCardLayout.paddingTop - mCardLayout.paddingBottom
                             x2 = mCardLayout.width
                             y2 = mCardLayout.height
                         }
@@ -202,7 +209,8 @@ class CustomCamera : AppCompatActivity() {
                         ) {
                             croppedBitmap = Bitmap.createBitmap(
                                 rotatedBitmap, cropStartX,
-                                cropStartY, cropWidthX, cropHeightY)
+                                cropStartY, cropWidthX, cropHeightY
+                            )
 
                         } else {
                             croppedBitmap = null
@@ -225,8 +233,15 @@ class CustomCamera : AppCompatActivity() {
                     result: TotalCaptureResult
                 ) {
                     super.onCaptureCompleted(session, request, result)
-                    Toast.makeText(this@CustomCamera, getString(R.string.saved), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@CustomCamera,
+                        getString(R.string.storage_permission),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                     createCameraPreview()
+
+
                 }
             }
             mCameraDevice!!.createCaptureSession(
@@ -271,7 +286,11 @@ class CustomCamera : AppCompatActivity() {
                     }
 
                     override fun onConfigureFailed(mCameraCaptureSession: CameraCaptureSession) {
-                        Toast.makeText(this@CustomCamera, getString(R.string.change), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@CustomCamera,
+                            getString(R.string.change),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 },
                 null
@@ -282,7 +301,11 @@ class CustomCamera : AppCompatActivity() {
     }
 
     private fun updatePreview() {
-        if (mCameraDevice == null) Toast.makeText(this@CustomCamera, getString(R.string.error), Toast.LENGTH_SHORT)
+        if (mCameraDevice == null) Toast.makeText(
+            this@CustomCamera,
+            getString(R.string.error),
+            Toast.LENGTH_SHORT
+        )
             .show()
         mCaptureRequestBuilder!!.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO)
         try {
@@ -304,9 +327,16 @@ class CustomCamera : AppCompatActivity() {
             val map =
                 cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!
             mImageDimensions = map.getOutputSizes(SurfaceTexture::class.java)[0]
+
+
+            //  val []permissions={Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE}
             if (ContextCompat.checkSelfPermission(
                     this@CustomCamera,
                     Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(
+                    this@CustomCamera,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
 
@@ -320,6 +350,9 @@ class CustomCamera : AppCompatActivity() {
                 )
                 return
             }
+
+
+
             cameraManager.openCamera(cameraId!!, mStateCallback!!, null)
         } catch (e: CameraAccessException) {
             e.printStackTrace()
@@ -348,10 +381,28 @@ class CustomCamera : AppCompatActivity() {
     }
 
     override fun onResume() {
+
         super.onResume()
+
         startBackgroundThread()
-        if (mTextureView!!.isAvailable) openCamera() else mTextureView!!.surfaceTextureListener =
-            textureListener
+
+
+        if (ContextCompat.checkSelfPermission(
+                this@CustomCamera,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+            &&
+            ContextCompat.checkSelfPermission(
+                this@CustomCamera,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            if (mTextureView!!.isAvailable) openCamera() else mTextureView!!.surfaceTextureListener =
+                textureListener
+
+        }
+
+
     }
 
     override fun onPause() {
@@ -385,23 +436,27 @@ class CustomCamera : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
 
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED
+        ) {
+
+            openCamera();
+
+        }
+
+
+/*
         when (requestCode) {
             102 ->
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[1] != PackageManager.PERMISSION_GRANTED) {
 
-                     openCamera();
-
-                }
-            else -> {
-                openSettings()
-            }
 
 
         }
+*/
     }
 
     private fun openSettings() {
+
+
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val uri = Uri.fromParts("package", packageName, null)
@@ -414,6 +469,7 @@ class CustomCamera : AppCompatActivity() {
         ).show()
     }
 
+
     fun createImageFile(bitmap: Bitmap) {
         val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         val timeStamp = SimpleDateFormat("MMdd_HHmmssSSS").format(Date())
@@ -422,7 +478,8 @@ class CustomCamera : AppCompatActivity() {
         try {
             // Make sure the Pictures directory exists.
             if (path.mkdirs()) {
-                Toast.makeText(this, getString(R.string.not_exist) + path.name, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.not_exist) + path.name, Toast.LENGTH_SHORT)
+                    .show()
             }
             val os: OutputStream = FileOutputStream(mFile)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
@@ -443,7 +500,8 @@ class CustomCamera : AppCompatActivity() {
 
 
             startActivityForResult(
-              ImagePreview.getInstance(this,mFile.path,mCameraViews!!), REQUEST_CODE_PREVIEW )
+                ImagePreview.getInstance(this, mFile.path, mCameraViews!!), REQUEST_CODE_PREVIEW
+            )
         } catch (e: Exception) {
             e.printStackTrace()
             // Unable to create mFile, likely because external storage is
@@ -462,14 +520,14 @@ class CustomCamera : AppCompatActivity() {
         }
     }
 
-    companion object{
-
+    companion object {
         private val ORIENTATIONS = SparseIntArray()
-        const val INTENT_KEY_URL="url"
+        const val INTENT_KEY_URL = "url"
         const val MY_PERMISSIONS_REQUEST_CAMERA = 102
-        const val HANDLER_NAME="Camera Background"
+        const val HANDLER_NAME = "Camera Background"
 
-        const val CAMERA_VIEW="camera_view"
+        const val CAMERA_VIEW = "camera_view"
+        const val IS_FRONT = "is_front"
 
         init {
             ORIENTATIONS.append(Surface.ROTATION_0, 90)
@@ -478,9 +536,13 @@ class CustomCamera : AppCompatActivity() {
             ORIENTATIONS.append(Surface.ROTATION_270, 180)
         }
 
-        fun getInstance(context: Context) = Intent(context, CustomCamera::class.java)
+        fun getInstance(context: Context, cameraViewType: CameraViews, isFront: Boolean) =
+            Intent(context, CustomCamera::class.java).apply {
+                putExtra(CAMERA_VIEW, cameraViewType.toString())
+                putExtra(IS_FRONT, isFront)
+            }
 
-        const val REQUEST_CODE_PREVIEW=1
+        const val REQUEST_CODE_PREVIEW = 1
 
     }
 }

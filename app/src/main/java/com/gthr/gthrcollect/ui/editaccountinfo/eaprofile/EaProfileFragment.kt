@@ -11,6 +11,7 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomEditText
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.extensions.afterTextChanged
+import com.gthr.gthrcollect.utils.extensions.checkWhiteSpaces
 import com.gthr.gthrcollect.utils.extensions.isValidDisplayName
 
 @RequiresApi(Build.VERSION_CODES.M)
@@ -51,9 +52,20 @@ class EaProfileFragment : BaseFragment<EaProfileViewModel, EaProfileFragmentBind
     }
 
 
+
     private fun setTextChangeListeners() {
         mEtDisplayName.mEtMain.afterTextChanged{
-            when {
+            when
+            {
+              /*  it.checkWhiteSpaces() ->{
+                    mEtDisplayName.setError(getString(R.string.cannot_empty))
+                    mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
+                }*/
+
+                 it.length<4->{
+                     mEtDisplayName.setError(getString(R.string.must_be_4_char))
+                     mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
+                 }
                 it.isValidDisplayName() -> {
                     mEtDisplayName.setSuccess()
                     mBtnNext.setState(CustomSecondaryButton.State.BLUE)
@@ -68,6 +80,8 @@ class EaProfileFragment : BaseFragment<EaProfileViewModel, EaProfileFragmentBind
                 }
             }
         }
+
+
     }
 
 

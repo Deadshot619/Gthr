@@ -1,5 +1,6 @@
 package com.gthr.gthrcollect.ui.editaccountinfo.eaidverification
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -18,8 +19,16 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.customcameraactivities.CustomCamera
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.CameraViews
+import com.gthr.gthrcollect.utils.extensions.getBackgroundDrawable
 import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.showPermissionSnackBar
 import com.gthr.gthrcollect.utils.extensions.visible
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+
 
 class EaIdVerificationFragment :
     BaseFragment<EaIdVerificationViewModel, EaIdVerificationFragmentBinding>() {
@@ -30,10 +39,8 @@ class EaIdVerificationFragment :
 
     private lateinit var mIvFrontImage: AppCompatImageView
     private lateinit var mIvBackImage: AppCompatImageView
-
     private lateinit var mFrontIdCapture: MaterialCardView
     private lateinit var mBackIdCapture: MaterialCardView
-
     private lateinit var mSkipBtn: CustomSecondaryButton
     private lateinit var mCompleteAccBtn: CustomSecondaryButton
 
@@ -45,16 +52,11 @@ class EaIdVerificationFragment :
     lateinit var mIdScanner: AppCompatImageView
 
     override fun onBinding() {
-
         initViews()
-
-
-
-        addListners()
+        addListeners()
     }
 
     private fun initViews() {
-
         mIvBackImage = mViewBinding.ivBackImage
         mIvFrontImage = mViewBinding.ivFrontImage
         mFrontIdCapture = mViewBinding.frontIdCapture
@@ -78,22 +80,31 @@ class EaIdVerificationFragment :
         mIvBackImage.gone()
     }
 
-    private fun addListners() {
+    private fun addListeners() {
         mFrontIdCapture.setOnClickListener {
-            startActivityForResult(
-                CustomCamera.getInstance(requireContext())
-                    .putExtra(CustomCamera.CAMERA_VIEW, CameraViews.ID_VERIFICATION.toString()),
-                REQUEST_CODE_FRONT_ID
-            )
+            checkMultiplePermissions {
+                startActivityForResult(
+                    CustomCamera.getInstance(
+                        requireContext(),
+                        CameraViews.ID_VERIFICATION,
+                        isFront = true
+                    ),
+                    REQUEST_CODE_FRONT_ID
+                )
+            }
         }
 
-
         mBackIdCapture.setOnClickListener {
-            startActivityForResult(
-                CustomCamera.getInstance(requireContext()).putExtra(
-                    CustomCamera.CAMERA_VIEW, CameraViews.ID_VERIFICATION.toString()
-                ), REQUEST_CODE_BACK_ID
-            )
+            checkMultiplePermissions {
+                startActivityForResult(
+                    CustomCamera.getInstance(
+                        requireContext(),
+                        CameraViews.ID_VERIFICATION,
+                        isFront = false
+                    ),
+                    REQUEST_CODE_BACK_ID
+                )
+            }
         }
 
         mCompleteAccBtn.setOnClickListener {
@@ -115,6 +126,7 @@ class EaIdVerificationFragment :
         }
     }
 
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -123,16 +135,13 @@ class EaIdVerificationFragment :
             val bitmap = BitmapFactory.decodeFile(data.getStringExtra(CustomCamera.INTENT_KEY_URL))
 
             if (requestCode == REQUEST_CODE_FRONT_ID) {
-
                 mIvFrontImage.visible()
                 mIvFrontImage.setImageBitmap(bitmap)
 
                 mfrontLable.text = getString(R.string.replae_front)
 
-                mFront_repls.background = resources.getDrawable(R.drawable.rectangle_5)
-
-
-            } else {
+                mFront_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)
+            } else if (requestCode == Companion.REQUEST_CODE_BACK_ID) {
                 mIvBackImage.visible()
                 mIvBackImage.setImageBitmap(bitmap)
 
@@ -140,19 +149,44 @@ class EaIdVerificationFragment :
 
                 mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
 
-                mBack_repls.background = resources.getDrawable(R.drawable.rectangle_5)
+                mBack_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)
             }
         }
+    }
 
+    private fun checkMultiplePermissions(onPermissionGranted: () -> Unit) {
+        Dexter.withContext(requireContext())
+            .withPermissions(permissions)
+            .withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
+                    if (p0?.areAllPermissionsGranted() == true)
+                        onPermissionGranted()
 
+                    if (p0?.isAnyPermissionPermanentlyDenied == true)
+                        context?.showPermissionSnackBar(
+                            mViewBinding.root,
+                            title = getString(R.string.permission_needed_text)
+                        )
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    p0: MutableList<PermissionRequest>?,
+                    p1: PermissionToken?
+                ) {
+                    p1?.continuePermissionRequest()
+                }
+            })
+            .check()
     }
 
     companion object {
+        private const val REQUEST_CODE_FRONT_ID = 1
+        private const val REQUEST_CODE_BACK_ID = 2
 
-        const val REQUEST_CODE_FRONT_ID = 1
-        const val REQUEST_CODE_BACK_ID = 2
-
-
+        private val permissions = listOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
     }
-
 }

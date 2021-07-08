@@ -92,6 +92,31 @@
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@+id/et_first_name" />
 
+        <com.gthr.gthrcollect.utils.customviews.CustomEditText
+            android:id="@+id/et_dd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_medium"
+            app:edit_hint="@string/dd"
+            app:edit_success_state="GREEN"
+            app:layout_constraintBottom_toBottomOf="@+id/et_mm"
+            app:layout_constraintEnd_toStartOf="@+id/et_year"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/et_mm" />
+
+        <com.gthr.gthrcollect.utils.customviews.CustomEditText
+            android:id="@+id/et_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:edit_hint="@string/yyyy"
+            app:edit_success_state="GREEN"
+            app:layout_constraintBottom_toBottomOf="@+id/et_dd"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/et_dd" />
+
+
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_birthday_info"
             android:layout_width="@dimen/info_size"
@@ -121,28 +146,7 @@
 
 
 
-        <com.gthr.gthrcollect.utils.customviews.CustomEditText
-            android:id="@+id/et_dd"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_medium"
-            app:edit_hint="@string/dd"
-            app:edit_success_state="GREEN"
-            app:layout_constraintBottom_toBottomOf="@+id/et_mm"
-            app:layout_constraintEnd_toStartOf="@+id/et_year"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/et_mm" />
 
-        <com.gthr.gthrcollect.utils.customviews.CustomEditText
-            android:id="@+id/et_year"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:edit_hint="@string/yyyy"
-            app:edit_success_state="GREEN"
-            app:layout_constraintBottom_toBottomOf="@+id/et_dd"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/et_dd" />
 
         <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
             android:id="@+id/btn_next"

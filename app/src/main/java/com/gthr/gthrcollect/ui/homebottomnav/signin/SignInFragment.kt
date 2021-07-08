@@ -7,6 +7,7 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.LayoutSignUpHeaderBinding
 import com.gthr.gthrcollect.databinding.SignInFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.ui.forgotpassword.ForgotPasswordActivity
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
 import com.gthr.gthrcollect.utils.customviews.CustomEmailEditText
@@ -50,6 +51,7 @@ class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
     private fun setUpListeners() {
         mBtnSignIn.setOnClickListener {
             validate()
+            startActivity(EditAccountInfoActivity.getInstance(requireContext()))
         }
 
         mTvCreateAccount.setOnClickListener {

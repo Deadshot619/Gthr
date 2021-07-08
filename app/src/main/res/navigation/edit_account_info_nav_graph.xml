@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edit_account_info_nav_graph.xml"
     app:startDestination="@id/eaProfileFragment">
 
     <fragment
         android:id="@+id/eaProfileFragment"
         android:name="com.gthr.gthrcollect.ui.editaccountinfo.eaprofile.EaProfileFragment"
-        android:label="EaProfileFragment">
+        android:label="EaProfileFragment"
+        tools:layout="@layout/ea_profile_fragment">
         <action
             android:id="@+id/action_eaProfileFragment_to_eaUserInfoFragment"
             app:destination="@id/eaUserInfoFragment" />
@@ -15,7 +17,8 @@
     <fragment
         android:id="@+id/eaUserInfoFragment"
         android:name="com.gthr.gthrcollect.ui.editaccountinfo.eauserinfo.EaUserInfoFragment"
-        android:label="EaUserInfoFragment">
+        android:label="EaUserInfoFragment"
+        tools:layout="@layout/ea_user_info_fragment">
         <action
             android:id="@+id/action_eaUserInfoFragment_to_eaOtpFragment"
             app:destination="@id/eaOtpFragment" />

@@ -62,11 +62,11 @@
             android:id="@+id/tv_forgot_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal"
             android:text="@string/forgot_password_text"
             android:textColor="@color/text_color_light_blue"
             android:textSize="@dimen/text_size_small"
-            app:layout_constraintEnd_toEndOf="@id/cet_password"
+            android:padding="@dimen/padding_normal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cet_password" />
 
         <!--Sign in button-->
@@ -90,8 +90,10 @@
             android:text="@string/create_account_text"
             android:textColor="@color/text_color_light_blue"
             android:textSize="@dimen/text_size_medium"
+            android:padding="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/margin_extra_small"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_sign_in"
             app:layout_constraintVertical_bias="1" />
 
@@ -99,7 +101,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_extra_small"
             android:text="@string/dont_have_account_text"
             android:textColor="@color/text_color_black"
             android:textSize="@dimen/text_size_medium"

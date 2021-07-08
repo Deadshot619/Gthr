@@ -17,17 +17,24 @@ fun String.isValidPassword(): Boolean {
 fun String.isValidPhoneNumber():Boolean = length==10
 
 fun String.isValidDisplayName(): Boolean {
-    val regex = "^[\\p{L} 0-9._]+$"
+  //  val regex = "^[\\p{L}0-9_]+$"
+    var regex = "^[A-Za-z0-9_]+$"
+
     val p: Pattern = Pattern.compile(regex)
     if (this.isEmpty()) return false
+  //  if (this.length<4) return false
     val m: Matcher = p.matcher(this)
     return if(!m.matches()) false else this.length < 25
+}
+
+fun String.checkWhiteSpaces():Boolean {
+        return    if (this.trim().isNotEmpty()) false else true
 }
 
 fun Calendar.isValidBirthDayDate():Boolean{
     val today = Calendar.getInstance()
     today.add(Calendar.YEAR, -18)
-    val year16Ago =  today.time
+    val year18Ago =  today.time
     val selectedDate = this.time
-    return selectedDate<year16Ago
+    return selectedDate<year18Ago
 }
