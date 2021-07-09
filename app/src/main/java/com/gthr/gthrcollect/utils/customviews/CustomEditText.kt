@@ -94,6 +94,7 @@ class CustomEditText @JvmOverloads constructor(
         setCurrentState(CurrentState.INITIAL)
         setCustomTextChangeListener()
 
+        attrs.recycle()
     }
 
     private fun setCurrentState(state: CurrentState) {

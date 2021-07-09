@@ -32,6 +32,8 @@ class CustomAuthenticationButton @JvmOverloads constructor(
         this.setTypeface(typeface, Typeface.BOLD)
         val padding = resources.getDimensionPixelOffset(R.dimen.padding_normal)
         this.setPadding(padding)
+
+        attrs.recycle()
     }
 
     fun enableAuthButton() {

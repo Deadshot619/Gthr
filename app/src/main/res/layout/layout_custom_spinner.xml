@@ -12,7 +12,6 @@
         android:id="@+id/tv_title"
         android:layout_marginBottom="@dimen/margin_medium"
         tools:text="Phone no*"
-        tools:visibility="visible"
         android:textAllCaps="true"
         android:fontFamily="@font/lato"
         android:layout_width="match_parent"

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/cl_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_market_value"
+    android:padding="@dimen/padding_medium"
+    >
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/lato"
+        android:maxLines="1"
+        tools:text="@string/title_market_value"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintBottom_toTopOf="@+id/tv_amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/tv_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/lato"
+        android:maxLines="1"
+        tools:text="@string/text_amount"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

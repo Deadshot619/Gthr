@@ -22,12 +22,12 @@ class CustomSpinner @JvmOverloads constructor(
 
 
     private val view: View = LayoutInflater.from(context).inflate(R.layout.layout_custom_spinner, this, true)
-    private val mLlMain: LinearLayoutCompat
+    private val mLlMain: LinearLayoutCompat = view.findViewById(R.id.ll_main)
 
-    var mSpnMain: AppCompatSpinner
+    var mSpnMain: AppCompatSpinner = view.findViewById(R.id.spn_main)
         private set
 
-    var mTvTitle : AppCompatTextView
+    var mTvTitle : AppCompatTextView = view.findViewById(R.id.tv_title)
         private set
 
     private var mInitialState: ColorState
@@ -38,11 +38,6 @@ class CustomSpinner @JvmOverloads constructor(
 
 
     init{
-
-        mLlMain = view.findViewById(R.id.ll_main)
-        mSpnMain = view.findViewById(R.id.spn_main)
-        mTvTitle =  view.findViewById(R.id.tv_title)
-
         val attrs = getContext().obtainStyledAttributes(attrs, R.styleable.CustomSpinner)
         attrs.getString(R.styleable.CustomSpinner_cs_title)?.let {
             mTvTitle.visible()
@@ -53,6 +48,8 @@ class CustomSpinner @JvmOverloads constructor(
         mSuccessState = ColorState.values()[attrs.getInt(R.styleable.CustomSpinner_cs_success_state, 1)]
         mErrorState = ColorState.values()[attrs.getInt(R.styleable.CustomSpinner_cs_error_state, 2)]
         setCurrentState(CurrentState.INITIAL)
+
+        attrs.recycle()
     }
 
 

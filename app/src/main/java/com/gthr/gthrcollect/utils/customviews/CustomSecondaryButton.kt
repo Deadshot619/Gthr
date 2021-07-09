@@ -39,6 +39,8 @@ class CustomSecondaryButton @JvmOverloads constructor(
 
         setState(state)
 
+        attrs.recycle()
+
     }
 
 

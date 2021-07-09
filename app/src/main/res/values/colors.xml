@@ -12,7 +12,6 @@
     <color name="colorPrimaryVariant">#1D83F4</color>
 
     <color name="toolbar_color">#3C92F1</color>
-
     <color name="view_stroke_color_grey">#B8BDC0</color>
 
     <!--Main Gradient-->
@@ -32,12 +31,18 @@
     <!--Custom Views-->
     <color name="red">#D74343</color>
     <color name="blue">#1574E3</color>
+    <color name="extra_light_blue">#F3F9FF</color>
     <color name="green">#30BA78</color>
     <color name="light_blue">#3C92F1</color>
     <color name="background">#F4F4F4</color>
     <color name="disable">#B8BDC0</color>
     <color name="hint_color">#626668</color>
     <color name="edit_text_error_color">#D74343</color>
+    <color name="collection_btn_bg">#F3F9FF</color>
+
+    <!--Light Blue Gradient-->
+    <color name="light_blue_gradient_start_color">#F4FAFF</color>
+    <color name="light_blue_gradient_end_color">#FFFFFF</color>
 
     <!--Yellow Gradient-->
     <color name="yellow_gradient_start_color">#FBB500</color>

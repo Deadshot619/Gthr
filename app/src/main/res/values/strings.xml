@@ -164,7 +164,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-
     <!--Add Address-->
     <string name="address">Address</string>
     <string name="address1">ADDRESS 1</string>
@@ -196,5 +195,27 @@
     <string name="add_new_address_postal_code_error">Enter postal code</string>
     <string name="add_new_address_poastal_code_input_error">Input postal code</string>
     <string name="add_new_address_postal_code_title_error">POSTAL CODE</string>
+
+
+    <!--Custom Fello View-->
+    <string name="title_followers">Followers</string>
+    <string name="title_following">Following</string>
+    <string name="title_sold">Sold</string>
+
+    <!--Custom Collection Charts View-->
+    <string name="title_market_value">Market Value</string>
+    <string name="title_collection_size">Collection Size</string>
+    <string name="title_average_price">Average Price</string>
+    <string name="text_amount">$1326.72</string>
+
+    <!--Collection Button-->
+    <string name="text_collection">Collection</string>
+    <string name="text_favorites">Favorites</string>
+
+    <!--Custom Delivery Button-->
+    <string name="text_pending">Pending</string>
+    <string name="text_delivered">Delivered</string>
+    <string name="text_transit">Transit</string>
+
 
 </resources>

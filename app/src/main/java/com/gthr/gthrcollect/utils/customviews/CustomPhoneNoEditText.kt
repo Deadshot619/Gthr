@@ -51,6 +51,8 @@ class CustomPhoneNoEditText @JvmOverloads constructor(
         mSuccessState = ColorState.values()[attrs.getInt(R.styleable.CustomPhoneNoEditText_phone_no_success_state, 1)]
 
         setCurrentState(CurrentState.INITIAL)
+
+        attrs.recycle()
     }
 
     private fun setState(state : ColorState) {

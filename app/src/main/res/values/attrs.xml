@@ -78,7 +78,6 @@
         </attr>
     </declare-styleable>
 
-
     <declare-styleable name="CustomSpinner">
         <attr name="cs_initial_state" format="enum">
             <enum name="GRAY" value="0"/>
@@ -98,11 +97,42 @@
             <enum name="RED" value="2"/>
             <enum name="BLUE" value="3" />
         </attr>
-
         <attr name="cs_title" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomFelloView">
+        <attr name="cfv_type" format="enum">
+            <enum name="FOLLOWERS" value="0" />
+            <enum name="FOLLOWING" value="1" />
+            <enum name="SOLD" value="2" />
+        </attr>
+        <attr name="cfv_count" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomCollectionChartsView">
+        <attr name="cccv_type" format="enum">
+            <enum name="MARKET_VALUE" value="0" />
+            <enum name="COLLECTION_SIZE" value="1" />
+            <enum name="AVERAGE_PRICE" value="2" />
+        </attr>
+        <attr name="cccv_amount" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomCollectionButton">
+        <attr name="ccb_type" format="enum">
+            <enum name="COLLECTION" value="0"/>
+            <enum name="FAVORITES" value="1"/>
+        </attr>
+    </declare-styleable>
 
 
-
+    <declare-styleable name="CustomDeliveryButton">
+        <attr name="cdb_type" format="enum">
+            <enum name="PRICE" value="0"/>
+            <enum name="PENDING" value="1"/>
+            <enum name="TRANSIT" value="2"/>
+            <enum name="DELIVERED" value="3"/>
+        </attr>
     </declare-styleable>
 
 

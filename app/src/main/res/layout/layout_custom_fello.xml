@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingVertical="@dimen/padding_small"
+    android:paddingHorizontal="@dimen/padding_extra_small"
+    android:background="@drawable/bg_fello_extra_light_blue"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_main"
+        android:layout_width="@dimen/size_custom_fello_view"
+        android:layout_height="@dimen/size_custom_fello_view"
+        android:src="@drawable/ic_followers"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato"
+        android:text="@string/title_followers"
+        android:textColor="@color/black"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginStart="@dimen/margin_start_fello_view_title"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_main"
+        app:layout_constraintTop_toTopOf="@+id/iv_main" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_extra_small"
+        android:layout_marginTop="@dimen/margin_top_fellow_view_count"
+        android:fontFamily="@font/lato"
+        tools:text="123"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/text_size_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
