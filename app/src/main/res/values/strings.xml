@@ -123,7 +123,7 @@
 
     <!--Permissions-->
     <string name="permission_needed_text">App needs Camera &amp; Storage permissions to capture photo</string>
-    <string name="settings_text">Settings</string>
+
     <!--Settings-->
     <string name="settings_text">Settings</string>
     <string name="btn_edit_account_info">Edit Account Info</string>
@@ -133,7 +133,6 @@
     <string name="btn_terms_and_conditions">Terms &amp; Conditions</string>
     <string name="btn_faq_and_help">FAQ and help</string>
     <string name="logout_text">Log Out</string>
-
 
     <!--Edit Account Info-->
     <string name="ea_birthday_name">BIRTHDAY</string>
@@ -163,12 +162,10 @@
     <string name="edit_acc_birthday_error">Users must be 18 or older.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
     <!--Add Address-->
     <string name="address">Address</string>
     <string name="address1">ADDRESS 1</string>
     <string name="address2">ADDRESS 2</string>
-
 
     <!--Settings Address-->
     <string name="full_name_builder">%s %s</string>
@@ -196,7 +193,7 @@
     <string name="add_new_address_poastal_code_input_error">Input postal code</string>
     <string name="add_new_address_postal_code_title_error">POSTAL CODE</string>
     <string name="text_save_changes">Save Changes</string>
-
+    <string name="text_edit_shipping_address">Edit Shipping Address</string>
 
     <!--Custom Fello View-->
     <string name="title_followers">Followers</string>
@@ -217,7 +214,5 @@
     <string name="text_pending">Pending</string>
     <string name="text_delivered">Delivered</string>
     <string name="text_transit">Transit</string>
-
-
 
 </resources>
