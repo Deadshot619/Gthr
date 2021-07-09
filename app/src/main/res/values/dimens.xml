@@ -142,5 +142,10 @@
     <!--Custom search view-->
     <dimen name="radius_search">10dp</dimen>
 
+    <!--Custom collection type-->
+    <dimen name="radius_collection_type">16dp</dimen>
+    <dimen name="size_update">12dp</dimen>
+    <dimen name="margin_update">5dp</dimen>
+
 
 </resources>

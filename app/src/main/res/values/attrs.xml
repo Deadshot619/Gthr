@@ -133,4 +133,13 @@
             <enum name="DELIVERED" value="3"/>
         </attr>
     </declare-styleable>
+
+
+    <declare-styleable name="CustomCollectionTypeView">
+        <attr name="ccv_isActive" format="boolean"/>
+        <attr name="ccv_isUpdate" format="boolean"/>
+        <attr name="cccv_text" format="string" />
+    </declare-styleable>
+
+
 </resources>

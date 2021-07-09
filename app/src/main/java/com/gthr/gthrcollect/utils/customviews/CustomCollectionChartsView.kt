@@ -24,9 +24,10 @@ class CustomCollectionChartsView @JvmOverloads constructor(
 
     init{
         val attrs = getContext().obtainStyledAttributes(attrs, R.styleable.CustomCollectionChartsView)
+        mCurrentType = Type.values()[attrs.getInt(R.styleable.CustomCollectionChartsView_cccv_type, 0)]
 
         attrs.getString(R.styleable.CustomCollectionChartsView_cccv_amount)?.let { mTvAmount.text = it }
-        mCurrentType = Type.values()[attrs.getInt(R.styleable.CustomCollectionChartsView_cccv_type, 0)]
+
         setCurrentType(mCurrentType)
 
     }

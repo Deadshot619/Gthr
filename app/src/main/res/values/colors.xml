@@ -39,6 +39,7 @@
     <color name="hint_color">#626668</color>
     <color name="edit_text_error_color">#D74343</color>
     <color name="collection_btn_bg">#F3F9FF</color>
+    <color name="update_bg">#FF4E4E</color>
 
     <!--Light Blue Gradient-->
     <color name="light_blue_gradient_start_color">#F4FAFF</color>
