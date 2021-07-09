@@ -17,12 +17,6 @@
         <action
             android:id="@+id/action_settingsFragment_to_editShippingAddressFragment"
             app:destination="@id/editShippingAddressFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_faqAndHelpFragment"
-            app:destination="@id/faqAndHelpFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_termsAndConditionsFragment"
-            app:destination="@id/termsAndConditionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editAccountInfoFragment"
@@ -40,14 +34,6 @@
             android:id="@+id/action_editShippingAddressFragment_to_addNewAddressFragment"
             app:destination="@id/addNewAddressFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/faqAndHelpFragment"
-        android:name="com.gthr.gthrcollect.ui.settings.faqandhelp.FaqAndHelpFragment"
-        android:label="FaqAndHelpFragment" />
-    <fragment
-        android:id="@+id/termsAndConditionsFragment"
-        android:name="com.gthr.gthrcollect.ui.settings.termsandconditions.TermsAndConditionsFragment"
-        android:label="TermsAndConditionsFragment" />
     <fragment
         android:id="@+id/addNewAddressFragment"
         android:name="com.gthr.gthrcollect.ui.settings.addnewaddress.AddNewAddressFragment"

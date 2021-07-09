@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/GthrCollectFullScreen">
-        <activity android:name=".ui.settings.SettingsActivity"></activity>
+        <activity android:name=".ui.termsandfaq.TermsAndFaqActivity"></activity>
+        <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.forgotpassword.ForgotPasswordActivity" />
         <activity android:name=".ui.homebottomnav.HomeBottomNavActivity" />
         <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity" />

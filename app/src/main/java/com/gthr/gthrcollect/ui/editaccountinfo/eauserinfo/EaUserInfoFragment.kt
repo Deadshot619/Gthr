@@ -6,17 +6,20 @@ import android.text.InputFilter
 import android.text.InputType
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.EaUserInfoFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants.DATE
 import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants.MONTH
 import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants.YEAR
 import com.gthr.gthrcollect.utils.customviews.CustomEditText
 import com.gthr.gthrcollect.utils.customviews.CustomPhoneNoEditText
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+import com.gthr.gthrcollect.utils.enums.WebViewType
 import com.gthr.gthrcollect.utils.extensions.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,6 +39,7 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
     private lateinit var mEtYYYY: CustomEditText
     private lateinit var mEtPhoneNo: CustomPhoneNoEditText
     private lateinit var mIvTermsAndConditions: AppCompatImageView
+    private lateinit var mTvTermsAndConditions: AppCompatTextView
 
     private var isTnCCheked = false
     private var selectedDate = Calendar.getInstance()
@@ -134,6 +138,7 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
         mEtYYYY = mViewBinding.etYear
         mEtPhoneNo = mViewBinding.etCustomPhoneNo
         mIvTermsAndConditions = mViewBinding.ivTermsAndConditions
+        mTvTermsAndConditions = mViewBinding.tvTermsAndConditions
     }
 
     private fun setUpClickListeners() {
@@ -165,6 +170,15 @@ class EaUserInfoFragment : BaseFragment<EaUserInfoViewModel, EaUserInfoFragmentB
                 mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
                 toggleTnC(false)
             }
+        }
+
+        mTvTermsAndConditions.setOnClickListener {
+            startActivity(
+                TermsAndFaqActivity.getInstance(
+                    requireContext(),
+                    WebViewType.TERMS_AND_CONDITION
+                )
+            )
         }
     }
 

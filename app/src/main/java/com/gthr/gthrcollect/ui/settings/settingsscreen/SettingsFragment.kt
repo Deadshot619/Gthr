@@ -5,7 +5,9 @@ import androidx.navigation.fragment.findNavController
 import com.gthr.gthrcollect.databinding.SettingsFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.settings.SettingsViewModel
+import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
+import com.gthr.gthrcollect.utils.enums.WebViewType
 
 class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding>() {
     override fun getViewBinding() = SettingsFragmentBinding.inflate(layoutInflater)
@@ -48,10 +50,15 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
 
         }
         mBtnTermsAndConditions.setOnClickListener {
-            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToTermsAndConditionsFragment())
+            startActivity(
+                TermsAndFaqActivity.getInstance(
+                    requireContext(),
+                    WebViewType.TERMS_AND_CONDITION
+                )
+            )
         }
         mBtnFaqAndHelp.setOnClickListener {
-            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToFaqAndHelpFragment())
+            startActivity(TermsAndFaqActivity.getInstance(requireContext(), WebViewType.FAQ))
         }
     }
 
