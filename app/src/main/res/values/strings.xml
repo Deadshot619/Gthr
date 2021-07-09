@@ -193,7 +193,6 @@
     <string name="add_new_address_poastal_code_input_error">Input postal code</string>
     <string name="add_new_address_postal_code_title_error">POSTAL CODE</string>
     <string name="text_save_changes">Save Changes</string>
-    <string name="text_edit_shipping_address">Edit Shipping Address</string>
 
     <!--Custom Fello View-->
     <string name="title_followers">Followers</string>

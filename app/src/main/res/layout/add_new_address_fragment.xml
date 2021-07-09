@@ -51,7 +51,7 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_public_profile"
+                    android:id="@+id/tv_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     style="@style/EditAccountPageTitle"
@@ -75,7 +75,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/et_last_name"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_public_profile" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
                 <com.gthr.gthrcollect.utils.customviews.CustomEditText
                     android:id="@+id/et_last_name"
@@ -90,7 +90,7 @@
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/et_first_name"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_public_profile" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
                 <com.gthr.gthrcollect.utils.customviews.CustomEditText
                     android:id="@+id/et_add1"

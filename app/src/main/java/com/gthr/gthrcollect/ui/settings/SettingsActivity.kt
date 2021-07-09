@@ -74,7 +74,7 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
         }
     }
 
-    private fun setToolbarTitle(title: String) {
+    fun setToolbarTitle(title: String) {
         mViewBinding.toolbarTitle.text = title
     }
 

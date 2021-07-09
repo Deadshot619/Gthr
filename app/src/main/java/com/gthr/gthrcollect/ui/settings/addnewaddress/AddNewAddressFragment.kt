@@ -1,12 +1,14 @@
 package com.gthr.gthrcollect.ui.settings.addnewaddress
 
 import android.text.InputType
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AddNewAddressFragmentBinding
 import com.gthr.gthrcollect.model.domain.ShippingAddress
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.ui.settings.addnewaddress.adapter.SpinnerAdapter
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
 import com.gthr.gthrcollect.utils.customviews.CustomEditText
@@ -21,6 +23,7 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
     override val mViewModel: AddNewAddressViewModel by viewModels()
     private val args by navArgs<AddNewAddressFragmentArgs>()
 
+    private lateinit var mTvTitle: TextView
     private lateinit var mEtFirstName: CustomEditText
     private lateinit var mEtLastName: CustomEditText
     private lateinit var mEtAdd1: CustomEditText
@@ -51,15 +54,29 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
             args.mShippinAddress?.let {
                 setViewWithValues(it)
             }
-        }
-        else{
+        } else {
             mBtnAddNewAdd.text = getString(R.string.add_new_address)
         }
 
     }
 
+    private fun initViews() {
+        mTvTitle = mViewBinding.tvTitle
+        mEtFirstName = mViewBinding.etFirstName
+        mEtLastName = mViewBinding.etLastName
+        mEtAdd1 = mViewBinding.etAdd1
+        mEtAdd2 = mViewBinding.etAdd2
+        mEtCity = mViewBinding.etCity
+        mSpnCountry = mViewBinding.spnCountry
+        mSpnState = mViewBinding.spnState
+        mBtnAddNewAdd = mViewBinding.btnAddNewAdd
+        mEtPostalCode = mViewBinding.etPostalCode
+    }
+
     private fun setViewWithValues(shippingAddress: ShippingAddress) {
         mBtnAddNewAdd.text = getString(R.string.text_save_changes)
+        mTvTitle.text = getString(R.string.edit_shipping_address_text)
+        (activity as SettingsActivity).setToolbarTitle(getString(R.string.edit_shipping_address_text))
 
         mEtFirstName.mEtMain.setText(shippingAddress.firstName)
         mEtLastName.mEtMain.setText(shippingAddress.lastName)
@@ -68,15 +85,15 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
         mEtCity.mEtMain.setText(shippingAddress.city)
         mEtPostalCode.mEtMain.setText(shippingAddress.postalCode)
 
-        for(index in states.indices){
-            if(states[index]==shippingAddress.state){
+        for (index in states.indices) {
+            if (states[index] == shippingAddress.state) {
                 mSpnState.mSpnMain.setSelection(index)
                 break
             }
         }
 
-        for(index in countries.indices){
-            if(countries[index]==shippingAddress.country){
+        for (index in countries.indices) {
+            if (countries[index] == shippingAddress.country) {
                 mSpnCountry.mSpnMain.setSelection(index)
                 break
             }
@@ -193,18 +210,6 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
             }
 
         }
-    }
-
-    private fun initViews() {
-        mEtFirstName = mViewBinding.etFirstName
-        mEtLastName = mViewBinding.etLastName
-        mEtAdd1 = mViewBinding.etAdd1
-        mEtAdd2 = mViewBinding.etAdd2
-        mEtCity = mViewBinding.etCity
-        mSpnCountry = mViewBinding.spnCountry
-        mSpnState = mViewBinding.spnState
-        mBtnAddNewAdd = mViewBinding.btnAddNewAdd
-        mEtPostalCode = mViewBinding.etPostalCode
     }
 
     private fun setUpClickListeners() {
