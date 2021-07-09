@@ -2,6 +2,7 @@ package com.gthr.gthrcollect.ui.settings.addnewaddress
 
 import android.text.InputType
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AddNewAddressFragmentBinding
 import com.gthr.gthrcollect.model.domain.ShippingAddress
@@ -18,6 +19,7 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
 
     override fun getViewBinding() = AddNewAddressFragmentBinding.inflate(layoutInflater)
     override val mViewModel: AddNewAddressViewModel by viewModels()
+    private val args by navArgs<AddNewAddressFragmentArgs>()
 
     private lateinit var mEtFirstName: CustomEditText
     private lateinit var mEtLastName: CustomEditText
@@ -32,6 +34,8 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
     private var mSpnCountryFirstTimeFlag = true
     private var mSpnStateFirstTimeFlag = true
 
+    private val countries = arrayListOf<String>()
+    private val states = arrayListOf<String>()
 
     override fun onBinding() {
 
@@ -40,21 +44,59 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
         setUpOnItemSelectedListeners()
         setUpTextChangeListeners()
         setUpInputType()
+        setUpStateAndCountry()
 
-        val country = arrayListOf<String>()
-        country.add("Select Country")
-        country.add("Usa")
-        mSpnCountry.mSpnMain.adapter = SpinnerAdapter(country)
 
-        val state = arrayListOf<String>()
-        state.add("Select state/province")
-        state.add("Alabama")
-        state.add("Alaska")
-        state.add("Arizona")
-        state.add("Arkansas")
-        state.add("California")
-        mSpnState.mSpnMain.adapter = SpinnerAdapter(state)
+        if (args.isEdit) {
+            args.mShippinAddress?.let {
+                setViewWithValues(it)
+            }
+        }
+        else{
+            mBtnAddNewAdd.text = getString(R.string.add_new_address)
+        }
 
+    }
+
+    private fun setViewWithValues(shippingAddress: ShippingAddress) {
+        mBtnAddNewAdd.text = getString(R.string.text_save_changes)
+
+        mEtFirstName.mEtMain.setText(shippingAddress.firstName)
+        mEtLastName.mEtMain.setText(shippingAddress.lastName)
+        mEtAdd1.mEtMain.setText(shippingAddress.addressLine1)
+        mEtAdd2.mEtMain.setText(shippingAddress.addressLine2)
+        mEtCity.mEtMain.setText(shippingAddress.city)
+        mEtPostalCode.mEtMain.setText(shippingAddress.postalCode)
+
+        for(index in states.indices){
+            if(states[index]==shippingAddress.state){
+                mSpnState.mSpnMain.setSelection(index)
+                break
+            }
+        }
+
+        for(index in countries.indices){
+            if(countries[index]==shippingAddress.country){
+                mSpnCountry.mSpnMain.setSelection(index)
+                break
+            }
+        }
+    }
+
+    private fun setUpStateAndCountry() {
+
+        countries.add("Select Country")
+        countries.add("Usa")
+        mSpnCountry.mSpnMain.adapter = SpinnerAdapter(countries)
+
+
+        states.add("Select state/province")
+        states.add("Alabama")
+        states.add("Alaska")
+        states.add("Arizona")
+        states.add("Arkansas")
+        states.add("California")
+        mSpnState.mSpnMain.adapter = SpinnerAdapter(states)
     }
 
     private fun setUpInputType() {
@@ -91,6 +133,15 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
                 mBtnAddNewAdd.disableAuthButton()
             }
         }
+
+        mEtAdd2.mEtMain.afterTextChanged {
+            if (it.isNotEmpty()) {
+                mEtAdd2.setSuccess()
+            } else {
+                mEtAdd2.setInitial()
+            }
+        }
+
 
         mEtCity.mEtMain.afterTextChanged {
             if (it.isNotEmpty()) {

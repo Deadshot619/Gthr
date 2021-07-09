@@ -1,5 +1,9 @@
 package com.gthr.gthrcollect.model.domain
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class ShippingAddress(
     val id: Int,
     var firstName: String,
@@ -11,4 +15,4 @@ data class ShippingAddress(
     var country: String,
     var postalCode: String,
     var isSelected: Boolean
-)
+) : Parcelable

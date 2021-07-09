@@ -39,6 +39,8 @@ class EditShippingAddressFragment :
 
                 override fun onClickEdit(shippingAddress: ShippingAddress) {
                     showToast("Edit click")
+                    val action = EditShippingAddressFragmentDirections.actionEditShippingAddressFragmentToAddNewAddressFragment(shippingAddress,true)
+                    findNavController().navigate(action)
                 }
 
                 override fun onClickDelete(shippingAddress: ShippingAddress) {
@@ -50,7 +52,8 @@ class EditShippingAddressFragment :
 
     private fun setUpClickListeners() {
         mBtnAddNewAddress.setOnClickListener {
-            findNavController().navigate(EditShippingAddressFragmentDirections.actionEditShippingAddressFragmentToAddNewAddressFragment())
+            val action = EditShippingAddressFragmentDirections.actionEditShippingAddressFragmentToAddNewAddressFragment(null,false)
+            findNavController().navigate(action)
         }
     }
 
