@@ -100,8 +100,7 @@ class EaIdVerificationFragment :
                     CustomCamera.getInstance(
                         requireContext(),
                         CameraViews.ID_VERIFICATION,
-                        isFront = false
-                    ),
+                        isFront = false),
                     REQUEST_CODE_BACK_ID
                 )
             }

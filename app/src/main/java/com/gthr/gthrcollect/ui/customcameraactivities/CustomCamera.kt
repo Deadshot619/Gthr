@@ -12,12 +12,10 @@ import android.media.Image
 import android.media.ImageReader
 import android.media.ImageReader.OnImageAvailableListener
 import android.media.MediaScannerConnection
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
-import android.provider.Settings
 import android.util.Size
 import android.util.SparseIntArray
 import android.view.*
@@ -46,9 +44,10 @@ class CustomCamera : AppCompatActivity() {
     private lateinit var mCardLayout: View
     lateinit var mPreview_layout: RelativeLayout
     lateinit var mBtn_camera: ImageView
+    private lateinit var mChangeCamera:ImageView
     private var mTextureView: TextureView? = null
     private var mCameraDevice: CameraDevice? = null
-    private var cameraId: String? = null
+    private var cameraId: String? = CAMERA_BACK
     private var mImageDimensions: Size? = null
     private var mCameraCaptureSession: CameraCaptureSession? = null
     private var mCaptureRequestBuilder: CaptureRequest.Builder? = null
@@ -91,6 +90,7 @@ class CustomCamera : AppCompatActivity() {
         mPreviewTextView = findViewById(R.id.tv_preview_text)
 
         mBtn_camera = findViewById(R.id.btn_camera)
+        mChangeCamera=findViewById(R.id.changeCamera)
 
         mCameraViews = intent.getStringExtra(CAMERA_VIEW)
         mIsFrontView = intent.getBooleanExtra(IS_FRONT, false)
@@ -106,6 +106,75 @@ class CustomCamera : AppCompatActivity() {
         }
 
         mBtn_camera.setOnClickListener { takePicture() }
+
+        mChangeCamera.setOnClickListener {
+
+            if (cameraId.equals(CAMERA_BACK)){
+                openFrontCamera()
+            }
+            else{
+                openBackCamera()
+            }
+
+        }
+
+    }
+
+    private fun openBackCamera() {
+
+
+        cameraId=CAMERA_BACK
+        this@CustomCamera.mCameraDevice!!.close()
+        this@CustomCamera.mCameraDevice = null
+
+        stopBackgroundThread()
+
+        mStateCallback = object : CameraDevice.StateCallback() {
+            override fun onOpened(camera: CameraDevice) {
+                mCameraDevice = camera
+                createCameraPreview()
+            }
+
+            override fun onDisconnected(mCameraDevice: CameraDevice) {
+                this@CustomCamera.mCameraDevice!!.close()
+            }
+
+            override fun onError(mCameraDevice: CameraDevice, i: Int) {
+                this@CustomCamera.mCameraDevice!!.close()
+                this@CustomCamera.mCameraDevice = null // Change to global
+            }
+        }
+
+        startBackgroundThread()
+        if (mTextureView!!.isAvailable) openCamera() else mTextureView!!.surfaceTextureListener =
+            textureListener
+    }
+
+    private fun openFrontCamera() {
+
+        cameraId= CAMERA_FRONT
+        this@CustomCamera.mCameraDevice!!.close()
+        this@CustomCamera.mCameraDevice = null
+        stopBackgroundThread()
+        mStateCallback = object : CameraDevice.StateCallback() {
+            override fun onOpened(camera: CameraDevice) {
+                mCameraDevice = camera
+                createCameraPreview()
+            }
+
+            override fun onDisconnected(mCameraDevice: CameraDevice) {
+                this@CustomCamera.mCameraDevice!!.close()
+            }
+
+            override fun onError(mCameraDevice: CameraDevice, i: Int) {
+                this@CustomCamera.mCameraDevice!!.close()
+                this@CustomCamera.mCameraDevice = null // Change to global
+            }
+        }
+
+        startBackgroundThread()
+        if (mTextureView!!.isAvailable) openCamera() else mTextureView!!.surfaceTextureListener =
+            textureListener
     }
 
     fun takePicture() {
@@ -180,8 +249,6 @@ class CustomCamera : AppCompatActivity() {
                         var y2 = 0
 
                         //get viewfinder border size and position on the screen
-
-
                         if (mCameraViews!!.equals(CameraViews.ID_VERIFICATION.toString())) {
 
                             x1 = mIdLayout.left - mIdLayout.paddingLeft - mIdLayout.paddingRight
@@ -233,11 +300,6 @@ class CustomCamera : AppCompatActivity() {
                     result: TotalCaptureResult
                 ) {
                     super.onCaptureCompleted(session, request, result)
-                    Toast.makeText(
-                        this@CustomCamera,
-                        getString(R.string.storage_permission),
-                        Toast.LENGTH_SHORT
-                    ).show()
 
                     createCameraPreview()
 
@@ -279,19 +341,14 @@ class CustomCamera : AppCompatActivity() {
             mCameraDevice!!.createCaptureSession(
                 Arrays.asList(surface),
                 object : CameraCaptureSession.StateCallback() {
+
                     override fun onConfigured(session: CameraCaptureSession) {
                         if (mCameraDevice == null) return
                         mCameraCaptureSession = session
                         updatePreview()
                     }
 
-                    override fun onConfigureFailed(mCameraCaptureSession: CameraCaptureSession) {
-                        Toast.makeText(
-                            this@CustomCamera,
-                            getString(R.string.change),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                    override fun onConfigureFailed(session: CameraCaptureSession) {}
                 },
                 null
             )
@@ -322,7 +379,7 @@ class CustomCamera : AppCompatActivity() {
     private fun openCamera() {
         val cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
         try {
-            cameraId = cameraManager.cameraIdList[0]
+        //    cameraId = cameraManager.cameraIdList[0]
             val cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId!!)
             val map =
                 cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!
@@ -350,9 +407,6 @@ class CustomCamera : AppCompatActivity() {
                 )
                 return
             }
-
-
-
             cameraManager.openCamera(cameraId!!, mStateCallback!!, null)
         } catch (e: CameraAccessException) {
             e.printStackTrace()
@@ -399,10 +453,7 @@ class CustomCamera : AppCompatActivity() {
         ) {
             if (mTextureView!!.isAvailable) openCamera() else mTextureView!!.surfaceTextureListener =
                 textureListener
-
         }
-
-
     }
 
     override fun onPause() {
@@ -435,39 +486,10 @@ class CustomCamera : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED
-        ) {
-
-            openCamera();
-
-        }
-
-
-/*
-        when (requestCode) {
-            102 ->
-
-
-
-        }
-*/
+        ) { openCamera(); }
     }
 
-    private fun openSettings() {
-
-
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        val uri = Uri.fromParts("package", packageName, null)
-        intent.data = uri
-        startActivity(intent)
-        Toast.makeText(
-            this,
-            getString(R.string.permission_denied),
-            Toast.LENGTH_SHORT
-        ).show()
-    }
 
 
     fun createImageFile(bitmap: Bitmap) {
@@ -494,10 +516,6 @@ class CustomCamera : AppCompatActivity() {
                 GthrLogger.i("ExternalStorage", "-> uri=$uri")
                 GthrLogger.e("URL", uri.toString())
             }
-            Toast.makeText(this, mFile.name, Toast.LENGTH_SHORT).show()
-
-
-
 
             startActivityForResult(
                 ImagePreview.getInstance(this, mFile.path, mCameraViews!!), REQUEST_CODE_PREVIEW
@@ -528,6 +546,9 @@ class CustomCamera : AppCompatActivity() {
 
         const val CAMERA_VIEW = "camera_view"
         const val IS_FRONT = "is_front"
+
+        const val CAMERA_FRONT = "1"
+        const val CAMERA_BACK = "0"
 
         init {
             ORIENTATIONS.append(Surface.ROTATION_0, 90)
