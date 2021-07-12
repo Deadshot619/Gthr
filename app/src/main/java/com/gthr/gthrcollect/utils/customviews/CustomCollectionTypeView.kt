@@ -46,7 +46,7 @@ class CustomCollectionTypeView @JvmOverloads constructor(
         } else {
             mTvTitle.background = getImageDrawable(R.drawable.bg_custom_collection_type_gray)
             mTvTitle.setTextColor(getResolvedColor(R.color.black))
-            mTvTitle.setTypeface(mTvTitle.typeface, Typeface.NORMAL)
+            mTvTitle.typeface = Typeface.DEFAULT
         }
     }
 

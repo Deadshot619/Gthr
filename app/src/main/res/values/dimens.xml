@@ -23,6 +23,7 @@
     <dimen name="text_size_medium">14sp</dimen>
     <dimen name="text_size_normal">16sp</dimen>
     <dimen name="text_size_extra_large">24sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
 
     <!--Margin-->
     <dimen name="margin_extra_small">8dp</dimen>
@@ -140,12 +141,23 @@
     <dimen name="width_delivery_view">200dp</dimen>
 
     <!--Custom search view-->
-    <dimen name="radius_search">10dp</dimen>
+    <dimen name="radius_search">8dp</dimen>
 
     <!--Custom collection type-->
     <dimen name="radius_collection_type">16dp</dimen>
     <dimen name="size_update">12dp</dimen>
-    <dimen name="margin_update">5dp</dimen>
+    <dimen name="margin_update">3dp</dimen>
+
+    <!--Custom collection type-->
+    <dimen name="search_toolbar_margin">40dp</dimen>
+    <dimen name="width_search_stroke">1dp</dimen>
+    <dimen name="radius_search_view">8dp</dimen>
+    <dimen name="margin_text_view">4dp</dimen>
+
+    <!--Search Ui-->
+    <dimen name="padding_vertical_search">4dp</dimen>
+    <dimen name="elevation_search_type">8dp</dimen>
+
 
 
 </resources>

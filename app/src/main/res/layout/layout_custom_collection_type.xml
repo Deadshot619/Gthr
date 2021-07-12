@@ -8,16 +8,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_margin="@dimen/margin_extra_small"
+        android:layout_margin="@dimen/margin_text_view"
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:ellipsize="end"
         android:fontFamily="@font/lato"
         android:maxLines="1"
+        android:textSize="@dimen/text_size_small"
         android:gravity="center"
         android:paddingVertical="@dimen/padding_extra_small"
-        android:paddingHorizontal="@dimen/padding_extra_large"
+        android:paddingHorizontal="@dimen/padding_normal"
         android:background="@drawable/bg_custom_collection_type_blue"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.widget.AppCompatEditText
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.utils.extensions.afterTextChanged
 import com.gthr.gthrcollect.utils.extensions.getImageDrawable
 import com.gthr.gthrcollect.utils.extensions.getResolvedColor
 
@@ -17,8 +18,7 @@ class CustomSearchView @JvmOverloads constructor(
 ) : AppCompatEditText(context, attrs, defStyleAttr) {
 
     init{
-
-        this.background = getImageDrawable(R.drawable.bg_search_edit_text_gray)
+        setSearchBackground(true)
         this.isFocusable = true
         this.isFocusableInTouchMode = true
         this.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
@@ -27,8 +27,30 @@ class CustomSearchView @JvmOverloads constructor(
         this.setPadding(padding, paddingVertical, padding, paddingVertical)
         this.setHintTextColor(getResolvedColor(R.color.hint_color))
         this.compoundDrawablePadding = paddingVertical
-        this.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search, 0, 0, 0)
+
+
+        this.afterTextChanged {
+            if(it.isNotEmpty()){
+                setSearchBackground(false)
+            }
+            else{
+                setSearchBackground(true)
+            }
+        }
 
     }
+
+    fun setSearchBackground(isEmpty : Boolean){
+        if(isEmpty){
+            this.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search, 0, 0, 0)
+            this.background = getImageDrawable(R.drawable.bg_search_edit_text_gray)
+        }
+        else{
+            this.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            this.background = getImageDrawable(R.drawable.bg_search_edit_text_blue)
+        }
+    }
+
+
 
 }

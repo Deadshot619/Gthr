@@ -214,4 +214,12 @@
     <string name="text_delivered">Delivered</string>
     <string name="text_transit">Transit</string>
 
+    <!--Search -->
+    <string name="text_search">Search</string>
+    <string name="text_for_sale">For Sale</string>
+    <string name="text_collections">Collections</string>
+    <string name="text_product">Products</string>
+    <string name="text_most_fav">Most Favorited</string>
+    <string name="text_most_followed">Most Followed</string>
+
 </resources>
