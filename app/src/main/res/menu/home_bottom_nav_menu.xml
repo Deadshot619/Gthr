@@ -6,12 +6,12 @@
         android:title="@string/menu_feed_title" />
 
     <item
-        android:id="@+id/search_menu"
+        android:id="@+id/searchFragment"
         android:icon="@drawable/menu_search_selection"
         android:title="@string/menu_search_title" />
 
     <item
-        android:id="@+id/sign_in"
+        android:id="@+id/signInFragment"
         android:icon="@drawable/menu_profile_selection"
         android:title="@string/menu_profile_title" />
 </menu>
