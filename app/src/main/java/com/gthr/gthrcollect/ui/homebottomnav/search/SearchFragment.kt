@@ -46,21 +46,21 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 mCctForSale.setActive(false)
                 mCctCollections.setActive(false)
                 mIvFilter.visible()
-                mTvTitle.text = getString(R.string.text_most_fav)
+                this.mTvTitle.text = getString(R.string.text_most_fav)
             }
             mCctForSale -> {
                 mCctProduct.setActive(false)
                 mCctForSale.setActive(true)
                 mCctCollections.setActive(false)
                 mIvFilter.visible()
-                mTvTitle.text = getString(R.string.text_most_fav)
+                this.mTvTitle.text = getString(R.string.text_most_fav)
             }
             mCctCollections -> {
                 mCctProduct.setActive(false)
                 mCctForSale.setActive(false)
                 mCctCollections.setActive(true)
                 mIvFilter.gone()
-                mTvTitle.text = getString(R.string.text_most_followed)
+                this.mTvTitle.text = getString(R.string.text_most_followed)
             }
         }
     }
@@ -70,7 +70,9 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mCctForSale = mViewBinding.cctForSale
         mCctCollections = mViewBinding.cctCollections
         mIvFilter = mViewBinding.ivFilter
-        mTvTitle = mViewBinding.tvTitle
+        mTvTitle = mViewBinding.tvSearchTitle
+
+        setSelectedCct(mCctProduct)
     }
 
 }
