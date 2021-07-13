@@ -3,7 +3,8 @@ package com.gthr.gthrcollect.ui.settings.editshippingaddress
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.GsonBuilder
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.EditShippingAddressFragmentBinding
 import com.gthr.gthrcollect.model.domain.ShippingAddress
 import com.gthr.gthrcollect.ui.base.BaseFragment
@@ -50,7 +51,7 @@ class EditShippingAddressFragment :
                 }
 
                 override fun onClickDelete(shippingAddress: ShippingAddress) {
-                    showToast("Delete click")
+                    showDeleteDialog()
                 }
             })
         }
@@ -75,6 +76,18 @@ class EditShippingAddressFragment :
     override fun onStart() {
         super.onStart()
         mViewModel.getShippingAddress()
+    }
+
+    private fun showDeleteDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.dialog_title_confirm_delete))
+            .setMessage(getString(R.string.dialog_msg_delete_address_note))
+            .setPositiveButton(getString(R.string.dialog_btn_delete)) { dialog, _ ->
+                showToast(getString(R.string.dialog_btn_delete))
+            }
+            .setNegativeButton(getString(R.string.dialog_btn_cancel)) { _, _ ->
+                showToast(getString(R.string.dialog_btn_cancel))
+            }.show();
     }
 }
 
