@@ -14,5 +14,7 @@ data class ShippingAddress(
     var state: String,
     var country: String,
     var postalCode: String,
-    var isSelected: Boolean
+    var isSelected: Boolean,
+
+
 ) : Parcelable

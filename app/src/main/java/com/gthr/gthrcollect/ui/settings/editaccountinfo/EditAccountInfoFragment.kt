@@ -78,7 +78,7 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
         mEtYYYY.mEtMain.isFocusable = false
         mEtYYYY.mEtMain.isFocusableInTouchMode = false
 
-        mEtMM.mEtMain.setOnClickListener {
+     /*   mEtMM.mEtMain.setOnClickListener {
             showDatePicker()
         }
 
@@ -88,11 +88,12 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
 
         mEtYYYY.mEtMain.setOnClickListener {
             showDatePicker()
-        }
+        }*/
 
 
     }
 
+/*
     private fun showDatePicker() {
 
         showBirthDayPicker(selectedDate.timeInMillis) {
@@ -111,6 +112,7 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
 
 
     }
+*/
 
     private fun setUpClickListeners() {
         mBtnSaveChanges.setOnClickListener {

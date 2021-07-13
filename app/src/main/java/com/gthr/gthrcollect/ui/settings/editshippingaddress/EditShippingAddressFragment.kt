@@ -3,16 +3,18 @@ package com.gthr.gthrcollect.ui.settings.editshippingaddress
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.GsonBuilder
 import com.gthr.gthrcollect.databinding.EditShippingAddressFragmentBinding
 import com.gthr.gthrcollect.model.domain.ShippingAddress
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.settings.addnewaddress.AddNewAddressViewModelFactory
 import com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
 import com.gthr.gthrcollect.utils.extensions.showToast
 
 class EditShippingAddressFragment :
     BaseFragment<EditShippingAddressViewModel, EditShippingAddressFragmentBinding>() {
     override fun getViewBinding() = EditShippingAddressFragmentBinding.inflate(layoutInflater)
-    override val mViewModel: EditShippingAddressViewModel by viewModels()
+    override val mViewModel: EditShippingAddressViewModel by viewModels ()
 
     private lateinit var mBtnAddNewAddress: CustomImageTextButton
     private lateinit var mRvShippingAddress: RecyclerView
@@ -38,8 +40,12 @@ class EditShippingAddressFragment :
                 }
 
                 override fun onClickEdit(shippingAddress: ShippingAddress) {
-                    showToast("Edit click")
-                    val action = EditShippingAddressFragmentDirections.actionEditShippingAddressFragmentToAddNewAddressFragment(shippingAddress,true)
+
+                    val action =
+                        EditShippingAddressFragmentDirections.actionEditShippingAddressFragmentToAddNewAddressFragment(
+                            shippingAddress,
+                            true
+                        )
                     findNavController().navigate(action)
                 }
 
@@ -52,7 +58,11 @@ class EditShippingAddressFragment :
 
     private fun setUpClickListeners() {
         mBtnAddNewAddress.setOnClickListener {
-            val action = EditShippingAddressFragmentDirections.actionEditShippingAddressFragmentToAddNewAddressFragment(null,false)
+            val action =
+                EditShippingAddressFragmentDirections.actionEditShippingAddressFragmentToAddNewAddressFragment(
+                    null,
+                    false
+                )
             findNavController().navigate(action)
         }
     }
@@ -60,4 +70,12 @@ class EditShippingAddressFragment :
     private fun setUpRecyclerView() {
         mRvShippingAddress.adapter = mRvAdapter
     }
+
+
+    override fun onStart() {
+        super.onStart()
+        mViewModel.getShippingAddress()
+    }
 }
+
+

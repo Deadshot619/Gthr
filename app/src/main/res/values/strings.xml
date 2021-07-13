@@ -181,7 +181,8 @@
 
     <!--Add New Address-->
     <string name="country">COUNTRY</string>
-    <string name="select_country">select country</string>
+    <string name="select_country">Select Country</string>
+    <string name="select_states">Select State</string>
     <string name="state_province">STATE/PROVINCE</string>
     <string name="add_new_address">Add New Address</string>
     <string name="add_new_address_name_error">Enter first name</string>

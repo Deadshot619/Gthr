@@ -20,7 +20,11 @@ import com.gthr.gthrcollect.utils.extensions.selected
 class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddressFragmentBinding>() {
 
     override fun getViewBinding() = AddNewAddressFragmentBinding.inflate(layoutInflater)
-    override val mViewModel: AddNewAddressViewModel by viewModels()
+    override val mViewModel: AddNewAddressViewModel by viewModels {
+        AddNewAddressViewModelFactory(
+            requireContext()
+        )
+    }
     private val args by navArgs<AddNewAddressFragmentArgs>()
 
     private lateinit var mTvTitle: TextView
@@ -37,8 +41,6 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
     private var mSpnCountryFirstTimeFlag = true
     private var mSpnStateFirstTimeFlag = true
 
-    private val countries = arrayListOf<String>()
-    private val states = arrayListOf<String>()
 
     override fun onBinding() {
 
@@ -47,8 +49,8 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
         setUpOnItemSelectedListeners()
         setUpTextChangeListeners()
         setUpInputType()
-        setUpStateAndCountry()
-
+        setUpObservers()
+        populateCountryState()
 
         if (args.isEdit) {
             args.mShippinAddress?.let {
@@ -85,35 +87,19 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
         mEtCity.mEtMain.setText(shippingAddress.city)
         mEtPostalCode.mEtMain.setText(shippingAddress.postalCode)
 
-        for (index in states.indices) {
-            if (states[index] == shippingAddress.state) {
-                mSpnState.mSpnMain.setSelection(index)
-                break
-            }
-        }
 
-        for (index in countries.indices) {
-            if (countries[index] == shippingAddress.country) {
+        for (index in mViewModel.countryList!!.indices) {
+            if (mViewModel.countryList!![index] == shippingAddress.country) {
                 mSpnCountry.mSpnMain.setSelection(index)
                 break
             }
         }
+
+
     }
 
-    private fun setUpStateAndCountry() {
-
-        countries.add("Select Country")
-        countries.add("Usa")
-        mSpnCountry.mSpnMain.adapter = SpinnerAdapter(countries)
-
-
-        states.add("Select state/province")
-        states.add("Alabama")
-        states.add("Alaska")
-        states.add("Arizona")
-        states.add("Arkansas")
-        states.add("California")
-        mSpnState.mSpnMain.adapter = SpinnerAdapter(states)
+    private fun populateCountryState() {
+        mSpnCountry.mSpnMain.adapter = SpinnerAdapter(mViewModel.countryList!!)
     }
 
     private fun setUpInputType() {
@@ -194,22 +180,42 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
                 else
                     mBtnAddNewAdd.disableAuthButton()
             }
-
         }
 
         mSpnCountry.mSpnMain.selected {
+
             if (it != 0) {
                 mSpnCountry.setSuccess()
-                if (validate(false)) mBtnAddNewAdd.enableAuthButton() else mBtnAddNewAdd.disableAuthButton()
+                if (validate(false)) {
+                    mBtnAddNewAdd.enableAuthButton()
+                } else {
+                    mBtnAddNewAdd.disableAuthButton()
+                    mViewModel.getStates(mSpnCountry.mSpnMain.selectedItem.toString())
+                    }
             } else {
+                mViewModel.getStates(mSpnCountry.mSpnMain.selectedItem.toString())
                 mSpnCountry.setInitial()
                 if (mSpnCountryFirstTimeFlag)
                     mSpnCountryFirstTimeFlag = false
                 else
                     mBtnAddNewAdd.disableAuthButton()
             }
-
         }
+    }
+
+    private fun setUpObservers() {
+        mViewModel.stateList.observe(viewLifecycleOwner, {
+            mSpnState.mSpnMain.adapter = SpinnerAdapter(it)
+            if ( args.isEdit){
+                for (index in it.indices) {
+                    if (it[index]== args.mShippinAddress!!.state) {
+                        mSpnState.mSpnMain.setSelection(index)
+                        break
+                    }
+                }
+            }
+        })
+
     }
 
     private fun setUpClickListeners() {
@@ -227,6 +233,7 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
                         city = mEtCity.mEtMain.text.toString().trim(),
                         postalCode = mEtPostalCode.mEtMain.text.toString().trim(),
                         isSelected = false
+
                     )
                 )
                 activity?.onBackPressed()
@@ -272,9 +279,7 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
             isValidate = false
         }
 
-
         return isValidate
-
     }
 
 
