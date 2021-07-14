@@ -142,4 +142,13 @@
     </declare-styleable>
 
 
+    <declare-styleable name="CustomFilterCategoryView">
+        <attr name="cfcv_isActive" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomFilterSubCategoryView">
+        <attr name="cfscv_isActive" format="boolean"/>
+    </declare-styleable>
+
+
 </resources>

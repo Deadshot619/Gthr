@@ -5,6 +5,8 @@
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="birth_day_dialog_title">Select date</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
     <!--Home Bottom Menu-->
     <string name="menu_feed_title">Feed</string>
@@ -226,5 +228,16 @@
     <string name="text_product">Products</string>
     <string name="text_most_fav">Most Favorited</string>
     <string name="text_most_followed">Most Followed</string>
+    <string name="text_sorting">Sorting</string>
+    <string name="text_filter_ask_lowest">Ask: Lowest</string>
+    <string name="text_filter_ask_highest">Ask: Highest</string>
+    <string name="text_filter_most_favorited">Most Favorited</string>
+    <string name="text_filter_category">Category</string>
+    <string name="text_filter_cards">Cards</string>
+    <string name="text_filter_pokemon">Pokemon</string>
+    <string name="text_filter_yu_gi_oh">Yu-Gi-Oh</string>
+    <string name="text_filter_magic_the_gathering">Magic: The Gathering</string>
+    <string name="text_filter_toys">Toys</string>
+    <string name="text_filter_sealed">Sealed</string>
 
 </resources>

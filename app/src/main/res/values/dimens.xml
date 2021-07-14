@@ -158,6 +158,12 @@
     <dimen name="padding_vertical_search">4dp</dimen>
     <dimen name="elevation_search_type">8dp</dimen>
 
+    <!--Search Filter-->
+    <dimen name="width_filter">150dp</dimen>
+    <dimen name="guideline_filter_start">36dp</dimen>
+    <dimen name="guideline_top">64dp</dimen>
+    <dimen name="radius_filter">8dp</dimen>
+    <dimen name="width_navigation_view">250dp</dimen>
 
 
 </resources>

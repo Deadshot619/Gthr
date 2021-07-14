@@ -1,12 +1,20 @@
 package com.gthr.gthrcollect.ui.homebottomnav.search
 
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.SearchFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+import com.gthr.gthrcollect.utils.customviews.CustomFilterCategoryView
+import com.gthr.gthrcollect.utils.customviews.CustomFilterSubCategoryView
+import com.gthr.gthrcollect.utils.extensions.animateVisibility
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
 
@@ -15,12 +23,43 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     override fun getViewBinding() = SearchFragmentBinding.inflate(layoutInflater)
     override val mViewModel: SearchViewModel by viewModels()
 
-    private lateinit var mCctProduct : CustomCollectionTypeView
-    private lateinit var mCctForSale : CustomCollectionTypeView
-    private lateinit var mCctCollections : CustomCollectionTypeView
+    private lateinit var mDrawer: DrawerLayout
+    private lateinit var mToggle: ActionBarDrawerToggle
+    private lateinit var mClMain: ConstraintLayout
 
-    private lateinit var mIvFilter : AppCompatImageView
-    private lateinit var mTvTitle : AppCompatTextView
+    private lateinit var mCctProduct: CustomCollectionTypeView
+    private lateinit var mCctForSale: CustomCollectionTypeView
+    private lateinit var mCctCollections: CustomCollectionTypeView
+
+    private lateinit var mCfcvAskLowest: CustomFilterCategoryView
+    private lateinit var mCfcvAskHighest: CustomFilterCategoryView
+    private lateinit var mCfcvMostFavourite: CustomFilterCategoryView
+
+    private lateinit var mCfcvCards: CustomFilterCategoryView
+    private lateinit var mCfcvToys: CustomFilterCategoryView
+    private lateinit var mCfcvSealed: CustomFilterCategoryView
+
+    private lateinit var mCfscvCardsPokemon: CustomFilterSubCategoryView
+    private lateinit var mCfscvCardsYuGiOh: CustomFilterSubCategoryView
+    private lateinit var mCfscvCardsMagic: CustomFilterSubCategoryView
+
+    private lateinit var mCfscvSealedPokemon: CustomFilterSubCategoryView
+    private lateinit var mCfscvSealedYuGiOh: CustomFilterSubCategoryView
+    private lateinit var mCfscvSealedMagic: CustomFilterSubCategoryView
+
+    private lateinit var mLayoutCards: LinearLayoutCompat
+    private lateinit var mLayoutSealed: LinearLayoutCompat
+
+    private lateinit var mIvFilter: AppCompatImageView
+    private lateinit var mTvTitle: AppCompatTextView
+
+    private var mToggleCards: Boolean = true
+    private var mToggleSealed: Boolean = true
+
+    private lateinit var mSortCategories: List<CustomFilterCategoryView>
+    private lateinit var mCategories: List<CustomFilterCategoryView>
+    private lateinit var mCardSubCategories: List<CustomFilterSubCategoryView>
+    private lateinit var mSealedSubCategories: List<CustomFilterSubCategoryView>
 
     override fun onBinding() {
         initViews()
@@ -36,11 +75,82 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
         mCctCollections.setOnClickListener {
             setSelectedCct(mCctCollections)
+            mDrawer.closeDrawer(GravityCompat.END)
+        }
+
+        mIvFilter.setOnClickListener {
+            if (mDrawer.isDrawerVisible(GravityCompat.END)) {
+                mDrawer.closeDrawer(GravityCompat.END)
+            } else {
+                mDrawer.openDrawer(GravityCompat.END)
+            }
+        }
+
+        mCfcvAskLowest.setOnClickListener {
+            selectSortingCategory(mCfcvAskLowest)
+        }
+
+        mCfcvAskHighest.setOnClickListener {
+            selectSortingCategory(mCfcvAskHighest)
+        }
+
+        mCfcvMostFavourite.setOnClickListener {
+            selectSortingCategory(mCfcvMostFavourite)
+        }
+
+        mCfscvCardsPokemon.setOnClickListener {
+            setSealedSubCategoryUnSelected()
+            mCardSubCategories.selectSubCategory(mCfscvCardsPokemon, mCfcvCards)
+        }
+
+        mCfscvCardsYuGiOh.setOnClickListener {
+            setSealedSubCategoryUnSelected()
+            mCardSubCategories.selectSubCategory(mCfscvCardsYuGiOh, mCfcvCards)
+        }
+
+        mCfscvCardsMagic.setOnClickListener {
+            setSealedSubCategoryUnSelected()
+            mCardSubCategories.selectSubCategory(mCfscvCardsMagic, mCfcvCards)
+        }
+
+        mCfcvToys.setOnClickListener {
+            mCfcvToys.setActive(!mCfcvToys.mIsActive)
+            setCardSubCategoryUnSelected()
+            setSealedSubCategoryUnSelected()
+        }
+
+        mCfscvSealedPokemon.setOnClickListener {
+            setCardSubCategoryUnSelected()
+            mSealedSubCategories.selectSubCategory(mCfscvSealedPokemon, mCfcvSealed)
+        }
+
+        mCfscvSealedYuGiOh.setOnClickListener {
+            setCardSubCategoryUnSelected()
+            mSealedSubCategories.selectSubCategory(mCfscvSealedYuGiOh, mCfcvSealed)
+        }
+
+        mCfscvSealedMagic.setOnClickListener {
+            setCardSubCategoryUnSelected()
+            mSealedSubCategories.selectSubCategory(mCfscvSealedMagic, mCfcvSealed)
         }
     }
 
-    private fun setSelectedCct(mCct : CustomCollectionTypeView) {
-        when(mCct){
+    private fun setCardSubCategoryUnSelected() {
+        mCfcvCards.setActive(false)
+        mCfscvCardsPokemon.setActive(false)
+        mCfscvCardsMagic.setActive(false)
+        mCfscvCardsYuGiOh.setActive(false)
+    }
+
+    private fun setSealedSubCategoryUnSelected() {
+        mCfcvSealed.setActive(false)
+        mCfscvSealedYuGiOh.setActive(false)
+        mCfscvSealedMagic.setActive(false)
+        mCfscvSealedPokemon.setActive(false)
+    }
+
+    private fun setSelectedCct(mCct: CustomCollectionTypeView) {
+        when (mCct) {
             mCctProduct -> {
                 mCctProduct.setActive(true)
                 mCctForSale.setActive(false)
@@ -63,6 +173,26 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 this.mTvTitle.text = getString(R.string.text_most_followed)
             }
         }
+
+        mCfcvCards.setOnClickListener {
+            mToggleCards = if (mToggleCards) {
+                mLayoutCards.animateVisibility(mToggleCards)
+                !mToggleCards
+            } else {
+                mLayoutCards.animateVisibility(mToggleCards)
+                !mToggleCards
+            }
+        }
+
+        mCfcvSealed.setOnClickListener {
+            mToggleSealed = if (mToggleSealed) {
+                mLayoutSealed.animateVisibility(mToggleSealed)
+                !mToggleSealed
+            } else {
+                mLayoutSealed.animateVisibility(mToggleSealed)
+                !mToggleSealed
+            }
+        }
     }
 
     private fun initViews() {
@@ -72,7 +202,59 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mIvFilter = mViewBinding.ivFilter
         mTvTitle = mViewBinding.tvSearchTitle
 
+        mCfcvAskLowest = mViewBinding.cfcvAskLowest
+        mCfcvAskHighest = mViewBinding.cfcvAskHighest
+        mCfcvMostFavourite = mViewBinding.cfcvMostFavourite
+
+        mCfcvCards = mViewBinding.cfcvCards
+        mCfcvToys = mViewBinding.cfcvToys
+        mCfcvSealed = mViewBinding.cfcvSealed
+
+        mCfscvCardsPokemon = mViewBinding.cfscvCardsPokemon
+        mCfscvCardsYuGiOh = mViewBinding.cfscvCardsYuGiOh
+        mCfscvCardsMagic = mViewBinding.cfscvCardsMagic
+
+        mCfscvSealedPokemon = mViewBinding.cfscvSealedPokemon
+        mCfscvSealedYuGiOh = mViewBinding.cfscvSealedYuGiOh
+        mCfscvSealedMagic = mViewBinding.cfscvSealedMagic
+
+        mLayoutCards = mViewBinding.layoutCards
+        mLayoutSealed = mViewBinding.layoutSealed
+
+        mClMain = mViewBinding.clMain
+        mDrawer = mViewBinding.drawer
+        mToggle = ActionBarDrawerToggle(requireActivity(), mDrawer, R.string.open, R.string.close)
+        mDrawer.addDrawerListener(mToggle)
+        mToggle.syncState()
+
         setSelectedCct(mCctProduct)
+
+        mSortCategories = listOf(mCfcvAskLowest, mCfcvAskHighest, mCfcvMostFavourite)
+        mCategories = listOf(mCfcvCards, mCfcvToys, mCfcvSealed)
+        mCardSubCategories = listOf(mCfscvCardsPokemon, mCfscvCardsYuGiOh, mCfscvCardsMagic)
+        mSealedSubCategories = listOf(mCfscvSealedPokemon, mCfscvSealedYuGiOh, mCfscvSealedMagic)
+
     }
 
+    //This fun used to select Sorting category as selected
+    private fun selectSortingCategory(category: CustomFilterCategoryView?) {
+        for (sortCategory in mSortCategories) {
+            sortCategory.setActive(sortCategory == category && !sortCategory.mIsActive)
+        }
+    }
+
+    //This fun used to select sub category and parent category as selected from the given list
+    private fun List<CustomFilterSubCategoryView>.selectSubCategory(subCategory: CustomFilterSubCategoryView?, parentCategory: CustomFilterCategoryView) {
+        var isParentSelect = false
+        for (category in this) {
+            if (category == subCategory && !category.mIsActive) {
+                category.setActive(true)
+                isParentSelect = true
+            } else {
+                category.setActive(false)
+            }
+        }
+        parentCategory.setActive(isParentSelect)
+        mCfcvToys.setActive(false)
+    }
 }
