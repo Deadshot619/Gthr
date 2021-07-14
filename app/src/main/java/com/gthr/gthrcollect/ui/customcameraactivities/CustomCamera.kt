@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.utils.enums.CameraViews
 import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import java.io.File
@@ -38,13 +39,14 @@ import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class CustomCamera : AppCompatActivity() {
 
     lateinit var mIdLayout: View
     private lateinit var mCardLayout: View
     lateinit var mPreview_layout: RelativeLayout
     lateinit var mBtn_camera: ImageView
-    private lateinit var mChangeCamera:ImageView
+    private lateinit var mChangeCamera: ImageView
     private var mTextureView: TextureView? = null
     private var mCameraDevice: CameraDevice? = null
     private var cameraId: String? = CAMERA_BACK
@@ -90,7 +92,7 @@ class CustomCamera : AppCompatActivity() {
         mPreviewTextView = findViewById(R.id.tv_preview_text)
 
         mBtn_camera = findViewById(R.id.btn_camera)
-        mChangeCamera=findViewById(R.id.changeCamera)
+        mChangeCamera = findViewById(R.id.changeCamera)
 
         mCameraViews = intent.getStringExtra(CAMERA_VIEW)
         mIsFrontView = intent.getBooleanExtra(IS_FRONT, false)
@@ -109,21 +111,18 @@ class CustomCamera : AppCompatActivity() {
 
         mChangeCamera.setOnClickListener {
 
-            if (cameraId.equals(CAMERA_BACK)){
+            if (cameraId.equals(CAMERA_BACK)) {
                 openFrontCamera()
-            }
-            else{
+            } else {
                 openBackCamera()
             }
-
         }
-
     }
 
     private fun openBackCamera() {
 
 
-        cameraId=CAMERA_BACK
+        cameraId = CAMERA_BACK
         this@CustomCamera.mCameraDevice!!.close()
         this@CustomCamera.mCameraDevice = null
 
@@ -152,7 +151,7 @@ class CustomCamera : AppCompatActivity() {
 
     private fun openFrontCamera() {
 
-        cameraId= CAMERA_FRONT
+        cameraId = CAMERA_FRONT
         this@CustomCamera.mCameraDevice!!.close()
         this@CustomCamera.mCameraDevice = null
         stopBackgroundThread()
@@ -177,7 +176,17 @@ class CustomCamera : AppCompatActivity() {
             textureListener
     }
 
+    fun rotateImage(source: Bitmap, angle: Int): Bitmap? {
+        val matrix = Matrix()
+        matrix.postRotate(angle.toFloat())
+        return Bitmap.createBitmap(
+            source, 0, 0, source.width, source.height,
+            matrix, true
+        )
+    }
+
     fun takePicture() {
+
         if (mCameraDevice == null) return
         val cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
         try {
@@ -206,8 +215,13 @@ class CustomCamera : AppCompatActivity() {
             captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO)
 
             // Check orientation base on device
-            val rotation = windowManager.defaultDisplay.rotation
-            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS[rotation])
+            val rotationD = windowManager.defaultDisplay.rotation
+            /*  captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS[rotation])*/
+
+            val rotation = cameraCharacteristics[CameraCharacteristics.SENSOR_ORIENTATION]
+            captureBuilder[CaptureRequest.JPEG_ORIENTATION] = rotation
+            //    captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, rotation)
+
             val readerListener = OnImageAvailableListener { mImageReader ->
                 mFile = File(
                     Environment.getExternalStorageDirectory().toString() + "/" + UUID.randomUUID()
@@ -224,15 +238,55 @@ class CustomCamera : AppCompatActivity() {
                     val bitmapPicture = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                     var croppedBitmap: Bitmap? = null
                     val display = (getSystemService(WINDOW_SERVICE) as WindowManager).defaultDisplay
-                    if (display.rotation == Surface.ROTATION_0) {
 
-                        //rotate bitmap, because camera sensor usually in landscape mode
-                        val matrix = Matrix()
-                        matrix.postRotate(0f)
-                        val rotatedBitmap = Bitmap.createBitmap(
-                            bitmapPicture, 0, 0,
-                            bitmapPicture.width, bitmapPicture.height, matrix, true
-                        )
+                    if (display.rotation == Surface.ROTATION_0) {
+                     //rotate bitmap, because camera sensor usually in landscape mode
+                         val matrix = Matrix()
+                         val rotatedBitmap: Bitmap
+                        when (rotationD) {
+
+                            Surface.ROTATION_0 ->{
+
+                                if (android.os.Build.VERSION.SDK_INT == android.os.Build.VERSION_CODES.R){
+                                    matrix.postRotate(90f)
+                                    rotatedBitmap = Bitmap.createBitmap(
+                                        bitmapPicture, 0, 0,
+                                        bitmapPicture.width, bitmapPicture.height, matrix, true)
+                                } else{
+                                    matrix.postRotate(0f)
+                                    rotatedBitmap = Bitmap.createBitmap(
+                                        bitmapPicture, 0, 0,
+                                        bitmapPicture.width, bitmapPicture.height, matrix, true)
+                                }
+                            }
+
+                            Surface.ROTATION_90 ->{
+
+                                matrix.postRotate(90f)
+                                rotatedBitmap = Bitmap.createBitmap(
+                                    bitmapPicture, 0, 0,
+                                    bitmapPicture.width, bitmapPicture.height, matrix, true)
+
+                            }
+
+                            Surface.ROTATION_180 ->{
+                                matrix.postRotate(180f)
+                                rotatedBitmap = Bitmap.createBitmap(
+                                    bitmapPicture, 0, 0,
+                                    bitmapPicture.width, bitmapPicture.height, matrix, true)
+                            }
+
+
+                            Surface.ROTATION_270 -> {
+                                matrix.postRotate(270f)
+                                rotatedBitmap = Bitmap.createBitmap(
+                                    bitmapPicture, 0, 0,
+                                    bitmapPicture.width, bitmapPicture.height, matrix, true)
+                            }
+
+                            else -> rotatedBitmap = bitmapPicture
+                        }
+
                         //save mFile
                         //    createImageFile(rotatedBitmap);
 
@@ -241,7 +295,6 @@ class CustomCamera : AppCompatActivity() {
                             .toFloat() / mPreview_layout.width.toFloat()
                         val koefY = rotatedBitmap.height
                             .toFloat() / mPreview_layout.height
-
 
                         var x1 = 0
                         var y1 = 0
@@ -256,10 +309,8 @@ class CustomCamera : AppCompatActivity() {
                             x2 = mIdLayout.width
                             y2 = mIdLayout.height
                         } else {
-                            x1 =
-                                mCardLayout.left - mCardLayout.paddingLeft - mCardLayout.paddingRight
-                            y1 =
-                                mCardLayout.top - mCardLayout.paddingTop - mCardLayout.paddingBottom
+                            x1 = mCardLayout.left - mCardLayout.paddingLeft - mCardLayout.paddingRight
+                            y1 = mCardLayout.top - mCardLayout.paddingTop - mCardLayout.paddingBottom
                             x2 = mCardLayout.width
                             y2 = mCardLayout.height
                         }
@@ -287,6 +338,7 @@ class CustomCamera : AppCompatActivity() {
                         croppedBitmap?.let { createImageFile(it) }
                     } else if (display.rotation == Surface.ROTATION_270) {
                         // for Landscape mode
+
                     }
                 } finally {
                     image?.close()
@@ -300,10 +352,7 @@ class CustomCamera : AppCompatActivity() {
                     result: TotalCaptureResult
                 ) {
                     super.onCaptureCompleted(session, request, result)
-
                     createCameraPreview()
-
-
                 }
             }
             mCameraDevice!!.createCaptureSession(
@@ -328,6 +377,39 @@ class CustomCamera : AppCompatActivity() {
         } catch (e: CameraAccessException) {
             e.printStackTrace()
         }
+    }
+
+
+    private fun transformImage(width: Int, height: Int) {
+        var croppedBitmap: Bitmap? = null
+        if (mPreview_layout == null || mTextureView == null) {
+            return
+        }
+        val matrix = Matrix()
+        val rotation = windowManager.defaultDisplay.rotation
+        val textureRectF = RectF(0.0F, 0.0F, width.toFloat(), height.toFloat())
+        val previewRectF = RectF(
+            0.0F,
+            0.0F,
+            mPreview_layout.getHeight().toFloat(),
+            mPreview_layout.getWidth().toFloat()
+        )
+        val centerX = textureRectF.centerX()
+        val centerY = textureRectF.centerY()
+        if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
+            previewRectF.offset(
+                centerX - previewRectF.centerX(),
+                centerY - previewRectF.centerY()
+            )
+            matrix.setRectToRect(textureRectF, previewRectF, Matrix.ScaleToFit.FILL)
+            val scale: Float = Math.max(
+                width.toFloat() / mPreview_layout.getWidth(),
+                height.toFloat() / mPreview_layout.getHeight()
+            )
+            matrix.postScale(scale, scale, centerX, centerY)
+            matrix.postRotate((90 * (rotation - 2)).toFloat(), centerX, centerY)
+        }
+        mTextureView!!.setTransform(matrix)
     }
 
     private fun createCameraPreview() {
@@ -379,12 +461,11 @@ class CustomCamera : AppCompatActivity() {
     private fun openCamera() {
         val cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
         try {
-        //    cameraId = cameraManager.cameraIdList[0]
+            //    cameraId = cameraManager.cameraIdList[0]
             val cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId!!)
             val map =
                 cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!
             mImageDimensions = map.getOutputSizes(SurfaceTexture::class.java)[0]
-
 
             //  val []permissions={Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE}
             if (ContextCompat.checkSelfPermission(
@@ -487,9 +568,9 @@ class CustomCamera : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED
-        ) { openCamera(); }
+        ) {
+            openCamera(); }
     }
-
 
 
     fun createImageFile(bitmap: Bitmap) {

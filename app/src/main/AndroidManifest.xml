@@ -28,8 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.customcameraactivities.CustomCamera" />
-        <activity android:name=".ui.customcameraactivities.ImagePreview" />
+        <activity android:name=".ui.customcameraactivities.CustomCamera"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.customcameraactivities.ImagePreview"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

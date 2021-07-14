@@ -31,7 +31,6 @@ class SignUpFragment : BaseFragment<SignUpViewModel, SignUpFragmentBinding>() {
         mLayoutHeader.tvTitle.text = getString(R.string.sign_up_text)
 
         setUpListeners()
-
     }
 
     private fun initViews() {
@@ -42,7 +41,7 @@ class SignUpFragment : BaseFragment<SignUpViewModel, SignUpFragmentBinding>() {
             mCetEmail = cetEmail
             mCetPassword = cetPassword
         }
-    }
+            }
 
     private fun setUpListeners() {
         mBtnSignUp.setOnClickListener {

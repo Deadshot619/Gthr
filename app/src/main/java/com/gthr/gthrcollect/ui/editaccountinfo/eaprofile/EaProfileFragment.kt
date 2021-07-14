@@ -25,24 +25,16 @@ class EaProfileFragment : BaseFragment<EaProfileViewModel, EaProfileFragmentBind
 
     private var isValidate = false
 
-
-
     override fun onBinding() {
         initViews()
         setUpClickListeners()
         setTextChangeListeners()
-
-
-
-
-
     }
 
     private fun initViews() {
         mEtDisplayName = mViewBinding.etDisplayName
         mBtnNext = mViewBinding.btnNext
         mEtBio = mViewBinding.etBio
-
     }
 
     private fun setUpClickListeners() {

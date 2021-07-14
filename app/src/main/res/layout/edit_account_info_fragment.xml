@@ -93,6 +93,7 @@
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_medium"
             android:src="@drawable/ic_info"
+            android:tint="@color/coloBlue"
             app:layout_constraintEnd_toStartOf="@+id/tv_birthday_info"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@id/guideline_start"

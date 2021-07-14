@@ -68,7 +68,7 @@
                     android:layout_marginEnd="@dimen/margin_medium"
                     android:src="@drawable/ic_right"
                     android:nextFocusForward="@id/et_last_name"
-                    app:edit_hint="@string/name"
+                    app:edit_hint="@string/hint_recipient_fname"
                     app:edit_success_state="BLUE"
                     app:edit_initial_state="GRAY"
                     app:edit_title="@string/first_name"
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/name_margin_top"
                     android:src="@drawable/ic_right"
-                    app:edit_hint="@string/name"
+                    app:edit_hint="@string/hint_recipient_lname"
                     app:edit_success_state="BLUE"
                     app:edit_initial_state="GRAY"
                     app:edit_title="@string/last_name"
@@ -116,7 +116,7 @@
                     android:layout_marginTop="@dimen/user_info_et_margin_top"
                     android:src="@drawable/ic_right"
                     android:nextFocusForward="@id/et_last_name"
-                    app:edit_hint="@string/address"
+                    app:edit_hint="@string/hint_address2"
                     app:edit_initial_state="GRAY"
                     app:edit_success_state="BLUE"
                     app:edit_title="@string/address2"
@@ -124,6 +124,19 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/et_add1" />
+
+                <com.gthr.gthrcollect.utils.customviews.CustomSpinner
+                    app:cs_initial_state="GRAY"
+                    app:cs_success_state="BLUE"
+                    app:cs_title="@string/country"
+                    android:layout_marginTop="@dimen/user_info_et_margin_top"
+                    android:id="@+id/spn_country"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@+id/et_add2"/>
 
 
                 <com.gthr.gthrcollect.utils.customviews.CustomEditText
@@ -141,7 +154,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/spn_state"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/et_add2" />
+                    app:layout_constraintTop_toBottomOf="@+id/spn_country" />
 
                 <com.gthr.gthrcollect.utils.customviews.CustomSpinner
                     app:cs_initial_state="GRAY"
@@ -155,21 +168,9 @@
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/et_city"
-                    app:layout_constraintTop_toBottomOf="@+id/et_add2" />
+                    app:layout_constraintTop_toBottomOf="@+id/spn_country" />
 
 
-                <com.gthr.gthrcollect.utils.customviews.CustomSpinner
-                    app:cs_initial_state="GRAY"
-                    app:cs_success_state="BLUE"
-                    app:cs_title="@string/country"
-                    android:layout_marginTop="@dimen/user_info_et_margin_top"
-                    android:id="@+id/spn_country"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/spn_state"/>
 
 
 
@@ -188,7 +189,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/spn_country" />
+                    app:layout_constraintTop_toBottomOf="@+id/spn_state" />
 
 
                 <com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
