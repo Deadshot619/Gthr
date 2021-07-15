@@ -92,7 +92,9 @@ dependencies {
     //Gson
     implementation 'com.google.code.gson:gson:2.8.7'
 
-
     //Dexter
     implementation 'com.karumi:dexter:6.2.3'
+
+    //Circle imageview
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

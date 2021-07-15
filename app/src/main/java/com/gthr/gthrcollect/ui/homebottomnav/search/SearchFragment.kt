@@ -8,9 +8,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.SearchFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.SearchCollectionAdapter
+import com.gthr.gthrcollect.utils.GridSpacingItemDecoration
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterCategoryView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterSubCategoryView
@@ -52,6 +56,8 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
     private lateinit var mIvFilter: AppCompatImageView
     private lateinit var mTvTitle: AppCompatTextView
+    private lateinit var mRvMain: RecyclerView
+
 
     private var mToggleCards: Boolean = true
     private var mToggleSealed: Boolean = true
@@ -61,21 +67,36 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     private lateinit var mCardSubCategories: List<CustomFilterSubCategoryView>
     private lateinit var mSealedSubCategories: List<CustomFilterSubCategoryView>
 
+    private lateinit var mAdapterSC : SearchCollectionAdapter
+
     override fun onBinding() {
         initViews()
         setUpOnClickListeners()
+        setUpRecyclerView()
+    }
+
+    private fun setUpRecyclerView() {
+
+        mAdapterSC = SearchCollectionAdapter{}
+        mRvMain.apply {
+            addItemDecoration(GridSpacingItemDecoration(resources.getDimensionPixelOffset(R.dimen.spacing_search_collection_recycler_view),spanCount,false))
+            layoutManager = GridLayoutManager(requireContext(),spanCount)
+        }
     }
 
     private fun setUpOnClickListeners() {
         mCctProduct.setOnClickListener {
             setSelectedCct(mCctProduct)
+            mRvMain.adapter = null
         }
         mCctForSale.setOnClickListener {
             setSelectedCct(mCctForSale)
+            mRvMain.adapter = null
         }
         mCctCollections.setOnClickListener {
             setSelectedCct(mCctCollections)
             mDrawer.closeDrawer(GravityCompat.END)
+            mRvMain.adapter = mAdapterSC
         }
 
         mIvFilter.setOnClickListener {
@@ -222,6 +243,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mCctCollections = mViewBinding.cctCollections
         mIvFilter = mViewBinding.ivFilter
         mTvTitle = mViewBinding.tvSearchTitle
+        mRvMain = mViewBinding.rvMain
 
         mCfcvAskLowest = mViewBinding.cfcvAskLowest
         mCfcvAskHighest = mViewBinding.cfcvAskHighest
@@ -276,5 +298,9 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         for (category in this) {
             category.setActive(category == subCategory && !category.mIsActive)
         }
+    }
+
+    companion object {
+        private const val spanCount = 2
     }
 }

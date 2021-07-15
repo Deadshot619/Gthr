@@ -164,6 +164,17 @@
     <dimen name="guideline_top">64dp</dimen>
     <dimen name="radius_filter">8dp</dimen>
     <dimen name="width_navigation_view">250dp</dimen>
+    <dimen name="spacing_search_collection_recycler_view">1dp</dimen>
+    <dimen name="radius_search_collection_cell">8dp</dimen>
+    <dimen name="radius_card_view_search_collection_cell">8dp</dimen>
+    <dimen name="height_search_collection_cell">200dp</dimen>
+    <dimen name="margin_search_collection_cell">5dp</dimen>
+    <dimen name="size_user_image_search_collection_cell">50dp</dimen>
+    <dimen name="elevation_user_name_search_collection_cell">4dp</dimen>
+    <dimen name="padding_vertical_search_collection_cell">10dp</dimen>
+    <dimen name="margin_start_search_collection_cell">25dp</dimen>
+    <dimen name="padding_start_search_collection_cell">30dp</dimen>
+    <dimen name="margin_end_search_collection_cell">30dp</dimen>
 
 
 </resources>
