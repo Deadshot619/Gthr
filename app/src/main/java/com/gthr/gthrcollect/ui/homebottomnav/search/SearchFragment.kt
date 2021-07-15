@@ -100,54 +100,77 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
         mCfscvCardsPokemon.setOnClickListener {
             setSealedSubCategoryUnSelected()
-            mCardSubCategories.selectSubCategory(mCfscvCardsPokemon, mCfcvCards)
+            mCardSubCategories.selectSubCategory(mCfscvCardsPokemon)
         }
 
         mCfscvCardsYuGiOh.setOnClickListener {
             setSealedSubCategoryUnSelected()
-            mCardSubCategories.selectSubCategory(mCfscvCardsYuGiOh, mCfcvCards)
+            mCardSubCategories.selectSubCategory(mCfscvCardsYuGiOh)
         }
 
         mCfscvCardsMagic.setOnClickListener {
             setSealedSubCategoryUnSelected()
-            mCardSubCategories.selectSubCategory(mCfscvCardsMagic, mCfcvCards)
+            mCardSubCategories.selectSubCategory(mCfscvCardsMagic)
         }
 
         mCfcvToys.setOnClickListener {
             mCfcvToys.setActive(!mCfcvToys.mIsActive)
+            mLayoutCards.animateVisibility(false)
+            mLayoutSealed.animateVisibility(false)
             setCardSubCategoryUnSelected()
             setSealedSubCategoryUnSelected()
         }
 
         mCfscvSealedPokemon.setOnClickListener {
             setCardSubCategoryUnSelected()
-            mSealedSubCategories.selectSubCategory(mCfscvSealedPokemon, mCfcvSealed)
+            mSealedSubCategories.selectSubCategory(mCfscvSealedPokemon)
         }
 
         mCfscvSealedYuGiOh.setOnClickListener {
             setCardSubCategoryUnSelected()
-            mSealedSubCategories.selectSubCategory(mCfscvSealedYuGiOh, mCfcvSealed)
+            mSealedSubCategories.selectSubCategory(mCfscvSealedYuGiOh)
         }
 
         mCfscvSealedMagic.setOnClickListener {
             setCardSubCategoryUnSelected()
-            mSealedSubCategories.selectSubCategory(mCfscvSealedMagic, mCfcvSealed)
+            mSealedSubCategories.selectSubCategory(mCfscvSealedMagic)
         }
+
+        mCfcvCards.setOnClickListener {
+            mToggleCards = if (mToggleCards) {
+                mLayoutCards.animateVisibility(mToggleCards)
+                mLayoutSealed.animateVisibility(false)
+                selectCategory(mCfcvCards)
+                setSealedSubCategoryUnSelected()
+                !mToggleCards
+            } else {
+                mCfcvCards.setActive(false)
+                setCardSubCategoryUnSelected()
+                mLayoutCards.animateVisibility(mToggleCards)
+                !mToggleCards
+            }
+
+        }
+
+        mCfcvSealed.setOnClickListener {
+            mToggleSealed = if (mToggleSealed) {
+                mLayoutSealed.animateVisibility(mToggleSealed)
+                mLayoutCards.animateVisibility(false)
+                selectCategory(mCfcvSealed)
+                setCardSubCategoryUnSelected()
+                !mToggleSealed
+            } else {
+                mCfcvSealed.setActive(false)
+                setSealedSubCategoryUnSelected()
+                mLayoutSealed.animateVisibility(mToggleSealed)
+                !mToggleSealed
+            }
+
+        }
+
     }
 
-    private fun setCardSubCategoryUnSelected() {
-        mCfcvCards.setActive(false)
-        mCfscvCardsPokemon.setActive(false)
-        mCfscvCardsMagic.setActive(false)
-        mCfscvCardsYuGiOh.setActive(false)
-    }
 
-    private fun setSealedSubCategoryUnSelected() {
-        mCfcvSealed.setActive(false)
-        mCfscvSealedYuGiOh.setActive(false)
-        mCfscvSealedMagic.setActive(false)
-        mCfscvSealedPokemon.setActive(false)
-    }
 
     private fun setSelectedCct(mCct: CustomCollectionTypeView) {
         when (mCct) {
@@ -174,26 +197,24 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             }
         }
 
-        mCfcvCards.setOnClickListener {
-            mToggleCards = if (mToggleCards) {
-                mLayoutCards.animateVisibility(mToggleCards)
-                !mToggleCards
-            } else {
-                mLayoutCards.animateVisibility(mToggleCards)
-                !mToggleCards
-            }
-        }
 
-        mCfcvSealed.setOnClickListener {
-            mToggleSealed = if (mToggleSealed) {
-                mLayoutSealed.animateVisibility(mToggleSealed)
-                !mToggleSealed
-            } else {
-                mLayoutSealed.animateVisibility(mToggleSealed)
-                !mToggleSealed
-            }
-        }
     }
+
+    private fun setCardSubCategoryUnSelected() {
+        mCfcvCards.setActive(false)
+        mCfscvCardsPokemon.setActive(false)
+        mCfscvCardsMagic.setActive(false)
+        mCfscvCardsYuGiOh.setActive(false)
+    }
+
+    private fun setSealedSubCategoryUnSelected() {
+        mCfcvSealed.setActive(false)
+        mCfscvSealedYuGiOh.setActive(false)
+        mCfscvSealedMagic.setActive(false)
+        mCfscvSealedPokemon.setActive(false)
+    }
+
+
 
     private fun initViews() {
         mCctProduct = mViewBinding.cctProduct
@@ -243,18 +264,17 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
     }
 
-    //This fun used to select sub category and parent category as selected from the given list
-    private fun List<CustomFilterSubCategoryView>.selectSubCategory(subCategory: CustomFilterSubCategoryView?, parentCategory: CustomFilterCategoryView) {
-        var isParentSelect = false
-        for (category in this) {
-            if (category == subCategory && !category.mIsActive) {
-                category.setActive(true)
-                isParentSelect = true
-            } else {
-                category.setActive(false)
-            }
+    //This fun used to select category
+    private fun selectCategory(category: CustomFilterCategoryView?) {
+        for (cat in mCategories) {
+            cat.setActive(cat == category && !cat.mIsActive)
         }
-        parentCategory.setActive(isParentSelect)
-        mCfcvToys.setActive(false)
+    }
+
+    //This fun used to select sub category and parent category as selected from the given list
+    private fun List<CustomFilterSubCategoryView>.selectSubCategory(subCategory: CustomFilterSubCategoryView?) {
+        for (category in this) {
+            category.setActive(category == subCategory && !category.mIsActive)
+        }
     }
 }
