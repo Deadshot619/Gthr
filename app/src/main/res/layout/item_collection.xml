@@ -31,9 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:fitsSystemWindows="true"
                 android:background="@drawable/collection_image_bg"
-                android:src="@drawable/pokemon" />
+                app:srcCompat="@drawable/pikapika" />
 
 
         </com.google.android.material.card.MaterialCardView>

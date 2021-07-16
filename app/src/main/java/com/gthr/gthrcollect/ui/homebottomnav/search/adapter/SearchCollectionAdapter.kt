@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.ItemCollectionBinding
 import com.gthr.gthrcollect.model.domain.SearchCollection
-import com.gthr.gthrcollect.model.domain.ShippingAddress
 
 class SearchCollectionAdapter(val callback : (SearchCollection) -> Unit) : ListAdapter<SearchCollection,SearchCollectionAdapter.SearchCollectionViewHolder>(DiffCallback) {
 
@@ -32,7 +31,13 @@ class SearchCollectionAdapter(val callback : (SearchCollection) -> Unit) : ListA
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchCollectionViewHolder =
-        SearchCollectionViewHolder(ItemCollectionBinding.inflate(LayoutInflater.from(parent.context)))
+        SearchCollectionViewHolder(
+            ItemCollectionBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
 
     override fun onBindViewHolder(holder: SearchCollectionViewHolder, position: Int) =
         holder.bind()
