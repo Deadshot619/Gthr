@@ -58,7 +58,6 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     private lateinit var mTvTitle: AppCompatTextView
     private lateinit var mRvMain: RecyclerView
 
-
     private var mToggleCards: Boolean = true
     private var mToggleSealed: Boolean = true
 

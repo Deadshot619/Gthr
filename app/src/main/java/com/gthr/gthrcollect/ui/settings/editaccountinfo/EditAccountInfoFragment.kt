@@ -1,24 +1,22 @@
 package com.gthr.gthrcollect.ui.settings.editaccountinfo
 
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.TextView
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.SettingsRepository
 import com.gthr.gthrcollect.databinding.DialogDeleteAccountBinding
 import com.gthr.gthrcollect.databinding.EditAccountInfoFragmentBinding
+import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.EditAccInfoDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
-import com.gthr.gthrcollect.ui.editaccountinfo.eauserinfo.EaUserInfoFragmentDirections
-import com.gthr.gthrcollect.ui.settings.settingsscreen.SettingsFragmentDirections
+import com.gthr.gthrcollect.utils.constants.CalendarConstants.MIN_AGE
 import com.gthr.gthrcollect.utils.constants.SimpleDateFormatConstants
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
 import com.gthr.gthrcollect.utils.customviews.CustomEditText
 import com.gthr.gthrcollect.utils.customviews.CustomPhoneNoEditText
-import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.extensions.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,7 +24,13 @@ import java.util.*
 class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccountInfoFragmentBinding>() {
 
     override fun getViewBinding() = EditAccountInfoFragmentBinding.inflate(layoutInflater)
-    override val mViewModel: EditAccountInfoViewModel by viewModels()
+
+    private val repository = SettingsRepository()
+    override val mViewModel: EditAccountInfoViewModel by viewModels {
+        EditAccountInfoViewModelFactory(
+            repository
+        )
+    }
 
     private lateinit var mEtFirstName: CustomEditText
     private lateinit var mEtLastName: CustomEditText
@@ -42,15 +46,61 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
 
 
     override fun onBinding() {
-
-        initValue()
+        selectedDate.add(Calendar.YEAR, MIN_AGE)
+        initView()
         setUpBirthdayEditText()
         setTextChangeListeners()
         setUpClickListeners()
-
+        setUpObservers()
     }
 
-    private fun initValue() {
+    private fun setUpObservers() {
+        mViewModel.userInfo.observe(viewLifecycleOwner){ it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        setData(it.data)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                    }
+                }
+            }
+        }
+
+        mViewModel.userDataUpdateFirestore.observe(viewLifecycleOwner){ it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setData(data: EditAccInfoDomainModel) {
+        mEtFirstName.mEtMain.setText(data.firstName)
+        mEtLastName.mEtMain.setText(data.lastName)
+        mEtEmail.mEtMain.setText(data.emailId)
+        mEtPhoneNo.mEtPhoneNo.setText(data.mobile)
+        mEtPhoneNo.mCcp.setCountryForPhoneCode(data.countryCode)
+        mEtMM.mEtMain.setText(data.mm)
+        mEtDD.mEtMain.setText(data.dd)
+        mEtYYYY.mEtMain.setText(data.yyyy)
+    }
+
+    private fun initView() {
         mEtFirstName = mViewBinding.etFirstName
         mEtLastName = mViewBinding.etLastName
         mEtMM = mViewBinding.etMm
@@ -60,6 +110,19 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
         mEtEmail = mViewBinding.etEmail
         mTvDeleteAccount = mViewBinding.tvDeleteAccount
         mBtnSaveChanges = mViewBinding.btnSaveChanges
+
+        mEtEmail.mEtMain.isClickable = false
+        mEtEmail.mEtMain.isCursorVisible = false
+        mEtEmail.mEtMain.isFocusable = false
+        mEtEmail.mEtMain.isFocusableInTouchMode = false
+
+        mEtPhoneNo.mEtPhoneNo.isClickable = false
+        mEtPhoneNo.mEtPhoneNo.isCursorVisible = false
+        mEtPhoneNo.mEtPhoneNo.isFocusable = false
+        mEtPhoneNo.mEtPhoneNo.isFocusableInTouchMode = false
+
+        mEtPhoneNo.mCcp.setCcpClickable(false)
+        initProgressBar(mViewBinding.layoutProgress)
     }
 
     private fun setUpBirthdayEditText() {
@@ -78,7 +141,7 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
         mEtYYYY.mEtMain.isFocusable = false
         mEtYYYY.mEtMain.isFocusableInTouchMode = false
 
-     /*   mEtMM.mEtMain.setOnClickListener {
+        mEtMM.mEtMain.setOnClickListener {
             showDatePicker()
         }
 
@@ -88,12 +151,12 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
 
         mEtYYYY.mEtMain.setOnClickListener {
             showDatePicker()
-        }*/
+        }
 
 
     }
 
-/*
+
     private fun showDatePicker() {
 
         showBirthDayPicker(selectedDate.timeInMillis) {
@@ -112,12 +175,18 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
 
 
     }
-*/
+
 
     private fun setUpClickListeners() {
         mBtnSaveChanges.setOnClickListener {
             if (validate()){
-
+                mViewModel.updateUserDataFirestore(EditAccInfoDomainModel(
+                    mEtFirstName.mEtMain.text.toString(),
+                    mEtLastName.mEtMain.text.toString(),
+                    mEtDD.mEtMain.text.toString(),
+                    mEtMM.mEtMain.text.toString(),
+                    mEtYYYY.mEtMain.text.toString(),
+                ))
             }
 
         }

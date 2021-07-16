@@ -33,10 +33,7 @@ class SearchCollectionAdapter(val callback : (SearchCollection) -> Unit) : ListA
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchCollectionViewHolder =
         SearchCollectionViewHolder(
             ItemCollectionBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+                LayoutInflater.from(parent.context),parent,false)
         )
 
     override fun onBindViewHolder(holder: SearchCollectionViewHolder, position: Int) =
