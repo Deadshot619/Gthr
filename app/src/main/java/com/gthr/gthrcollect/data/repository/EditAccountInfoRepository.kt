@@ -1,5 +1,8 @@
 package com.gthr.gthrcollect.data.repository
 
+import android.net.Uri
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -8,6 +11,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.User
@@ -15,7 +19,7 @@ import com.gthr.gthrcollect.model.mapper.toUser
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.CollectionInfoModel
 import com.gthr.gthrcollect.model.network.firestore.UserInfoFirestoreModel
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
-import com.gthr.gthrcollect.utils.constants.FirebaseStorage.FIREBASE_STORAGE_LINK
+import com.gthr.gthrcollect.utils.constants.FirebaseStorage.GOVERNMENT_ID
 import com.gthr.gthrcollect.utils.constants.Firestore
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
@@ -25,12 +29,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
+import java.io.File
 
 class EditAccountInfoRepository {
     private val mAuth = Firebase.auth
     private val mFirestore = Firebase.firestore
     private val mFirebaseRD = Firebase.database.reference
-    private val mStorageRef = Firebase.storage(FIREBASE_STORAGE_LINK).reference
+    private val mStorageRef = Firebase.storage.reference
 
     fun signInWithOtp(credential: PhoneAuthCredential) = flow<State<Boolean>> {
         // Emit loading state
@@ -111,4 +116,33 @@ class EditAccountInfoRepository {
             emit(State.failed(it.message.toString()))
             GthrLogger.d("Faileeed", it.message.toString())
         }.flowOn(Dispatchers.IO)
+
+    fun uploadGovtIds(url: String, imageSide: String, uid: String) = callbackFlow<State<Boolean>> {
+        trySend(State.loading())
+        val file = Uri.fromFile(File(url))
+        val ref = mStorageRef.child(GOVERNMENT_ID).child(imageSide).child(uid)
+        val uploadTask: UploadTask = ref.putFile(file)
+        val failureListener = object : OnFailureListener {
+            override fun onFailure(p0: Exception) {
+                trySend(State.failed(p0.message.toString()))
+            }
+        }
+        val successListener = object : OnSuccessListener<UploadTask.TaskSnapshot> {
+            override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
+                trySend(State.success(true))
+                GthrLogger.e("uploadTask", imageSide)
+            }
+        }
+        uploadTask.addOnSuccessListener(successListener).addOnFailureListener(failureListener)
+
+        awaitClose {
+            uploadTask.removeOnSuccessListener(successListener)
+            uploadTask.removeOnFailureListener(failureListener)
+        }
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+
 }

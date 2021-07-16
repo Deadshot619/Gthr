@@ -18,13 +18,18 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.EditAccountInfoRepository
 import com.gthr.gthrcollect.databinding.EaIdVerificationFragmentBinding
+import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.customcameraactivities.CustomCamera
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModel
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModelFactory
+import com.gthr.gthrcollect.ui.editaccountinfo.eaotp.EaOtpFragmentDirections
+import com.gthr.gthrcollect.utils.Prefs
+import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.CameraViews
 import com.gthr.gthrcollect.utils.extensions.*
@@ -43,11 +48,11 @@ class EaIdVerificationFragment :
     BaseFragment<EditAccountInfoViewModel, EaIdVerificationFragmentBinding>() {
     private val TAG: String = this.javaClass.name
     private val repository = EditAccountInfoRepository()
+    private var imageCheck: Int = 0
+    private var imageData: Intent? = null
 
     override val mViewModel: EditAccountInfoViewModel by activityViewModels {
-        EditAccountInfoViewModelFactory(
-            repository
-        )
+        EditAccountInfoViewModelFactory(repository)
     }
 
     override fun getViewBinding() = EaIdVerificationFragmentBinding.inflate(layoutInflater)
@@ -69,15 +74,13 @@ class EaIdVerificationFragment :
 
     val storage = Firebase.storage("gs://dlc-db-staging.appspot.com")
     var storageRef = storage.reference
-    var spaceRef = storageRef.child("images")
+    var spaceRef = storageRef.child("government_ID")
 
-
-    //gs://dlc-db-staging.appspot.com/images/region_0707_131746981.jpg
 
     override fun onBinding() {
         initViews()
         addListeners()
-        deleteImages()
+        setUpObservers()
     }
 
     private fun initViews() {
@@ -102,6 +105,9 @@ class EaIdVerificationFragment :
 
         mIvFrontImage.gone()
         mIvBackImage.gone()
+
+
+        initProgressBar(mViewBinding.layoutProgress)
     }
 
     private fun addListeners() {
@@ -132,7 +138,10 @@ class EaIdVerificationFragment :
         }
 
         mCompleteAccBtn.setOnClickListener {
-            findNavController().navigate(EaIdVerificationFragmentDirections.actionEaIdVerificationFragmentToWelcomeFragment())
+            mViewModel.uploadFrontImage(
+                imageData?.getStringExtra(CustomCamera.INTENT_KEY_URL).toString(),
+                GthrCollect.prefs!!.signedInUser!!.uid
+            )
         }
 
         mSkipBtn.setOnClickListener {
@@ -150,109 +159,102 @@ class EaIdVerificationFragment :
         }
     }
 
+    private fun setUpObservers() {
+        mViewModel.frontImageUpload.observe(viewLifecycleOwner, {
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        GthrLogger.e("uploadTask", "FrontFrag")
+                        mViewModel.uploadBackImage(
+                            imageData?.getStringExtra(CustomCamera.INTENT_KEY_URL).toString(),
+                            GthrCollect.prefs!!.signedInUser!!.uid
+                        )
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        })
+
+        mViewModel.backImageUpload.observe(viewLifecycleOwner, {
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        GthrLogger.e("uploadTask", "BackFrag")
+                        findNavController().navigate(EaIdVerificationFragmentDirections.actionEaIdVerificationFragmentToWelcomeFragment())
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        })
+    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (data != null) {
+            imageCheck = imageCheck + 1
             val bitmap = BitmapFactory.decodeFile(data.getStringExtra(CustomCamera.INTENT_KEY_URL))
-
+            imageData = data
             if (requestCode == REQUEST_CODE_FRONT_ID) {
                 mIvFrontImage.visible()
                 mIvFrontImage.setImageBitmap(bitmap)
-
                 mfrontLable.text = getString(R.string.replae_front)
-
                 mFront_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)
 
-                uploadUsingURL(data.getStringExtra(CustomCamera.INTENT_KEY_URL).toString())
+                if (imageCheck >= 2) {
+                    mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
+                }
 
             } else if (requestCode == Companion.REQUEST_CODE_BACK_ID) {
                 mIvBackImage.visible()
                 mIvBackImage.setImageBitmap(bitmap)
-
                 mBackLable.text = getString(R.string.replace_back)
 
-                mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
-
+                if (imageCheck >= 2) {
+                    mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
+                }
                 mBack_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)
-
-                uploadUsingURL(data.getStringExtra(CustomCamera.INTENT_KEY_URL).toString())
             }
         }
     }
 
 
-    private fun uploadImageToFb(url: String) {
-
-        val stream = FileInputStream(File(url))
-        val bitmap = (mIvFrontImage.drawable as BitmapDrawable).bitmap
-
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
-
-        var uploadTask = spaceRef.putBytes(data)
-
-        uploadTask = spaceRef.putStream(stream)
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-
-            activity?.showToast("addOnFailureListener")
-
-        }.addOnSuccessListener { taskSnapshot ->
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+    /*   private fun deleteImages() {
+           GthrLogger.e("Ref", spaceRef.path)
+           spaceRef.child("region_0708_162844190.jpg").delete().addOnSuccessListener {
+               activity?.showToast("deleted successfully")
+           }.addOnFailureListener {
+               // Uh-oh, an error occurred!
+               activity?.showToast("Uh-oh, an error occurred!")
+           }
 
 
-            activity?.showToast("addOnSuccessListener")
-        }
+           spaceRef.delete().addOnSuccessListener(OnSuccessListener<Void?> { // File deleted successfully
+
+                   GthrLogger.d(TAG, "onSuccess: deleted file")
+
+               }).addOnFailureListener(OnFailureListener { // Uh-oh, an error occurred!
+                   GthrLogger.d(TAG, "onFailure: did not delete file")
+               })
 
     }
+      */
 
-    private fun uploadUsingURL(url: String) {
-
-        var file = Uri.fromFile(File(url))
-        val riversRef = storageRef.child("images/${file.lastPathSegment}")
-        val uploadTask = riversRef.putFile(file)
-
-// Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-
-            activity?.showToast("Error")
-
-        }.addOnSuccessListener { taskSnapshot ->
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
-
-            activity?.showToast("successfully")
-
-
-        }
-
-    }
-
-
-    private fun deleteImages() {
-        GthrLogger.e("Ref", spaceRef.path)
-        spaceRef.child("region_0708_162844190.jpg").delete().addOnSuccessListener {
-            activity?.showToast("deleted successfully")
-        }.addOnFailureListener {
-            // Uh-oh, an error occurred!
-            activity?.showToast("Uh-oh, an error occurred!")
-        }
-
-/*
-        spaceRef.delete().addOnSuccessListener(OnSuccessListener<Void?> { // File deleted successfully
-
-                GthrLogger.d(TAG, "onSuccess: deleted file")
-
-            }).addOnFailureListener(OnFailureListener { // Uh-oh, an error occurred!
-                GthrLogger.d(TAG, "onFailure: did not delete file")
-            })
-*/
-    }
 
     private fun checkMultiplePermissions(onPermissionGranted: () -> Unit) {
         Dexter.withContext(requireContext())
