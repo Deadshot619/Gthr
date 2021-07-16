@@ -3,9 +3,11 @@ package com.gthr.gthrcollect.ui.settings.settingsscreen
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.GthrCollect
+import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.SettingsFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.settings.SettingsViewModel
@@ -24,6 +26,18 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
     private lateinit var mBtnTermsAndConditions: CustomImageTextButton
     private lateinit var mBtnFaqAndHelp: CustomImageTextButton
     private lateinit var mTvLogout: AppCompatTextView
+
+    private val mLogoutDialog by lazy {
+        MaterialAlertDialogBuilder(requireContext()).setTitle(getString(R.string.dialog_logout_title))
+            .setMessage(getString(R.string.dialog_logout_body))
+            .setPositiveButton(getString(R.string.dialog_logout_pos_btn)) { dialog, _ ->
+                logout()
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.dialog_logout_neg_btn)) { dialog, _ ->
+                dialog.dismiss()
+            }
+    }
 
     override fun onBinding() {
         initViews()
@@ -68,10 +82,13 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
         }
 
         mTvLogout.setOnClickListener {
-            Firebase.auth.signOut()
-            GthrCollect.prefs?.clearPref()
-            requireActivity().finish()
+            mLogoutDialog.show()
         }
     }
 
+    private fun logout() {
+        Firebase.auth.signOut()
+        GthrCollect.prefs?.clearPref()
+        requireActivity().finish()
+    }
 }

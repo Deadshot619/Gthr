@@ -47,8 +47,8 @@ class SignUpFragment : BaseFragment<SignUpViewModel, SignUpFragmentBinding>() {
         setUpListeners()
         setUpObservers()
 
-        mCetEmail.mEtEmail.setText("abc@gmail.com")
-        mCetPassword.mEtPassword.setText("Abc@12345")
+/*        mCetEmail.mEtEmail.setText("abc@gmail.com")
+        mCetPassword.mEtPassword.setText("Abc@12345")*/
     }
 
     private fun initViews() {

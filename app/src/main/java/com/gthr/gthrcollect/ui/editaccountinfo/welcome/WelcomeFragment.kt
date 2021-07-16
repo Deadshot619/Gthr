@@ -3,6 +3,7 @@ package com.gthr.gthrcollect.ui.editaccountinfo.welcome
 import androidx.fragment.app.viewModels
 import com.gthr.gthrcollect.databinding.WelcomeFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
 
 class WelcomeFragment : BaseFragment<WelcomeViewModel, WelcomeFragmentBinding>() {
@@ -24,6 +25,7 @@ class WelcomeFragment : BaseFragment<WelcomeViewModel, WelcomeFragmentBinding>()
 
     private fun setUpClickListeners() {
         mBtnWelcome.setOnClickListener {
+            startActivity(SettingsActivity.getInstance(requireContext()))
             activity?.finish()
         }
     }

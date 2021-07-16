@@ -173,8 +173,10 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
     }
 
     private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
-        val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
-        mViewModel.verifyOtp(credential)
+        verificationId?.let {
+            val credential = PhoneAuthProvider.getCredential(it, code)
+            mViewModel.verifyOtp(credential)
+        }
     }
 
     private fun startPhoneNumberVerification(phoneNumber: String) {
@@ -220,7 +222,6 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
             showProgressBar(false)
             GthrLogger.d(TAG, "onVerificationCompleted:$credential")
             mViewModel.verifyOtp(credential)
-            activity?.showToast(getString(R.string.verification_complere))
         }
 
         override fun onVerificationFailed(e: FirebaseException) {
@@ -230,14 +231,14 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
             when (e) {
                 is FirebaseAuthInvalidCredentialsException -> {
                     // Invalid request
-                    activity?.showToast(getString(R.string.invalid_request))
+                    showToast(getString(R.string.invalid_request))
                 }
                 is FirebaseTooManyRequestsException -> {
-                    activity?.showToast(getString(R.string.sms_limit_exceed))
+                    showToast(getString(R.string.sms_limit_exceed))
                     // The SMS quota for the project has been exceeded
                 }
                 else -> {
-                    activity?.showToast(e.message.toString())
+                    showToast(e.message.toString())
                     GthrLogger.i("Firebaseee", e.message.toString())
                 }
             }
@@ -251,7 +252,7 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
             // now need to ask the user to enter the code and then construct a credential
             // by combining the code with a verification ID.
             GthrLogger.d(TAG, "onCodeSent:$verificationId")
-            activity?.showToast(getString(R.string.otp_sent))
+            showToast(getString(R.string.otp_sent))
             storedVerificationId = verificationId
             mResendToken = token
             showProgressBar(false)
