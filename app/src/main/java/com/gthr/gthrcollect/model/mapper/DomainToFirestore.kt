@@ -4,7 +4,7 @@ import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.model.domain.EditAccInfoDomainModel
 import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
 
-fun UserInfoDomainModel.toFirestoreModel() =
+fun UserInfoDomainModel.toFirestoreModel(collectionId: String) =
     com.gthr.gthrcollect.model.network.firestore.UserInfoFirestoreModel(
         firstName = firstName,
         lastName = lastName,
@@ -13,7 +13,7 @@ fun UserInfoDomainModel.toFirestoreModel() =
         birthDate = "$mm/$dd/$yyyy",
         uid = GthrCollect.prefs?.signedInUser!!.uid,
         creationDate = "",
-        collectionId = "",
+        collectionId = collectionId,
         addressList = listOf()
     )
 

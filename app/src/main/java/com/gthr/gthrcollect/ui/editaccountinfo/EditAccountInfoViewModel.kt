@@ -10,6 +10,7 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.User
 import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
 import com.gthr.gthrcollect.model.mapper.toFirestoreModel
+import com.gthr.gthrcollect.model.mapper.toRealtimeDatabaseModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -37,10 +38,18 @@ class EditAccountInfoViewModel(private val repository: EditAccountInfoRepository
     val userDataAddedFirestore: LiveData<Event<State<Boolean>>>
         get() = _userDataAddedFirestore
 
+    private val _userCollectionInfoModelKey = MutableLiveData<Event<State<String>>>()
+    val userCollectionInfoModelKey: LiveData<Event<State<String>>>
+        get() = _userCollectionInfoModelKey
+
     fun setUserInfo(userInfoDomainModel: UserInfoDomainModel) {
         _userInfoLiveData.value = userInfoDomainModel
     }
 
+
+    /*
+     *  User will first verify Otp -> sign up using email -> create a collectionInfoModel in Firebase RD -> create a UserInfoModel in Firestore
+     */
     fun verifyOtp(credential: PhoneAuthCredential) {
         viewModelScope.launch {
             repository.signInWithOtp(credential).collect {
@@ -57,11 +66,21 @@ class EditAccountInfoViewModel(private val repository: EditAccountInfoRepository
         }
     }
 
-    fun addUserDataFirestore(userInfoDomainModel: UserInfoDomainModel) {
+    fun addUserDataFirestore(userInfoDomainModel: UserInfoDomainModel, collectionId: String) {
         viewModelScope.launch {
-            repository.insertUserDataFirestore(userInfoDomainModel.toFirestoreModel()).collect {
-                _userDataAddedFirestore.value = Event(it)
-            }
+            repository.insertUserDataFirestore(userInfoDomainModel.toFirestoreModel(collectionId))
+                .collect {
+                    _userDataAddedFirestore.value = Event(it)
+                }
+        }
+    }
+
+    fun addCollectionInfoModel(userInfoDomainModel: UserInfoDomainModel) {
+        viewModelScope.launch {
+            repository.insertCollectionInfoInRD(userInfoDomainModel.toRealtimeDatabaseModel())
+                .collect {
+                    _userCollectionInfoModelKey.value = Event(it)
+                }
         }
     }
 }

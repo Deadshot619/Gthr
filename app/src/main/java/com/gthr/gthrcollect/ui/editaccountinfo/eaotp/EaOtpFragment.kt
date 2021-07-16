@@ -124,11 +124,32 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
                 is State.Success -> {
                     showProgressBar(false)
                     GthrCollect.prefs?.signedInUser = it.data
-                    mViewModel.addUserDataFirestore(mViewModel.userInfoLiveData.value!!)
+                    mViewModel.addCollectionInfoModel(mViewModel.userInfoLiveData.value!!)
                 }
                 is State.Failed -> {
                     showProgressBar(false)
                     showToast(it.message)
+                }
+            }
+        })
+
+        mViewModel.userCollectionInfoModelKey.observe(viewLifecycleOwner, {
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mViewModel.addUserDataFirestore(
+                            mViewModel.userInfoLiveData.value!!,
+                            it.data
+                        )
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
                 }
             }
         })
