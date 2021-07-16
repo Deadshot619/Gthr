@@ -25,6 +25,7 @@
     <string name="enter_valid_email_error_text">Please enter valid Email</string>
     <string name="enter_valid_password_error_text">Please enter valid Password</string>
     <string name="btn_next_text">Next</string>
+    <string name="text_user_exists">User already exists!</string>
 
     <!--Edit Account Info-->
     <string name="edit_account_info_title">Edit Account Info</string>

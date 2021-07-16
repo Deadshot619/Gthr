@@ -8,6 +8,7 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.SignInFlowRepository
 import com.gthr.gthrcollect.databinding.LayoutSignUpHeaderBinding
 import com.gthr.gthrcollect.databinding.SignUpFragmentBinding
+import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.SignUpAuthCred
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
@@ -16,6 +17,7 @@ import com.gthr.gthrcollect.utils.customviews.CustomEmailEditText
 import com.gthr.gthrcollect.utils.customviews.CustomPasswordEditText
 import com.gthr.gthrcollect.utils.extensions.isValidEmail
 import com.gthr.gthrcollect.utils.extensions.isValidPassword
+import com.gthr.gthrcollect.utils.extensions.showToast
 
 
 class SignUpFragment : BaseFragment<SignUpViewModel, SignUpFragmentBinding>() {
@@ -33,6 +35,9 @@ class SignUpFragment : BaseFragment<SignUpViewModel, SignUpFragmentBinding>() {
     private lateinit var mCetEmail: CustomEmailEditText
     private lateinit var mCetPassword: CustomPasswordEditText
 
+    private var mEmailId = ""
+    private var mPassword = ""
+
     override fun onBinding() {
         initViews()
 
@@ -40,6 +45,7 @@ class SignUpFragment : BaseFragment<SignUpViewModel, SignUpFragmentBinding>() {
         mLayoutHeader.tvTitle.text = getString(R.string.sign_up_text)
 
         setUpListeners()
+        setUpObservers()
 
         mCetEmail.mEtEmail.setText("abc@gmail.com")
         mCetPassword.mEtPassword.setText("Abc@12345")
@@ -59,10 +65,9 @@ class SignUpFragment : BaseFragment<SignUpViewModel, SignUpFragmentBinding>() {
     private fun setUpListeners() {
         mBtnSignUp.setOnClickListener {
             if (validate()) {
-                val email = mCetEmail.mEtEmail.text.toString().trim()
-                val password = mCetPassword.mEtPassword.text.toString().trim()
-                GthrCollect.prefs?.signUpCred = SignUpAuthCred(email, password)
-                startActivity(EditAccountInfoActivity.getInstance(requireContext()))
+                mEmailId = mCetEmail.mEtEmail.text.toString().trim()
+                mPassword = mCetPassword.mEtPassword.text.toString().trim()
+                mViewModel.checkIfUserExists(mEmailId)
             }
         }
 
@@ -70,6 +75,29 @@ class SignUpFragment : BaseFragment<SignUpViewModel, SignUpFragmentBinding>() {
             findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignIn())
         }
     }
+
+    private fun setUpObservers() {
+        mViewModel.newUser.observe(viewLifecycleOwner, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        if (it.data) {
+                            GthrCollect.prefs?.signUpCred = SignUpAuthCred(mEmailId, mPassword)
+                            startActivity(EditAccountInfoActivity.getInstance(requireContext()))
+                        } else
+                            showToast(getString(R.string.text_user_exists))
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        })
+    }
+
 
     private fun validate(): Boolean {
         var isValid = true

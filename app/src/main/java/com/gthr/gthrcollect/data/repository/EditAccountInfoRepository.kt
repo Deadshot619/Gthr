@@ -122,16 +122,12 @@ class EditAccountInfoRepository {
         val file = Uri.fromFile(File(url))
         val ref = mStorageRef.child(GOVERNMENT_ID).child(imageSide).child(uid)
         val uploadTask: UploadTask = ref.putFile(file)
-        val failureListener = object : OnFailureListener {
-            override fun onFailure(p0: Exception) {
-                trySend(State.failed(p0.message.toString()))
-            }
-        }
-        val successListener = object : OnSuccessListener<UploadTask.TaskSnapshot> {
-            override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
-                trySend(State.success(true))
-                GthrLogger.e("uploadTask", imageSide)
-            }
+
+        val failureListener =
+            OnFailureListener { p0 -> trySend(State.failed(p0.message.toString())) }
+        val successListener = OnSuccessListener<UploadTask.TaskSnapshot> {
+            trySend(State.success(true))
+            GthrLogger.e("uploadTask", imageSide)
         }
         uploadTask.addOnSuccessListener(successListener).addOnFailureListener(failureListener)
 

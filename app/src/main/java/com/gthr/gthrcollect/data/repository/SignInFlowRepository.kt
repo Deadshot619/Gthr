@@ -29,4 +29,18 @@ class SignInFlowRepository {
         // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
+
+
+    fun checkIfUserExists(email: String) = flow<State<Boolean>> {
+        emit(State.loading())
+
+        val auth = mAuth.fetchSignInMethodsForEmail(email).await()
+        val isNewUser: Boolean = auth.signInMethods?.isEmpty() ?: false
+        emit(State.Success(isNewUser))
+
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
 }
