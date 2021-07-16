@@ -1,5 +1,6 @@
 package com.gthr.gthrcollect.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.gthr.gthrcollect.model.domain.SignUpAuthCred
@@ -23,9 +24,14 @@ class Prefs(mContext: Context) {
 
 
     var signUpCred: SignUpAuthCred?
-        set(value) = sharedPreferences.edit().putString(SIGN_UP_CRED, gson.toJsonString(value))
-            .apply()
+        set(value) = sharedPreferences.edit().putString(SIGN_UP_CRED, gson.toJsonString(value)).apply()
         get() = gson.fromJsonString(sharedPreferences.getString(SIGN_UP_CRED, "") ?: "")
+
+    @SuppressLint("CommitPrefEdits")
+    fun clearPref(){
+        sharedPreferences.edit().clear().apply()
+    }
+
 
 
     companion object {

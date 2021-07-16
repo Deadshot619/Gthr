@@ -1,7 +1,11 @@
 package com.gthr.gthrcollect.ui.settings.settingsscreen
 
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.databinding.SettingsFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.settings.SettingsViewModel
@@ -19,6 +23,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
     private lateinit var mBtnPayoutInfo: CustomImageTextButton
     private lateinit var mBtnTermsAndConditions: CustomImageTextButton
     private lateinit var mBtnFaqAndHelp: CustomImageTextButton
+    private lateinit var mTvLogout: AppCompatTextView
 
     override fun onBinding() {
         initViews()
@@ -33,6 +38,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
             mBtnPayoutInfo = btnPayoutInfo
             mBtnTermsAndConditions = btnTermsConditions
             mBtnFaqAndHelp = btnFaq
+            mTvLogout = tvLogout
         }
     }
 
@@ -59,6 +65,12 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
         }
         mBtnFaqAndHelp.setOnClickListener {
             startActivity(TermsAndFaqActivity.getInstance(requireContext(), WebViewType.FAQ))
+        }
+
+        mTvLogout.setOnClickListener {
+            Firebase.auth.signOut()
+            GthrCollect.prefs?.clearPref()
+            requireActivity().finish()
         }
     }
 
