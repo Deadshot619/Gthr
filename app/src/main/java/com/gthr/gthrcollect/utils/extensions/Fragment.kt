@@ -10,6 +10,7 @@ import com.google.android.material.datepicker.CompositeDateValidator
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.utils.constants.CalendarConstants
 import java.util.*
 
 private var isDatePickerShowing: Boolean = false
@@ -29,10 +30,9 @@ fun Fragment.showBirthDayPicker(
     positiveButtonClick: (Long) -> Unit
 
 ) {
-
     if (isDatePickerShowing) return
     val today = Calendar.getInstance()
-    today.add(Calendar.YEAR, -18)
+    today.add(Calendar.YEAR, CalendarConstants.MIN_AGE)
     val year18Ago =  today.timeInMillis
     val validators: ArrayList<CalendarConstraints.DateValidator> = ArrayList()
     validators.add(DateValidatorPointBackward.before(year18Ago))
@@ -50,13 +50,10 @@ fun Fragment.showBirthDayPicker(
         positiveButtonClick(it)
     }
 
-
-
     datePicker.addOnDismissListener() {
         isDatePickerShowing = false
     }
 
     datePicker.show(this.childFragmentManager, "")
     isDatePickerShowing = true
-
 }

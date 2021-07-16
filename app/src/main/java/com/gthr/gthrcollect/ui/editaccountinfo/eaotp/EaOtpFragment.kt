@@ -60,7 +60,6 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
         mPhoneNumber = args.phoneNumber/*TEST_PHONE_NUMBER*/
         mTvPhoneNo.text = mPhoneNumber
         startPhoneNumberVerification(mPhoneNumber)
-        showToast(GthrCollect.prefs?.signUpCred?.email.toString())
     }
 
     private fun initViews() {

@@ -21,7 +21,8 @@ import com.gthr.gthrcollect.utils.extensions.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccountInfoFragmentBinding>() {
+class EditAccountInfoFragment :
+    BaseFragment<EditAccountInfoViewModel, EditAccountInfoFragmentBinding>() {
 
     override fun getViewBinding() = EditAccountInfoFragmentBinding.inflate(layoutInflater)
 
@@ -55,34 +56,33 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
     }
 
     private fun setUpObservers() {
-        mViewModel.userInfo.observe(viewLifecycleOwner){ it ->
+        mViewModel.userInfo.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
-                    is State.Loading -> {
-                        showProgressBar()
-                    }
+                    is State.Loading -> showProgressBar()
                     is State.Success -> {
                         showProgressBar(false)
                         setData(it.data)
                     }
                     is State.Failed -> {
                         showProgressBar(false)
+                        showToast(it.message)
                     }
                 }
             }
         }
 
-        mViewModel.userDataUpdateFirestore.observe(viewLifecycleOwner){ it ->
+        mViewModel.userDataUpdateFirestore.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
-                    is State.Loading -> {
-                        showProgressBar()
-                    }
+                    is State.Loading -> showProgressBar()
                     is State.Success -> {
                         showProgressBar(false)
+                        showToast(getString(R.string.text_user_data_update_success))
                     }
                     is State.Failed -> {
                         showProgressBar(false)
+                        showToast(it.message)
                     }
                 }
             }
@@ -141,24 +141,12 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
         mEtYYYY.mEtMain.isFocusable = false
         mEtYYYY.mEtMain.isFocusableInTouchMode = false
 
-        mEtMM.mEtMain.setOnClickListener {
-            showDatePicker()
-        }
-
-        mEtDD.mEtMain.setOnClickListener {
-            showDatePicker()
-        }
-
-        mEtYYYY.mEtMain.setOnClickListener {
-            showDatePicker()
-        }
-
-
+        mEtMM.mEtMain.setOnClickListener { showDatePicker() }
+        mEtDD.mEtMain.setOnClickListener { showDatePicker() }
+        mEtYYYY.mEtMain.setOnClickListener { showDatePicker() }
     }
 
-
     private fun showDatePicker() {
-
         showBirthDayPicker(selectedDate.timeInMillis) {
             val cal = Calendar.getInstance()
             cal.timeInMillis = it
@@ -172,49 +160,32 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
             mEtDD.setInitial()
             mEtYYYY.setInitial()
         }
-
-
     }
-
 
     private fun setUpClickListeners() {
         mBtnSaveChanges.setOnClickListener {
-            if (validate()){
-                mViewModel.updateUserDataFirestore(EditAccInfoDomainModel(
-                    mEtFirstName.mEtMain.text.toString(),
-                    mEtLastName.mEtMain.text.toString(),
-                    mEtDD.mEtMain.text.toString(),
-                    mEtMM.mEtMain.text.toString(),
-                    mEtYYYY.mEtMain.text.toString(),
-                ))
-            }
-
+            if (validate())
+                mViewModel.updateUserDataFirestore(
+                    EditAccInfoDomainModel(
+                        mEtFirstName.mEtMain.text.toString(),
+                        mEtLastName.mEtMain.text.toString(),
+                        mEtDD.mEtMain.text.toString(),
+                        mEtMM.mEtMain.text.toString(),
+                        mEtYYYY.mEtMain.text.toString(),
+                    )
+                )
         }
 
-        mTvDeleteAccount.setOnClickListener{
-            customDialog()
-        }
-
+        mTvDeleteAccount.setOnClickListener { customDeleteDialog() }
     }
 
     private fun setTextChangeListeners() {
-        mEtFirstName.mEtMain.afterTextChanged {
-            mEtFirstName.setInitial()
-        }
+        mEtFirstName.mEtMain.afterTextChanged { mEtFirstName.setInitial() }
+        mEtLastName.mEtMain.afterTextChanged { mEtLastName.setInitial() }
 
-        mEtLastName.mEtMain.afterTextChanged {
-            mEtLastName.setInitial()
-        }
-
-        mEtPhoneNo.mEtPhoneNo.afterTextChanged {
-            mEtPhoneNo.setInitial()
-        }
-
-        mEtPhoneNo.mEtPhoneNo.setOnClickListener {
-            mEtPhoneNo.setInitial()
-        }
+        mEtPhoneNo.mEtPhoneNo.afterTextChanged { mEtPhoneNo.setInitial() }
+        mEtPhoneNo.mEtPhoneNo.setOnClickListener { mEtPhoneNo.setInitial() }
     }
-
 
 
     private fun validate(): Boolean {
@@ -241,8 +212,7 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
         if (mEtEmail.mEtMain.text.toString().isEmpty()) {
             mEtEmail.setError(getString(R.string.edit_acc_empty_email_error))
             isValidate = false
-        }
-        else if (!mEtEmail.mEtMain.text.toString().isValidEmail()) {
+        } else if (!mEtEmail.mEtMain.text.toString().isValidEmail()) {
             mEtEmail.setError(getString(R.string.edit_acc_email_error))
             isValidate = false
         }
@@ -250,35 +220,33 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
     }
 
 
-    private fun customDialog(){
-        val dialogBinding : DialogDeleteAccountBinding = DialogDeleteAccountBinding.inflate(LayoutInflater.from(requireContext()))
+    private fun customDeleteDialog() {
+        val dialogBinding: DialogDeleteAccountBinding =
+            DialogDeleteAccountBinding.inflate(LayoutInflater.from(requireContext()))
+        dialogBinding.apply {
+            tvTitle.text = getString(R.string.acc_delete)
+            etMain.gone()
 
-        dialogBinding.tvTitle.text = getString(R.string.acc_delete)
-        dialogBinding.etMain.gone()
-
-
-
-        dialogBinding.etMain.afterTextChanged{
-            if(it=="Delete"){
-                dialogBinding.positive.isEnabled = true
-                dialogBinding.positive.setTextColor(getResolvedColor(R.color.blue))
+            etMain.afterTextChanged {
+                if (it == "Delete") {
+                    positive.isEnabled = true
+                    positive.setTextColor(getResolvedColor(R.color.blue))
+                } else {
+                    positive.isEnabled = false
+                    positive.setTextColor(getResolvedColor(R.color.disable))
+                }
             }
-            else{
-                dialogBinding.positive.isEnabled = false
-                dialogBinding.positive.setTextColor(getResolvedColor(R.color.disable))
-            }
-
         }
 
-        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext()).setView(dialogBinding.root)
+        val materialAlertDialogBuilder =
+            MaterialAlertDialogBuilder(requireContext()).setView(dialogBinding.root)
         val dialog = materialAlertDialogBuilder.show()
 
         dialogBinding.positive.setOnClickListener {
-            if(dialogBinding.etMain.isVisible){
-                if(dialogBinding.etMain.text.toString()=="Delete")
+            if (dialogBinding.etMain.isVisible) {
+                if (dialogBinding.etMain.text.toString() == "Delete")
                     dialog.dismiss()
-            }
-            else{
+            } else {
                 dialogBinding.positive.isEnabled = false
                 dialogBinding.positive.setTextColor(getResolvedColor(R.color.disable))
                 dialogBinding.etMain.visible()
@@ -290,6 +258,4 @@ class EditAccountInfoFragment : BaseFragment<EditAccountInfoViewModel, EditAccou
             dialog.dismiss()
         }
     }
-
-
 }

@@ -179,7 +179,7 @@
     <string name="acc_delete">Delete</string>
     <string name="edit_acc_birthday_error">Users must be 18 or older.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="text_user_data_update_success">User data updated successfully!</string>
     <!--Add Address-->
     <string name="address1">ADDRESS 1</string>
     <string name="address2">ADDRESS 2</string>
