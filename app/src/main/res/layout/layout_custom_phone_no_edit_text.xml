@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:background="@drawable/edit_text_gray_bg"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_phone_no"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/edit_text_gray_bg">
 
     <com.hbb20.CountryCodePicker
+        android:id="@+id/ccp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginVertical="@dimen/ccp_marginVertical"
+        android:layout_marginStart="@dimen/ccp_marginLeft"
         app:ccp_defaultNameCode="US"
-        app:ccp_textSize="@dimen/text_size_medium"
         app:ccp_showFlag="false"
         app:ccp_showNameCode="false"
-        android:layout_gravity="center_vertical"
-        android:id="@+id/ccp"
-        android:layout_marginLeft="@dimen/ccp_marginLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        app:ccp_textSize="@dimen/text_size_medium" />
 
     <View
         android:layout_width="@dimen/view_width"
         android:layout_height="match_parent"
-        android:background="@color/black"
-        android:layout_marginVertical="@dimen/margin_medium"/>
-
+        android:layout_marginVertical="@dimen/margin_medium"
+        android:background="@color/black" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:layout_gravity="center_vertical"
         android:id="@+id/et_phone_no"
         android:layout_width="match_parent"
         android:layout_height="@dimen/phone_edit_text_height"
+        android:layout_gravity="center_vertical"
         android:background="@null"
+        android:digits="0123456789"
+        android:ellipsize="end"
         android:fontFamily="@font/lato"
         android:hint="@string/phone_no"
         android:inputType="phone"
         android:maxLength="10"
+        android:maxLines="1"
         android:paddingHorizontal="@dimen/padding_normal"
         android:textColorHint="@color/hint_color"
         android:textSize="@dimen/text_size_medium" />

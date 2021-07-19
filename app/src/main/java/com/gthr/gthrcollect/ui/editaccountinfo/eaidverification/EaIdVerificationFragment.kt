@@ -2,10 +2,7 @@ package com.gthr.gthrcollect.ui.editaccountinfo.eaidverification
 
 import android.Manifest
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.os.Build
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -27,9 +24,6 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.customcameraactivities.CustomCamera
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModel
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModelFactory
-import com.gthr.gthrcollect.ui.editaccountinfo.eaotp.EaOtpFragmentDirections
-import com.gthr.gthrcollect.utils.Prefs
-import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.CameraViews
 import com.gthr.gthrcollect.utils.extensions.*
@@ -39,9 +33,6 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileInputStream
 
 
 class EaIdVerificationFragment :
@@ -49,7 +40,9 @@ class EaIdVerificationFragment :
     private val TAG: String = this.javaClass.name
     private val repository = EditAccountInfoRepository()
     private var imageCheck: Int = 0
-    private var imageData: Intent? = null
+
+    private var mFrontImageUrl: String? = null
+    private var mBackImageUrl: String? = null
 
     override val mViewModel: EditAccountInfoViewModel by activityViewModels {
         EditAccountInfoViewModelFactory(repository)
@@ -138,10 +131,9 @@ class EaIdVerificationFragment :
         }
 
         mCompleteAccBtn.setOnClickListener {
-            mViewModel.uploadFrontImage(
-                imageData?.getStringExtra(CustomCamera.INTENT_KEY_URL).toString(),
-                GthrCollect.prefs!!.signedInUser!!.uid
-            )
+            mFrontImageUrl?.let { url ->
+                mViewModel.uploadFrontImage(url, GthrCollect.prefs!!.signedInUser!!.uid)
+            }
         }
 
         mSkipBtn.setOnClickListener {
@@ -169,10 +161,9 @@ class EaIdVerificationFragment :
                     is State.Success -> {
                         showProgressBar(false)
                         GthrLogger.e("uploadTask", "FrontFrag")
-                        mViewModel.uploadBackImage(
-                            imageData?.getStringExtra(CustomCamera.INTENT_KEY_URL).toString(),
-                            GthrCollect.prefs!!.signedInUser!!.uid
-                        )
+                        mBackImageUrl?.let { url ->
+                            mViewModel.uploadBackImage(url, GthrCollect.prefs!!.signedInUser!!.uid)
+                        }
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -207,14 +198,15 @@ class EaIdVerificationFragment :
         super.onActivityResult(requestCode, resultCode, data)
 
         if (data != null) {
-            imageCheck = imageCheck + 1
+            imageCheck += 1
             val bitmap = BitmapFactory.decodeFile(data.getStringExtra(CustomCamera.INTENT_KEY_URL))
-            imageData = data
             if (requestCode == REQUEST_CODE_FRONT_ID) {
                 mIvFrontImage.visible()
                 mIvFrontImage.setImageBitmap(bitmap)
                 mfrontLable.text = getString(R.string.replae_front)
                 mFront_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)
+
+                mFrontImageUrl = data.getStringExtra(CustomCamera.INTENT_KEY_URL)
 
                 if (imageCheck >= 2) {
                     mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
@@ -224,6 +216,8 @@ class EaIdVerificationFragment :
                 mIvBackImage.visible()
                 mIvBackImage.setImageBitmap(bitmap)
                 mBackLable.text = getString(R.string.replace_back)
+
+                mBackImageUrl = data.getStringExtra(CustomCamera.INTENT_KEY_URL)
 
                 if (imageCheck >= 2) {
                     mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
