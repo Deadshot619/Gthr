@@ -3,12 +3,10 @@ package com.gthr.gthrcollect.ui.homebottomnav.signin
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.gthr.gthrcollect.GthrCollect
+import com.gthr.gthrcollect.GthrCollect.Companion.prefs
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.SignInFlowRepository
 import com.gthr.gthrcollect.databinding.LayoutSignUpHeaderBinding
@@ -23,7 +21,6 @@ import com.gthr.gthrcollect.utils.customviews.CustomPasswordEditText
 import com.gthr.gthrcollect.utils.extensions.isValidEmail
 import com.gthr.gthrcollect.utils.extensions.isValidPassword
 import com.gthr.gthrcollect.utils.extensions.showToast
-import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
 
@@ -42,8 +39,6 @@ class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
     private lateinit var mBtnSignIn: CustomAuthenticationButton
     private lateinit var mTvForgotPassword: TextView
 
-    val db = Firebase.firestore
-
     override fun onBinding() {
         mAuth = Firebase.auth
         initViews()
@@ -54,6 +49,9 @@ class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
         setUpListeners()
         setUpObservers()
 
+        if (isUserLoggedIn()) {
+            goToSettingsPage()
+        }
 /*        mCetEmail.mEtEmail.setText("abc@gmail.com")
         mCetPassword.mEtPassword.setText("Abc@12345")*/
     }
@@ -96,8 +94,8 @@ class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
                 }
                 is State.Success -> {
                     showProgressBar(false)
-                    GthrCollect.prefs?.signedInUser = it.data
-                    startActivity(SettingsActivity.getInstance(requireContext()))
+                    prefs?.signedInUser = it.data
+                    goToSettingsPage()
                 }
                 is State.Failed -> {
                     showProgressBar(false)
@@ -124,104 +122,14 @@ class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
         return isValid
     }
 
-    private fun authUser() {
-        val email = mCetEmail.mEtEmail.text.toString().trim()
-        val password = mCetPassword.mEtPassword.text.toString().trim()
-
-        mAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity(), OnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    GthrLogger.d(TAG, "signInWithEmail:success")
-
-                    val user = mAuth.currentUser
-
-                    activity?.showToast(getString(R.string.sign_successfully))
-                    startActivity(SettingsActivity.getInstance(requireContext()))
-
-                    //     fetchDataFromFirestore(user!!.uid)
-
-                    //    getUserDataUsingUID("E1DmUzgkX4e9RaGxiBmAPxtRO0H3")
-
-                    //    addDataToFirestore("quuiGSKVZMQkyo492znegJYYNlG2")
-
-                    //     updateDataWithUID("quuiGSKVZMQkyo492znegJYYNlG2")
-
-                    //   addDataToFirestore(user!!.uid)
-
-                    //    updateData()
-
-                    //      deleteData()
-                } else {
-                    // If sign in fails, display a message to the user.
-                    GthrLogger.w(TAG, "signInWithEmail:failure" + task.exception)
-
-                    activity?.showToast(getString(R.string.auth_fail))
-                }
-            })
+    private fun isUserLoggedIn(): Boolean {
+        prefs?.signedInUser?.let {
+            return@isUserLoggedIn !it.email.isNullOrEmpty() && it.uid.isNotEmpty()
+        } ?: return false
     }
 
-    private fun fetchDataFromFirestore(uid: String) {
-        db.collection("userInfo")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    GthrLogger.d(TAG, "${document.id} => ${document.data}")
-                    GthrLogger.e("document", document.data["collectionID"].toString())
-                    GthrLogger.e("document", document.id.toString())
-                    GthrLogger.e("document", document.data.toString())
-                }
-            }
-            .addOnFailureListener { exception ->
-                GthrLogger.w(TAG, "Error getting documents." + exception)
-            }
-    }
-
-    private fun getUserDataUsingUID(uid: String) {
-        db.collection("userInfo").document(uid).get().addOnSuccessListener {
-            GthrLogger.e("name", it.data.toString())
-        }
-    }
-
-    private fun updateDataWithUID(uid: String) {
-        var address: ArrayList<String> = ArrayList()
-
-        address.add("Address 1")
-        address.add("Address 2")
-        address.add("Address 3")
-
-        val user = hashMapOf(
-            "first" to "Shubham",
-            "last" to "Khandelwal",
-            "born" to 2022,
-            "uid" to uid,
-            "address" to address
-        )
-
-        db.collection("users").document(uid)
-            .set(user)
-            .addOnSuccessListener {
-
-                activity?.showToast("successfully written!")
-
-
-                GthrLogger.d(TAG, "DocumentSnapshot successfully written!")
-            }
-            .addOnFailureListener {
-                GthrLogger.w(TAG, "Error writing document")
-
-                activity?.showToast(it.message!!)
-            }
-    }
-
-    private fun updateData() {
-        val option = db.collection("users").document("EL130o4XxJYLopOJNwrS")
-            .update("last", "EL130o4XxJYLopOJNwrS")
-
-        activity?.showToast(option.isSuccessful.toString())
-    }
-
-    private fun deleteData() {
-        db.collection("users").document("EL130o4XxJYLopOJNwrS").delete()
+    private fun goToSettingsPage() {
+        startActivity(SettingsActivity.getInstance(requireContext()))
+        activity?.finish()
     }
 }

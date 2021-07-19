@@ -10,6 +10,7 @@ import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.SettingsFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.settings.SettingsViewModel
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
@@ -89,6 +90,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
     private fun logout() {
         Firebase.auth.signOut()
         GthrCollect.prefs?.clearPref()
-        requireActivity().finish()
+        startActivity(HomeBottomNavActivity.getInstance(requireContext()))
+        activity?.finish()
     }
 }
