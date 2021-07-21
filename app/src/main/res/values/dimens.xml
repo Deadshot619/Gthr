@@ -26,6 +26,7 @@
     <dimen name="text_size_large">20sp</dimen>
 
     <!--Margin-->
+    <dimen name="margin_extra_5dp_small">5dp</dimen>
     <dimen name="margin_extra_small">8dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="margin_medium">10dp</dimen>
@@ -170,7 +171,7 @@
     <dimen name="spacing_search_collection_recycler_view">1dp</dimen>
     <dimen name="radius_search_collection_cell">8dp</dimen>
     <dimen name="radius_card_view_search_collection_cell">8dp</dimen>
-    <dimen name="height_search_collection_cell">200dp</dimen>
+    <dimen name="height_search_collection_cell">170dp</dimen>
     <dimen name="margin_search_collection_cell">5dp</dimen>
     <dimen name="size_user_image_search_collection_cell">50dp</dimen>
     <dimen name="elevation_user_name_search_collection_cell">4dp</dimen>

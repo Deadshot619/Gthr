@@ -9,15 +9,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_extra_5dp_small"
+        android:layout_marginVertical="@dimen/margin_extra_5dp_small"
+        >
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/mc_main"
             app:cardCornerRadius="@dimen/radius_card_view_search_collection_cell"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/height_search_collection_cell"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="@dimen/margin_search_collection_cell"
+            android:layout_marginHorizontal="@dimen/margin_search_collection_cell"
             android:layout_marginVertical="@dimen/margin_search_collection_cell"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +32,8 @@
                 android:maxHeight="@dimen/margin_medium"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
                 android:background="@drawable/collection_image_bg"
                 app:srcCompat="@drawable/pikapika" />
 
@@ -44,7 +47,8 @@
             app:layout_constraintTop_toTopOf="@+id/mc_main"
             android:id="@+id/iv_user"
             android:layout_width="@dimen/size_user_image_search_collection_cell"
-            android:layout_height="@dimen/size_user_image_search_collection_cell"/>
+            android:layout_height="@dimen/size_user_image_search_collection_cell"
+            />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
@@ -64,4 +68,6 @@
             tools:ignore="RtlSymmetry" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>
