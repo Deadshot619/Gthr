@@ -24,6 +24,7 @@
     <dimen name="text_size_normal">16sp</dimen>
     <dimen name="text_size_extra_large">24sp</dimen>
     <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_extra_small">10sp</dimen>
 
     <!--Margin-->
     <dimen name="margin_extra_5dp_small">5dp</dimen>
@@ -31,6 +32,7 @@
     <dimen name="margin_medium">10dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="margin_large">20dp</dimen>
+    <dimen name="margin_small">12dp</dimen>
     <dimen name="margin_extra_large">24dp</dimen>
 
     <!--Text Size-->
@@ -71,6 +73,7 @@
     <dimen name="padding_extra_large">24dp</dimen>
 
     <!--Guidelines-->
+    <dimen name="guideline_extra_small">8dp</dimen>
     <dimen name="guideline_normal">16dp</dimen>
     <dimen name="guideline_extra_large">24dp</dimen>
     <dimen name="guideline_edit_account_info">24dp</dimen>
@@ -179,6 +182,15 @@
     <dimen name="margin_start_search_collection_cell">25dp</dimen>
     <dimen name="padding_start_search_collection_cell">30dp</dimen>
     <dimen name="margin_end_search_collection_cell">30dp</dimen>
+
+    <!--Custom Product-->
+    <dimen name="radius_custom_product">8dp</dimen>
+    <dimen name="margin_small_custom_product">4dp</dimen>
+    <dimen name="padding_custom_product">6dp</dimen>
+    <dimen name="height_image_custom_product">170dp</dimen>
+    <dimen name="elevation_custom_product">10dp</dimen>
+    <dimen name="size_icon_custom_product">32dp</dimen>
+    <dimen name="size_glob">16dp</dimen>
 
     <!--Follower/following user List size-->
     <dimen name="size_follow_image">45dp</dimen>

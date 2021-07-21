@@ -152,4 +152,23 @@
     </declare-styleable>
 
 
+    <declare-styleable name="CustomProductCell">
+        <attr name="cpc_type" format="enum">
+            <enum name="FUNKO" value="0" />
+            <enum name="SEALED" value="1" />
+            <enum name="MYTHIC" value="2" />
+            <enum name="HOLO_RARE" value="3" />
+            <enum name="SECRET_RARE" value="4" />
+        </attr>
+        <attr name="cpc_card_state" format="enum">
+            <enum name="FOR_SALE" value="0" />
+            <enum name="WANT" value="1" />
+            <enum name="NORMAL" value="2" />
+            <enum name="FAVORITE" value="3" />
+            <enum name="OFFER" value="4" />
+            <enum name="SOLD" value="6" />
+        </attr>
+    </declare-styleable>
+
+
 </resources>

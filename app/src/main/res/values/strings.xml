@@ -226,7 +226,6 @@
     <string name="hint_address2">Apt/ Bldg/ Other</string>
 
 
-
     <!--Custom Fello View-->
     <string name="title_followers">Followers</string>
     <string name="title_following">Following</string>
@@ -268,5 +267,19 @@
 
     <!--Follower/following search hint-->
     <string name="hint_follow_search">Search in followers’ collection</string>
+
+    <!--Custom product type-->
+    <string name="text_funko">Funko</string>
+    <string name="text_mythic">Mythic</string>
+    <string name="text_sealed">Sealed</string>
+    <string name="text_holo_rare">Holo Rare</string>
+    <string name="text_secret_rare">Secret Rare</string>
+    <string name="text_fore_sale">For sale</string>
+    <string name="text_want">Want</string>
+    <string name="text_offer">Offer</string>
+    <string name="text_sold">Sold</string>
+    <string name="text_product_name">Name</string>
+    <string name="text_product_set">Set</string>
+    <string name="text_Hash">#:</string>
 
 </resources>
