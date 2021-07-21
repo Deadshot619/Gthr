@@ -1,6 +1,10 @@
 package com.gthr.gthrcollect.data.repository
 
 import android.net.Uri
+import com.algolia.search.client.ClientSearch
+import com.algolia.search.model.APIKey
+import com.algolia.search.model.ApplicationID
+import com.algolia.search.model.IndexName
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
@@ -9,9 +13,12 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.User
+import com.gthr.gthrcollect.model.mapper.toAlgoliaCollectionModel
 import com.gthr.gthrcollect.model.mapper.toUser
+import com.gthr.gthrcollect.model.network.algolia.AlgoliaCollectionModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.CollectionInfoModel
 import com.gthr.gthrcollect.model.network.firestore.UserInfoFirestoreModel
+import com.gthr.gthrcollect.utils.constants.AlgoliaConstants
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.constants.FirebaseStorage.GOVERNMENT_ID
 import com.gthr.gthrcollect.utils.constants.Firestore
@@ -28,6 +35,7 @@ class EditAccountInfoRepository {
     private val mFirestore = Firebase.firestore
     private val mFirebaseRD = Firebase.database.reference
     private val mStorageRef = Firebase.storage.reference
+
 
     fun signInWithOtp(credential: PhoneAuthCredential) = flow<State<Boolean>> {
         // Emit loading state
@@ -87,6 +95,8 @@ class EditAccountInfoRepository {
             val key = data.push().key
             data.child(key!!).setValue(collectionInfoModel).await()
 
+            uploadDataToAlgolia(collectionInfoModel)
+
             emit(State.success(key))
 
         }.catch {
@@ -108,4 +118,23 @@ class EditAccountInfoRepository {
         // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
+
+
+    suspend fun uploadDataToAlgolia(collectionInfoModel: CollectionInfoModel) {
+
+        val client = ClientSearch(
+            applicationID = ApplicationID(AlgoliaConstants.APP_ID),
+            apiKey = APIKey(AlgoliaConstants.APIKey)
+        )
+        val indexName = IndexName(AlgoliaConstants.COLLECTION_INFO_MODEL)
+        val index = client.initIndex(indexName)
+        val collectionInfoList = listOf(
+            collectionInfoModel.toAlgoliaCollectionModel()
+        )
+
+        index.saveObjects(
+            AlgoliaCollectionModel.serializer(),
+            collectionInfoList
+        )
+    }
 }

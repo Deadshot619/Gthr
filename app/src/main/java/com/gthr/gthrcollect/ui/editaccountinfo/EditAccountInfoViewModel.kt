@@ -13,8 +13,6 @@ import com.gthr.gthrcollect.model.mapper.toFirestoreModel
 import com.gthr.gthrcollect.model.mapper.toRealtimeDatabaseModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
 import com.gthr.gthrcollect.utils.constants.FirebaseStorage
-import com.gthr.gthrcollect.utils.constants.FirebaseStorage.BACK_ID
-import com.gthr.gthrcollect.utils.constants.FirebaseStorage.FRONT_ID
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
