@@ -1,7 +1,7 @@
 package com.gthr.gthrcollect.model.network.firestore
 
 data class UserInfoFirestoreModel(
-    val addressList: List<AddressModel> = listOf(),
+    val addressList: List<AddressFirestoreModel> = listOf(),
     val birthDate: String = "",
     val collectionId: String = "",
     val creationDate: String = "",

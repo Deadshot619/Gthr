@@ -39,13 +39,16 @@
         android:name="com.gthr.gthrcollect.ui.settings.addnewaddress.AddNewAddressFragment"
         android:label="AddNewAddressFragment" >
         <argument
-            android:name="mShippinAddress"
-            app:argType="com.gthr.gthrcollect.model.domain.ShippingAddress"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            android:name="item"
+            app:argType="com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel"
+            app:nullable="true" />
         <argument
             android:name="isEdit"
             app:argType="boolean"
             android:defaultValue="false" />
+        <argument
+            android:name="addressList"
+            app:argType="com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel[]"
+            app:nullable="true" />
     </fragment>
 </navigation>

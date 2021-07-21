@@ -5,6 +5,8 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.SettingsRepository
 import com.gthr.gthrcollect.databinding.DialogDeleteAccountBinding

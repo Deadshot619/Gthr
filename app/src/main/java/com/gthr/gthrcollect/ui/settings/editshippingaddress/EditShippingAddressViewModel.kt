@@ -1,36 +1,61 @@
 package com.gthr.gthrcollect.ui.settings.editshippingaddress
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.gthr.gthrcollect.GthrCollect
-import com.gthr.gthrcollect.model.domain.ShippingAddress
+import com.gthr.gthrcollect.data.repository.AddressRepository
+import com.gthr.gthrcollect.model.Event
+import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel
+import com.gthr.gthrcollect.model.mapper.toFirestoreModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
-import com.gthr.gthrcollect.utils.extensions.fromJsonString
-import com.gthr.gthrcollect.utils.extensions.gson
-import com.gthr.gthrcollect.utils.logger.GthrLogger
-import java.io.IOException
-import java.io.InputStream
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class EditShippingAddressViewModel : BaseViewModel() {
+class EditShippingAddressViewModel(val repository : AddressRepository) : BaseViewModel() {
 
-    private val _mShippingAddressList = MutableLiveData<List<ShippingAddress>>()
-    val mShippingAddressList: LiveData<List<ShippingAddress>>
+    private val _mShippingAddressList = MutableLiveData<Event<State<List<ShippingAddressDomainModel>>>>()
+    val mShippingAddressDomainModelList: LiveData<Event<State<List<ShippingAddressDomainModel>>>>
         get() = _mShippingAddressList
 
 
-     fun getShippingAddress() {
-        _mShippingAddressList.value =
-            gson.fromJsonString<List<ShippingAddress>>(GthrCollect.prefs?.shippingAddresses!!)
+
+
+    fun getAllShippingAddress(uId : String){
+        viewModelScope.launch {
+            repository.getAddressFirestore(uId).collect {
+                _mShippingAddressList.value = Event(it)
+            }
+        }
     }
 
-    fun changeAddressSelectedStatus(shippingAddress: ShippingAddress) {
-//        if (shippingAddress)
+    fun updateAddressList(list : List<ShippingAddressDomainModel>){
+        viewModelScope.launch {
+            repository.updateAddressListFirestore(list.toFirestoreModel(),GthrCollect.prefs?.signedInUser!!.uid).collect {
+                _mShippingAddressList.value = Event(it)
+            }
+        }
+    }
+
+    fun deleteAddress(shippingAddressDomainModel : ShippingAddressDomainModel){
+        val list = (_mShippingAddressList.value?.peekContent() as State.Success).data.toMutableList()
+        list.remove(shippingAddressDomainModel)
+        if(list.size>0&&shippingAddressDomainModel.isSelected){
+            val item = list[0].copy()
+            item.isSelected = true
+            list[0] = item
+        }
+        updateAddressList(list)
+    }
+
+
+
+    fun changeAddressSelectedStatus(shippingAddressDomainModel: ShippingAddressDomainModel) {
+
     }
 
     fun deletedAddress() {
 
     }
-
-
 }

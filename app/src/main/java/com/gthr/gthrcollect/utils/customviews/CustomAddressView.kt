@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.gthr.gthrcollect.R
-import com.gthr.gthrcollect.model.domain.ShippingAddress
+import com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel
 import com.gthr.gthrcollect.utils.extensions.getImageDrawable
 
 class CustomAddressView @JvmOverloads constructor(
@@ -72,8 +72,8 @@ class CustomAddressView @JvmOverloads constructor(
         isViewSelected = false
     }
 
-    fun updateValues(shippingAddress: ShippingAddress) {
-        shippingAddress.run {
+    fun updateValues(shippingAddressDomainModel: ShippingAddressDomainModel) {
+        shippingAddressDomainModel.run {
             mTvFullName?.text =
                 String.format(context.getString(R.string.full_name_builder), firstName, lastName)
             mTvAddress1?.text = addressLine1

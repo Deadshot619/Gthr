@@ -4,8 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ShippingAddress(
-    val id: Int,
+data class ShippingAddressDomainModel(
+    var id : Int = -1,
+    var uid: String,
     var firstName: String,
     var lastName: String,
     var addressLine1: String,
@@ -15,6 +16,4 @@ data class ShippingAddress(
     var country: String,
     var postalCode: String,
     var isSelected: Boolean,
-
-
 ) : Parcelable

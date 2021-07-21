@@ -6,19 +6,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.LayoutShippingAddressBinding
-import com.gthr.gthrcollect.model.domain.ShippingAddress
+import com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel
 
-class ShippingAddressAdapter(val clickListener: SAClickListener) :
-    ListAdapter<ShippingAddress, ShippingAddressAdapter.ShippingAddressViewHolder>(DiffCallback) {
+class ShippingAddressAdapter(private val clickListener: SAClickListener) :
+    ListAdapter<ShippingAddressDomainModel, ShippingAddressAdapter.ShippingAddressViewHolder>(DiffCallback) {
 
-    companion object DiffCallback : DiffUtil.ItemCallback<ShippingAddress>() {
-        override fun areItemsTheSame(oldItem: ShippingAddress, newItem: ShippingAddress): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<ShippingAddressDomainModel>() {
+        override fun areItemsTheSame(oldItem: ShippingAddressDomainModel, newItem: ShippingAddressDomainModel): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: ShippingAddress,
-            newItem: ShippingAddress
+            oldItem: ShippingAddressDomainModel,
+            newItem: ShippingAddressDomainModel
         ): Boolean {
             return oldItem == newItem
         }
@@ -40,34 +40,32 @@ class ShippingAddressAdapter(val clickListener: SAClickListener) :
 
     class ShippingAddressViewHolder(private var bindingView: LayoutShippingAddressBinding) :
         RecyclerView.ViewHolder(bindingView.root) {
-        fun onBind(shippingAddress: ShippingAddress, clickListener: SAClickListener) {
+        fun onBind(shippingAddressDomainModel: ShippingAddressDomainModel, clickListener: SAClickListener) {
             bindingView.cavAddress.run {
-                updateValues(shippingAddress)
+                updateValues(shippingAddressDomainModel)
                 setOnClickListener {
-                    clickListener.onClickAddress(shippingAddress)
-                    if (isViewSelected)
-                        setUnselected()
-                    else
-                        setSelected()
+                    if(!isViewSelected)
+                        clickListener.onClickAddress(shippingAddressDomainModel)
                 }
                 onEditClick {
-                    clickListener.onClickEdit(shippingAddress)
+                    clickListener.onClickEdit(shippingAddressDomainModel)
                 }
                 onDeleteClick {
-                    clickListener.onClickDelete(shippingAddress)
+                    clickListener.onClickDelete(shippingAddressDomainModel)
                 }
             }
-
-
             bindingView.executePendingBindings()
         }
     }
 
     interface SAClickListener {
-        fun onClickAddress(shippingAddress: ShippingAddress)
-        fun onClickEdit(shippingAddress: ShippingAddress)
-        fun onClickDelete(shippingAddress: ShippingAddress)
+        fun onClickAddress(shippingAddressDomainModel: ShippingAddressDomainModel)
+        fun onClickEdit(shippingAddressDomainModel: ShippingAddressDomainModel)
+        fun onClickDelete(shippingAddressDomainModel: ShippingAddressDomainModel)
     }
+
+
+
 }
 
 
