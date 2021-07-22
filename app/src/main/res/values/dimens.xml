@@ -28,8 +28,8 @@
     <!--Margin-->
     <dimen name="margin_extra_5dp_small">5dp</dimen>
     <dimen name="margin_extra_small">8dp</dimen>
-    <dimen name="margin_normal">16dp</dimen>
     <dimen name="margin_medium">10dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
     <dimen name="margin_large">20dp</dimen>
     <dimen name="margin_extra_large">24dp</dimen>
 
