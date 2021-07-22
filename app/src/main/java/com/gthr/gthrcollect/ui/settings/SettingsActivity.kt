@@ -4,14 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.algolia.search.client.ClientSearch
+import com.algolia.search.model.APIKey
+import com.algolia.search.model.ApplicationID
+import com.algolia.search.model.IndexName
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivitySettingsBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
+import com.gthr.gthrcollect.utils.constants.AlgoliaConstants
+import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
 class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding>() {
     override val mViewModel: SettingsViewModel by viewModels()
@@ -76,4 +84,6 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
     companion object {
         fun getInstance(context: Context) = Intent(context, SettingsActivity::class.java)
     }
+
+
 }

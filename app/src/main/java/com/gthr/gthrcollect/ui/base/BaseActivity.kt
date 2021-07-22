@@ -3,7 +3,14 @@ package com.gthr.gthrcollect.ui.base
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
+import com.algolia.search.client.ClientSearch
+import com.algolia.search.model.APIKey
+import com.algolia.search.model.ApplicationID
+import com.algolia.search.model.IndexName
+import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
 /**
  * Abstract Activity which binds [ViewModel] [VM] and [ViewBinding] [VB]
@@ -21,8 +28,7 @@ abstract class BaseActivity<VM : ViewModel, VB : ViewBinding> : AppCompatActivit
         setContentView(mViewBinding.root)
 
         onBinding()
-    }
-
+}
     /**
      * It returns [VB] which is assigned to [mViewBinding] and used in [onCreate]
      */
