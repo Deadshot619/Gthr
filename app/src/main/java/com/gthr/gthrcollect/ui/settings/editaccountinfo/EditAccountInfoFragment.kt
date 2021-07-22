@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -81,6 +82,8 @@ class EditAccountInfoFragment :
                     is State.Success -> {
                         showProgressBar(false)
                         showToast(getString(R.string.text_user_data_update_success))
+                        findNavController().popBackStack(R.id.settingsFragment,false)
+
                     }
                     is State.Failed -> {
                         showProgressBar(false)
