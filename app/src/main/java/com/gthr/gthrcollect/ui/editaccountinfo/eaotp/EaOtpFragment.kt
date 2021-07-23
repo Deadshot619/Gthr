@@ -25,6 +25,8 @@ import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModelFactory
 import com.gthr.gthrcollect.utils.customviews.CustomPinView
 import com.gthr.gthrcollect.utils.extensions.hideKeyboard
 import com.gthr.gthrcollect.utils.extensions.showToast
+import com.gthr.gthrcollect.utils.extensions.updateCollectionInfoModelData
+import com.gthr.gthrcollect.utils.extensions.updateUserInfoModelData
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import java.util.concurrent.TimeUnit
 
@@ -147,7 +149,7 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
                             mViewModel.userInfoLiveData.value!!,
                             it.data
                         )
-                        prefs?.collectionInfoModel = mViewModel.userInfoLiveData.value!!.toRealtimeDatabaseModel().toCollectionInfoDomainModel()
+                        prefs?.updateCollectionInfoModelData(mViewModel.userInfoLiveData.value!!.toRealtimeDatabaseModel().toCollectionInfoDomainModel())
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -166,7 +168,7 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
                     is State.Success -> {
                         showProgressBar(false)
                         findNavController().navigate(EaOtpFragmentDirections.actionEaOtpFragmentToEaIdVerificationFragment())
-                        prefs?.userInfoModel = mViewModel.userInfoLiveData.value!!
+                        prefs?.updateUserInfoModelData(mViewModel.userInfoLiveData.value!!)
                     }
                     is State.Failed -> {
                         showProgressBar(false)

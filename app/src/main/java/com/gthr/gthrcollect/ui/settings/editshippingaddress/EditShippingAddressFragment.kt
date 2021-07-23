@@ -5,6 +5,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gthr.gthrcollect.GthrCollect
+import com.gthr.gthrcollect.GthrCollect.Companion.prefs
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AddressRepository
 import com.gthr.gthrcollect.databinding.EditShippingAddressFragmentBinding
@@ -13,6 +14,7 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel
+import com.gthr.gthrcollect.utils.extensions.updateShippingAddress
 
 class EditShippingAddressFragment :
     BaseFragment<EditShippingAddressViewModel, EditShippingAddressFragmentBinding>() {
@@ -48,6 +50,7 @@ class EditShippingAddressFragment :
                     is State.Success -> {
                         showProgressBar(false)
                         mRvAdapter.submitList(it.data)
+                        prefs?.updateShippingAddress(it.data)
                     }
                     is State.Failed -> {
                         showProgressBar(false)
