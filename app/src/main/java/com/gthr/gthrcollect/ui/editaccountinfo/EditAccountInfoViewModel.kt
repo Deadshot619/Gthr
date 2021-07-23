@@ -9,6 +9,7 @@ import com.gthr.gthrcollect.model.Event
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.User
 import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
+import com.gthr.gthrcollect.model.mapper.toCollectionInfoDomainModel
 import com.gthr.gthrcollect.model.mapper.toFirestoreModel
 import com.gthr.gthrcollect.model.mapper.toRealtimeDatabaseModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel

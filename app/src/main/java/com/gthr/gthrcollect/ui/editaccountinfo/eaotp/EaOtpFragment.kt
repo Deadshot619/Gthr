@@ -12,10 +12,13 @@ import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.GthrCollect
+import com.gthr.gthrcollect.GthrCollect.Companion.prefs
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.EditAccountInfoRepository
 import com.gthr.gthrcollect.databinding.EaOtpFragmentBinding
 import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.mapper.toCollectionInfoDomainModel
+import com.gthr.gthrcollect.model.mapper.toRealtimeDatabaseModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModel
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModelFactory
@@ -122,7 +125,7 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
                 }
                 is State.Success -> {
                     showProgressBar(false)
-                    GthrCollect.prefs?.signedInUser = it.data
+                    prefs?.signedInUser = it.data
                     mViewModel.addCollectionInfoModel(mViewModel.userInfoLiveData.value!!)
                 }
                 is State.Failed -> {
@@ -144,6 +147,7 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
                             mViewModel.userInfoLiveData.value!!,
                             it.data
                         )
+                        prefs?.collectionInfoModel = mViewModel.userInfoLiveData.value!!.toRealtimeDatabaseModel().toCollectionInfoDomainModel()
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -162,6 +166,7 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
                     is State.Success -> {
                         showProgressBar(false)
                         findNavController().navigate(EaOtpFragmentDirections.actionEaOtpFragmentToEaIdVerificationFragment())
+                        prefs?.userInfoModel = mViewModel.userInfoLiveData.value!!
                     }
                     is State.Failed -> {
                         showProgressBar(false)
