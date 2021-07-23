@@ -75,6 +75,12 @@ class CustomImageTextButton @JvmOverloads constructor(
                 mIvEnd.setImageDrawable(getImageDrawable(R.drawable.ic_right_arrow_grey))
                 mTvTitle.typeface = Typeface.DEFAULT
             }
+            2 -> {  //No Image button, Grey
+                mIvStart.gone()
+                mMainLayout.background = getImageDrawable(R.drawable.blue_bg_outline)
+                mIvEnd.setImageDrawable(getImageDrawable(R.drawable.ic_right_arrow_blue))
+                mTvTitle.typeface = Typeface.DEFAULT
+            }
         }
     }
 

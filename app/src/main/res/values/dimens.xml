@@ -180,5 +180,10 @@
     <dimen name="padding_start_search_collection_cell">30dp</dimen>
     <dimen name="margin_end_search_collection_cell">30dp</dimen>
 
+    <!--Follower/following user List size-->
+    <dimen name="size_follow_image">45dp</dimen>
+
+    <!--edit profile picture size-->
+    <dimen name="size_profile_image">250dp</dimen>
 
 </resources>

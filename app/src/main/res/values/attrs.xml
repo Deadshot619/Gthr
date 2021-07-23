@@ -75,6 +75,7 @@
         <attr name="citb_btn_type" format="enum">
             <enum name="IMAGE" value="0" />
             <enum name="NO_IMAGE_GREY" value="1" />
+            <enum name="NO_IMAGE_BLUE" value="2" />
         </attr>
     </declare-styleable>
 

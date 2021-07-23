@@ -266,4 +266,7 @@
     <string name="text_filter_toys">Toys</string>
     <string name="text_filter_sealed">Sealed</string>
 
+    <!--Follower/following search hint-->
+    <string name="hint_follow_search">Search in followers’ collection</string>
+
 </resources>

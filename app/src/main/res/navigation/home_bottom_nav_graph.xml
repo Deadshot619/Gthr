@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_bottom_nav_graph"
     app:startDestination="@id/signInFragment">
 
@@ -24,4 +25,10 @@
         android:id="@+id/searchFragment"
         android:name="com.gthr.gthrcollect.ui.homebottomnav.search.SearchFragment"
         android:label="SearchFragment" />
+
+    <fragment
+        android:id="@+id/followFragment"
+        android:name="com.gthr.gthrcollect.ui.profile.follow.FollowFragment"
+        tools:layout="@layout/follow_fragment"
+        android:label="FollowFragment" />
 </navigation>
