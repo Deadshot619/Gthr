@@ -18,9 +18,7 @@ import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
 import com.gthr.gthrcollect.utils.customviews.CustomEmailEditText
 import com.gthr.gthrcollect.utils.customviews.CustomPasswordEditText
-import com.gthr.gthrcollect.utils.extensions.isValidEmail
-import com.gthr.gthrcollect.utils.extensions.isValidPassword
-import com.gthr.gthrcollect.utils.extensions.showToast
+import com.gthr.gthrcollect.utils.extensions.*
 
 class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
 
@@ -94,7 +92,27 @@ class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
                 }
                 is State.Success -> {
                     showProgressBar(false)
-                    prefs?.signedInUser = it.data
+                    mViewModel.getUserData(it.data.uid)
+                }
+                is State.Failed -> {
+                    showProgressBar(false)
+                    showToast(it.message)
+                }
+            }
+        })
+
+        mViewModel.userInfoAndCollectionInfo.observe(viewLifecycleOwner, {
+            when (it) {
+                is State.Loading -> {
+                    showProgressBar()
+                }
+                is State.Success -> {
+                    showProgressBar(false)
+                    prefs?.run {
+                        updateUserInfoModelData(it.data.first)
+                        updateCollectionInfoModelData(it.data.second)
+                        signedInUser = (mViewModel.userInfo.value as State.Success).data
+                    }
                     goToSettingsPage()
                 }
                 is State.Failed -> {
