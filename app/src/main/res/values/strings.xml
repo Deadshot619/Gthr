@@ -12,6 +12,10 @@
     <string name="menu_feed_title">Feed</string>
     <string name="menu_search_title">Search</string>
     <string name="menu_profile_title">Profile</string>
+    <string name="title_account">Account</string>
+    <string name="title_my_profile">My Profile</string>
+    <string name="title_receipts">Receipts</string>
+
 
     <!--SignIn/SignUp-->
     <string name="sign_in_text">Sign In</string>

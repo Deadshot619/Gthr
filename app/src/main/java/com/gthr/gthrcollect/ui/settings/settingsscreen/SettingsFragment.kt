@@ -92,7 +92,9 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
     private fun logout() {
         Firebase.auth.signOut()
         GthrCollect.prefs?.clearPref()
-        startActivity(HomeBottomNavActivity.getInstance(requireContext()))
+        startActivity(HomeBottomNavActivity.getInstance(requireContext()).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
         activity?.finish()
     }
 }

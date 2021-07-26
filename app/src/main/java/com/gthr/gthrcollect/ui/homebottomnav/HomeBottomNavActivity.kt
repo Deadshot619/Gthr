@@ -17,12 +17,22 @@ class HomeBottomNavActivity : BaseActivity<HomeBottomNavViewModel, ActivityHomeB
 
     private lateinit var mNavController: NavController
     private lateinit var mNavHostFragment: NavHostFragment
+    private lateinit var mBottomNavView: BottomNavigationView
 
     override fun onBinding() {
-        mNavHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        initViews()
+        initBottomView()
+    }
+
+    private fun initViews(){
+        mNavHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         mNavController = mNavHostFragment.navController
-        findViewById<BottomNavigationView>(R.id.bnv_home).setupWithNavController(mNavController)
+        mBottomNavView = mViewBinding.bnvHome
+    }
+
+    private fun initBottomView(){
+        mBottomNavView.setupWithNavController(mNavController)
+        mBottomNavView.menu.getItem(2).isChecked = true
     }
 
     companion object {

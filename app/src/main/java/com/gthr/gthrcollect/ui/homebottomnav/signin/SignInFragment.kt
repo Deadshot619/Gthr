@@ -48,7 +48,7 @@ class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
         setUpObservers()
 
         if (isUserLoggedIn()) {
-            goToSettingsPage()
+            goToProfilePage()
         }
 /*        mCetEmail.mEtEmail.setText("abc@gmail.com")
         mCetPassword.mEtPassword.setText("Abc@12345")*/
@@ -113,7 +113,7 @@ class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
                         updateCollectionInfoModelData(it.data.second)
                         signedInUser = (mViewModel.userInfo.value as State.Success).data
                     }
-                    goToSettingsPage()
+                    goToProfilePage()
                 }
                 is State.Failed -> {
                     showProgressBar(false)
@@ -146,8 +146,7 @@ class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
         } ?: return false
     }
 
-    private fun goToSettingsPage() {
-        startActivity(SettingsActivity.getInstance(requireContext()))
-        activity?.finish()
+    private fun goToProfilePage(){
+        findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToAccountFragment())
     }
 }
