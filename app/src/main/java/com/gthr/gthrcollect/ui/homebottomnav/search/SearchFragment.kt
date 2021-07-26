@@ -78,7 +78,6 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
         mAdapterSC = SearchCollectionAdapter{}
         mRvMain.apply {
-            addItemDecoration(GridSpacingItemDecoration(resources.getDimensionPixelOffset(R.dimen.spacing_search_collection_recycler_view),spanCount,false))
             layoutManager = GridLayoutManager(requireContext(),spanCount)
         }
     }

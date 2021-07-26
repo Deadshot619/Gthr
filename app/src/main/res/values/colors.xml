@@ -40,6 +40,8 @@
     <color name="update_bg">#FF4E4E</color>
     <color name="product_type_bg">#F5F9FF</color>
     <color name="product_text_gray">#B1B1B1</color>
+    <color name="collection_text_gray">#626668</color>
+    <color name="search_text_background_gray">#F9F9F9</color>
     <color name="product_line_gray">#C3C8CC</color>
 
     <!--Main Gradient-->

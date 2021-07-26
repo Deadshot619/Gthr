@@ -149,6 +149,7 @@
 
     <!--Custom search view-->
     <dimen name="radius_search">8dp</dimen>
+    <dimen name="margin_vertical_search">10dp</dimen>
 
     <!--Custom collection type-->
     <dimen name="radius_collection_type">16dp</dimen>
@@ -174,13 +175,15 @@
     <dimen name="spacing_search_collection_recycler_view">1dp</dimen>
     <dimen name="radius_search_collection_cell">8dp</dimen>
     <dimen name="radius_card_view_search_collection_cell">8dp</dimen>
+    <dimen name="elevation_search_collection_cell">5dp</dimen>
     <dimen name="height_search_collection_cell">170dp</dimen>
-    <dimen name="margin_search_collection_cell">5dp</dimen>
-    <dimen name="size_user_image_search_collection_cell">50dp</dimen>
+    <dimen name="margin_search_collection_cell">2dp</dimen>
+    <dimen name="margin_start_search_collection_image">2dp</dimen>
+    <dimen name="size_user_image_search_collection_cell">40dp</dimen>
     <dimen name="elevation_user_name_search_collection_cell">4dp</dimen>
-    <dimen name="padding_vertical_search_collection_cell">10dp</dimen>
+    <dimen name="padding_vertical_search_collection_cell">6dp</dimen>
     <dimen name="margin_start_search_collection_cell">25dp</dimen>
-    <dimen name="padding_start_search_collection_cell">30dp</dimen>
+    <dimen name="padding_start_search_collection_cell">20dp</dimen>
     <dimen name="margin_end_search_collection_cell">30dp</dimen>
 
     <!--Custom Product-->

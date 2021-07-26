@@ -9,16 +9,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_extra_5dp_small"
-        android:layout_marginVertical="@dimen/margin_extra_5dp_small">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/mc_main"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/margin_search_collection_cell"
-            android:layout_marginVertical="@dimen/margin_search_collection_cell"
+            android:layout_marginEnd="@dimen/margin_search_collection_cell"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_search_collection_cell"
+            android:layout_marginBottom="@dimen/margin_small"
             app:cardCornerRadius="@dimen/radius_card_view_search_collection_cell"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H,1:1"
@@ -30,7 +30,7 @@
                 android:id="@+id/iv_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin_medium"
+                android:layout_margin="@dimen/margin_extra_small"
                 android:background="@drawable/collection_image_bg"
                 android:maxHeight="@dimen/margin_medium"
                 android:scaleType="fitXY"
@@ -42,16 +42,16 @@
             android:id="@+id/iv_user"
             android:layout_width="@dimen/size_user_image_search_collection_cell"
             android:layout_height="@dimen/size_user_image_search_collection_cell"
-            android:elevation="5dp"
+            android:elevation="@dimen/elevation_search_collection_cell"
+            android:layout_marginStart="@dimen/margin_start_search_collection_image"
             android:src="@drawable/user"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/mc_main" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start_search_collection_cell"
-            android:layout_marginEnd="@dimen/margin_end_search_collection_cell"
             android:background="@drawable/bg_search_collection_username"
             android:elevation="@dimen/elevation_user_name_search_collection_cell"
             android:paddingVertical="@dimen/padding_vertical_search_collection_cell"
@@ -60,8 +60,10 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_small"
             app:layout_constraintBottom_toBottomOf="@+id/iv_user"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/mc_main"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.7"
             tools:ignore="RtlSymmetry" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

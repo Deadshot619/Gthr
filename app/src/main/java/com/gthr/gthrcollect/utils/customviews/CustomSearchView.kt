@@ -23,7 +23,7 @@ class CustomSearchView @JvmOverloads constructor(
         this.isFocusableInTouchMode = true
         this.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
         val padding = resources.getDimensionPixelOffset(R.dimen.padding_normal)
-        val paddingVertical = resources.getDimensionPixelOffset(R.dimen.padding_medium)
+        val paddingVertical = resources.getDimensionPixelOffset(R.dimen.margin_vertical_search)
         this.setPadding(padding, paddingVertical, padding, paddingVertical)
         this.setHintTextColor(getResolvedColor(R.color.hint_color))
         this.compoundDrawablePadding = paddingVertical
