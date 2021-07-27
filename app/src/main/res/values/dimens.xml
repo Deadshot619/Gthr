@@ -139,7 +139,7 @@
 
 
     <!--Custom fello view-->
-    <dimen name="radius_fello">15dp</dimen>
+    <dimen name="radius_fello">8dp</dimen>
     <dimen name="size_custom_fello_view">14dp</dimen>
     <dimen name="text_size_custom_fello_view_Count">20sp</dimen>
     <dimen name="margin_top_fellow_view_count">5dp</dimen>
@@ -204,6 +204,7 @@
     <dimen name="size_profile_image">250dp</dimen>
 
     <!--Profile header size-->
+    <dimen name="radius_profile">10dp</dimen>
     <dimen name="size_profile">64dp</dimen>
     <dimen name="size_elevation">4dp</dimen>
     <dimen name="margin_collection_type">2dp</dimen>

@@ -2,13 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:paddingVertical="@dimen/padding_small"
-    android:paddingHorizontal="@dimen/padding_extra_small"
+    android:paddingHorizontal="@dimen/padding_normal"
     android:background="@drawable/bg_fello_extra_light_blue"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_main"
@@ -17,7 +16,6 @@
         android:src="@drawable/ic_followers"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_title"
@@ -36,14 +34,12 @@
         app:layout_constraintStart_toEndOf="@+id/iv_main"
         app:layout_constraintTop_toTopOf="@+id/iv_main" />
 
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_extra_small"
-        android:layout_marginTop="@dimen/margin_top_fellow_view_count"
-        android:fontFamily="@font/lato"
+        android:layout_marginTop="@dimen/margin_mini"
+        android:fontFamily="@font/lato_bold"
         tools:text="123"
         android:maxLines="1"
         android:ellipsize="end"
@@ -54,10 +50,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title"
         app:layout_constraintVertical_bias="0.0" />
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
