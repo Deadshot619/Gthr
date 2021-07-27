@@ -26,8 +26,8 @@ class CustomDeliveryButton  @JvmOverloads constructor(
         val state = Type.values()[attrs.getInt(R.styleable.CustomDeliveryButton_cdb_type, 0)]
 
         this.textAlignment = View.TEXT_ALIGNMENT_CENTER
-        val padding = resources.getDimensionPixelOffset(R.dimen.padding_normal)
-        val paddingVertical = resources.getDimensionPixelOffset(R.dimen.padding_extra_small)
+        val padding = resources.getDimensionPixelOffset(R.dimen.padding_small)
+        val paddingVertical = resources.getDimensionPixelOffset(R.dimen.padding_custom_delivery_button)
         this.setPadding(padding, paddingVertical, padding, paddingVertical)
         this.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.text_size_semi_small))
         this.maxLines = 1

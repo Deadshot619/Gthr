@@ -201,4 +201,15 @@
     <!--edit profile picture size-->
     <dimen name="size_profile_image">250dp</dimen>
 
+    <!-- CustomDeliveryButton -->
+    <dimen name="padding_custom_delivery_button">6dp</dimen>
+
+    <!--receipt-->
+    <dimen name="margin_card_receipt">8dp</dimen>
+    <dimen name="width_image_receipt">80dp</dimen>
+    <dimen name="width_button_receipt">90dp</dimen>
+    <dimen name="margin_top_text_receipt">6dp</dimen>
+    <dimen name="margin_bottom_layout_receipt">4dp</dimen>
+
+
 </resources>
