@@ -240,6 +240,8 @@
     <!--Collection Button-->
     <string name="text_collection">Collection</string>
     <string name="text_favorites">Favorites</string>
+    <string name="text_follow">Follow</string>
+    <string name="text_following">Following</string>
 
     <!--Custom Delivery Button-->
     <string name="text_pending">Pending</string>
@@ -281,5 +283,12 @@
     <string name="text_product_name">Name</string>
     <string name="text_product_set">Set</string>
     <string name="text_Hash">#:</string>
+
+    <!--My profile-->
+    <string name="user_name">Funko Master Flex</string>
+    <string name="user_bio">Lorem ipsum dolor sit amet, elit, sed do dolor sit amet, elit, sed do</string>
+    <string name="lable_stats">Stats</string>
+    <string name="lable_collection">Collection</string>
+    <string name="hint_Search_collection">Search the collection</string>
 
 </resources>

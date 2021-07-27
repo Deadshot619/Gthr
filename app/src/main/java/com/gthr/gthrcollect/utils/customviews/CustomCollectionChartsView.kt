@@ -44,7 +44,7 @@ class CustomCollectionChartsView @JvmOverloads constructor(
                 getImageDrawable(R.drawable.ic_collection_size)
             }
             Type.AVERAGE_PRICE -> {
-                mTvTitle.text = context.getString(R.string.title_collection_size)
+                mTvTitle.text = context.getString(R.string.title_average_price)
                 getImageDrawable(R.drawable.ic_average_price)
             }
         }

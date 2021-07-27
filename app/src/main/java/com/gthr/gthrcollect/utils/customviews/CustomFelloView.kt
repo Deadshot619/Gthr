@@ -50,6 +50,10 @@ class CustomFelloView @JvmOverloads constructor(
                 mIvMain.setImageDrawable(getImageDrawable(R.drawable.ic_sold))
                 mTvTitle.text = context.getString(R.string.title_sold)
             }
+            Type.COLLECTION -> {
+                mIvMain.setImageDrawable(getImageDrawable(R.drawable.ic_sold))
+                mTvTitle.text = context.getString(R.string.lable_collection)
+            }
         }
     }
 
@@ -70,11 +74,6 @@ class CustomFelloView @JvmOverloads constructor(
     }
 
     enum class Type{
-        FOLLOWERS,FOLLOWING,SOLD
+        FOLLOWERS,FOLLOWING,SOLD,COLLECTION
     }
-
-
-
-
-
 }

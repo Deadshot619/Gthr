@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/followFragment"
-        android:name="com.gthr.gthrcollect.ui.profile.follow.FollowFragment"
-        tools:layout="@layout/follow_fragment"
-        android:label="FollowFragment" />
+        android:name="com.gthr.gthrcollect.ui.profile.my_profile.MyProfileFragment"
+        tools:layout="@layout/my_profile"
+        android:label="Follow Fragment" />
 </navigation>
