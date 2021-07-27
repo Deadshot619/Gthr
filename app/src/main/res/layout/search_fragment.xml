@@ -12,46 +12,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--Top Tab bar-->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_search_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/guideline_extra_large"
+            android:layout_marginHorizontal="@dimen/margin_extra_large"
             android:background="@drawable/bg_search_white"
             android:elevation="@dimen/elevation_search_type"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/padding_extra_small"
+            android:paddingHorizontal="@dimen/padding_small"
             android:paddingVertical="@dimen/padding_vertical_search"
             app:layout_constraintBottom_toBottomOf="@+id/ll_toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_toolbar">
 
+            <!--Product-->
             <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
                 android:id="@+id/cct_product"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_extra_small"
                 android:layout_weight="1"
                 app:cccv_text="@string/text_product"
                 tools:ccv_isActive="true" />
 
+            <!--For Sale-->
             <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
                 android:id="@+id/cct_for_sale"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/margin_extra_small"
                 app:cccv_text="@string/text_for_sale" />
 
-
+            <!--Collections-->
             <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
                 android:id="@+id/cct_collections"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_extra_small"
                 android:layout_weight="1"
                 app:cccv_text="@string/text_collections" />
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.drawerlayout.widget.DrawerLayout
@@ -379,21 +383,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
-
-
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </ScrollView>
-
-
-
             </com.google.android.material.navigation.NavigationView>
-
-
         </androidx.drawerlayout.widget.DrawerLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -406,6 +400,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <!--Search-->
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
@@ -414,8 +409,9 @@
                 android:layout_marginTop="@dimen/margin_extra_large"
                 android:layout_marginBottom="@dimen/search_toolbar_margin"
                 android:text="@string/text_search"
+                android:fontFamily="@font/lato_bold"
                 android:textColor="?attr/colorOnPrimary"
-                android:textSize="@dimen/text_size_normal" />
+                android:textSize="@dimen/text_size_medium" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

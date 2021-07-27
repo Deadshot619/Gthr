@@ -50,7 +50,4 @@ class CustomSearchView @JvmOverloads constructor(
             this.background = getImageDrawable(R.drawable.bg_search_edit_text_blue)
         }
     }
-
-
-
 }

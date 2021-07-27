@@ -10,7 +10,7 @@
     <dimen name="signup_btn_margin_top">64dp</dimen>
 
     <!--Toolbar-->
-    <dimen name="toolbar_radius">12dp</dimen>
+    <dimen name="toolbar_radius">16dp</dimen>
 
     <!--Bottom Nav-->
     <dimen name="bottom_nav_icon_size">42dp</dimen>
@@ -161,12 +161,12 @@
     <!--Custom collection type-->
     <dimen name="search_toolbar_margin">40dp</dimen>
     <dimen name="width_search_stroke">1dp</dimen>
-    <dimen name="radius_search_view">8dp</dimen>
+    <dimen name="radius_search_view">10dp</dimen>
     <dimen name="margin_text_view">4dp</dimen>
 
     <!--Search Ui-->
-    <dimen name="padding_vertical_search">4dp</dimen>
-    <dimen name="elevation_search_type">8dp</dimen>
+    <dimen name="padding_vertical_search">7dp</dimen>
+    <dimen name="elevation_search_type">4dp</dimen>
 
     <!--Search Filter-->
     <dimen name="width_filter">150dp</dimen>

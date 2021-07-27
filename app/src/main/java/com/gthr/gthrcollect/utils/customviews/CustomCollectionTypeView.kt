@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.res.ResourcesCompat
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.utils.extensions.getImageDrawable
 import com.gthr.gthrcollect.utils.extensions.getResolvedColor
@@ -42,11 +44,11 @@ class CustomCollectionTypeView @JvmOverloads constructor(
         if (isActive) {
             mTvTitle.background = getImageDrawable(R.drawable.bg_custom_collection_type_blue)
             mTvTitle.setTextColor(getResolvedColor(R.color.white))
-            mTvTitle.setTypeface(mTvTitle.typeface, Typeface.BOLD)
+            mTvTitle.typeface = ResourcesCompat.getFont(context, R.font.lato_bold)
         } else {
             mTvTitle.background = getImageDrawable(R.drawable.bg_custom_collection_type_gray)
             mTvTitle.setTextColor(getResolvedColor(R.color.collection_text_gray))
-            mTvTitle.typeface = Typeface.DEFAULT
+            mTvTitle.typeface = ResourcesCompat.getFont(context, R.font.lato)
         }
     }
 
