@@ -16,6 +16,7 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AccountFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.profile.follow.FollowFragment
+import com.gthr.gthrcollect.ui.profile.reciepts.ReceiptsFragment
 import com.gthr.gthrcollect.ui.settings.SettingsActivity
 
 class AccountFragment : BaseFragment<AccountViewModel, AccountFragmentBinding>() {
@@ -41,7 +42,7 @@ class AccountFragment : BaseFragment<AccountViewModel, AccountFragmentBinding>()
             mViewPager = viewPager
             mViews = listOf(
                 Pair(getString(R.string.title_my_profile), FollowFragment()),
-                Pair(getString(R.string.title_receipts), FollowFragment())
+                Pair(getString(R.string.title_receipts), ReceiptsFragment())
             )
             mAdapter = AccountPagerAdapter(this@AccountFragment, mViews)
         }
