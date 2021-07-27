@@ -1,13 +1,14 @@
 package com.gthr.gthrcollect.utils.customviews
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.content.PermissionChecker
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.utils.extensions.getImageDrawable
+import com.gthr.gthrcollect.utils.extensions.getResolvedColor
 
 class CustomCollectionButton @JvmOverloads constructor(
     context: Context,
@@ -36,8 +37,6 @@ class CustomCollectionButton @JvmOverloads constructor(
         setType(type)
         attrs.recycle()
 
-
-
     }
 
     private fun setType(type: Type) {
@@ -51,12 +50,24 @@ class CustomCollectionButton @JvmOverloads constructor(
                  this.text = context.getString(R.string.text_favorites)
                  this.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorites, 0, 0, 0)
              }
+            Type.FOLLOWING -> {
+                this.text = context.getString(R.string.text_following)
+                this.background = getImageDrawable(R.drawable.bg_custom_collection_type_blue)
+                this.setTextColor(getResolvedColor(R.color.white))
+            }
+            Type.FOLLOW -> {
+                this.text = context.getString(R.string.text_follow)
+                this.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_collection, 0, 0, 0)
+                this.setTextColor(getResolvedColor(R.color.grey_color))
+
+            }
+
         }
     }
 
 
     enum class Type{
-        COLLECTION,FAVORITES
+        COLLECTION,FAVORITES,FOLLOW,FOLLOWING
     }
 
 }

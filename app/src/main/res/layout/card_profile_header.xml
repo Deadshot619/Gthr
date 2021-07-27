@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/radius_filter"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile_pic"
+            android:layout_width="@dimen/size_profile"
+            android:layout_height="@dimen/size_profile"
+            android:src="@drawable/profile_pic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_extra_small"
+            android:layout_marginTop="@dimen/margin_extra_5dp_small"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/user_name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_normal"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/iv_edit"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/iv_profile_pic"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_pic" />
+
+        <TextView
+            android:id="@+id/tv_user_bio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@string/user_bio"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintEnd_toEndOf="@id/tv_user_name"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
+            app:layout_constraintStart_toStartOf="@id/tv_user_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_extra_5dp_small"
+            app:layout_constraintBottom_toBottomOf="@id/iv_follow"
+            app:layout_constraintEnd_toStartOf="@id/iv_share"
+            app:layout_constraintRight_toLeftOf="@id/iv_share"
+            app:layout_constraintTop_toTopOf="@id/iv_follow"
+            app:srcCompat="@drawable/ic_blue_edit" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_extra_5dp_small"
+            app:layout_constraintBottom_toBottomOf="@id/iv_follow"
+            app:layout_constraintEnd_toStartOf="@+id/iv_follow"
+            app:layout_constraintTop_toTopOf="@id/iv_follow"
+            app:srcCompat="@drawable/ic_blue_share" />
+
+        <com.gthr.gthrcollect.utils.customviews.CustomCollectionButton
+            android:id="@+id/iv_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14"
+            app:ccb_type="FOLLOW"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/tv_user_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_user_name" />
+
+
+        <com.gthr.gthrcollect.utils.customviews.CustomFelloView
+            android:id="@+id/follower"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            app:cfv_count="235"
+            app:cfv_type="FOLLOWERS"
+            app:layout_constraintEnd_toStartOf="@+id/following"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_profile_pic" />
+
+
+        <com.gthr.gthrcollect.utils.customviews.CustomFelloView
+            android:id="@+id/following"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_normal"
+            app:cfv_count="445"
+            app:cfv_type="FOLLOWING"
+            app:layout_constraintBottom_toBottomOf="@+id/follower"
+            app:layout_constraintEnd_toStartOf="@+id/sold"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/follower"
+            app:layout_constraintTop_toTopOf="@+id/follower"
+            app:layout_constraintVertical_bias="0.0"
+
+            />
+
+        <com.gthr.gthrcollect.utils.customviews.CustomFelloView
+            android:id="@+id/sold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cfv_count="920"
+            app:cfv_type="SOLD"
+            app:layout_constraintBottom_toBottomOf="@+id/following"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/following"
+            app:layout_constraintTop_toTopOf="@+id/following" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
+
+

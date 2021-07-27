@@ -106,6 +106,7 @@
             <enum name="FOLLOWERS" value="0" />
             <enum name="FOLLOWING" value="1" />
             <enum name="SOLD" value="2" />
+            <enum name="COLLECTION" value="3" />
         </attr>
         <attr name="cfv_count" format="string" />
     </declare-styleable>
@@ -123,6 +124,8 @@
         <attr name="ccb_type" format="enum">
             <enum name="COLLECTION" value="0"/>
             <enum name="FAVORITES" value="1"/>
+            <enum name="FOLLOW" value="2"/>
+            <enum name="FOLLOWING" value="3"/>
         </attr>
     </declare-styleable>
 

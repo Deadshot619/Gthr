@@ -27,6 +27,7 @@
     <dimen name="text_size_extra_small">10sp</dimen>
 
     <!--Margin-->
+    <dimen name="margin_mini">4dp</dimen>
     <dimen name="margin_extra_5dp_small">5dp</dimen>
     <dimen name="margin_extra_small">8dp</dimen>
     <dimen name="margin_medium">10dp</dimen>
@@ -65,6 +66,7 @@
 
 
     <!--Padding-->
+    <dimen name="padding_mini">4dp</dimen>
     <dimen name="padding_extra_small">8dp</dimen>
     <dimen name="padding_small">12dp</dimen>
     <dimen name="padding_medium">14dp</dimen>
@@ -200,6 +202,11 @@
 
     <!--edit profile picture size-->
     <dimen name="size_profile_image">250dp</dimen>
+
+    <!--Profile header size-->
+    <dimen name="size_profile">64dp</dimen>
+    <dimen name="size_elevation">4dp</dimen>
+    <dimen name="margin_collection_type">2dp</dimen>
 
     <!-- CustomDeliveryButton -->
     <dimen name="padding_custom_delivery_button">6dp</dimen>
