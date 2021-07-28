@@ -298,4 +298,12 @@
     <string name="lable_collection">Collection</string>
     <string name="hint_Search_collection">Search the collection</string>
 
+    <!--Edit profile-->
+    <string name="edit_profile_picture">Edit Profile Picture</string>
+    <string name="text_display_name">Display name</string>
+    <string name="info_display_name_edit_profile">You may only change your Display Name Once per 30 days.</string>
+    <string name="choose_from_library">Choose from Library</string>
+    <string name="dialog_take_photo">Take Photo</string>
+    <string name="dialog_edit_profile_picture">Edit Profile Picture</string>
+
 </resources>

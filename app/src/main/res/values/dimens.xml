@@ -218,4 +218,8 @@
     <dimen name="width_button_receipt">90dp</dimen>
     <dimen name="margin_top_text_receipt">6dp</dimen>
     <dimen name="margin_bottom_layout_receipt">4dp</dimen>
+
+    <!-- Edit profile -->
+    <dimen name="margin_bottom_edit_profile">64dp</dimen>
+    <dimen name="margin_top_edit_profile">28dp</dimen>
 </resources>
