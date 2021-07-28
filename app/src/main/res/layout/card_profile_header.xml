@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/radius_profile"
-    app:strokeColor="@color/white"
+    app:cardCornerRadius="@dimen/radius_filter"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/margin_small"
         android:layout_height="match_parent"
-        android:padding="@dimen/padding_normal">
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_profile_pic"
@@ -47,7 +49,6 @@
             android:maxLines="2"
             android:text="@string/user_bio"
             android:textSize="@dimen/text_size_medium"
-            android:layout_marginTop="@dimen/margin_mini"
             app:layout_constraintEnd_toEndOf="@id/tv_user_name"
             app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
             app:layout_constraintStart_toStartOf="@id/tv_user_name"
@@ -74,13 +75,13 @@
             app:layout_constraintTop_toTopOf="@id/iv_follow"
             app:srcCompat="@drawable/ic_blue_share" />
 
-        <com.gthr.gthrcollect.utils.customviews.CustomCollectionButton
+        <com.gthr.gthrcollect.utils.customviews.CustomFollowView
             android:id="@+id/iv_follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_14"
-            app:ccb_type="FOLLOW"
-            android:visibility="gone"
+            android:textStyle="bold"
+            app:ccf_view="FOLLOW"
             app:layout_constraintBottom_toBottomOf="@id/tv_user_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_user_name" />
