@@ -127,6 +127,7 @@
                 app:ccb_type="COLLECTION" />
 
             <com.gthr.gthrcollect.utils.customviews.CustomCollectionButton
+                android:id="@+id/ccb_favourites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -151,6 +152,7 @@
                 android:weightSum="4">
 
                 <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+                    android:id="@+id/cctv_all"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_collection_type"
@@ -158,6 +160,7 @@
                     app:cccv_text="All" />
 
                 <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+                    android:id="@+id/cctv_cards"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_collection_type"
@@ -165,6 +168,7 @@
                     app:cccv_text="Cards" />
 
                 <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+                    android:id="@+id/cctv_toys"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_collection_type"
@@ -172,6 +176,7 @@
                     app:cccv_text="Toys" />
 
                 <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+                    android:id="@+id/cctv_buy_list"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_collection_type"

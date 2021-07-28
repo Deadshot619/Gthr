@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profile_nav_graph"
+    app:startDestination="@id/profileNavigationFragment">
+
+    <fragment
+        android:id="@+id/profileNavigationFragment"
+        android:name="com.gthr.gthrcollect.ui.profile.navigation.ProfileNavigationFragment"
+        android:label="ProfileNavigationFragment" >
+        <action
+            android:id="@+id/action_profileNavigationFragment_to_followFragment2"
+            app:destination="@id/followFragment2"
+            app:popUpTo="@id/profileNavigationFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileNavigationFragment_to_favSoldFragment"
+            app:destination="@id/favSoldFragment"
+            app:popUpTo="@id/profileNavigationFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="type"
+            app:argType="com.gthr.gthrcollect.utils.enums.ProfileNavigationType" />
+    </fragment>
+    <fragment
+        android:id="@+id/followFragment2"
+        android:name="com.gthr.gthrcollect.ui.profile.follow.FollowFragment"
+        android:label="FollowFragment" >
+        <argument
+            android:name="type"
+            app:argType="com.gthr.gthrcollect.utils.enums.ProfileNavigationType" />
+    </fragment>
+    <fragment
+        android:id="@+id/favSoldFragment"
+        android:name="com.gthr.gthrcollect.ui.profile.favsold.FavSoldFragment"
+        android:label="FavSoldFragment" >
+        <argument
+            android:name="type"
+            app:argType="com.gthr.gthrcollect.utils.enums.ProfileNavigationType" />
+    </fragment>
+</navigation>

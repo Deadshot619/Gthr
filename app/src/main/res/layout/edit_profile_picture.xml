@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:background="@color/grey_color"
             android:gravity="center"
-            android:hint="@string/hint_follow_search"
+            android:hint="@string/hint_follower_search"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toTopOf="@id/guideline_top">

@@ -54,8 +54,4 @@ class CustomCollectionTypeView @JvmOverloads constructor(
         mIsUpdate = isActive
         if (isActive) mVUpdate.visible() else mVUpdate.gone()
     }
-
-
-
-
 }

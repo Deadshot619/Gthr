@@ -6,12 +6,6 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:name=".GthrCollect"
         android:allowBackup="true"
@@ -20,18 +14,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/GthrCollectFullScreen">
-        <activity android:name=".ui.test.TestProductActivity"/>
-        <activity android:name=".ui.test.TestActivity"/>
+        <activity android:name=".ui.profile.ProfileActivity"></activity>
+        <activity android:name=".ui.test.TestProductActivity" />
+        <activity android:name=".ui.test.TestActivity" />
         <activity android:name=".ui.termsandfaq.TermsAndFaqActivity" />
-        <activity android:name=".ui.settings.SettingsActivity"/>
+        <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.forgotpassword.ForgotPasswordActivity" />
-        <activity android:name=".ui.homebottomnav.HomeBottomNavActivity" android:launchMode="singleTop"  />
+        <activity
+            android:name=".ui.homebottomnav.HomeBottomNavActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/GthrCollectFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -42,5 +40,11 @@
             android:name=".ui.customcameraactivities.ImagePreview"
             android:screenOrientation="portrait" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

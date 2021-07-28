@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:paddingVertical="@dimen/padding_small"
-    android:paddingHorizontal="@dimen/padding_normal"
+    android:paddingHorizontal="@dimen/padding_medium"
     android:background="@drawable/bg_fello_extra_light_blue"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
