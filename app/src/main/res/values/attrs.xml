@@ -124,10 +124,17 @@
         <attr name="ccb_type" format="enum">
             <enum name="COLLECTION" value="0"/>
             <enum name="FAVORITES" value="1"/>
-            <enum name="FOLLOW" value="2"/>
-            <enum name="FOLLOWING" value="3"/>
+
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="CustomFollowView">
+        <attr name="ccf_view" format="enum">
+            <enum name="FOLLOW" value="0"/>
+            <enum name="FOLLOWING" value="1"/>
+        </attr>
+    </declare-styleable>
+
 
     <declare-styleable name="CustomDeliveryButton">
         <attr name="cdb_type" format="enum">

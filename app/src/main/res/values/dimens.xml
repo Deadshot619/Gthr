@@ -204,5 +204,6 @@
     <dimen name="size_profile">64dp</dimen>
     <dimen name="size_elevation">4dp</dimen>
     <dimen name="margin_collection_type">2dp</dimen>
+    <dimen name="margin_background_size">100dp</dimen>
 
 </resources>

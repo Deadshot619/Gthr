@@ -12,6 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/margin_small"
         android:layout_height="match_parent"
         >
 
@@ -74,13 +75,13 @@
             app:layout_constraintTop_toTopOf="@id/iv_follow"
             app:srcCompat="@drawable/ic_blue_share" />
 
-        <com.gthr.gthrcollect.utils.customviews.CustomCollectionButton
+        <com.gthr.gthrcollect.utils.customviews.CustomFollowView
             android:id="@+id/iv_follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_14"
-            app:ccb_type="FOLLOW"
-            android:visibility="gone"
+            android:textStyle="bold"
+            app:ccf_view="FOLLOW"
             app:layout_constraintBottom_toBottomOf="@id/tv_user_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_user_name" />
