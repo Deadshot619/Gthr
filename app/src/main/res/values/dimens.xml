@@ -11,6 +11,7 @@
 
     <!--Toolbar-->
     <dimen name="toolbar_radius">12dp</dimen>
+    <dimen name="bottom_toolbar_radius">16dp</dimen>
 
     <!--Bottom Nav-->
     <dimen name="bottom_nav_icon_size">42dp</dimen>

@@ -3,6 +3,6 @@
     android:shape="rectangle">
     <solid android:color="@color/white" />
     <corners
-        android:topLeftRadius="@dimen/toolbar_radius"
-        android:topRightRadius="@dimen/toolbar_radius" />
+        android:topLeftRadius="@dimen/bottom_toolbar_radius"
+        android:topRightRadius="@dimen/bottom_toolbar_radius" />
 </shape>
