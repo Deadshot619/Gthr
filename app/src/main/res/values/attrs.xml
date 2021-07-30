@@ -11,6 +11,7 @@
         <attr name="secondary_button_state" format="enum">
             <enum name="DISABLE" value="0"/>
             <enum name="BLUE" value="1"/>
+            <enum name="BLUE_GRADIENT" value="6"/>
             <enum name="YELLOW" value="2"/>
             <enum name="GREEN" value="3"/>
             <enum name="WHITE_WITH_BLUE_BORDER" value="4"/>

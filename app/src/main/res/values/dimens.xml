@@ -198,7 +198,7 @@
     <dimen name="height_image_custom_product">170dp</dimen>
     <dimen name="elevation_custom_product">10dp</dimen>
     <dimen name="size_icon_custom_product">32dp</dimen>
-    <dimen name="size_glob">16dp</dimen>
+    <dimen name="size_glob">12dp</dimen>
 
     <!--Follower/following user List size-->
     <dimen name="size_follow_image">45dp</dimen>
@@ -226,4 +226,7 @@
     <!-- Edit profile -->
     <dimen name="margin_bottom_edit_profile">64dp</dimen>
     <dimen name="margin_top_edit_profile">28dp</dimen>
+
+    <!-- Purchase Detail -->
+    <dimen name="size_profile_purchase_detail">24dp</dimen>
 </resources>

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.gthr.gthrcollect.R
-import com.gthr.gthrcollect.ui.profile.editprofile.EditProfileFragment
+import com.gthr.gthrcollect.ui.profile.purchasedetails.PurchaseDetailsFragment
 
 class TestActivity : AppCompatActivity() {
 
@@ -56,8 +56,7 @@ class TestActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-
+        supportFragmentManager.beginTransaction().replace(R.id.frame,PurchaseDetailsFragment()).commit()
     }
 
 

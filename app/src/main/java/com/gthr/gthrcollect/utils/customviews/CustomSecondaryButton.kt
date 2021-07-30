@@ -85,6 +85,13 @@ class CustomSecondaryButton @JvmOverloads constructor(
                     ColorStateList.valueOf(ContextCompat.getColor(context, R.color.light_blue))
                 getImageDrawable(R.drawable.bg_btn_secondary_black_with_blue_border)
             }
+            State.BLUE_GRADIENT -> {
+                this.isEnabled = true
+                this.setTextColor(getResolvedColor(R.color.white))
+                this.compoundDrawableTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.light_blue))
+                getImageDrawable(R.drawable.bg_btn_secondary_blue_gradint)
+            }
 
         }
     }
@@ -96,7 +103,7 @@ class CustomSecondaryButton @JvmOverloads constructor(
 
 
     enum class State {
-        DISABLE, BLUE, YELLOW, GREEN, WHITE_WITH_BLUE_BORDER, BLACK_WITH_BLUE_BORDER
+        DISABLE, BLUE, YELLOW, GREEN, WHITE_WITH_BLUE_BORDER, BLACK_WITH_BLUE_BORDER,BLUE_GRADIENT
     }
 
 
