@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -17,29 +18,61 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/padding_normal">
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/guideline_normal"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintGuide_end="@dimen/guideline_small" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintGuide_end="@dimen/guideline_normal"
+                />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/guideline_normal"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_profile_pic"
                 android:layout_width="@dimen/size_profile"
                 android:layout_height="@dimen/size_profile"
                 android:src="@drawable/profile_pic"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
             <TextView
                 android:id="@+id/tv_user_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_extra_small"
-                android:layout_marginTop="@dimen/margin_extra_5dp_small"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/user_name"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_normal"
+                android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold"
+                android:layout_marginTop="@dimen/margin_bio"
                 app:layout_constraintEnd_toStartOf="@+id/iv_edit"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/iv_profile_pic"
@@ -52,8 +85,8 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@string/user_bio"
-                android:textSize="@dimen/text_size_medium"
-                android:layout_marginTop="@dimen/margin_mini"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginTop="@dimen/margin_bio"
                 app:layout_constraintEnd_toEndOf="@id/tv_user_name"
                 app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
                 app:layout_constraintStart_toStartOf="@id/tv_user_name"
@@ -88,8 +121,9 @@
                 android:textStyle="bold"
                 app:ccf_view="FOLLOW"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@id/tv_user_name"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintTop_toTopOf="@id/tv_user_name" />
 
             <com.gthr.gthrcollect.utils.customviews.CustomFelloView
@@ -102,7 +136,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/following"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@id/iv_profile_pic" />
 
             <com.gthr.gthrcollect.utils.customviews.CustomFelloView
@@ -126,7 +161,7 @@
                 app:cfv_count="920"
                 app:cfv_type="SOLD"
                 app:layout_constraintBottom_toBottomOf="@+id/following"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/following"
                 app:layout_constraintTop_toTopOf="@+id/following" />

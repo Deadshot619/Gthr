@@ -77,6 +77,7 @@
 
     <!--Guidelines-->
     <dimen name="guideline_extra_small">8dp</dimen>
+    <dimen name="guideline_small">12dp</dimen>
     <dimen name="guideline_normal">16dp</dimen>
     <dimen name="guideline_extra_large">24dp</dimen>
     <dimen name="guideline_edit_account_info">24dp</dimen>
@@ -204,9 +205,10 @@
     <!--edit profile picture size-->
     <dimen name="size_profile_image">250dp</dimen>
 
-    <!--Profile header size-->
+    <!--Profile-->
     <dimen name="radius_profile">10dp</dimen>
-    <dimen name="size_profile">64dp</dimen>
+    <dimen name="margin_bio">2dp</dimen>
+    <dimen name="size_profile">48dp</dimen>
     <dimen name="size_elevation">4dp</dimen>
     <dimen name="margin_collection_type">2dp</dimen>
 

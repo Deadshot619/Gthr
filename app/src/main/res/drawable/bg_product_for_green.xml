@@ -3,7 +3,7 @@
     <gradient
         android:startColor="@color/green_gradient_start_color"
         android:endColor="@color/green_gradient_end_color"
-        android:angle="0"/>
+        android:angle="180"/>
     <corners android:topLeftRadius="8dp"
         android:bottomLeftRadius="@dimen/radius_custom_product"/>
 </shape>

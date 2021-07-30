@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
+import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.BuildConfig
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.EditProfileFragmentBinding
@@ -31,6 +32,7 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragme
     override val mViewModel: EditProfileViewModel by viewModels()
     override fun getViewBinding() = EditProfileFragmentBinding.inflate(layoutInflater)
 
+    private lateinit var mProfileLayout: MaterialCardView
     private lateinit var mTvEditProfilePicture: AppCompatTextView
     private lateinit var mIvProfilePic: CircleImageView
 
@@ -44,6 +46,7 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragme
 
     private fun initViews() {
         mViewBinding.let {
+            mProfileLayout = it.mcvProfile
             mTvEditProfilePicture = it.tvEditProfilePicture
             mIvProfilePic = it.ivProfilePic
         }
@@ -75,7 +78,7 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragme
     }
 
     private fun setUpOnClickListeners() {
-        mTvEditProfilePicture.setOnClickListener {
+        mProfileLayout.setOnClickListener {
             val sheet = ProfileImageBottomSheet(object : ProfileImageBottomSheet.ClickAction {
                 override fun takePhoto() {
                     checkMultiplePermissions(takePicturePermissions) {

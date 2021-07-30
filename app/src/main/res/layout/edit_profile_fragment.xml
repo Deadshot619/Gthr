@@ -59,7 +59,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/padding_normal">
+                android:paddingHorizontal="@dimen/padding_large"
+                android:paddingVertical="@dimen/padding_small">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_profile_pic"
