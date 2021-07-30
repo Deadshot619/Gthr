@@ -1,10 +1,12 @@
 package com.gthr.gthrcollect.ui.profile.my_profile
 
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.MyProfileBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.editprofile.EditProfileActivity
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.ui.profile.follow.FollowUserAdapter
 import com.gthr.gthrcollect.ui.profile.follow.FollowViewModel
@@ -29,6 +31,7 @@ class MyProfileFragment : BaseFragment<FollowViewModel, MyProfileBinding>() {
     private lateinit var mFollowing: CustomFelloView
     private lateinit var mSold: CustomFelloView
     private lateinit var mFavourites: CustomCollectionButton
+    private lateinit var mEdit: AppCompatImageView
 
     private lateinit var mAll: CustomCollectionTypeView
     private lateinit var mCards: CustomCollectionTypeView
@@ -51,6 +54,7 @@ class MyProfileFragment : BaseFragment<FollowViewModel, MyProfileBinding>() {
             mFollowers = profileLayout.follower
             mFollowing = profileLayout.following
             mSold = profileLayout.sold
+            mEdit = profileLayout.ivEdit
             mAll = cctvAll
             mCards = cctvCards
             mToys = cctvToys
@@ -71,6 +75,9 @@ class MyProfileFragment : BaseFragment<FollowViewModel, MyProfileBinding>() {
         }
         mFavourites.setOnClickListener {
             goToProfilePage(ProfileNavigationType.FAVOURITES)
+        }
+        mEdit.setOnClickListener {
+            startActivity(EditProfileActivity.getInstance(requireContext()))
         }
 
         mCctvList.forEach { view ->

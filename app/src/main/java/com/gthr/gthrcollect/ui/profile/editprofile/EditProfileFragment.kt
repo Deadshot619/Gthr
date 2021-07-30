@@ -34,6 +34,7 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragme
     private var fileName : String = ""
 
     override fun onBinding() {
+        setHasOptionsMenu(true)
         initViews()
         setUpOnClickListeners()
     }

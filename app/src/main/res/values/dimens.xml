@@ -10,7 +10,7 @@
     <dimen name="signup_btn_margin_top">64dp</dimen>
 
     <!--Toolbar-->
-    <dimen name="toolbar_radius">16dp</dimen>
+    <dimen name="toolbar_radius">12dp</dimen>
 
     <!--Bottom Nav-->
     <dimen name="bottom_nav_icon_size">42dp</dimen>

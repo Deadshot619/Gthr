@@ -299,6 +299,7 @@
     <string name="hint_Search_collection">Search the collection</string>
 
     <!--Edit profile-->
+    <string name="title_edit_profile_info">Edit Profile Info</string>
     <string name="edit_profile_picture">Edit Profile Picture</string>
     <string name="text_display_name">Display name</string>
     <string name="info_display_name_edit_profile">You may only change your Display Name Once per 30 days.</string>

@@ -27,6 +27,10 @@
         <item name="android:background">@drawable/toolbar_bg</item>
     </style>
 
+    <style name="ToolbarSquareTheme" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">@drawable/toolbar_square_bg</item>
+    </style>
+
     <!--Edit Account Info-->
     <style name="EditAccountPageTitle">
         <item name="android:textSize">@dimen/text_size_normal</item>
