@@ -18,6 +18,8 @@
           app:layout_constraintTop_toTopOf="parent"
           app:layout_constraintBottom_toBottomOf="parent"
           android:layout_width="match_parent"
+          app:cpc_type="MYTHIC"
+          app:cpc_card_state="OFFER"
           android:layout_height="wrap_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

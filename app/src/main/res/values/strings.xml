@@ -307,4 +307,7 @@
     <string name="dialog_take_photo">Take Photo</string>
     <string name="dialog_edit_profile_picture">Edit Profile Picture</string>
 
+    <!--Active Offers-->
+    <string name="hint_Search_your_offers">Search your offers</string>
+
 </resources>

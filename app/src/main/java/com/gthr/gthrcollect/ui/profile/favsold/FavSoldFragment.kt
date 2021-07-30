@@ -2,11 +2,13 @@ package com.gthr.gthrcollect.ui.profile.favsold
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.FollowFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
+import com.gthr.gthrcollect.ui.profile.follow.FavSoldAdapter
 import com.gthr.gthrcollect.ui.profile.follow.FollowFragmentArgs
 import com.gthr.gthrcollect.ui.profile.follow.FollowViewModel
 import com.gthr.gthrcollect.utils.customviews.CustomSearchView
@@ -18,6 +20,8 @@ class FavSoldFragment : BaseFragment<FollowViewModel, FollowFragmentBinding>() {
 
     private val args by navArgs<FollowFragmentArgs>()
     private lateinit var mType: ProfileNavigationType
+
+    private lateinit var mAdapter: FavSoldAdapter
 
     private lateinit var mRvMain: RecyclerView
     private lateinit var mSearchView: CustomSearchView
@@ -55,5 +59,11 @@ class FavSoldFragment : BaseFragment<FollowViewModel, FollowFragmentBinding>() {
     }
 
     private fun setUpRecyclerView() {
+        mAdapter = FavSoldAdapter(mType,{})
+        mRvMain.apply {
+            layoutManager = GridLayoutManager(requireContext(),2)
+            mRvMain.adapter = mAdapter
+        }
     }
+
 }
