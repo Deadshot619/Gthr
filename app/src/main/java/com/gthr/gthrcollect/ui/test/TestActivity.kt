@@ -4,13 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
-import com.gthr.gthrcollect.ui.homebottomnav.search.SearchFragment
-import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.TestProductAdapter
-import com.gthr.gthrcollect.utils.GridSpacingItemDecoration
-import com.gthr.gthrcollect.utils.customviews.CustomProductCell
+import com.gthr.gthrcollect.ui.profile.editprofile.EditProfileFragment
 
 class TestActivity : AppCompatActivity() {
 
@@ -60,6 +55,7 @@ class TestActivity : AppCompatActivity() {
             intent.putExtra("type",6)
             startActivity(intent)
         }
+
 
 
     }

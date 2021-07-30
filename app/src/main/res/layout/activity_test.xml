@@ -9,6 +9,7 @@
     tools:context=".ui.test.TestActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:visibility="gone"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -83,5 +84,6 @@
             android:id="@+id/rv6"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 </ScrollView>

@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.TestProductAdapter
-import com.gthr.gthrcollect.utils.GridSpacingItemDecoration
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 
 class TestProductActivity : AppCompatActivity() {

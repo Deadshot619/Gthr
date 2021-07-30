@@ -14,7 +14,6 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.SearchFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.SearchCollectionAdapter
-import com.gthr.gthrcollect.utils.GridSpacingItemDecoration
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterCategoryView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterSubCategoryView

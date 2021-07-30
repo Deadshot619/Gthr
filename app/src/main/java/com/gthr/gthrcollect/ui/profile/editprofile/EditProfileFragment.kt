@@ -12,6 +12,7 @@ import com.gthr.gthrcollect.BuildConfig
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.EditProfileFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.utils.RealPathHelper
 import com.gthr.gthrcollect.utils.extensions.convertBitmapToFile
 import com.gthr.gthrcollect.utils.extensions.getFile
 import com.gthr.gthrcollect.utils.extensions.rotateImage
@@ -22,6 +23,8 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import de.hdodenhof.circleimageview.CircleImageView
+import java.io.File
+
 
 class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragmentBinding>() {
 
@@ -46,7 +49,7 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragme
         }
     }
 
-    private fun checkMultiplePermissions(onPermissionGranted: () -> Unit) {
+    private fun checkMultiplePermissions(permissions : Collection<String>,onPermissionGranted: () -> Unit) {
         Dexter.withContext(requireContext())
             .withPermissions(permissions)
             .withListener(object : MultiplePermissionsListener {
@@ -75,14 +78,25 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragme
         mTvEditProfilePicture.setOnClickListener {
             val sheet = ProfileImageBottomSheet(object : ProfileImageBottomSheet.ClickAction {
                 override fun takePhoto() {
-                    checkMultiplePermissions {
+                    checkMultiplePermissions(takePicturePermissions) {
                         openCamera()
                     }
                 }
-                override fun chooseFromLibrary() {}
+                override fun chooseFromLibrary() {
+                    checkMultiplePermissions(pickPicturePermissions){
+                        pickImage()
+                    }
+                }
             })
             sheet.show(childFragmentManager, BOTTOM_SHEET_TAG)
         }
+    }
+
+    private fun pickImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PICTURE_REQUEST)
     }
 
     private fun openCamera() {
@@ -110,20 +124,36 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragme
                     mIvProfilePic.setImageBitmap(bitmap)
                 }
             }
+
+            PICK_PICTURE_REQUEST -> if(resultCode == RESULT_OK){
+                data?.data?.let { it ->
+                    RealPathHelper.getRealPath(requireContext(),it)?.let {
+                        val file = File(it)
+                        val bitmap = BitmapFactory.decodeFile(file.absolutePath).rotateImage(file)
+                        mIvProfilePic.setImageBitmap(bitmap)
+                    }
+                }
+            }
         }
     }
 
 
     companion object {
         const val TAKE_PICTURE_REQUEST = 100
+        const val PICK_PICTURE_REQUEST = 111
         const val BOTTOM_SHEET_TAG = "EditProfileFragment"
         const val IMAGE_NAME = "_image.jpg"
         const val DIR_NAME = "GTHR"
         const val PROVIDER = ".provider"
         const val IMAGE_CAPTURE_ACTION = "android.media.action.IMAGE_CAPTURE"
 
-        private val permissions = listOf(
+        private val takePicturePermissions = listOf(
             Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+
+        private val pickPicturePermissions = listOf(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
