@@ -272,9 +272,9 @@
     <string name="text_filter_sealed">Sealed</string>
 
     <!--Follower/following search hint-->
-    <string name="hint_follower_search">Search in followers’ collection</string>
-    <string name="hint_following_search">Search in following collection</string>
-    <string name="hint_favourites_search">Search in favorites</string>
+    <string name="hint_follower_search">Search Followers</string>
+    <string name="hint_following_search">Search Following</string>
+    <string name="hint_favourites_search">Search Favorites</string>
     <string name="hint_sold_search">Search in sold items</string>
 
     <!--Custom product type-->
@@ -286,6 +286,10 @@
     <string name="text_fore_sale">For sale</string>
     <string name="text_want">Want</string>
     <string name="text_offer">Offer</string>
+    <string name="text_offer_price">Offer Price</string>
+    <string name="text_market_price">Market Price</string>
+    <string name="text_buylist_price">Buylist Price</string>
+    <string name="text_sale_price">Sale Price</string>
     <string name="text_sold">Sold</string>
     <string name="text_product_name">Name</string>
     <string name="text_product_set">Set</string>

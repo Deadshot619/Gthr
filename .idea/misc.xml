@@ -8,12 +8,14 @@
         <entry key="app/src/main/res/drawable/bg_product_bottom.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/drawable/bg_product_for_green.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/drawable/bottom_nav_bg.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/drawable/ic_blue_edit.xml" value="0.1734375" />
         <entry key="app/src/main/res/drawable/toolbar_bg.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/activity_home_bottom_nav.xml" value="0.1765625" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.18541666666666667" />
-        <entry key="app/src/main/res/layout/card_profile_header.xml" value="0.7206427688504327" />
+        <entry key="app/src/main/res/layout/card_profile_header.xml" value="0.38946015424164526" />
         <entry key="app/src/main/res/layout/edit_profile_fragment.xml" value="0.26403985507246375" />
+        <entry key="app/src/main/res/layout/follow_fragment.xml" value="0.2006340579710145" />
         <entry key="app/src/main/res/layout/item_collection.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_test_product.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/layout_custom_collection_type.xml" value="0.1765625" />

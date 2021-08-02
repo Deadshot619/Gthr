@@ -79,6 +79,7 @@
     <dimen name="guideline_extra_small">8dp</dimen>
     <dimen name="guideline_small">12dp</dimen>
     <dimen name="guideline_normal">16dp</dimen>
+    <dimen name="guideline_large">20dp</dimen>
     <dimen name="guideline_extra_large">24dp</dimen>
     <dimen name="guideline_edit_account_info">24dp</dimen>
     <dimen name="guideline_profile">64dp</dimen>

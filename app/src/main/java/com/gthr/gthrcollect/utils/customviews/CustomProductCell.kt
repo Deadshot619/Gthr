@@ -49,12 +49,15 @@ class CustomProductCell @JvmOverloads constructor(
 
     init {
         mIvMain.clipToOutline = true
+
         val attrs = getContext().obtainStyledAttributes(attrs, R.styleable.CustomProductCell)
         mCurrentType = Type.values()[attrs.getInt(R.styleable.CustomProductCell_cpc_type, 0)]
         mCurrentState = State.values()[attrs.getInt(R.styleable.CustomProductCell_cpc_card_state, 0)]
 
         setType(mCurrentType)
         setState(mCurrentState)
+
+        attrs.recycle()
     }
 
     fun setType(type: Type) {
@@ -102,6 +105,7 @@ class CustomProductCell @JvmOverloads constructor(
         mCurrentState = state
         when(state){
             State.FOR_SALE -> {
+                mTvTitle.text = context.getString(R.string.text_sale_price)
                 mTvCardState.visible()
                 mTvCardState.text = context.getString(R.string.text_fore_sale)
                 mTvCardState.background = getImageDrawable(R.drawable.bg_product_for_green)
@@ -110,6 +114,7 @@ class CustomProductCell @JvmOverloads constructor(
                 mIvIcon.gone()
             }
             State.WANT -> {
+                mTvTitle.text = context.getString(R.string.text_buylist_price)
                 mTvCardState.visible()
                 mTvCardState.text = context.getString(R.string.text_want)
                 mTvCardState.background = getImageDrawable(R.drawable.bg_product_for_red)
@@ -118,18 +123,21 @@ class CustomProductCell @JvmOverloads constructor(
                 mIvIcon.gone()
             }
             State.NORMAL -> {
+                mTvTitle.text = context.getString(R.string.text_market_price)
                 mTvCardState.gone()
                 mClBottom.gone()
                 mIvFav.gone()
                 mIvIcon.gone()
             }
             State.FAVORITE -> {
+                mTvTitle.text = context.getString(R.string.text_market_price)
                 mTvCardState.gone()
                 mClBottom.gone()
                 mIvFav.visible()
                 mIvIcon.gone()
             }
             State.OFFER -> {
+                mTvTitle.text = context.getString(R.string.text_offer_price)
                 mTvCardState.visible()
                 mTvCardState.text = context.getString(R.string.text_offer)
                 mTvCardState.background = getImageDrawable(R.drawable.bg_product_for_green)
@@ -138,6 +146,7 @@ class CustomProductCell @JvmOverloads constructor(
                 mIvIcon.visible()
             }
             State.SOLD -> {
+                mTvTitle.text = context.getString(R.string.text_sale_price)
                 mTvCardState.visible()
                 mTvCardState.text = context.getString(R.string.text_sold)
                 mTvCardState.background = getImageDrawable(R.drawable.bg_product_for_green)
@@ -155,5 +164,4 @@ class CustomProductCell @JvmOverloads constructor(
     enum class State {
         FOR_SALE, WANT, NORMAL, FAVORITE, OFFER, SOLD
     }
-
 }
