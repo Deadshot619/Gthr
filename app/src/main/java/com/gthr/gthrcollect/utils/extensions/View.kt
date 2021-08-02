@@ -30,7 +30,7 @@ fun View.gone() {
     visibility = View.GONE
 }
 
-fun View.getImageDrawable(@DrawableRes id: Int): Drawable? = ContextCompat.getDrawable(context, id)
+fun View.getImageDrawable(@DrawableRes id: Int): Drawable? = context.getImageDrawable(id)
 
 fun View.getResolvedColor(@ColorRes id: Int): Int = ContextCompat.getColor(context, id)
 

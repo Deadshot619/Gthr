@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.CardFollowBinding
 import com.gthr.gthrcollect.model.domain.FollowDomainModel
 
-class FollowUserAdapter(val callback: (FollowDomainModel) -> Unit) :
+class FollowUserAdapter(val callback: FollowUserListener) :
     ListAdapter<FollowDomainModel, FollowUserAdapter.FollowUserViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<FollowDomainModel>() {
@@ -29,18 +29,20 @@ class FollowUserAdapter(val callback: (FollowDomainModel) -> Unit) :
         )
 
     override fun onBindViewHolder(holder: FollowUserViewHolder, position: Int) =
-        holder.bind()
+        holder.bind(/*getItem(position),*/ callback)
 
     override fun getItemCount(): Int = 17
 
     inner class FollowUserViewHolder(var binding: CardFollowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
+        fun bind(/*data: FollowDomainModel,*/ callback: FollowUserListener) {
             binding.root.setOnClickListener {
-
-
+                callback.onClick(null)
             }
         }
     }
 
+    interface FollowUserListener {
+        fun onClick(followDomainModel: FollowDomainModel?)
+    }
 }

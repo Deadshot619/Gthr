@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -13,7 +14,9 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityProfileBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.profile.navigation.ProfileNavigationFragmentArgs
+import com.gthr.gthrcollect.utils.enums.EditAccountSection
 import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
+import com.gthr.gthrcollect.utils.extensions.getImageDrawable
 
 class ProfileActivity : BaseActivity<ProfileViewModel, ActivityProfileBinding>() {
     override val mViewModel: ProfileViewModel by viewModels()
@@ -22,13 +25,21 @@ class ProfileActivity : BaseActivity<ProfileViewModel, ActivityProfileBinding>()
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var mType: ProfileNavigationType
+    private lateinit var mToolbar: Toolbar
 
     override fun onBinding() {
         mType = intent.getSerializableExtra(KEY_TYPE) as ProfileNavigationType
 
+        initViews()
         setUpNavGraph()
-        setSupportActionBar(mViewBinding.toolbar)
+        setSupportActionBar(mToolbar)
         setUpNavigationAndActionBar()
+    }
+
+    private fun initViews(){
+        mViewBinding.run {
+            mToolbar = toolbar
+        }
     }
 
     private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination
@@ -47,9 +58,19 @@ class ProfileActivity : BaseActivity<ProfileViewModel, ActivityProfileBinding>()
         NavigationUI.setupActionBarWithNavController(this, mNavController, mAppBarConfiguration)
 
         mNavController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
-            mViewBinding.toolbar.title = ""     //Set Title as empty as we have used custom title
+            mToolbar.title = ""     //Set Title as empty as we have used custom title
             upButtonVisibility(isVisible = true)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_up_button) //Set up button as <
+
+            when (nd.id) {
+                R.id.myProfileFragment -> {
+                    setToolbarTitle("")
+                    mToolbar.background = getImageDrawable(R.drawable.toolbar_square_bg)
+                }
+                else -> {
+                    mToolbar.background = getImageDrawable(R.drawable.toolbar_bg)
+                }
+            }
         }
     }
 

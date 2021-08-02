@@ -272,10 +272,10 @@
     <string name="text_filter_sealed">Sealed</string>
 
     <!--Follower/following search hint-->
-    <string name="hint_follower_search">Search Followers</string>
-    <string name="hint_following_search">Search Following</string>
-    <string name="hint_favourites_search">Search Favorites</string>
-    <string name="hint_sold_search">Search in sold items</string>
+    <string name="hint_follower_search">Search fkollowers</string>
+    <string name="hint_following_search">Search following</string>
+    <string name="hint_favourites_search">Search favorites</string>
+    <string name="hint_sold_search">Search sold items</string>
 
     <!--Custom product type-->
     <string name="text_funko">Funko</string>

@@ -29,6 +29,9 @@
         <argument
             android:name="type"
             app:argType="com.gthr.gthrcollect.utils.enums.ProfileNavigationType" />
+        <action
+            android:id="@+id/action_followFragment2_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/favSoldFragment"
@@ -37,5 +40,13 @@
         <argument
             android:name="type"
             app:argType="com.gthr.gthrcollect.utils.enums.ProfileNavigationType" />
+    </fragment>
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.gthr.gthrcollect.ui.profile.my_profile.MyProfileFragment"
+        android:label="MyProfileFragment" >
+        <argument
+            android:name="isOtherUser"
+            app:argType="boolean" />
     </fragment>
 </navigation>

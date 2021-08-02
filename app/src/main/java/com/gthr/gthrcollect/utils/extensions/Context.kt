@@ -3,11 +3,14 @@ package com.gthr.gthrcollect.utils.extensions
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Environment
 import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.ui.profile.editprofile.EditProfileFragment
@@ -18,6 +21,8 @@ fun Context.hideKeyboard(view: View) {
         getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
+
+fun Context.getImageDrawable(@DrawableRes id: Int): Drawable? = ContextCompat.getDrawable(this, id)
 
 //Get file from file name
 fun Context.getFile(name: String): File? {

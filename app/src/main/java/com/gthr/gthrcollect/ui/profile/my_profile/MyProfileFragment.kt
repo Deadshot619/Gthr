@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.MyProfileBinding
+import com.gthr.gthrcollect.model.domain.FollowDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editprofile.EditProfileActivity
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
@@ -88,7 +89,11 @@ class MyProfileFragment : BaseFragment<FollowViewModel, MyProfileBinding>() {
     }
 
     private fun setUpRecyclerView() {
-        mAdapter = FollowUserAdapter {}
+        mAdapter = FollowUserAdapter(object : FollowUserAdapter.FollowUserListener{
+            override fun onClick(followDomainModel: FollowDomainModel?) {
+
+            }
+        })
         mRvMain.apply {
             layoutManager = LinearLayoutManager(requireContext())
             mRvMain.adapter = mAdapter
