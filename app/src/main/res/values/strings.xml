@@ -272,7 +272,7 @@
     <string name="text_filter_sealed">Sealed</string>
 
     <!--Follower/following search hint-->
-    <string name="hint_follower_search">Search fkollowers</string>
+    <string name="hint_follower_search">Search followers</string>
     <string name="hint_following_search">Search following</string>
     <string name="hint_favourites_search">Search favorites</string>
     <string name="hint_sold_search">Search sold items</string>
