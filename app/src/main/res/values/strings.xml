@@ -15,7 +15,7 @@
     <string name="title_account">Account</string>
     <string name="title_my_profile">My Profile</string>
     <string name="title_receipts">Receipts</string>
-
+    <string name="title_market">Market</string>
 
     <!--SignIn/SignUp-->
     <string name="sign_in_text">Sign In</string>
@@ -326,4 +326,9 @@
     <string name="text_purchase_detail_ship_to">Ship to</string>
     <string name="text_purchase_detail_order">Order#</string>
 
+    <!--Feed-->
+    <string name="btn_feed_all">All</string>
+    <string name="btn_feed_cards">Cards</string>
+    <string name="btn_feed_sealed">Sealed</string>
+    <string name="btn_feed_funko">Funko</string>
 </resources>
