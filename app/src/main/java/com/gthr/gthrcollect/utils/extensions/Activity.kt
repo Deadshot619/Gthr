@@ -10,9 +10,7 @@ import androidx.core.content.ContextCompat
 private var toast: Toast? = null
 
 fun Activity.showToast(text: String, durationLong: Boolean = false) {
-    toast?.cancel()
-    toast = Toast.makeText(this, text, if (durationLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT)
-    toast?.show()
+    applicationContext?.showToast(text, durationLong)
 }
 
 fun Activity.getBackgroundDrawable(@DrawableRes id: Int): Drawable? =

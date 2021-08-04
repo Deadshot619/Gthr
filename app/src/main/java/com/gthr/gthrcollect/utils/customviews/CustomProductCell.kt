@@ -66,7 +66,7 @@ class CustomProductCell @JvmOverloads constructor(
             Type.FUNKO -> {
                 mTvProductType.text = context.getString(R.string.text_funko)
                 mTvRow1Collum1.text = context.getString(R.string.text_product_name)
-                mTvRow2Collum1.text = context.getString(R.string.text_Hash)
+                mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
                 mGroupGlob.gone()
                 mGroupPsa.gone()
             }
@@ -80,21 +80,21 @@ class CustomProductCell @JvmOverloads constructor(
             Type.MYTHIC -> {
                 mTvProductType.text = context.getString(R.string.text_mythic)
                 mTvRow1Collum1.text = context.getString(R.string.text_product_set)
-                mTvRow2Collum1.text = context.getString(R.string.text_Hash)
+                mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
                 mGroupGlob.visible()
                 mGroupPsa.visible()
             }
             Type.HOLO_RARE -> {
                 mTvProductType.text = context.getString(R.string.text_holo_rare)
                 mTvRow1Collum1.text = context.getString(R.string.text_product_set)
-                mTvRow2Collum1.text = context.getString(R.string.text_Hash)
+                mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
                 mGroupGlob.visible()
                 mGroupPsa.visible()
             }
             Type.SECRET_RARE -> {
                 mTvProductType.text = context.getString(R.string.text_secret_rare)
                 mTvRow1Collum1.text = context.getString(R.string.text_product_set)
-                mTvRow2Collum1.text = context.getString(R.string.text_Hash)
+                mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
                 mGroupGlob.visible()
                 mGroupPsa.visible()
             }

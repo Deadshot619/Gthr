@@ -8,6 +8,14 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
 
+    <!-- Send Email-->
+    <string name="intent_email_chooser_title">Send Email…</string>
+    <string name="intent_email_chooser_not_found">There are no email client installed on your device</string>
+
+    <!--Common Dialog-->
+    <string name="dialog_btn_yes">Yes</string>
+    <string name="dialog_btn_no">No</string>
+
     <!--Home Bottom Menu-->
     <string name="menu_feed_title">Feed</string>
     <string name="menu_search_title">Search</string>
@@ -293,7 +301,12 @@
     <string name="text_sold">Sold</string>
     <string name="text_product_name">Name</string>
     <string name="text_product_set">Set</string>
-    <string name="text_Hash">#:</string>
+    <string name="text_hash_colon">#:</string>
+    <string name="text_hash">#</string>
+    <string name="text_product_rarity">Rarity</string>
+    <string name="text_product_psa">PSA</string>
+    <string name="text_product_conditon">Cond.</string>
+    <string name="text_product_license">License</string>
 
     <!--My profile-->
     <string name="user_name">Funko Master Flex</string>
@@ -315,6 +328,8 @@
     <string name="hint_Search_your_offers">Search your offers</string>
 
     <!--Purchase Detail-->
+    <string name="text_purchase_detail">Purchase Details</string>
+    <string name="text_purchase_summary">Purchase Summary</string>
     <string name="text_purchase_detail_track_package"><u>Track Package</u></string>
     <string name="text_btn_purchase_detail_report_issue">Report Issue</string>
     <string name="text_btn_purchase_detail_confirm_received">Confirm Received</string>
@@ -325,6 +340,11 @@
     <string name="text_btn_purchase_detail_payment">Payment</string>
     <string name="text_purchase_detail_ship_to">Ship to</string>
     <string name="text_purchase_detail_order">Order#</string>
+    <string name="text_purchase_sale_price">Sale Price</string>
+    <string name="text_purchase_shipping">Shipping</string>
+    <string name="text_purchase_sales_tax">Sales Tax(%s)</string>
+    <string name="dialog_confirm_received_title">Confirm Received</string>
+    <string name="dialog_confirm_received_body">Did you receive the item?</string>
 
     <!--Feed-->
     <string name="btn_feed_all">All</string>

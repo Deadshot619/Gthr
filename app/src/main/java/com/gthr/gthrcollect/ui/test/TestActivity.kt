@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.gthr.gthrcollect.R
-import com.gthr.gthrcollect.ui.profile.purchasedetails.PurchaseDetailsFragment
+import com.gthr.gthrcollect.ui.receiptdetail.purchasedetails.PurchaseDetailsFragment
 
 class TestActivity : AppCompatActivity() {
 

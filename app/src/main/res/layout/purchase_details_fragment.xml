@@ -39,7 +39,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_end"
@@ -61,7 +61,7 @@
                     android:id="@+id/mcv_detail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_normal"
+                    android:elevation="@dimen/cardview_default_elevation"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toTopOf="parent">
@@ -70,7 +70,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-
+                        <!--Seller-->
                         <TextView
                             android:id="@+id/tv_seller"
                             android:layout_width="0dp"
@@ -79,6 +79,7 @@
                             android:text="@string/text_purchase_detail_seller"
                             android:textColor="@color/light_blue"
                             android:textSize="@dimen/text_size_small"
+                            android:fontFamily="@font/lato_bold"
                             app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
                             app:layout_constraintEnd_toStartOf="@+id/iv_profile"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -86,6 +87,7 @@
                             app:layout_constraintTop_toTopOf="@+id/iv_profile"
                             app:layout_constraintVertical_bias="0.97" />
 
+                        <!--Seller Name-->
                         <TextView
                             android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
@@ -100,6 +102,7 @@
                             app:layout_constraintTop_toTopOf="@+id/iv_profile"
                             app:layout_constraintVertical_bias="1.0" />
 
+                        <!--Seller profile pic-->
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/iv_profile"
                             android:layout_width="@dimen/size_profile_purchase_detail"
@@ -136,6 +139,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/line" />
 
+                        <!--Set-->
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/ll_set"
                             android:layout_width="0dp"
@@ -150,14 +154,14 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
-
                             <TextView
                                 android:id="@+id/tv_set"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/margin_small"
                                 android:layout_weight="1"
-                                android:text="Set"
+                                android:textStyle="bold"
+                                android:text="@string/text_product_set"
                                 android:textColor="@color/light_blue"
                                 android:textSize="@dimen/text_size_small" />
 
@@ -172,21 +176,22 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_small" />
 
-
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
+                        <!--Number Rarity-->
                         <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/ll_details"
+                            android:id="@+id/ll_number_rarity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_normal"
                             android:layout_marginTop="@dimen/margin_extra_small"
                             android:orientation="horizontal"
-                            android:weightSum="3"
+                            android:weightSum="2"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/ll_set">
 
+                            <!--Number-->
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -199,6 +204,101 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/margin_extra_small"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:text="@string/text_hash"
+                                    android:textColor="@color/blue"
+                                    android:textSize="@dimen/text_size_small"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/line_glob"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tv_number_value"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                                    android:layout_weight="7"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/lato"
+                                    android:maxLines="1"
+                                    android:gravity="center"
+                                    android:text="-"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/text_size_small" />
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <!--Rarity-->
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/margin_extra_small"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_recipt_bottom"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingVertical="@dimen/padding_extra_small"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/margin_extra_small"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:text="@string/text_product_rarity"
+                                    android:textColor="@color/blue"
+                                    android:textSize="@dimen/text_size_small"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/line_glob"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tv_rarity_value"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="@dimen/margin_normal"
+                                    android:layout_weight="7"
+                                    android:fontFamily="@font/lato"
+                                    android:text="-"
+                                    android:gravity="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/text_size_small" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <!--Language, PSA-->
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/ll_details"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/margin_normal"
+                            android:layout_marginTop="@dimen/margin_extra_small"
+                            android:orientation="horizontal"
+                            android:weightSum="3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ll_number_rarity">
+
+                            <!--Language-->
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_recipt_bottom"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingVertical="@dimen/padding_extra_small"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:id="@+id/iv_glob"
@@ -219,9 +319,9 @@
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/text_size_small" />
 
-
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
+                            <!--PSA-->
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -235,14 +335,13 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
-
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tv_psa"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/margin_extra_small"
                                     android:fontFamily="@font/lato_bold"
-                                    android:text="PSA"
+                                    android:text="@string/text_product_psa"
                                     android:textColor="@color/blue"
                                     android:textSize="@dimen/text_size_small"
                                     android:textStyle="bold"
@@ -259,8 +358,6 @@
                                     android:text="10"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/text_size_small" />
-
-
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
                             <androidx.appcompat.widget.LinearLayoutCompat
@@ -275,7 +372,6 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
-
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -287,14 +383,12 @@
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/text_size_small" />
 
-
                             </androidx.appcompat.widget.LinearLayoutCompat>
-
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
+                        <!--Product Image-->
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/iv_main"
+                            android:id="@+id/iv_product_image"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_marginTop="@dimen/margin_extra_small"
@@ -306,14 +400,15 @@
                             app:layout_constraintTop_toTopOf="@+id/tv_purchase_summary"
                             app:srcCompat="@drawable/receipts" />
 
+                        <!--Expand Image-->
                         <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_expand_image"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_expand"
                             android:layout_margin="@dimen/margin_extra_small"
-                            app:layout_constraintBottom_toBottomOf="@+id/iv_main"
-                            app:layout_constraintEnd_toEndOf="@+id/iv_main" />
-
+                            app:layout_constraintBottom_toBottomOf="@+id/iv_product_image"
+                            app:layout_constraintEnd_toEndOf="@+id/iv_product_image" />
 
                         <TextView
                             android:id="@+id/tv_purchase_summary"
@@ -322,13 +417,12 @@
                             android:layout_margin="@dimen/margin_normal"
                             android:layout_marginEnd="@dimen/margin_normal"
                             android:fontFamily="@font/lato_bold"
-                            android:text="Purchase Summary"
+                            android:text="@string/text_purchase_summary"
                             android:textColor="@color/black"
-                            app:layout_constraintEnd_toStartOf="@+id/iv_main"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_product_image"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/ll_details" />
-
 
                         <TextView
                             android:id="@+id/tv_sale_price"
@@ -337,8 +431,8 @@
                             android:layout_marginStart="@dimen/margin_extra_large"
                             android:layout_marginTop="@dimen/margin_small"
                             android:layout_marginEnd="@dimen/margin_normal"
-                            android:fontFamily="@font/lato"
-                            android:text="Sale Price"
+                            android:textSize="@dimen/text_size_semi_small"
+                            android:text="@string/text_purchase_sale_price"
                             android:textColor="@color/black"
                             app:layout_constraintEnd_toStartOf="@+id/tv_sale_price_value"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -353,9 +447,10 @@
                             android:layout_marginEnd="@dimen/margin_large"
                             android:fontFamily="@font/lato"
                             android:text="$22.00"
+                            android:textSize="@dimen/text_size_semi_small"
                             android:textColor="@color/black"
                             app:layout_constraintBottom_toBottomOf="@+id/tv_sale_price"
-                            app:layout_constraintEnd_toStartOf="@+id/iv_main"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_product_image"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/tv_sale_price"
                             app:layout_constraintTop_toTopOf="@+id/tv_sale_price" />
@@ -365,10 +460,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_extra_large"
-                            android:layout_marginTop="@dimen/margin_small"
+                            android:layout_marginTop="@dimen/margin_extra_small"
                             android:layout_marginEnd="@dimen/margin_normal"
                             android:fontFamily="@font/lato"
-                            android:text="Shipping"
+                            android:textSize="@dimen/text_size_semi_small"
+                            android:text="@string/text_purchase_shipping"
                             android:textColor="@color/black"
                             app:layout_constraintEnd_toStartOf="@+id/tv_shipping_value"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -382,25 +478,25 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_large"
                             android:fontFamily="@font/lato"
-                            android:text="$22.00"
+                            android:text="+ $22.00"
+                            android:textSize="@dimen/text_size_semi_small"
                             android:textColor="@color/black"
                             app:layout_constraintBottom_toBottomOf="@+id/tv_shipping_price"
-                            app:layout_constraintEnd_toStartOf="@+id/iv_main"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_product_image"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/tv_shipping_price"
                             app:layout_constraintTop_toTopOf="@+id/tv_shipping_price" />
-
 
                         <TextView
                             android:id="@+id/tv_sales_tax"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_extra_large"
-                            android:layout_marginTop="@dimen/margin_small"
+                            android:layout_marginTop="@dimen/margin_extra_small"
                             android:layout_marginEnd="@dimen/margin_normal"
-                            android:fontFamily="@font/lato"
-                            android:text="Sales Tax (7.5%)"
+                            android:text="@string/text_purchase_sales_tax"
                             android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_semi_small"
                             app:layout_constraintEnd_toStartOf="@+id/tv_sales_tax_value"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -413,10 +509,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_large"
                             android:fontFamily="@font/lato"
-                            android:text="$22.00"
+                            android:text="+ $22.00"
                             android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_semi_small"
                             app:layout_constraintBottom_toBottomOf="@+id/tv_sales_tax"
-                            app:layout_constraintEnd_toStartOf="@+id/iv_main"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_product_image"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/tv_sales_tax"
                             app:layout_constraintTop_toTopOf="@+id/tv_sales_tax" />
@@ -427,17 +524,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_normal"
-                            android:layout_marginTop="@dimen/margin_extra_small"
+                            android:layout_marginTop="@dimen/margin_small"
                             android:layout_marginBottom="@dimen/margin_normal"
                             android:background="@drawable/bg_recipt_bottom"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:paddingVertical="@dimen/padding_extra_small"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/iv_main"
+                            app:layout_constraintEnd_toStartOf="@id/iv_product_image"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_sales_tax">
-
 
                             <TextView
                                 android:id="@+id/tv_total"
@@ -454,17 +550,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="@dimen/margin_extra_small"
+                                android:textSize="@dimen/text_size_medium"
                                 android:fontFamily="@font/lato_bold"
                                 android:text="$25.81"
                                 android:textColor="@color/light_blue" />
 
-
                         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
@@ -706,7 +798,7 @@
                     android:id="@+id/btn_report_issue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_normal"
+                    android:layout_marginVertical="@dimen/margin_extra_large"
                     android:text="@string/text_btn_purchase_detail_report_issue"
                     app:secondary_button_state="BLUE_GRADIENT"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -732,9 +824,6 @@
                     app:layout_constraintVertical_bias="1.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </ScrollView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

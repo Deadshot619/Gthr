@@ -8,9 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.ItemReceiptBinding
 import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
-import com.gthr.gthrcollect.model.domain.SearchCollection
 
-class ReceiptAdapter(val callback : (SearchCollection) -> Unit) : ListAdapter<ReceiptDomainModel, ReceiptAdapter.ReceiptViewHolder>(
+class ReceiptAdapter(val callback : ReceiptListener) : ListAdapter<ReceiptDomainModel, ReceiptAdapter.ReceiptViewHolder>(
     DiffCallback
 ) {
 
@@ -25,9 +24,9 @@ class ReceiptAdapter(val callback : (SearchCollection) -> Unit) : ListAdapter<Re
 
     inner class  ReceiptViewHolder(var binding: ItemReceiptBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
+        fun bind(callback: ReceiptListener) {
             binding.root.setOnClickListener {
-
+                callback.onClick(null)
             }
         }
     }
@@ -40,8 +39,11 @@ class ReceiptAdapter(val callback : (SearchCollection) -> Unit) : ListAdapter<Re
         )
 
     override fun onBindViewHolder(holder:  ReceiptViewHolder, position: Int) =
-        holder.bind()
+        holder.bind(callback)
 
     override fun getItemCount(): Int = 10
 
+    interface ReceiptListener {
+        fun onClick(receiptDomainModel: ReceiptDomainModel?)
+    }
 }

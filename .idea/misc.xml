@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.2046875" />
+        <entry key="app/src/main/res/drawable/bg_btn_delivery_yellow.xml" value="0.35333333333333333" />
+        <entry key="app/src/main/res/drawable/bg_btn_secondary_blue_gradint.xml" value="0.29739583333333336" />
+        <entry key="app/src/main/res/drawable/bg_btn_secondary_yellow.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/drawable/bg_custom_collection_type_blue.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/drawable/bg_product_bottom.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/drawable/bg_product_for_green.xml" value="0.35885416666666664" />
@@ -11,9 +14,12 @@
         <entry key="app/src/main/res/drawable/ic_blue_edit.xml" value="0.1734375" />
         <entry key="app/src/main/res/drawable/toolbar_bg.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/account_fragment.xml" value="0.13722826086956522" />
+        <entry key="app/src/main/res/layout/activity_edit_account_info.xml" value="0.17916666666666667" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/activity_home_bottom_nav.xml" value="0.1765625" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.26403985507246375" />
+        <entry key="app/src/main/res/layout/activity_receipt.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/activity_receipt_detail.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.18541666666666667" />
         <entry key="app/src/main/res/layout/bottom_feed_fragment.xml" value="0.17447916666666666" />
         <entry key="app/src/main/res/layout/card_profile_header.xml" value="0.38946015424164526" />
@@ -26,6 +32,7 @@
         <entry key="app/src/main/res/layout/layout_custom_product_cell.xml" value="0.6482758620689655" />
         <entry key="app/src/main/res/layout/market_fragment.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/my_profile.xml" value="0.2522585128561501" />
+        <entry key="app/src/main/res/layout/purchase_details_fragment.xml" value="0.3752605976372481" />
         <entry key="app/src/main/res/layout/receipts_fragment.xml" value="0.47429171038824763" />
         <entry key="app/src/main/res/layout/search_fragment.xml" value="0.1765625" />
         <entry key="app/src/main/res/menu/edit_profile_menu.xml" value="0.34270833333333334" />

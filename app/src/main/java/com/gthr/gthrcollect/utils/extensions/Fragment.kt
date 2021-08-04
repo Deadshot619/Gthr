@@ -16,7 +16,7 @@ import java.util.*
 private var isDatePickerShowing: Boolean = false
 
 fun Fragment.showToast(text: String, durationLong: Boolean = false) {
-    activity?.showToast(text, durationLong)
+    context?.showToast(text, durationLong)
 }
 
 fun Fragment.getBackgroundDrawable(@DrawableRes id: Int): Drawable? =
