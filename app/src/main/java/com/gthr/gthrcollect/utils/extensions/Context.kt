@@ -4,19 +4,31 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Environment
 import android.provider.Settings
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.ui.profile.editprofile.EditProfileFragment
 import java.io.File
+
+
+fun Context.getScreenWidth(): Int {
+    val wm = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    val display = wm.defaultDisplay
+    val size = Point()
+    display.getSize(size)
+    return size.x
+}
 
 private var toast: Toast? = null
 
@@ -34,10 +46,11 @@ fun Context.hideKeyboard(view: View) {
 
 fun Context.getImageDrawable(@DrawableRes id: Int): Drawable? = ContextCompat.getDrawable(this, id)
 
+fun Context.getResolvedColor(@ColorRes color : Int) = ContextCompat.getColor(this, color)
+
 //Get file from file name
 fun Context.getFile(name: String): File? {
-    val mediaStorageDir =
-        File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), EditProfileFragment.DIR_NAME)
+    val mediaStorageDir = File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), EditProfileFragment.DIR_NAME)
     if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
         return null
     }

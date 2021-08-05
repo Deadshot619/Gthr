@@ -129,7 +129,7 @@
                 android:background="@drawable/bg_product_price"
                 android:paddingHorizontal="@dimen/padding_small"
                 android:paddingVertical="@dimen/padding_custom_product"
-                android:text="$69420.69"
+                android:text="$694.69"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_end"

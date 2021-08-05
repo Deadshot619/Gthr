@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:background="@color/light_gray"
+            android:gravity="center"
+            android:id="@+id/tv_sale_price"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:fontFamily="@font/lato_bold"
+            android:text="@string/text_recent_sell_sale_price"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/text_size_extra_small" />
+
+        <TextView
+            android:background="@color/light_gray"
+            android:gravity="center"
+            android:layout_marginHorizontal="@dimen/margin_recent_sale"
+            android:id="@+id/tv_date"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/padding_extra_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fontFamily="@font/lato_bold"
+            android:text="@string/text_recent_sell_date"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/text_size_extra_small" />
+
+        <TextView
+            android:background="@color/light_gray"
+            android:gravity="center"
+            android:paddingEnd="@dimen/padding_extra_small"
+            android:id="@+id/tv_customization"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/padding_extra_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fontFamily="@font/lato_bold"
+            android:text="@string/text_recent_sell_customization"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/text_size_extra_small" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

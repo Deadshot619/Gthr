@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.gthr.gthrcollect" >
+    package="com.gthr.gthrcollect">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -31,7 +31,7 @@
         <activity android:name=".ui.editaccountinfo.EditAccountInfoActivity" />
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:theme="@style/GthrCollectFullScreen" >
+            android:theme="@style/GthrCollectFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,12 +50,18 @@
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true"
-            tools:replace="android:authorities" >
+            tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"
                 tools:replace="android:resource" />
         </provider>
     </application>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

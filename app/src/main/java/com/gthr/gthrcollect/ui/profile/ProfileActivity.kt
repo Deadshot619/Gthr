@@ -19,6 +19,7 @@ import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
 import com.gthr.gthrcollect.utils.extensions.getImageDrawable
 
 class ProfileActivity : BaseActivity<ProfileViewModel, ActivityProfileBinding>() {
+
     override val mViewModel: ProfileViewModel by viewModels()
     override fun getViewBinding() = ActivityProfileBinding.inflate(layoutInflater)
 

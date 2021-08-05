@@ -340,6 +340,28 @@
     <string name="text_btn_purchase_detail_payment">Payment</string>
     <string name="text_purchase_detail_ship_to">Ship to</string>
     <string name="text_purchase_detail_order">Order#</string>
+
+    <!--Product Detail-->
+    <string name="text_product_details_recent_sales">Recent Sales</string>
+    <string name="text_product_detail_see_all">See All</string>
+    <string name="text_recent_sell_sale_price">SALE PRICE</string>
+    <string name="text_recent_sell_date">DATE</string>
+    <string name="text_recent_sell_customization">CUSTOMIZATION</string>
+    <string name="text_btn_buy_product_detail">Buy</string>
+    <string name="text_btn_own_product_detail">Own</string>
+    <string name="text_btn_sell_product_detail">Sell</string>
+    <string name="text_details_product_detail">Details</string>
+    <string name="text_number_product_detail">NUMBER</string>
+    <string name="text_type_product_detail">TYPE</string>
+    <string name="text_related_product_detail">Related</string>
+    <string name="text_set_product_details">Set</string>
+    <string name="text_hash_product_details">#</string>
+    <string name="text_rarity_product_details">Rarity</string>
+    <string name="text_up_for_sell_product_details">Up for sell</string>
+    <string name="text_hp_product_details">HP</string>
+    <string name="text_stage_product_details">STAGE</string>
+    <string name="text_jap_set_product_detail">JAP SET</string>
+    <string name="text_jap_number_product_detail">JAP NUMBER</string>
     <string name="text_purchase_sale_price">Sale Price</string>
     <string name="text_purchase_shipping">Shipping</string>
     <string name="text_purchase_sales_tax">Sales Tax(%s)</string>

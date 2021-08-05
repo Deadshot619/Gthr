@@ -56,7 +56,7 @@ class TestActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        supportFragmentManager.beginTransaction().replace(R.id.frame,PurchaseDetailsFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.frame, PurchaseDetailsFragment()).commit()
     }
 
 

@@ -229,4 +229,10 @@
 
     <!-- Purchase Detail -->
     <dimen name="size_profile_purchase_detail">24dp</dimen>
+    <dimen name="radius_product_btn">8dp</dimen>
+    <dimen name="radius_product_detail">8dp</dimen>
+
+    <!-- Recent Sale -->
+    <dimen name="margin_recent_sale">4dp</dimen>
+    <dimen name="width_recent_sale_psa_value">30dp</dimen>
 </resources>

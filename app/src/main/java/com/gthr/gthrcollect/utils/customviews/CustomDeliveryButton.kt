@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.res.ResourcesCompat
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.utils.extensions.getImageDrawable
 import com.gthr.gthrcollect.utils.extensions.getResolvedColor
@@ -32,7 +33,7 @@ class CustomDeliveryButton  @JvmOverloads constructor(
         this.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.text_size_semi_small))
         this.maxLines = 1
         this.ellipsize = TextUtils.TruncateAt.END
-
+        this.typeface = ResourcesCompat.getFont(context, R.font.lato_bold)
 
 
         attrs.recycle()

@@ -19,6 +19,14 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="CustomProductButton">
+        <attr name="custom_product_button_state" format="enum">
+            <enum name="BUY" value="0"/>
+            <enum name="SELL" value="1"/>
+            <enum name="OWN" value="2"/>
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="CustomPhoneNoEditText">
         <attr name="phone_no_initial_state" format="enum">
             <enum name="GRAY" value="0"/>

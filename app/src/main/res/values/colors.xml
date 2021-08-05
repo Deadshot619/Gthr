@@ -13,7 +13,8 @@
 
     <color name="toolbar_color">#3C92F1</color>
     <color name="view_stroke_color_grey">#B8BDC0</color>
-
+    <color name="light_gray">#F9F9F9</color>
+    <color name="extra_light_blue">#F5F9FF</color>
 
 
     <!--Text Colors-->
@@ -29,7 +30,6 @@
     <!--Custom Views-->
     <color name="red">#D74343</color>
     <color name="blue">#1574E3</color>
-    <color name="extra_light_blue">#F3F9FF</color>
     <color name="green">#30BA78</color>
     <color name="light_blue">#3C92F1</color>
     <color name="background">#F4F4F4</color>
