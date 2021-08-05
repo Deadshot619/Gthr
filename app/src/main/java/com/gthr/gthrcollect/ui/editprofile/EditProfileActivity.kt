@@ -18,6 +18,7 @@ import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.settings.SettingsActivity
 
 class EditProfileActivity : BaseActivity<EditProfileViewModel, ActivityEditProfileBinding>() {
+
     override val mViewModel: EditProfileViewModel by viewModels()
     override fun getViewBinding() = ActivityEditProfileBinding.inflate(layoutInflater)
 

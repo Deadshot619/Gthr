@@ -14,9 +14,11 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.SearchFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.SearchCollectionAdapter
+import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterCategoryView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterSubCategoryView
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.animateVisibility
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
@@ -74,8 +76,12 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     }
 
     private fun setUpRecyclerView() {
-
-        mAdapterSC = SearchCollectionAdapter{}
+        mAdapterSC = SearchCollectionAdapter{
+            if(it%2==0)
+                startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.POKEMON))
+            else
+                startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.MTG))
+        }
         mRvMain.apply {
             layoutManager = GridLayoutManager(requireContext(),spanCount)
         }

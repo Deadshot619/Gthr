@@ -2,6 +2,7 @@
 <resources>
 
     <dimen name="app_name_text_size">55sp</dimen>
+    <dimen name="radius">8dp</dimen>
 
     <!--SignIn/SignUp-->
     <dimen name="header_app_title_size">36sp</dimen>
@@ -235,4 +236,5 @@
     <!-- Recent Sale -->
     <dimen name="margin_recent_sale">4dp</dimen>
     <dimen name="width_recent_sale_psa_value">30dp</dimen>
+
 </resources>

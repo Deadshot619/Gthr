@@ -29,15 +29,33 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <ScrollView
-            android:layout_marginTop="@dimen/margin_normal"
-            android:fillViewport="true"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/guideline_edit_account_info"
+            app:cardCornerRadius="@dimen/radius_product_detail"
+            app:cardElevation="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/ll_Bottom"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:id="@+id/fl_top"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/ll_Bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mcv_detail">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -60,177 +78,6 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/mcv_detail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/radius_product_detail"
-                    app:cardElevation="1dp"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tv_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_normal"
-                            android:layout_marginEnd="@dimen/margin_normal"
-                            android:fontFamily="@font/lato_bold"
-                            android:text="Pikachu"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_normal"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/ll_set"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_normal"
-                            android:layout_marginTop="@dimen/margin_extra_small"
-                            android:background="@drawable/bg_recipt_bottom"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingVertical="@dimen/padding_extra_small"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_title">
-
-
-                            <TextView
-                                android:id="@+id/tv_set"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_small"
-                                android:layout_weight="1"
-                                android:text="@string/text_set_product_details"
-                                android:textColor="@color/light_blue"
-                                android:textSize="@dimen/text_size_small" />
-
-                            <TextView
-                                android:id="@+id/tv_set_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="@dimen/margin_normal"
-                                android:layout_weight="7"
-                                android:fontFamily="@font/lato"
-                                android:text="Collector's Edition"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/text_size_small" />
-
-
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/ll_details"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_normal"
-                            android:layout_marginTop="@dimen/margin_small"
-                            android:layout_marginBottom="@dimen/margin_normal"
-                            android:orientation="horizontal"
-                            android:weightSum="2"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ll_set">
-
-                            <androidx.appcompat.widget.LinearLayoutCompat
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/margin_extra_small"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_recipt_bottom"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:paddingVertical="@dimen/padding_extra_small"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_title">
-
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/margin_extra_small"
-                                    android:fontFamily="@font/lato_bold"
-                                    android:text="@string/text_hash_product_details"
-                                    android:textColor="@color/blue"
-                                    android:textSize="@dimen/text_size_small"
-                                    android:textStyle="bold"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toEndOf="@+id/line_glob"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="@dimen/margin_normal"
-                                    android:layout_weight="7"
-                                    android:fontFamily="@font/lato"
-                                    android:gravity="center"
-                                    android:text="10"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/text_size_small" />
-
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
-
-                            <androidx.appcompat.widget.LinearLayoutCompat
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/margin_extra_small"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_recipt_bottom"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:paddingVertical="@dimen/padding_extra_small"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_title">
-
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tv_psa"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/margin_extra_small"
-                                    android:fontFamily="@font/lato_bold"
-                                    android:text="@string/text_rarity_product_details"
-                                    android:textColor="@color/blue"
-                                    android:textSize="@dimen/text_size_small"
-                                    android:textStyle="bold"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toEndOf="@+id/line_glob"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="@dimen/margin_normal"
-                                    android:layout_weight="7"
-                                    android:fontFamily="@font/lato"
-                                    android:gravity="center"
-                                    android:text="Promo"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/text_size_small" />
-
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
-
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_product"
                     android:layout_width="0dp"
@@ -240,7 +87,7 @@
                     app:layout_constraintDimensionRatio="h,1:1.5"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintStart_toEndOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/mcv_detail"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintWidth_percent="0.4" />
 
 
@@ -313,6 +160,7 @@
                     app:layout_constraintTop_toTopOf="@+id/tv_up_for_sell" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/appCompatImageView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/padding_extra_small"
@@ -332,313 +180,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_up_for_sell" />
 
-                <TextView
-                    android:id="@+id/tv_details"
-                    android:layout_width="wrap_content"
+                <FrameLayout
+                    android:id="@+id/fl_Detail"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_extra_large"
-                    android:fontFamily="@font/lato_bold"
-                    android:text="@string/text_details_product_detail"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_normal"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/rv_up_for_sell" />
-
-
-                <TextView
-                    android:textAllCaps="true"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:id="@+id/tv_number"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="@string/text_number_product_detail"
-                    android:textColor="@color/light_blue"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:textSize="@dimen/text_size_extra_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_type"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_details" />
-
-                <TextView
-                    android:textAllCaps="true"
-                    android:layout_marginStart="@dimen/margin_extra_small"
-                    android:id="@+id/tv_type"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="@string/text_type_product_detail"
-                    android:textColor="@color/light_blue"
-                    android:textSize="@dimen/text_size_extra_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_number"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_number"
-                    app:layout_constraintTop_toTopOf="@+id/tv_number" />
-
-
-                <TextView
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:id="@+id/tv_number_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:background="@drawable/bg_recipt_bottom"
-                    android:text="10"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_type_value"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_number" />
-
-                <TextView
-                    android:background="@drawable/bg_recipt_bottom"
-                    android:layout_marginStart="@dimen/margin_extra_small"
-                    android:id="@+id/tv_type_value"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Lighting"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_number_value"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_number_value"
-                    app:layout_constraintTop_toTopOf="@+id/tv_number_value" />
-
-                <TextView
-                    android:textAllCaps="true"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:id="@+id/tv_set_detail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="@string/text_set_product_details"
-                    android:textColor="@color/light_blue"
-                    android:textSize="@dimen/text_size_extra_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_hp"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_number_value" />
-
-                <TextView
-                    android:textAllCaps="true"
-                    android:layout_marginStart="@dimen/margin_extra_small"
-                    android:id="@+id/tv_hp"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="@string/text_hp_product_details"
-                    android:textColor="@color/light_blue"
-                    android:textSize="@dimen/text_size_extra_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_set_detail"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_set_detail"
-                    app:layout_constraintTop_toTopOf="@+id/tv_set_detail" />
-
-
-                <TextView
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:id="@+id/tv_set_detail_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:background="@drawable/bg_recipt_bottom"
-                    android:text="10"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_hp_value"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_set_detail" />
-
-                <TextView
-                    android:background="@drawable/bg_recipt_bottom"
-                    android:layout_marginStart="@dimen/margin_extra_small"
-                    android:id="@+id/tv_hp_value"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Lighting"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_set_detail_value"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_set_detail_value"
-                    app:layout_constraintTop_toTopOf="@+id/tv_set_detail_value" />
-
-
-                <TextView
-                    android:textAllCaps="true"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:id="@+id/tv_rarity"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="@string/text_rarity_product_details"
-                    android:textColor="@color/light_blue"
-                    android:textSize="@dimen/text_size_extra_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_stage"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_hp_value" />
-
-                <TextView
-                    android:textAllCaps="true"
-                    android:layout_marginStart="@dimen/margin_extra_small"
-                    android:id="@+id/tv_stage"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="@string/text_stage_product_details"
-                    android:textColor="@color/light_blue"
-                    android:textSize="@dimen/text_size_extra_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_rarity"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_rarity"
-                    app:layout_constraintTop_toTopOf="@+id/tv_rarity" />
-
-
-                <TextView
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:id="@+id/tv_rarity_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:background="@drawable/bg_recipt_bottom"
-                    android:text="10"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_stage_value"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_rarity" />
-
-                <TextView
-                    android:background="@drawable/bg_recipt_bottom"
-                    android:layout_marginStart="@dimen/margin_extra_small"
-                    android:id="@+id/tv_stage_value"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Lighting"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_rarity_value"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_rarity_value"
-                    app:layout_constraintTop_toTopOf="@+id/tv_rarity_value" />
-
-
-                <TextView
-                    android:textAllCaps="true"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:id="@+id/tv_jap_number"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="@string/text_jap_number_product_detail"
-                    android:textColor="@color/light_blue"
-                    android:textSize="@dimen/text_size_extra_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_jap_set"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_stage_value" />
-
-                <TextView
-                    android:textAllCaps="true"
-                    android:layout_marginStart="@dimen/margin_extra_small"
-                    android:id="@+id/tv_jap_set"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="@string/text_jap_set_product_detail"
-                    android:textColor="@color/light_blue"
-                    android:textSize="@dimen/text_size_extra_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_jap_number"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_jap_number"
-                    app:layout_constraintTop_toTopOf="@+id/tv_jap_number" />
-
-
-                <TextView
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:id="@+id/tv_jap_number_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:background="@drawable/bg_recipt_bottom"
-                    android:text="10"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_jap_set_value"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_jap_number" />
-
-                <TextView
-                    android:background="@drawable/bg_recipt_bottom"
-                    android:layout_marginStart="@dimen/margin_extra_small"
-                    android:id="@+id/tv_jap_set_value"
-                    android:paddingVertical="@dimen/padding_extra_small"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Lighting"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_jap_number_value"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_jap_number_value"
-                    app:layout_constraintTop_toTopOf="@+id/tv_jap_number_value" />
 
 
                 <TextView
@@ -651,20 +199,25 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_jap_set_value" />
+                    app:layout_constraintTop_toBottomOf="@+id/fl_Detail" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_related"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_normal"
                     android:layout_marginHorizontal="@dimen/margin_normal"
                     android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginBottom="@dimen/margin_normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_related" />
 
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group_up_for_sell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tv_up_for_sell,tv_see_all_up_for_sell,rv_up_for_sell,appCompatImageView2" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -672,41 +225,38 @@
         </ScrollView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:elevation="10dp"
             android:id="@+id/ll_Bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/bottom_nav_bg"
-            android:padding="@dimen/padding_normal"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_nav_bg"
+            android:elevation="10dp"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <com.gthr.gthrcollect.utils.customviews.CustomProductButton
-                android:layout_weight="1"
-                android:text="@string/text_btn_buy_product_detail"
-                app:custom_product_button_state="BUY"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                />
+                android:layout_weight="1"
+                android:text="@string/text_btn_buy_product_detail"
+                app:custom_product_button_state="BUY" />
 
             <com.gthr.gthrcollect.utils.customviews.CustomProductButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_extra_small"
                 android:layout_weight="1"
                 android:text="@string/text_btn_own_product_detail"
-                app:custom_product_button_state="OWN"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                />
+                app:custom_product_button_state="OWN" />
 
             <com.gthr.gthrcollect.utils.customviews.CustomProductButton
-                android:layout_weight="1"
-                android:text="@string/text_btn_sell_product_detail"
-                app:custom_product_button_state="SELL"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                />
+                android:layout_weight="1"
+                android:text="@string/text_btn_sell_product_detail"
+                app:custom_product_button_state="SELL" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

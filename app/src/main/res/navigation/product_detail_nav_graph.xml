@@ -7,5 +7,10 @@
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragment"
-        android:label="ProductDetailFragment" />
+        android:label="ProductDetailFragment" >
+        <argument
+            android:name="type"
+            app:argType="com.gthr.gthrcollect.utils.enums.ProductType"
+            android:defaultValue="POKEMON" />
+    </fragment>
 </navigation>

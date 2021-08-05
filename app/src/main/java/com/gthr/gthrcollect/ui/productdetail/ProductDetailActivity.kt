@@ -15,7 +15,8 @@ import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityProductDetailBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
-import com.gthr.gthrcollect.ui.settings.SettingsActivity
+import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.showToast
 
 class ProductDetailActivity :
@@ -29,8 +30,18 @@ class ProductDetailActivity :
 
     override fun onBinding() {
         initViews()
+        setUpNavGraph()
         setSupportActionBar(mToolbar)
         setUpNavigationAndActionBar()
+    }
+
+    private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination
+        val type = intent.getSerializableExtra(PRODUCT_TYPE) as ProductType
+        findNavController(R.id.nav_host_fragment)
+            .setGraph(
+                R.navigation.product_detail_nav_graph,
+                ProductDetailFragmentArgs(type = type).toBundle()
+            )
     }
 
     private fun initViews() {
@@ -93,6 +104,9 @@ class ProductDetailActivity :
     }
 
     companion object {
-        fun getInstance(context: Context) = Intent(context, ProductDetailActivity::class.java)
+        private const val PRODUCT_TYPE = "product_type"
+        fun getInstance(context: Context,productType: ProductType) = Intent(context, ProductDetailActivity::class.java).apply {
+            putExtra(PRODUCT_TYPE,productType)
+        }
     }
 }

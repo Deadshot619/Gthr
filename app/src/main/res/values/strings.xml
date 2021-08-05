@@ -375,4 +375,6 @@
     <string name="btn_feed_cards">Cards</string>
     <string name="btn_feed_sealed">Sealed</string>
     <string name="btn_feed_funko">Funko</string>
+    <string name="text_legal_product_detail">LEGAL</string>
+    <string name="text_not_legal_product_detail">Not LEGAL</string>
 </resources>

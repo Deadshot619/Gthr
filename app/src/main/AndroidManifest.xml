@@ -17,9 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/GthrCollectFullScreen">
-        <activity
-            android:name=".ui.productdetail.ProductDetailActivity"
-            android:exported="true" />
+        <activity android:name=".ui.productdetail.ProductDetailActivity" />
         <activity android:name=".ui.receiptdetail.ReceiptDetailActivity" />
         <activity android:name=".ui.editprofile.EditProfileActivity" />
         <activity android:name=".ui.profile.ProfileActivity" />

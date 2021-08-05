@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra_large"
+            android:fontFamily="@font/lato_bold"
+            android:text="@string/text_details_product_detail"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:textAllCaps="true"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:id="@+id/tv_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="@string/text_number_product_detail"
+            android:textColor="@color/light_blue"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:textSize="@dimen/text_size_extra_small"
+            app:layout_constraintEnd_toStartOf="@+id/tv_type"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_details" />
+
+        <TextView
+            android:textAllCaps="true"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:id="@+id/tv_type"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="@string/text_type_product_detail"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/text_size_extra_small"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_number"
+            app:layout_constraintTop_toTopOf="@+id/tv_number" />
+
+        <TextView
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:id="@+id/tv_number_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:background="@drawable/bg_recipt_bottom"
+            android:text="10"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toStartOf="@+id/tv_type_value"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_number" />
+
+        <TextView
+            android:background="@drawable/bg_recipt_bottom"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:id="@+id/tv_type_value"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="Lighting"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_number_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_number_value"
+            app:layout_constraintTop_toTopOf="@+id/tv_number_value" />
+
+        <TextView
+            android:textAllCaps="true"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:id="@+id/tv_set_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="@string/text_set_product_details"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/text_size_extra_small"
+            app:layout_constraintEnd_toStartOf="@+id/tv_hp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_number_value" />
+
+        <TextView
+            android:textAllCaps="true"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:id="@+id/tv_hp"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="@string/text_hp_product_details"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/text_size_extra_small"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_set_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_set_detail"
+            app:layout_constraintTop_toTopOf="@+id/tv_set_detail" />
+
+        <TextView
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:id="@+id/tv_set_detail_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:background="@drawable/bg_recipt_bottom"
+            android:text="10"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toStartOf="@+id/tv_hp_value"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_set_detail" />
+
+        <TextView
+            android:background="@drawable/bg_recipt_bottom"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:id="@+id/tv_hp_value"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="Lighting"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_set_detail_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_set_detail_value"
+            app:layout_constraintTop_toTopOf="@+id/tv_set_detail_value" />
+
+        <TextView
+            android:textAllCaps="true"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:id="@+id/tv_rarity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="@string/text_rarity_product_details"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/text_size_extra_small"
+            app:layout_constraintEnd_toStartOf="@+id/tv_stage"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_hp_value" />
+
+        <TextView
+            android:textAllCaps="true"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:id="@+id/tv_stage"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="@string/text_stage_product_details"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/text_size_extra_small"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_rarity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_rarity"
+            app:layout_constraintTop_toTopOf="@+id/tv_rarity" />
+
+        <TextView
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:id="@+id/tv_rarity_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:background="@drawable/bg_recipt_bottom"
+            android:text="10"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toStartOf="@+id/tv_stage_value"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rarity" />
+
+        <TextView
+            android:background="@drawable/bg_recipt_bottom"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:id="@+id/tv_stage_value"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="Lighting"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_rarity_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_rarity_value"
+            app:layout_constraintTop_toTopOf="@+id/tv_rarity_value" />
+
+        <TextView
+            android:textAllCaps="true"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:id="@+id/tv_jap_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="@string/text_jap_number_product_detail"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/text_size_extra_small"
+            app:layout_constraintEnd_toStartOf="@+id/tv_jap_set"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_stage_value" />
+
+        <TextView
+            android:textAllCaps="true"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:id="@+id/tv_jap_set"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="@string/text_jap_set_product_detail"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/text_size_extra_small"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_jap_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_jap_number"
+            app:layout_constraintTop_toTopOf="@+id/tv_jap_number" />
+
+        <TextView
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:id="@+id/tv_jap_number_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:background="@drawable/bg_recipt_bottom"
+            android:text="10"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toStartOf="@+id/tv_jap_set_value"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_jap_number" />
+
+        <TextView
+            android:background="@drawable/bg_recipt_bottom"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:id="@+id/tv_jap_set_value"
+            android:paddingVertical="@dimen/padding_extra_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_normal"
+            android:text="Lighting"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_jap_number_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_jap_number_value"
+            app:layout_constraintTop_toTopOf="@+id/tv_jap_number_value" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

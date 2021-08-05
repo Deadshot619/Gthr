@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.ItemCollectionBinding
 import com.gthr.gthrcollect.model.domain.SearchCollection
 
-class SearchCollectionAdapter(val callback : (SearchCollection) -> Unit) : ListAdapter<SearchCollection,SearchCollectionAdapter.SearchCollectionViewHolder>(DiffCallback) {
+class SearchCollectionAdapter(val callback : (position : Int) -> Unit) : ListAdapter<SearchCollection,SearchCollectionAdapter.SearchCollectionViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<SearchCollection>() {
         override fun areItemsTheSame(oldItem: SearchCollection, newItem: SearchCollection): Boolean {
@@ -25,7 +25,7 @@ class SearchCollectionAdapter(val callback : (SearchCollection) -> Unit) : ListA
         fun bind() {
             binding.ivMain.clipToOutline = true
             binding.root.setOnClickListener {
-
+                  callback(layoutPosition)
             }
         }
     }
