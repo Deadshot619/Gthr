@@ -12,11 +12,13 @@
         <entry key="app/src/main/res/drawable/bg_product_for_green.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/drawable/bottom_nav_bg.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/drawable/ic_blue_edit.xml" value="0.1734375" />
+        <entry key="app/src/main/res/drawable/ic_see_all.xml" value="0.15885416666666666" />
         <entry key="app/src/main/res/drawable/toolbar_bg.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/account_fragment.xml" value="0.13722826086956522" />
         <entry key="app/src/main/res/layout/activity_edit_account_info.xml" value="0.17916666666666667" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/activity_home_bottom_nav.xml" value="0.1765625" />
+        <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.26403985507246375" />
         <entry key="app/src/main/res/layout/activity_receipt.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/activity_receipt_detail.xml" value="0.15520833333333334" />
@@ -37,6 +39,7 @@
         <entry key="app/src/main/res/layout/search_fragment.xml" value="0.1765625" />
         <entry key="app/src/main/res/menu/edit_profile_menu.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/menu/home_bottom_nav_menu.xml" value="0.34270833333333334" />
+        <entry key="app/src/main/res/menu/product_detail_menu.xml" value="0.25" />
       </map>
     </option>
   </component>

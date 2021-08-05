@@ -342,6 +342,8 @@
     <string name="text_purchase_detail_order">Order#</string>
 
     <!--Product Detail-->
+    <string name="menu_share">Share</string>
+    <string name="menu_favorite">Add to favorite</string>
     <string name="text_product_details_recent_sales">Recent Sales</string>
     <string name="text_product_detail_see_all">See All</string>
     <string name="text_recent_sell_sale_price">SALE PRICE</string>

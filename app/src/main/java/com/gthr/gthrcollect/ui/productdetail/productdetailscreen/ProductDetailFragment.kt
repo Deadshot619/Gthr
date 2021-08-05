@@ -1,17 +1,11 @@
-package com.gthr.gthrcollect.ui.productdetail
+package com.gthr.gthrcollect.ui.productdetail.productdetailscreen
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ProductDetailFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
 import com.gthr.gthrcollect.ui.productdetail.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
@@ -26,6 +20,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var rvRelated : RecyclerView
 
     override fun onBinding() {
+        setHasOptionsMenu(true)
         initViews()
         setUpRecentSell()
         setUpUpForSell()

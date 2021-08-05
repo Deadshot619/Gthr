@@ -16,9 +16,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/GthrCollectFullScreen" >
+        android:theme="@style/GthrCollectFullScreen">
+        <activity
+            android:name=".ui.productdetail.ProductDetailActivity"
+            android:exported="true" />
         <activity android:name=".ui.receiptdetail.ReceiptDetailActivity" />
-        <activity android:name=".ui.editprofile.EditProfileActivity"/>
+        <activity android:name=".ui.editprofile.EditProfileActivity" />
         <activity android:name=".ui.profile.ProfileActivity" />
         <activity android:name=".ui.test.TestProductActivity" />
         <activity android:name=".ui.test.TestActivity" />
@@ -57,11 +60,4 @@
                 tools:replace="android:resource" />
         </provider>
     </application>
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-
 </manifest>
