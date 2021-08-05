@@ -7,9 +7,10 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/my_profile_description">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_end"
@@ -59,10 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/profile_layout">
+            android:orientation="horizontal">
 
             <com.gthr.gthrcollect.utils.customviews.CustomCollectionChartsView
                 android:layout_width="0dp"
@@ -94,18 +92,13 @@
             android:layout_marginTop="@dimen/margin_extra_large"
             android:text="@string/lable_collection"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat" />
+            android:textStyle="bold"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/collection_layout"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintTop_toTopOf="@id/tv_collection_label"
-            app:layout_constraintBottom_toBottomOf="@id/tv_collection_label">
+            android:gravity="end">
 
             <com.gthr.gthrcollect.utils.customviews.CustomCollectionButton
                 android:layout_width="wrap_content"
@@ -126,10 +119,7 @@
             android:layout_height="wrap_content"
             android:elevation="@dimen/size_elevation"
             app:cardCornerRadius="@dimen/margin_extra_small"
-            android:layout_marginTop="@dimen/margin_mini"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/collection_layout">
+            android:layout_marginTop="@dimen/margin_mini">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -197,5 +187,5 @@
             app:spanCount="2"
             tools:listitem="@layout/item_collection" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
