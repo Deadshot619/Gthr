@@ -41,6 +41,7 @@
             android:name="type"
             app:argType="com.gthr.gthrcollect.utils.enums.ProfileNavigationType" />
     </fragment>
+
     <fragment
         android:id="@+id/myProfileFragment"
         android:name="com.gthr.gthrcollect.ui.profile.my_profile.MyProfileFragment"

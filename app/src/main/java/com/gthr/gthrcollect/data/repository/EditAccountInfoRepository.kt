@@ -13,8 +13,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.User
-import com.gthr.gthrcollect.model.mapper.toAlgoliaCollectionModel
-import com.gthr.gthrcollect.model.mapper.toUser
+import com.gthr.gthrcollect.model.mapper.*
 import com.gthr.gthrcollect.model.network.algolia.AlgoliaCollectionModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.CollectionInfoModel
 import com.gthr.gthrcollect.model.network.firestore.UserInfoFirestoreModel
@@ -137,4 +136,6 @@ class EditAccountInfoRepository {
             collectionInfoList
         )
     }
+
 }
+

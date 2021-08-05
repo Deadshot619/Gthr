@@ -63,7 +63,6 @@ class SignInFlowRepository {
 
         val userInfo = mFirestore.collection(Firestore.COLLECTION_USER_INFO).document(uid).get().await().toObject(UserInfoFirestoreModel::class.java)
         val collectionInfo = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(userInfo!!.collectionId).get().await().getValue(CollectionInfoModel::class.java)
-
         emit(State.success(Pair(userInfo.toUserInfoDomainModel(), collectionInfo!!.toCollectionInfoDomainModel())))
 
     }.catch {

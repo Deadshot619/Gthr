@@ -187,5 +187,11 @@
             app:spanCount="2"
             tools:listitem="@layout/item_collection" />
 
+        <!--Progress Bar-->
+        <include
+            android:id="@+id/layout_progress"
+            layout="@layout/layout_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

@@ -34,7 +34,6 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
-
 class EaIdVerificationFragment :
     BaseFragment<EditAccountInfoViewModel, EaIdVerificationFragmentBinding>() {
     private val TAG: String = this.javaClass.name
@@ -49,7 +48,6 @@ class EaIdVerificationFragment :
     }
 
     override fun getViewBinding() = EaIdVerificationFragmentBinding.inflate(layoutInflater)
-
 
     private lateinit var mIvFrontImage: AppCompatImageView
     private lateinit var mIvBackImage: AppCompatImageView
@@ -226,7 +224,6 @@ class EaIdVerificationFragment :
             }
         }
     }
-
 
     /*   private fun deleteImages() {
            GthrLogger.e("Ref", spaceRef.path)

@@ -309,11 +309,12 @@
     <string name="text_product_license">License</string>
 
     <!--My profile-->
-    <string name="user_name">Funko Master Flex</string>
-    <string name="user_bio">Lorem ipsum dolor sit amet, elit, sed do dolor sit amet, elit, sed do</string>
+    <string name="user_name">user_name</string>
+    <string name="user_bio">user bio</string>
     <string name="lable_stats">Stats</string>
     <string name="lable_collection">Collection</string>
     <string name="hint_Search_collection">Search the collection</string>
+    <string name="success_note">Data updated successfully</string>
 
     <!--Edit profile-->
     <string name="title_edit_profile_info">Edit Profile Info</string>
@@ -388,4 +389,7 @@
     <string name="text_btn_product_detail">Collect</string>
 
 
+
+  <!--  Generic Error Mesage-->
+    <string name="required_field">required</string>
 </resources>

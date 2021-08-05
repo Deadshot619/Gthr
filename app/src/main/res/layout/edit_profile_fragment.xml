@@ -124,6 +124,9 @@
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:edit_hint="@string/display_name_hint"
             app:edit_success_state="BLUE"
+            android:focusable="false"
+            android:clickable="false"
+            android:saveEnabled="false"
             android:src="@drawable/ic_right"
             app:edit_info="@string/display_name_info"
             android:layout_width="0dp"
@@ -194,6 +197,14 @@
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintWidth_percent="0.75" />
 
-
+        <!--Progress Bar-->
+        <include
+            android:id="@+id/layout_progress"
+            layout="@layout/layout_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 </layout>

@@ -223,8 +223,7 @@ class CustomCamera : AppCompatActivity() {
             //    captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, rotation)
 
             val readerListener = OnImageAvailableListener { mImageReader ->
-                mFile = File(
-                    Environment.getExternalStorageDirectory().toString() + "/" + UUID.randomUUID()
+                mFile = File(Environment.getExternalStorageDirectory().toString() + "/" + UUID.randomUUID()
                         .toString() + ".jpg"
                 )
                 var image: Image? = null

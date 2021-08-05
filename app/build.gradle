@@ -124,6 +124,9 @@ dependencies {
     //Firebase functions
     implementation 'com.google.firebase:firebase-functions-ktx'
 
+    // FirebaseUI Storage only
+    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
+
     // Algolia
    // implementation 'com.algolia:algoliasearch-android:3.+'
 
