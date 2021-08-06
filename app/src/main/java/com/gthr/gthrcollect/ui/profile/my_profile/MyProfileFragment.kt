@@ -10,7 +10,6 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.MyProfileBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
-import com.gthr.gthrcollect.model.domain.FollowDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editprofile.EditProfileActivity
 import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
@@ -65,7 +64,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     override fun onBinding() {
         initViews()
         setUpClickListeners()
-        setUpRecyclerView()
+     //   setUpRecyclerView()
         setUpObservers()
     }
 
@@ -163,10 +162,10 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     }
 
     private fun setUpRecyclerView() {
-        mAdapter = FollowUserAdapter(object : FollowUserAdapter.FollowUserListener {
+      /*  mAdapter = FollowUserAdapter(object : FollowUserAdapter.FollowUserListener {
             override fun onClick(followDomainModel: FollowDomainModel?) {
             }
-        })
+        })*/
         mRvMain.apply {
             layoutManager = LinearLayoutManager(requireContext())
             mRvMain.adapter = mAdapter

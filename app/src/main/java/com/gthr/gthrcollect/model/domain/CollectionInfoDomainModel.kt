@@ -10,5 +10,6 @@ data class CollectionInfoDomainModel(
     val favoriteProductList: List<String>?,
     val followersList: List<String>?,
     val sellList: List<Any>?,
-    val userRefKey: String      //corresponds to the firebase uid and the userInfoModel document id and uid
+    val userRefKey: String ,     //corresponds to the firebase uid and the userInfoModel document id and uid
+    var profileImage:String=""
 )

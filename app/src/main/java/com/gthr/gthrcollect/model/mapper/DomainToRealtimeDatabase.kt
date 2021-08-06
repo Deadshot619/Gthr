@@ -1,5 +1,6 @@
 package com.gthr.gthrcollect.model.mapper
 
+import com.google.firebase.firestore.IgnoreExtraProperties
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.CollectionInfoModel

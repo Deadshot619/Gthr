@@ -5,17 +5,33 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.FollowFragmentBinding
+import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
 import com.gthr.gthrcollect.model.domain.FollowDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
-import com.gthr.gthrcollect.ui.profile.navigation.ProfileNavigationFragmentArgs
+import com.gthr.gthrcollect.ui.profile.ProfileViewModel
+import com.gthr.gthrcollect.ui.profile.editprofile.ProfileRepository
 import com.gthr.gthrcollect.utils.customviews.CustomSearchView
 import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
+import com.gthr.gthrcollect.utils.extensions.showToast
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 
-class FollowFragment : BaseFragment<FollowViewModel, FollowFragmentBinding>() {
-    override val mViewModel: FollowViewModel by viewModels()
+class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
+    private val repository = ProfileRepository()
+
+    override val mViewModel: ProfileViewModel by viewModels {
+        MyProfileViewModelFactory(
+            repository
+        )
+    }
+
     override fun getViewBinding() = FollowFragmentBinding.inflate(layoutInflater)
 
     private val args by navArgs<FollowFragmentArgs>()
@@ -31,18 +47,70 @@ class FollowFragment : BaseFragment<FollowViewModel, FollowFragmentBinding>() {
         initViews()
         setUpViews(mType)
         setUpClickListeners()
-        setUpRecyclerView()
+        setUpObservers()
+
+        if (mType == ProfileNavigationType.FOLLOWERS) {
+            mViewModel.followersData()
+        } else {
+            mViewModel.followingsData()
+        }
+
+    }
+
+    private fun setUpObservers() {
+
+        mViewModel.followersList.observe(viewLifecycleOwner, {
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+
+                        mAdapter.submitList(it.data)
+                        showProgressBar(false)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        })
+
+        mViewModel.followingList.observe(viewLifecycleOwner, {
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        mAdapter.submitList(it.data)
+                        showProgressBar(false)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        })
+
     }
 
     private fun initViews() {
+        initProgressBar(mViewBinding.layoutProgress)
+
         mViewBinding.run {
             mRvMain = rvMain
             mSearchView = csvSearch
         }
+
+        setUpRecyclerView()
     }
 
-    private fun setUpViews(type: ProfileNavigationType){
-        when(type) {
+    private fun setUpViews(type: ProfileNavigationType) {
+        when (type) {
             ProfileNavigationType.FOLLOWING -> {
                 (activity as ProfileActivity).setToolbarTitle(getString(R.string.title_following))
                 mSearchView.hint = getString(R.string.hint_following_search)
@@ -59,9 +127,13 @@ class FollowFragment : BaseFragment<FollowViewModel, FollowFragmentBinding>() {
     }
 
     private fun setUpRecyclerView() {
-        mAdapter = FollowUserAdapter(object : FollowUserAdapter.FollowUserListener{
-            override fun onClick(followDomainModel: FollowDomainModel?) {
-                findNavController().navigate(FollowFragmentDirections.actionFollowFragment2ToMyProfileFragment(isOtherUser = true))
+        mAdapter = FollowUserAdapter(object : FollowUserAdapter.FollowUserListener {
+            override fun onClick(followDomainModel: CollectionInfoDomainModel?) {
+                findNavController().navigate(
+                    FollowFragmentDirections.actionFollowFragment2ToMyProfileFragment(
+                        isOtherUser = true
+                    )
+                )
             }
         })
         mRvMain.apply {
@@ -69,4 +141,5 @@ class FollowFragment : BaseFragment<FollowViewModel, FollowFragmentBinding>() {
             mRvMain.adapter = mAdapter
         }
     }
+
 }

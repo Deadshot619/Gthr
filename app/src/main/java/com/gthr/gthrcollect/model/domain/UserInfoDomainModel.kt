@@ -1,5 +1,8 @@
 package com.gthr.gthrcollect.model.domain
 
+import com.google.firebase.firestore.IgnoreExtraProperties
+
+@IgnoreExtraProperties
 data class UserInfoDomainModel(
     var firstName: String = "",
     var lastName: String = "",

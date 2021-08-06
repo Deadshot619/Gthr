@@ -7,5 +7,8 @@ fun CollectionInfoModel.toCollectionInfoDomainModel() = CollectionInfoDomainMode
     about = about, buyList = buyList, collectionDisplayName = collectionDisplayName, //collectionList,
     collectionRawName = collectionRawName, favoriteCollectionList = favoriteCollectionList,
     favoriteProductList = favoriteProductList,
-    followersList = followersList, sellList = sellList, userRefKey = userRefKey
+    followersList = followersList,
+    sellList = sellList, userRefKey = userRefKey,
+    profileImage=profileImageURL
+
 )

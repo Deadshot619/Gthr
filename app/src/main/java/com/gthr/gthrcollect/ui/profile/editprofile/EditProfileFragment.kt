@@ -239,6 +239,8 @@ class EditProfileFragment : BaseFragment<ProfileViewModel, EditProfileFragmentBi
     }
 
     fun saveUserdata() {
+
+
         val userdata = UserInfoDomainModel()
         userdata.bio = mEtBio.text.toString().trim()
         userdata.displayName = mEt_display_name.mEtMain.text.toString().trim()
