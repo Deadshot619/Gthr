@@ -47,7 +47,16 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             ProductType.POKEMON -> setUpPokemon()
             ProductType.MTG -> setUpMGT()
             ProductType.YUGIOH -> seUpYugioh()
+            ProductType.SEALED -> setUpSealed()
         }
+    }
+
+    private fun setUpSealed() {
+        val topView = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
+        mFlTop.addView(topView.root)
+
+        topView.llRow2.gone()
+        mMcvDescription.visible()
     }
 
     private fun seUpYugioh() {

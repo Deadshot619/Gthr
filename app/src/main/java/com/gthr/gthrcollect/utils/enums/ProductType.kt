@@ -1,5 +1,5 @@
 package com.gthr.gthrcollect.utils.enums
 
 enum class ProductType {
-    POKEMON,MTG,YUGIOH
+    POKEMON,MTG,YUGIOH,SEALED
 }

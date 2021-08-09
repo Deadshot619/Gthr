@@ -79,7 +79,6 @@
 
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:visibility="gone"
                     android:id="@+id/iv_product"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -127,7 +126,6 @@
 
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:visibility="gone"
                     android:id="@+id/rv_recent_sell"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -173,7 +171,6 @@
 
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:visibility="gone"
                     android:id="@+id/rv_up_for_sell"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
