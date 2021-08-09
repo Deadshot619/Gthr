@@ -79,6 +79,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:visibility="gone"
                     android:id="@+id/iv_product"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -126,6 +127,7 @@
 
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:visibility="gone"
                     android:id="@+id/rv_recent_sell"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -171,6 +173,7 @@
 
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:visibility="gone"
                     android:id="@+id/rv_up_for_sell"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -180,13 +183,82 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_up_for_sell" />
 
+                <TextView
+                    android:id="@+id/tv_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="@string/text_details_product_detail"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_up_for_sell"/>
+
                 <FrameLayout
                     android:id="@+id/fl_Detail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_up_for_sell" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_details" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_card_description"
+                    android:layout_marginBottom="@dimen/margin_extra_small"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_large"
+                    app:cardCornerRadius="@dimen/radius"
+                    app:layout_constraintTop_toBottomOf="@+id/fl_Detail"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/margin_small"
+                        android:layout_marginHorizontal="@dimen/margin_normal">
+
+                        <TextView
+                            android:id="@+id/tv_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato"
+                            android:gravity="center"
+                            android:text="@string/text_card_description_product_detail"
+                            android:textColor="@color/gray_text"
+                            android:textSize="@dimen/text_size_small"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/line"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:background="@color/view_stroke_color_grey"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+                        <TextView
+                            android:id="@+id/tv_text_line1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:fontFamily="@font/lato"
+                            android:text="Lorem ipsum dolor sit amet, at his iisque inimicus, mei fugit constituam et. In maiorum conclusionemque quo, in labore aliquip his. No posidonium efficiantur sed, vis everti molestie vivendum ad, admodum qualisque eam ne. Sonet veniam suavitate ex qui, veniam ceteros eam ut. His in alia insolens eleifend, facer eripuit et mel, vis eu mentitum oporteat vituperata. Id reque assum forensibus vix."
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_small"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/line" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
 
                 <TextView
@@ -199,7 +271,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/fl_Detail" />
+                    app:layout_constraintTop_toBottomOf="@+id/cv_card_description" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_related"
@@ -211,7 +283,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_related" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_related"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/group_up_for_sell"

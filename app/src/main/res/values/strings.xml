@@ -340,6 +340,19 @@
     <string name="text_btn_purchase_detail_payment">Payment</string>
     <string name="text_purchase_detail_ship_to">Ship to</string>
     <string name="text_purchase_detail_order">Order#</string>
+    <string name="text_purchase_sale_price">Sale Price</string>
+    <string name="text_purchase_shipping">Shipping</string>
+    <string name="text_purchase_sales_tax">Sales Tax(%s)</string>
+    <string name="dialog_confirm_received_title">Confirm Received</string>
+    <string name="dialog_confirm_received_body">Did you receive the item?</string>
+
+    <!--Feed-->
+    <string name="btn_feed_all">All</string>
+    <string name="btn_feed_cards">Cards</string>
+    <string name="btn_feed_sealed">Sealed</string>
+    <string name="btn_feed_funko">Funko</string>
+    <string name="text_legal_product_detail">LEGAL</string>
+    <string name="text_not_legal_product_detail">Not LEGAL</string>
 
     <!--Product Detail-->
     <string name="menu_share">Share</string>
@@ -364,17 +377,8 @@
     <string name="text_stage_product_details">STAGE</string>
     <string name="text_jap_set_product_detail">JAP SET</string>
     <string name="text_jap_number_product_detail">JAP NUMBER</string>
-    <string name="text_purchase_sale_price">Sale Price</string>
-    <string name="text_purchase_shipping">Shipping</string>
-    <string name="text_purchase_sales_tax">Sales Tax(%s)</string>
-    <string name="dialog_confirm_received_title">Confirm Received</string>
-    <string name="dialog_confirm_received_body">Did you receive the item?</string>
+    <string name="text_card_description_product_detail">Card Description</string>
+    <string name="text_stats_product_details">STATS</string>
 
-    <!--Feed-->
-    <string name="btn_feed_all">All</string>
-    <string name="btn_feed_cards">Cards</string>
-    <string name="btn_feed_sealed">Sealed</string>
-    <string name="btn_feed_funko">Funko</string>
-    <string name="text_legal_product_detail">LEGAL</string>
-    <string name="text_not_legal_product_detail">Not LEGAL</string>
+
 </resources>

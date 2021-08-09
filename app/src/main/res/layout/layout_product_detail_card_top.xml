@@ -6,42 +6,30 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_normal"
-            android:layout_marginEnd="@dimen/margin_normal"
-            android:fontFamily="@font/lato_bold"
-            android:text="Pikachu"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_set"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/margin_extra_small"
+            android:layout_marginVertical="@dimen/margin_small"
             android:background="@drawable/bg_recipt_bottom"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingVertical="@dimen/padding_extra_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title">
+            app:layout_constraintTop_toTopOf="parent" >
 
 
             <TextView
-                android:id="@+id/tv_set"
+                android:id="@+id/tv_row1_column2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small"
@@ -51,7 +39,7 @@
                 android:textSize="@dimen/text_size_small" />
 
             <TextView
-                android:id="@+id/tv_set_value"
+                android:id="@+id/tv_row1_colum2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_normal"
@@ -69,8 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/margin_small"
-            android:layout_marginBottom="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_small"
             android:orientation="horizontal"
             android:weightSum="2"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -163,5 +150,5 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
