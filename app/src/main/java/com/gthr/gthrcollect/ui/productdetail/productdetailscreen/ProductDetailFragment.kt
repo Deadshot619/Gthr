@@ -2,7 +2,10 @@ package com.gthr.gthrcollect.ui.productdetail.productdetailscreen
 
 
 import android.widget.FrameLayout
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +16,7 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
 import com.gthr.gthrcollect.ui.productdetail.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
+import com.gthr.gthrcollect.utils.customviews.CustomProductButton
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
@@ -30,16 +34,50 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var mFlTop : FrameLayout
     private lateinit var mFlDetails : FrameLayout
     private lateinit var mMcvDescription : MaterialCardView
+    private lateinit var mBtnCenter : CustomProductButton
+
+    private lateinit var mIvRecentSellSeeAll : AppCompatImageView
+    private lateinit var mTvRecentSellSeeAll : AppCompatTextView
+
+    private lateinit var mIvUpForSellSeeAll : AppCompatImageView
+    private lateinit var mTvUpForSellSeeAll : AppCompatTextView
+
 
     private val args by navArgs<ProductDetailFragmentArgs>()
 
     override fun onBinding() {
         setHasOptionsMenu(true)
         initViews()
+        setUpOnClickListeners()
         setUpRecentSell()
         setUpUpForSell()
         setUpRelated()
         setUpProductType()
+    }
+
+    private fun setUpOnClickListeners() {
+        mIvRecentSellSeeAll.setOnClickListener {
+            recentSellSeeAll()
+        }
+        mTvRecentSellSeeAll.setOnClickListener {
+            recentSellSeeAll()
+        }
+        mTvUpForSellSeeAll.setOnClickListener {
+            upForSellSeeAll()
+        }
+        mIvUpForSellSeeAll.setOnClickListener {
+            upForSellSeeAll()
+        }
+    }
+
+    private fun upForSellSeeAll() {
+        val action = ProductDetailFragmentDirections.actionProductDetailFragmentToUpForSellFragment(args.type)
+        findNavController().navigate(action)
+    }
+
+    private fun recentSellSeeAll() {
+        val action = ProductDetailFragmentDirections.actionProductDetailFragmentToRecentSellFragment(args.type)
+        findNavController().navigate(action)
     }
 
     private fun setUpProductType() {
@@ -53,6 +91,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpFunko() {
+        mBtnCenter.text = getString(R.string.text_btn_product_detail)
         val topView = LayoutProductDetailToyTopBinding.inflate(layoutInflater)
         mFlTop.addView(topView.root)
 
@@ -72,6 +111,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpSealed() {
+        mBtnCenter.text = getString(R.string.text_btn_product_detail)
         val topView = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
         mFlTop.addView(topView.root)
 
@@ -80,6 +120,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun seUpYugioh() {
+        mBtnCenter.text = getString(R.string.text_btn_product_detail)
         val topView = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
         mFlTop.addView(topView.root)
 
@@ -100,6 +141,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpMGT() {
+        mBtnCenter.text = getString(R.string.text_btn_product_detail)
         val topView = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
         mFlTop.addView(topView.root)
 
@@ -132,22 +174,21 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         rvRelated.apply {
             layoutManager = LinearLayoutManager(requireContext(),
                 LinearLayoutManager.HORIZONTAL,false)
-            adapter = ProductAdapter(CustomProductCell.State.NORMAL)
+            adapter = ProductAdapter(args.type,CustomProductCell.State.NORMAL)
         }
     }
 
     private fun setUpUpForSell() {
         rvUpForSell.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL,false)
-            adapter = ProductAdapter(CustomProductCell.State.FOR_SALE)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+            adapter = ProductAdapter(args.type,CustomProductCell.State.FOR_SALE)
         }
     }
 
     private fun setUpRecentSell() {
         rvRecentSell.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = RecentSellAdapter()
+            adapter = RecentSellAdapter(5)
         }
     }
 
@@ -159,7 +200,11 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             mFlTop = it.flTop
             mFlDetails = it.flDetail
             mMcvDescription = it.cvCardDescription
+            mIvRecentSellSeeAll = it.ivRecentSellSeeAll
+            mTvRecentSellSeeAll = it.tvRecentSalesSeeAll
+            mIvUpForSellSeeAll = it.ivUpForSellSeeAll
+            mTvUpForSellSeeAll = it.tvUpForSellSeeAll
+            mBtnCenter = it.btnCenter
         }
     }
-
 }

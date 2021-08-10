@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/product_detail_nav_graph"
     app:startDestination="@id/productDetailFragment">
 
@@ -12,5 +13,29 @@
             android:name="type"
             app:argType="com.gthr.gthrcollect.utils.enums.ProductType"
             android:defaultValue="POKEMON" />
+        <action
+            android:id="@+id/action_productDetailFragment_to_recentSellFragment"
+            app:destination="@id/recentSellFragment" />
+        <action
+            android:id="@+id/action_productDetailFragment_to_upForSellFragment"
+            app:destination="@id/upForSellFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentSellFragment"
+        android:name="com.gthr.gthrcollect.ui.productdetail.recentsell.RecentSellFragment"
+        android:label="recent_sell_fragment"
+        tools:layout="@layout/recent_sell_fragment" >
+        <argument
+            android:name="type"
+            app:argType="com.gthr.gthrcollect.utils.enums.ProductType" />
+    </fragment>
+    <fragment
+        android:id="@+id/upForSellFragment"
+        android:name="com.gthr.gthrcollect.ui.productdetail.upforsell.UpForSellFragment"
+        android:label="up_for_sell_fragment"
+        tools:layout="@layout/up_for_sell_fragment" >
+        <argument
+            android:name="type"
+            app:argType="com.gthr.gthrcollect.utils.enums.ProductType" />
     </fragment>
 </navigation>

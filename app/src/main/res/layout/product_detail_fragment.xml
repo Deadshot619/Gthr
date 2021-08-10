@@ -28,7 +28,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/mcv_detail"
             android:layout_width="0dp"
@@ -46,7 +45,6 @@
                 android:layout_height="match_parent" />
 
         </com.google.android.material.card.MaterialCardView>
-
 
         <ScrollView
             android:layout_width="match_parent"
@@ -103,8 +101,9 @@
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/iv_product" />
 
-                <TextView
-                    android:id="@+id/recent_sales_recent_sales"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:paddingVertical="@dimen/margin_extra_small"
+                    android:id="@+id/tv_recent_sales_see_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato"
@@ -116,13 +115,14 @@
                     app:layout_constraintTop_toTopOf="@+id/tv_recent_sales" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/padding_extra_small"
+                    android:id="@+id/iv_recent_sell_see_all"
+                    android:layout_width="@dimen/size_see_all_image_product_detail"
+                    android:layout_height="@dimen/size_see_all_image_product_detail"
+                    android:padding="@dimen/margin_medium"
                     android:src="@drawable/ic_see_all"
-                    app:layout_constraintBottom_toBottomOf="@+id/recent_sales_recent_sales"
-                    app:layout_constraintEnd_toStartOf="@+id/recent_sales_recent_sales"
-                    app:layout_constraintTop_toTopOf="@+id/recent_sales_recent_sales" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_recent_sales_see_all"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_recent_sales_see_all"
+                    app:layout_constraintTop_toTopOf="@+id/tv_recent_sales_see_all" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -147,27 +147,28 @@
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/rv_recent_sell" />
 
-                <TextView
-                    android:id="@+id/tv_see_all_up_for_sell"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_up_for_sell_see_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato"
                     android:text="@string/text_product_detail_see_all"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_small"
+                    android:paddingVertical="@dimen/margin_extra_small"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_up_for_sell"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintTop_toTopOf="@+id/tv_up_for_sell" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/appCompatImageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/padding_extra_small"
+                    android:id="@+id/iv_up_for_sell_see_all"
+                    android:layout_width="@dimen/size_see_all_image_product_detail"
+                    android:layout_height="@dimen/size_see_all_image_product_detail"
+                    android:padding="@dimen/margin_medium"
                     android:src="@drawable/ic_see_all"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_see_all_up_for_sell"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_see_all_up_for_sell"
-                    app:layout_constraintTop_toTopOf="@+id/tv_see_all_up_for_sell" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_up_for_sell_see_all"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_up_for_sell_see_all"
+                    app:layout_constraintTop_toTopOf="@+id/tv_up_for_sell_see_all" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -287,7 +288,7 @@
                     android:id="@+id/group_up_for_sell"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="tv_up_for_sell,tv_see_all_up_for_sell,rv_up_for_sell,appCompatImageView2" />
+                    app:constraint_referenced_ids=",tv_up_for_sell,rv_up_for_sell,tv_up_for_sell_see_all,iv_up_for_sell_see_all" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -314,6 +315,7 @@
                 app:custom_product_button_state="BUY" />
 
             <com.gthr.gthrcollect.utils.customviews.CustomProductButton
+                android:id="@+id/btn_center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_extra_small"

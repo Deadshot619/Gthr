@@ -237,4 +237,8 @@
     <dimen name="margin_recent_sale">4dp</dimen>
     <dimen name="width_recent_sale_psa_value">30dp</dimen>
 
+    <!-- Product detail -->
+    <dimen name="size_see_all_image_product_detail">32dp</dimen>
+
+
 </resources>

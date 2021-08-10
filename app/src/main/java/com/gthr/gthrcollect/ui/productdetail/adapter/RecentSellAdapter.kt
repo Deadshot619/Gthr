@@ -11,7 +11,7 @@ import com.gthr.gthrcollect.databinding.ItemRecentSeleHerderBinding
 import com.gthr.gthrcollect.model.domain.RecentCellDomainModel
 import com.gthr.gthrcollect.utils.extensions.getResolvedColor
 
-class RecentSellAdapter : ListAdapter<RecentCellDomainModel, RecyclerView.ViewHolder>(DiffCallback) {
+class RecentSellAdapter(val count : Int) : ListAdapter<RecentCellDomainModel, RecyclerView.ViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<RecentCellDomainModel>() {
         override fun areItemsTheSame(
@@ -54,7 +54,7 @@ class RecentSellAdapter : ListAdapter<RecentCellDomainModel, RecyclerView.ViewHo
         else
             (holder as RecentSellViewHolder).bind(position)
 
-    override fun getItemCount() = 5
+    override fun getItemCount() = count
 
     override fun getItemViewType(position: Int) = position
 

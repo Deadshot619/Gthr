@@ -385,6 +385,7 @@
     <string name="text_item_number_product_dtail">ITEM NUMBER</string>
     <string name="text_product_type_product_detail">PRODUCT TYPE</string>
     <string name="text_exclusivity_product_detail">EXCLUSIVITY</string>
+    <string name="text_btn_product_detail">Collect</string>
 
 
 </resources>
