@@ -48,7 +48,27 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             ProductType.MTG -> setUpMGT()
             ProductType.YUGIOH -> seUpYugioh()
             ProductType.SEALED -> setUpSealed()
+            ProductType.FUNKO -> setUpFunko()
         }
+    }
+
+    private fun setUpFunko() {
+        val topView = LayoutProductDetailToyTopBinding.inflate(layoutInflater)
+        mFlTop.addView(topView.root)
+
+        val detailView = LayoutProductDetailMainDetailsBinding.inflate(layoutInflater)
+        mFlDetails.addView(detailView.root)
+
+        detailView.tvRow1Column1.text = getString(R.string.text_release_date_product_detail)
+        detailView.tvRow1Column2.text = getString(R.string.text_category_product_detail)
+        detailView.tvRow3Column1.text = getString(R.string.text_item_number_product_dtail)
+        detailView.tvRow3Column2.text = getString(R.string.text_product_type_product_detail)
+        detailView.tvRow5Column1.text = getString(R.string.text_exclusivity_product_detail)
+        detailView.tvRow5Column2.text = getString(R.string.text_license_product_detail)
+
+        detailView.groupYugioh.gone()
+
+        mMcvDescription.gone()
     }
 
     private fun setUpSealed() {
@@ -73,8 +93,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         detailView.tvRow5Column1.text = getString(R.string.text_rarity_product_details)
         detailView.tvRow5Column2.text = ""
         detailView.tvRow6Column2.text = ""
-        detailView.tvRow7Column1.text = getString(R.string.text_jap_number_product_detail)
-        detailView.tvRow7Column2.text = getString(R.string.text_jap_set_product_detail)
+
+        detailView.groupYugioh.gone()
 
         mMcvDescription.visible()
     }

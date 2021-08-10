@@ -379,6 +379,12 @@
     <string name="text_jap_number_product_detail">JAP NUMBER</string>
     <string name="text_card_description_product_detail">Card Description</string>
     <string name="text_stats_product_details">STATS</string>
+    <string name="text_license_product_detail">License</string>
+    <string name="text_release_date_product_detail">RELEASE DATE</string>
+    <string name="text_category_product_detail">CATEGORY</string>
+    <string name="text_item_number_product_dtail">ITEM NUMBER</string>
+    <string name="text_product_type_product_detail">PRODUCT TYPE</string>
+    <string name="text_exclusivity_product_detail">EXCLUSIVITY</string>
 
 
 </resources>

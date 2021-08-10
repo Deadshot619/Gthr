@@ -78,10 +78,11 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     private fun setUpRecyclerView() {
         mAdapterSC = SearchCollectionAdapter{
             when {
-                it%4==0 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.POKEMON))
-                it%4==1 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.MTG))
-                it%4==2 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.YUGIOH))
-                it%4==3 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.SEALED))
+                it%5==0 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.POKEMON))
+                it%5==1 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.MTG))
+                it%5==2 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.YUGIOH))
+                it%5==3 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.SEALED))
+                it%5==4 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.FUNKO))
             }
         }
         mRvMain.apply {

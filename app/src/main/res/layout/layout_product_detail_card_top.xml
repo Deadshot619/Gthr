@@ -11,7 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
+        <TextView
+            android:layout_marginTop="@dimen/margin_small"
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_normal"
+            android:layout_weight="7"
+            android:fontFamily="@font/lato_bold"
+            android:text="Dark Magician Girl"
+            android:textColor="@color/black"
+            />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_set"

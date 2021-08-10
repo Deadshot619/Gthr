@@ -11,6 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:layout_marginTop="@dimen/margin_small"
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_normal"
+            android:layout_weight="7"
+            android:fontFamily="@font/lato_bold"
+            android:text="Dark Magician Girl"
+            android:textColor="@color/black"
+            />
+
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_row1"
             android:layout_width="match_parent"
@@ -31,8 +44,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small"
-                android:layout_weight="1"
-                android:text="@string/text_set_product_details"
+                android:layout_weight="1.5"
+                android:text="@string/text_license_product_detail"
                 android:textColor="@color/light_blue"
                 android:textSize="@dimen/text_size_small" />
 
@@ -66,7 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_extra_small"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:fontFamily="@font/lato_bold"
                 android:text="@string/text_hash_product_details"
                 android:textColor="@color/blue"
