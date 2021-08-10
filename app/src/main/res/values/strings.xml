@@ -302,11 +302,6 @@
     <string name="text_product_name">Name</string>
     <string name="text_product_set">Set</string>
     <string name="text_hash_colon">#:</string>
-    <string name="text_hash">#</string>
-    <string name="text_product_rarity">Rarity</string>
-    <string name="text_product_psa">PSA</string>
-    <string name="text_product_conditon">Cond.</string>
-    <string name="text_product_license">License</string>
 
     <!--My profile-->
     <string name="user_name">user_name</string>
@@ -343,9 +338,16 @@
     <string name="text_purchase_detail_order">Order#</string>
     <string name="text_purchase_sale_price">Sale Price</string>
     <string name="text_purchase_shipping">Shipping</string>
-    <string name="text_purchase_sales_tax">Sales Tax(%s)</string>
+    <string name="text_purchase_sales_tax">Sales Tax (%s)</string>
     <string name="dialog_confirm_received_title">Confirm Received</string>
     <string name="dialog_confirm_received_body">Did you receive the item?</string>
+    <string name="dialog_confirm_shipped_title">Confirm Shipped</string>
+    <string name="dialog_confirm_shipped_body">Once the item, is shipped confirm yes, and the buyer will be notified.</string>
+    <string name="text_hash">#</string>
+    <string name="text_product_rarity">Rarity</string>
+    <string name="text_product_psa">PSA</string>
+    <string name="text_product_conditon">Cond.</string>
+    <string name="text_product_license">License</string>
 
     <!--Feed-->
     <string name="btn_feed_all">All</string>
@@ -354,6 +356,13 @@
     <string name="btn_feed_funko">Funko</string>
     <string name="text_legal_product_detail">LEGAL</string>
     <string name="text_not_legal_product_detail">Not LEGAL</string>
+
+    <!--Sold Detail-->
+    <string name="text_sold_details">Sold Details</string>
+    <string name="text_sold_summary">Sold Summary</string>
+    <string name="text_selling_fee">Selling fee (%s%%)</string>
+    <string name="text_payment_processing">Payment Processing (%s%%)</string>
+    <string name="text_shipping_reimbursement">Shipping Reimbursement</string>
 
     <!--Product Detail-->
     <string name="menu_share">Share</string>

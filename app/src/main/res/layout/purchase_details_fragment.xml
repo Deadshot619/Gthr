@@ -107,7 +107,7 @@
                             android:id="@+id/iv_profile"
                             android:layout_width="@dimen/size_profile_purchase_detail"
                             android:layout_height="@dimen/size_profile_purchase_detail"
-                            android:layout_marginTop="@dimen/margin_extra_small"
+                            android:layout_marginTop="@dimen/margin_small"
                             android:layout_marginEnd="@dimen/padding_extra_small"
                             android:src="@drawable/prifile_picture"
                             app:layout_constraintEnd_toStartOf="@+id/tv_name"
@@ -154,12 +154,13 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
+                            <!--Set & License-->
                             <TextView
                                 android:id="@+id/tv_set"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/margin_small"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:textStyle="bold"
                                 android:text="@string/text_product_set"
                                 android:textColor="@color/light_blue"
@@ -169,7 +170,7 @@
                                 android:id="@+id/tv_set_value"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="@dimen/margin_normal"
+                                android:layout_marginEnd="@dimen/margin_normal"
                                 android:layout_weight="7"
                                 android:fontFamily="@font/lato"
                                 android:text="Collector's Edition"
@@ -181,12 +182,11 @@
                         <!--Number Rarity-->
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/ll_number_rarity"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_normal"
                             android:layout_marginTop="@dimen/margin_extra_small"
                             android:orientation="horizontal"
-                            android:weightSum="2"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/ll_set">
@@ -207,7 +207,7 @@
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/margin_extra_small"
+                                    android:layout_marginStart="@dimen/margin_small"
                                     android:fontFamily="@font/lato_bold"
                                     android:text="@string/text_hash"
                                     android:textColor="@color/blue"
@@ -234,6 +234,7 @@
 
                             <!--Rarity-->
                             <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/ll_rarity"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="@dimen/margin_extra_small"
@@ -249,7 +250,7 @@
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/margin_extra_small"
+                                    android:layout_marginStart="@dimen/margin_small"
                                     android:fontFamily="@font/lato_bold"
                                     android:text="@string/text_product_rarity"
                                     android:textColor="@color/blue"
@@ -274,6 +275,48 @@
                             </androidx.appcompat.widget.LinearLayoutCompat>
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
+
+                        <!--Set-->
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/ll_condition"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/margin_normal"
+                            android:layout_marginTop="@dimen/margin_extra_small"
+                            android:background="@drawable/bg_recipt_bottom"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingVertical="@dimen/padding_extra_small"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ll_number_rarity">
+
+                            <!--Set & License-->
+                            <TextView
+                                android:id="@+id/tv_condition"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margin_small"
+                                android:layout_weight="1"
+                                android:textStyle="bold"
+                                android:text="@string/text_product_conditon"
+                                android:textColor="@color/light_blue"
+                                android:textSize="@dimen/text_size_small" />
+
+                            <TextView
+                                android:id="@+id/tv_condition_value"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/margin_normal"
+                                android:layout_weight="7"
+                                android:fontFamily="@font/lato"
+                                android:text="New"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_small" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
                         <!--Language, PSA-->
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/ll_details"
@@ -285,7 +328,7 @@
                             android:weightSum="3"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ll_number_rarity">
+                            app:layout_constraintTop_toBottomOf="@+id/ll_condition">
 
                             <!--Language-->
                             <androidx.appcompat.widget.LinearLayoutCompat
@@ -301,13 +344,14 @@
                                 app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
                                 <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/iv_glob"
+                                    android:id="@+id/iv_lang"
                                     android:layout_width="@dimen/size_glob"
                                     android:layout_height="@dimen/size_glob"
                                     android:layout_marginStart="@dimen/margin_small"
                                     android:src="@drawable/ic_glob" />
 
                                 <TextView
+                                    android:id="@+id/tv_lang_value"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/margin_extra_small"
@@ -350,6 +394,7 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
+                                    android:id="@+id/tv_psa_value"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/margin_normal"
@@ -373,6 +418,7 @@
                                 app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
                                 <TextView
+                                    android:id="@+id/tv_card_type"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/margin_normal"
@@ -424,8 +470,9 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/ll_details" />
 
+                        <!--Row 1-->
                         <TextView
-                            android:id="@+id/tv_sale_price"
+                            android:id="@+id/tv_summary_r1c1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_extra_large"
@@ -434,14 +481,14 @@
                             android:textSize="@dimen/text_size_semi_small"
                             android:text="@string/text_purchase_sale_price"
                             android:textColor="@color/black"
-                            app:layout_constraintEnd_toStartOf="@+id/tv_sale_price_value"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_summary_r1c2"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintHorizontal_chainStyle="spread_inside"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_purchase_summary" />
 
                         <TextView
-                            android:id="@+id/tv_sale_price_value"
+                            android:id="@+id/tv_summary_r1c2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_large"
@@ -449,14 +496,15 @@
                             android:text="$22.00"
                             android:textSize="@dimen/text_size_semi_small"
                             android:textColor="@color/black"
-                            app:layout_constraintBottom_toBottomOf="@+id/tv_sale_price"
+                            app:layout_constraintBottom_toBottomOf="@+id/tv_summary_r1c1"
                             app:layout_constraintEnd_toStartOf="@+id/iv_product_image"
                             app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/tv_sale_price"
-                            app:layout_constraintTop_toTopOf="@+id/tv_sale_price" />
+                            app:layout_constraintStart_toEndOf="@+id/tv_summary_r1c1"
+                            app:layout_constraintTop_toTopOf="@+id/tv_summary_r1c1" />
 
+                        <!--Row 2-->
                         <TextView
-                            android:id="@+id/tv_shipping_price"
+                            android:id="@+id/tv_summary_r2c1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_extra_large"
@@ -466,14 +514,14 @@
                             android:textSize="@dimen/text_size_semi_small"
                             android:text="@string/text_purchase_shipping"
                             android:textColor="@color/black"
-                            app:layout_constraintEnd_toStartOf="@+id/tv_shipping_value"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_summary_r2c2"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintHorizontal_chainStyle="spread_inside"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_sale_price" />
+                            app:layout_constraintTop_toBottomOf="@+id/tv_summary_r1c1" />
 
                         <TextView
-                            android:id="@+id/tv_shipping_value"
+                            android:id="@+id/tv_summary_r2c2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_large"
@@ -481,14 +529,15 @@
                             android:text="+ $22.00"
                             android:textSize="@dimen/text_size_semi_small"
                             android:textColor="@color/black"
-                            app:layout_constraintBottom_toBottomOf="@+id/tv_shipping_price"
+                            app:layout_constraintBottom_toBottomOf="@+id/tv_summary_r2c1"
                             app:layout_constraintEnd_toStartOf="@+id/iv_product_image"
                             app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/tv_shipping_price"
-                            app:layout_constraintTop_toTopOf="@+id/tv_shipping_price" />
+                            app:layout_constraintStart_toEndOf="@+id/tv_summary_r2c1"
+                            app:layout_constraintTop_toTopOf="@+id/tv_summary_r2c1" />
 
+                        <!--Row 3-->
                         <TextView
-                            android:id="@+id/tv_sales_tax"
+                            android:id="@+id/tv_summary_r3c1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_extra_large"
@@ -497,14 +546,14 @@
                             android:text="@string/text_purchase_sales_tax"
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_size_semi_small"
-                            app:layout_constraintEnd_toStartOf="@+id/tv_sales_tax_value"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_summary_r3c2"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintHorizontal_chainStyle="spread_inside"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_shipping_price" />
+                            app:layout_constraintTop_toBottomOf="@+id/tv_summary_r2c1" />
 
                         <TextView
-                            android:id="@+id/tv_sales_tax_value"
+                            android:id="@+id/tv_summary_r3c2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_large"
@@ -512,13 +561,45 @@
                             android:text="+ $22.00"
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_size_semi_small"
-                            app:layout_constraintBottom_toBottomOf="@+id/tv_sales_tax"
+                            app:layout_constraintBottom_toBottomOf="@+id/tv_summary_r3c1"
                             app:layout_constraintEnd_toStartOf="@+id/iv_product_image"
                             app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/tv_sales_tax"
-                            app:layout_constraintTop_toTopOf="@+id/tv_sales_tax" />
+                            app:layout_constraintStart_toEndOf="@+id/tv_summary_r3c1"
+                            app:layout_constraintTop_toTopOf="@+id/tv_summary_r3c1" />
 
+                        <!--Row 4-->
+                        <TextView
+                            android:id="@+id/tv_summary_r4c1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_extra_large"
+                            android:layout_marginTop="@dimen/margin_extra_small"
+                            android:layout_marginEnd="@dimen/margin_normal"
+                            android:text="@string/text_shipping_reimbursement"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_semi_small"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_summary_r4c2"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintHorizontal_chainStyle="spread_inside"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_summary_r3c1" />
 
+                        <TextView
+                            android:id="@+id/tv_summary_r4c2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_large"
+                            android:fontFamily="@font/lato"
+                            android:text="+ $22.00"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_semi_small"
+                            app:layout_constraintBottom_toBottomOf="@+id/tv_summary_r4c1"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_product_image"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/tv_summary_r4c1"
+                            app:layout_constraintTop_toTopOf="@+id/tv_summary_r4c1" />
+
+                        <!--Total-->
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/ll_total"
                             android:layout_width="0dp"
@@ -533,7 +614,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/iv_product_image"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_sales_tax">
+                            app:layout_constraintTop_toBottomOf="@+id/tv_summary_r4c1">
 
                             <TextView
                                 android:id="@+id/tv_total"
@@ -584,17 +665,17 @@
                     android:text="@string/text_purchase_detail_order_status"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toStartOf="@id/cdb_delivered"
+                    app:layout_constraintEnd_toStartOf="@id/cdb_order_status"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/tv_order_summary" />
 
                 <com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
-                    android:id="@+id/cdb_delivered"
+                    android:id="@+id/cdb_order_status"
                     android:layout_width="@dimen/width_button_receipt"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_normal"
-                    android:text="$25.81"
+                    tools:text="Delivered"
                     app:cdb_type="DELIVERED"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_order_status"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
@@ -611,7 +692,7 @@
                     android:text="@string/text_purchase_detail_ordered_on"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toStartOf="@id/cdb_delivered"
+                    app:layout_constraintEnd_toStartOf="@id/cdb_order_status"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/tv_order_status" />
@@ -640,7 +721,7 @@
                     android:text="@string/text_btn_purchase_detail_payment"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toStartOf="@id/cdb_delivered"
+                    app:layout_constraintEnd_toStartOf="@id/cdb_order_status"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/tv_ordered_on" />

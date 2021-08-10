@@ -9,6 +9,7 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.profile.reciepts.adapter.ReceiptAdapter
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+import com.gthr.gthrcollect.utils.enums.ReceiptType
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -46,8 +47,11 @@ class ReceiptsFragment : BaseFragment<ReceiptsViewModel, ReceiptsFragmentBinding
 
     private fun setUpRecyclerView() {
         mAdapter = ReceiptAdapter (object : ReceiptAdapter.ReceiptListener{
-            override fun onClick(receiptDomainModel: ReceiptDomainModel?) {
-                startActivity(ReceiptDetailActivity.getInstance(this@ReceiptsFragment.requireContext()))
+            override fun onClick(receiptDomainModel: ReceiptDomainModel?, pos: Int) {
+                if (pos%2==0)
+                    startActivity(ReceiptDetailActivity.getInstance(this@ReceiptsFragment.requireContext(), ReceiptType.PURCHASED))
+                else
+                    startActivity(ReceiptDetailActivity.getInstance(this@ReceiptsFragment.requireContext(), ReceiptType.SOLD))
             }
         })
 

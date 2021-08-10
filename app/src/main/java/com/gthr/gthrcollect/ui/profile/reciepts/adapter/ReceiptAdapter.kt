@@ -24,9 +24,9 @@ class ReceiptAdapter(val callback : ReceiptListener) : ListAdapter<ReceiptDomain
 
     inner class  ReceiptViewHolder(var binding: ItemReceiptBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(callback: ReceiptListener) {
+        fun bind(callback: ReceiptListener, pos: Int) {
             binding.root.setOnClickListener {
-                callback.onClick(null)
+                callback.onClick(null, pos)
             }
         }
     }
@@ -39,11 +39,11 @@ class ReceiptAdapter(val callback : ReceiptListener) : ListAdapter<ReceiptDomain
         )
 
     override fun onBindViewHolder(holder:  ReceiptViewHolder, position: Int) =
-        holder.bind(callback)
+        holder.bind(callback, position)
 
     override fun getItemCount(): Int = 10
 
     interface ReceiptListener {
-        fun onClick(receiptDomainModel: ReceiptDomainModel?)
+        fun onClick(receiptDomainModel: ReceiptDomainModel?, pos: Int)
     }
 }

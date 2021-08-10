@@ -7,5 +7,9 @@
     <fragment
         android:id="@+id/purchaseDetailsFragment"
         android:name="com.gthr.gthrcollect.ui.receiptdetail.purchasedetails.PurchaseDetailsFragment"
-        android:label="PurchaseDetailsFragment" />
+        android:label="PurchaseDetailsFragment" >
+        <argument
+            android:name="receiptType"
+            app:argType="com.gthr.gthrcollect.utils.enums.ReceiptType" />
+    </fragment>
 </navigation>
