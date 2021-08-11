@@ -338,7 +338,7 @@
     <string name="text_purchase_detail_order">Order#</string>
     <string name="text_purchase_sale_price">Sale Price</string>
     <string name="text_purchase_shipping">Shipping</string>
-    <string name="text_purchase_sales_tax">Sales Tax (%s)</string>
+    <string name="text_purchase_sales_tax">Sales Tax (%s%%  )</string>
     <string name="dialog_confirm_received_title">Confirm Received</string>
     <string name="dialog_confirm_received_body">Did you receive the item?</string>
     <string name="dialog_confirm_shipped_title">Confirm Shipped</string>

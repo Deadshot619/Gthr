@@ -81,7 +81,7 @@ class PurchaseDetailsFragment :
 
     override fun onBinding() {
         initViews()
-        setUpCardTypeViews("funko")
+        setUpCardTypeViews("cards")
         setUpReceiptTypeViews(args.receiptType)
         initClickListeners()
     }
@@ -152,9 +152,9 @@ class PurchaseDetailsFragment :
                 mTvSummaryR1C1.text = getString(R.string.text_sale_price)
                 mTvSummaryR1C2.text = "$22.00"
                 mTvSummaryR2C1.text = String.format(getString(R.string.text_selling_fee), "8.5")
-                mTvSummaryR2C2.text = "+ \$5.23"
+                mTvSummaryR2C2.text = "- \$5.23"
                 mTvSummaryR3C1.text = String.format(getString(R.string.text_payment_processing), "2.9")
-                mTvSummaryR3C2.text = "+ \$1.60"
+                mTvSummaryR3C2.text = "- \$1.60"
                 mTvSummaryR4C1.text = getString(R.string.text_shipping_reimbursement)
                 mTvSummaryR4C2.text = "+ \$0.55"
 
