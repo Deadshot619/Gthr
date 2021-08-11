@@ -1,14 +1,28 @@
 package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
+import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CollectionInfoModel(
+    @SerialName(FirebaseRealtimeDatabase.ABOUT)
     val about: String? = "",
+    @SerialName(FirebaseRealtimeDatabase.BUY_LIST)
     val buyList: List<String>? = listOf(),
+    @SerialName(FirebaseRealtimeDatabase.COLLECTION_DISPLAY_NAME)
     val collectionDisplayName: String = "",
-//    val collectionList: CollectionList,
+    @SerialName(FirebaseRealtimeDatabase.COLLECTION_RAW_NAME)
     val collectionRawName: String = "",
+    @SerialName(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST)
     val favoriteCollectionList: List<String>? = listOf(),
+    @SerialName(FirebaseRealtimeDatabase.FAVORITE_PRODUCT_LIST)
     val favoriteProductList: List<String>? = listOf(),
+    @SerialName(FirebaseRealtimeDatabase.FOLLOWERS_LIST)
     val followersList: List<String>? = listOf(),
-    val sellList: List<Any>? = listOf(),
+    @SerialName(FirebaseRealtimeDatabase.SELL_LIST)
+    val sellList: List<String>? = listOf(),
+    @SerialName(FirebaseRealtimeDatabase.USER_REF_KEY)
     val userRefKey: String = ""       //corresponds to the firebase uid and the userInfoModel document id and uid
+//    val collectionList: CollectionList,
 )
