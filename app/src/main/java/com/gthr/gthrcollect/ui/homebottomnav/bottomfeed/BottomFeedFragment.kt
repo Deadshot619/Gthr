@@ -37,8 +37,8 @@ class BottomFeedFragment : BaseFragment<HomeBottomNavViewModel, BottomFeedFragme
             mTabLayout = tabLayout
             mViewPager = viewPager
             mViews = listOf(
-                Pair(getString(R.string.title_market), MarketFragment()),
-                Pair(getString(R.string.menu_feed_title), FeedFragment())
+                Pair(getString(R.string.menu_feed_title), FeedFragment()),
+                Pair(getString(R.string.title_market), MarketFragment())
             )
             mAdapter = CommonPagerAdapter(this@BottomFeedFragment, mViews)
         }
