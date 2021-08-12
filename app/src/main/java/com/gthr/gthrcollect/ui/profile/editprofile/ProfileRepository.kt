@@ -50,9 +50,7 @@ class ProfileRepository {
             val ref = mStorageRef.child(FirebaseStorage.PROFILE_IMAGE)
                 .child(GthrCollect.prefs?.userInfoModel?.collectionId.toString())
 
-            val url = ref.downloadUrl.addOnSuccessListener {
-                GthrLogger.e("url_it", it.toString())
-            }.await()
+            val url = ref.downloadUrl.await()
 
             emit(State.Success(url.toString()))
             GthrLogger.e("url", url.toString())

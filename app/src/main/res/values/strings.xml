@@ -397,8 +397,10 @@
     <string name="text_exclusivity_product_detail">EXCLUSIVITY</string>
     <string name="text_btn_product_detail">Collect</string>
 
-
-
-  <!--  Generic Error Mesage-->
+    <!--  Generic Error Mesage-->
     <string name="required_field">required</string>
+
+    <!-- market -->
+    <string name="text_popular_collections_market">Popular Collections</string>
+    <string name="text_your_favorite_binders_market">Your Favorite Binders</string>
 </resources>

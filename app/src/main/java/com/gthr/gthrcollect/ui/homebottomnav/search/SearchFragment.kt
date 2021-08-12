@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
@@ -19,6 +20,7 @@ import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterCategoryView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterSubCategoryView
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.enums.SearchType
 import com.gthr.gthrcollect.utils.extensions.animateVisibility
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
@@ -69,10 +71,16 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
     private lateinit var mAdapterSC : SearchCollectionAdapter
 
+    private val args by navArgs<SearchFragmentArgs>()
+
     override fun onBinding() {
         initViews()
         setUpOnClickListeners()
         setUpRecyclerView()
+
+        if(args.type==SearchType.COLLECTIONS){
+            setCollectionSelected()
+        }
     }
 
     private fun setUpRecyclerView() {
@@ -100,9 +108,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             mRvMain.adapter = null
         }
         mCctCollections.setOnClickListener {
-            setSelectedCct(mCctCollections)
-            mDrawer.closeDrawer(GravityCompat.END)
-            mRvMain.adapter = mAdapterSC
+            setCollectionSelected()
         }
 
         mIvFilter.setOnClickListener {
@@ -197,6 +203,11 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
     }
 
+    private fun setCollectionSelected() {
+        setSelectedCct(mCctCollections)
+        mDrawer.closeDrawer(GravityCompat.END)
+        mRvMain.adapter = mAdapterSC
+    }
 
 
     private fun setSelectedCct(mCct: CustomCollectionTypeView) {

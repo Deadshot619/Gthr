@@ -240,5 +240,8 @@
     <!-- Product detail -->
     <dimen name="size_see_all_image_product_detail">32dp</dimen>
 
+    <!-- Market -->
+    <dimen name="height_banner_market">94dp</dimen>
+
 
 </resources>

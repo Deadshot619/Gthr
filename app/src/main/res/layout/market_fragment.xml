@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.homebottomnav.market.MarketFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -9,8 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.homebottomnav.market.MarketFragment">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_top"
@@ -19,6 +19,23 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.06"
             app:layout_constraintTop_toTopOf="@id/ll_market_type" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_end="@dimen/guideline_edit_account_info" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideline_edit_account_info"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
         <View
             android:id="@+id/topView"
@@ -77,5 +94,81 @@
                 app:cccv_text="@string/btn_feed_funko" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_banner_market"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="@dimen/margin_normal"
+            app:layout_constraintTop_toBottomOf="@+id/ll_market_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tv_popular_collections"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:fontFamily="@font/lato_bold"
+            android:text="@string/text_popular_collections_market"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/iv_banner" />
+
+        <TextView
+            android:id="@+id/tv_your_favorite_binders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:text="@string/text_your_favorite_binders_market"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_extra_small"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_popular_collections" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:paddingVertical="@dimen/margin_extra_small"
+            android:id="@+id/tv_popular_collections_see_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:text="@string/text_product_detail_see_all"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_your_favorite_binders"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/tv_popular_collections" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_popular_collections_see_all"
+            android:layout_width="@dimen/size_see_all_image_product_detail"
+            android:layout_height="@dimen/size_see_all_image_product_detail"
+            android:padding="@dimen/margin_medium"
+            android:src="@drawable/ic_see_all"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_popular_collections_see_all"
+            app:layout_constraintEnd_toStartOf="@+id/tv_popular_collections_see_all"
+            app:layout_constraintTop_toTopOf="@+id/tv_popular_collections_see_all" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:nestedScrollingEnabled="false"
+            android:layout_marginHorizontal="@dimen/margin_extra_small"
+            android:id="@+id/rv_popular_collections"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_popular_collections_see_all" />
+
+        <!--Progress Bar-->
+        <include
+            android:id="@+id/layout_progress"
+            layout="@layout/layout_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -32,7 +32,12 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.gthr.gthrcollect.ui.homebottomnav.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <argument
+            android:name="type"
+            app:argType="com.gthr.gthrcollect.utils.enums.SearchType"
+            android:defaultValue="PRODUCT" />
+    </fragment>
 
     <fragment
         android:id="@+id/accountFragment"
@@ -41,5 +46,6 @@
     <fragment
         android:id="@+id/bottomFeedFragment"
         android:name="com.gthr.gthrcollect.ui.homebottomnav.bottomfeed.BottomFeedFragment"
-        android:label="BottomFeedFragment" />
+        android:label="BottomFeedFragment" >
+    </fragment>
 </navigation>

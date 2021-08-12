@@ -4,12 +4,16 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityHomeBottomNavBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
+import com.gthr.gthrcollect.ui.homebottomnav.search.SearchFragmentArgs
+import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
+import com.gthr.gthrcollect.utils.enums.SearchType
 
 class HomeBottomNavActivity : BaseActivity<HomeBottomNavViewModel, ActivityHomeBottomNavBinding>() {
     override val mViewModel: HomeBottomNavViewModel by viewModels()
@@ -33,6 +37,10 @@ class HomeBottomNavActivity : BaseActivity<HomeBottomNavViewModel, ActivityHomeB
     private fun initBottomView(){
         mBottomNavView.setupWithNavController(mNavController)
         mBottomNavView.menu.getItem(2).isChecked = true
+    }
+
+    fun goToSearch(type : SearchType){
+        findNavController(R.id.nav_host_fragment).navigate(R.id.searchFragment, SearchFragmentArgs(type = type).toBundle())
     }
 
     companion object {
