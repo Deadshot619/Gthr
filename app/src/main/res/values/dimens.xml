@@ -3,6 +3,7 @@
 
     <dimen name="app_name_text_size">55sp</dimen>
     <dimen name="radius">8dp</dimen>
+    <dimen name="letter_spacing">0.08</dimen>
 
     <!--SignIn/SignUp-->
     <dimen name="header_app_title_size">36sp</dimen>
@@ -239,6 +240,8 @@
 
     <!-- Product detail -->
     <dimen name="size_see_all_image_product_detail">32dp</dimen>
+    <dimen name="radius_cardview_product_recent_sale">8dp</dimen>
+    <dimen name="padding_recent_sale">6dp</dimen>
 
     <!-- Market -->
     <dimen name="height_banner_market">94dp</dimen>

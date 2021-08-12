@@ -3,7 +3,7 @@
     <style name="Theme.GthrCollect" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -85,10 +85,20 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
-    <style name="TitleTextView" parent="Widget.AppCompat.TextView">
+    <style name="TitleTextView" parent="BoldSpacingStyle">
         <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:letterSpacing">0.1</item>
-        <item name="android:textAllCaps">true</item>
         <item name="android:fontFamily">@font/lato</item>
+    </style>
+
+    <style name="BoldSpacingStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
+    </style>
+
+    <style name="ProductDetailTextTitle" parent="BoldSpacingStyle">
+        <item name="android:textSize">@dimen/text_size_extra_small</item>
+        <item name="android:textColor">@color/light_blue</item>
+
     </style>
 </resources>

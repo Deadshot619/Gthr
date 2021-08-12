@@ -7,7 +7,6 @@
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_marginTop="@dimen/margin_recent_sale"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -17,7 +16,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/padding_extra_small"
+            android:paddingVertical="@dimen/padding_recent_sale"
             android:fontFamily="@font/lato"
             android:text="$100"
             android:textColor="@color/black"
@@ -30,7 +29,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/padding_extra_small"
+            android:paddingVertical="@dimen/padding_recent_sale"
             app:layout_constraintBottom_toBottomOf="parent"
             android:fontFamily="@font/lato"
             android:text="06.22.2021"
@@ -72,7 +71,7 @@
                 android:id="@+id/tv_psa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_extra_small"
+                android:layout_marginStart="@dimen/margin_small"
                 android:text="PSA"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/text_size_small"

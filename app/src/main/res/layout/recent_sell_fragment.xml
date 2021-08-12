@@ -64,41 +64,61 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_product"
+        <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:src="@drawable/product"
-            app:layout_constraintDimensionRatio="h,1:1.5"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@+id/mcv_detail"
-            app:layout_constraintWidth_percent="0.4" />
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:id="@+id/tv_recent_sales"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_extra_large"
-            android:fontFamily="@font/lato_bold"
-            android:text="@string/text_product_details_recent_sales"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_normal"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/iv_product" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/padding_normal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_recent_sell"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginVertical="@dimen/margin_normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/tv_recent_sales"
-            app:layout_constraintVertical_bias="0.0" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_product"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:src="@drawable/product"
+                    app:layout_constraintDimensionRatio="h,1:1.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.4" />
 
+                <TextView
+                    android:id="@+id/tv_recent_sales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="@string/text_product_details_recent_sales"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_product" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_recent_sale"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:cardUseCompatPadding="true"
+                    app:cardCornerRadius="@dimen/radius_cardview_product_recent_sale"
+                    android:layout_marginVertical="@dimen/margin_normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_recent_sales">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_recent_sell"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

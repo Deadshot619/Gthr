@@ -382,7 +382,7 @@
     <string name="text_set_product_details">Set</string>
     <string name="text_hash_product_details">#</string>
     <string name="text_rarity_product_details">Rarity</string>
-    <string name="text_up_for_sell_product_details">Up for sell</string>
+    <string name="text_up_for_sale_product_details">Up for sale</string>
     <string name="text_hp_product_details">HP</string>
     <string name="text_stage_product_details">STAGE</string>
     <string name="text_jap_set_product_detail">JAP SET</string>

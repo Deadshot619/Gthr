@@ -110,16 +110,25 @@
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintTop_toTopOf="@+id/tv_recent_sales"/>
 
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_recent_sell"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_recent_sale"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/radius_cardview_product_recent_sale"
                     android:layout_marginVertical="@dimen/margin_normal"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_recent_sales" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_recent_sales">
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_recent_sell"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_recent_sales" />
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <TextView
                     android:id="@+id/tv_up_for_sell"
@@ -127,11 +136,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_extra_large"
                     android:fontFamily="@font/lato_bold"
-                    android:text="@string/text_up_for_sell_product_details"
+                    android:text="@string/text_up_for_sale_product_details"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_recent_sell" />
+                    app:layout_constraintTop_toBottomOf="@+id/cv_recent_sale" />
 
                 <com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
                     android:id="@+id/csav_up_for_sales_see_all"
@@ -148,7 +157,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_normal"
                     android:layout_marginVertical="@dimen/margin_normal"
+                    android:layout_marginTop="52dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_up_for_sell" />
 
@@ -168,6 +179,7 @@
                     android:id="@+id/fl_Detail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
                     app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/tv_details" />
