@@ -10,9 +10,8 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
 import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
 import com.gthr.gthrcollect.model.mapper.toRealtimeDatabaseModel
-import com.gthr.gthrcollect.model.network.firebaserealtimedb.CollectionInfoModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
-import com.gthr.gthrcollect.ui.profile.editprofile.ProfileRepository
+import com.gthr.gthrcollect.data.repository.ProfileRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

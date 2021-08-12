@@ -11,6 +11,8 @@
     <uses-feature android:name="android.hardware.camera"
         android:required="true" />
 
+
+
     <application
         android:name=".GthrCollect"
         android:allowBackup="true"
@@ -47,6 +49,7 @@
         <activity
             android:name=".ui.customcameraactivities.ImagePreview"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.receiptdetail.purchasedetails.FullProductImage" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -1,6 +1,7 @@
 package com.gthr.gthrcollect.ui.receiptdetail.purchasedetails
 
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -51,6 +52,7 @@ class PurchaseDetailsFragment :
     private lateinit var llRarity: LinearLayoutCompat
     private lateinit var llCondition: LinearLayoutCompat
     private lateinit var llDetails: LinearLayoutCompat
+    private lateinit var mProductImage: AppCompatImageView
 
 
     private val mConfirmReceivedDialog by lazy {
@@ -100,6 +102,7 @@ class PurchaseDetailsFragment :
             mTvLangValue = tvLangValue
             mTvPsaValue = tvPsaValue
             mTvCardTypeValue = tvCardType
+            mProductImage =ivProductImage
 
             mTvSummaryTitle = tvPurchaseSummary
             mTvSummaryR1C1 = tvSummaryR1c1
@@ -128,6 +131,10 @@ class PurchaseDetailsFragment :
                 mConfirmReceivedDialog.show()
             else
                 mConfirmShippedDialog.show()
+        }
+        mProductImage.setOnClickListener{
+            startActivity(FullProductImage.getInstance(requireContext(),"vgfgg"))
+
         }
     }
 

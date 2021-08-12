@@ -1,9 +1,10 @@
 package com.gthr.gthrcollect.ui.splash
 
+import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.activity.viewModels
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.databinding.ActivitySplashBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
@@ -39,10 +40,6 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
     }
 
     private fun goToHomeScreen() {
-
-
-
-
         startActivity(HomeBottomNavActivity.getInstance(this))
         finish()
     }

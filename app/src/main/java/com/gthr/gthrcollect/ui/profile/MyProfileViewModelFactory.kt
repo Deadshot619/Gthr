@@ -2,7 +2,7 @@ package com.gthr.gthrcollect.ui.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.gthr.gthrcollect.ui.profile.editprofile.ProfileRepository
+import com.gthr.gthrcollect.data.repository.ProfileRepository
 
 class MyProfileViewModelFactory(private val repository: ProfileRepository) :
     ViewModelProvider.Factory {

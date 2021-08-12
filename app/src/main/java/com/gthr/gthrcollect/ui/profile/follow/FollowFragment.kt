@@ -5,23 +5,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.FollowFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
-import com.gthr.gthrcollect.model.domain.FollowDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.ui.profile.ProfileViewModel
-import com.gthr.gthrcollect.ui.profile.editprofile.ProfileRepository
+import com.gthr.gthrcollect.data.repository.ProfileRepository
 import com.gthr.gthrcollect.utils.customviews.CustomSearchView
 import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
 import com.gthr.gthrcollect.utils.extensions.showToast
-import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
     private val repository = ProfileRepository()

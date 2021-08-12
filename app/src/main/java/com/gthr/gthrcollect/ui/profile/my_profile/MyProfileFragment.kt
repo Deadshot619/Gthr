@@ -15,7 +15,7 @@ import com.gthr.gthrcollect.ui.editprofile.EditProfileActivity
 import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.ui.profile.ProfileViewModel
-import com.gthr.gthrcollect.ui.profile.editprofile.ProfileRepository
+import com.gthr.gthrcollect.data.repository.ProfileRepository
 import com.gthr.gthrcollect.ui.profile.follow.FollowUserAdapter
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionButton
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView

@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.ui.profile.editprofile
+package com.gthr.gthrcollect.data.repository
 
 import android.net.Uri
 import com.google.firebase.database.ktx.database

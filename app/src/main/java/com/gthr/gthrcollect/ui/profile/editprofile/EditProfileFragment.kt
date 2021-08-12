@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.ProfileRepository
 import com.gthr.gthrcollect.databinding.EditProfileFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.UserInfoDomainModel

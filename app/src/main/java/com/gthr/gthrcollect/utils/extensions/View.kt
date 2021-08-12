@@ -9,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.AdapterView
+import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
-
+import com.bumptech.glide.Glide
+import com.gthr.gthrcollect.ui.receiptdetail.purchasedetails.FullProductImage
 
 private const val DURATION = 300
 
@@ -93,6 +95,7 @@ fun View.animateView(initialHeight: Int, targetHeight: Int) {
     valueAnimator.duration = DURATION.toLong()
     valueAnimator.interpolator = DecelerateInterpolator()
     valueAnimator.start()
+
 }
 
 
