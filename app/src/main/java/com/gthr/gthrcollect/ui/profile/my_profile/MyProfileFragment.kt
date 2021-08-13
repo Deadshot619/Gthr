@@ -1,11 +1,15 @@
 package com.gthr.gthrcollect.ui.profile.my_profile
 
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.MyProfileBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
@@ -15,11 +19,9 @@ import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.ui.profile.ProfileViewModel
 import com.gthr.gthrcollect.data.repository.ProfileRepository
+import com.gthr.gthrcollect.model.domain.FollowDomainModel
 import com.gthr.gthrcollect.ui.profile.follow.FollowUserAdapter
-import com.gthr.gthrcollect.utils.customviews.CustomCollectionButton
-import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-import com.gthr.gthrcollect.utils.customviews.CustomFelloView
-import com.gthr.gthrcollect.utils.customviews.CustomFollowView
+import com.gthr.gthrcollect.utils.customviews.*
 import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.setImageByUrl
@@ -50,7 +52,8 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
 
     private var mainJob: Job? = null
 
-    private lateinit var mAdapter: FollowUserAdapter
+    private lateinit var mAdapter: CollectionsAdapter
+    private lateinit var mMlMain : MotionLayout
     private lateinit var mRvMain: RecyclerView
     private lateinit var mFollowers: CustomFelloView
     private lateinit var mFollowing: CustomFelloView
@@ -88,6 +91,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
 
     private fun initViews() {
         mViewBinding.run {
+            mMlMain = mlMain
             mRvMain = rvMain
             mFavourites = ccbFavourites
             mFollowers = profileLayout.follower
@@ -106,14 +110,22 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             mDisplayName = profileLayout.tvUserName
             initProgressBar(layoutProgress)
             setViewsForOtherUser()
+            setUpRecyclerView()
         }
     }
 
     private fun setViewsForOtherUser(){
-        if(!otherUserId.isNullOrEmpty()){
+        mAdapter = if(!otherUserId.isNullOrEmpty()){
             mEdit.gone()
             mBtnFollow.visible()
             mFollowing.setTypeCollection()
+            mMlMain.getConstraintSet(R.id.start)?.let { startConstraintSet ->
+                startConstraintSet.setVisibility(R.id.linearLayoutCompat, View.GONE)
+                startConstraintSet.setVisibility(R.id.collection_layout, View.GONE)
+            }
+            CollectionsAdapter(CustomProductCell.State.FOR_SALE) {  }
+        } else{
+            CollectionsAdapter(CustomProductCell.State.WANT) {  }
         }
     }
 
@@ -175,12 +187,8 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     }
 
     private fun setUpRecyclerView() {
-      /*  mAdapter = FollowUserAdapter(object : FollowUserAdapter.FollowUserListener {
-            override fun onClick(followDomainModel: FollowDomainModel?) {
-            }
-        })*/
         mRvMain.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(),2)
             mRvMain.adapter = mAdapter
         }
     }

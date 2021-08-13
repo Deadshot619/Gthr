@@ -17,7 +17,7 @@
 
         <Constraint
             android:id="@+id/tv_collection_label"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_extra_large"
             android:visibility="visible"
@@ -41,11 +41,11 @@
             android:id="@+id/selection_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_mini"
+            android:layout_marginTop="@dimen/margin_small"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/collection_layout" />
+            app:layout_constraintTop_toBottomOf="@id/tv_collection_label" />
 
     </ConstraintSet>
 
@@ -63,7 +63,7 @@
 
         <Constraint
             android:id="@+id/tv_collection_label"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_extra_large"
             android:visibility="gone"
@@ -87,11 +87,11 @@
             android:id="@+id/selection_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_mini"
+            android:layout_marginTop="@dimen/margin_small"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/collection_layout" />
+            app:layout_constraintTop_toBottomOf="@id/tv_collection_label" />
     </ConstraintSet>
 
     <Transition
