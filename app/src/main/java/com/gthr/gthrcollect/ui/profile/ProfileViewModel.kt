@@ -16,7 +16,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val repository: ProfileRepository) : BaseViewModel() {
+class ProfileViewModel(private val repository: ProfileRepository, private val otherUserId: String?) : BaseViewModel() {
 
     private var uploadImageJob: Job? = null
 
@@ -35,10 +35,6 @@ class ProfileViewModel(private val repository: ProfileRepository) : BaseViewMode
     val followingList: LiveData<Event<State<List<CollectionInfoDomainModel>>>>
         get() = _followingList
 
-    private val _userProfilePic = MutableLiveData<Event<State<String>>>()
-    val userProfilePic: LiveData<Event<State<String>>>
-        get() = _userProfilePic
-
     private val _userCollectionInfoData = MutableLiveData<Event<State<String>>>()
     val userCollectionInfoData: LiveData<Event<State<String>>>
         get() = _userCollectionInfoData
@@ -49,13 +45,23 @@ class ProfileViewModel(private val repository: ProfileRepository) : BaseViewMode
         get() = _profileImageUpload
 
     init {
-        fetchUserProfileData()
-        fetchUserProfilePic()
+        if (otherUserId == null)
+            fetchUserProfileData()
+        else
+            fetchCollectionDataFromUserId(otherUserId)
+    }
+
+    fun fetchCollectionDataFromUserId(userRefKey: String){
+        viewModelScope.launch {
+            repository.fetchOtherUserProfileData(userRefKey).collect {
+                _userCollectionInfo.value = Event(it)
+            }
+        }
     }
 
     fun fetchUserProfileData(collectionId: String=GthrCollect.prefs?.userInfoModel?.collectionId.toString()) {
         viewModelScope.launch {
-            repository.fetchUserProfileData(collectionId ).collect {
+            repository.fetchUserProfileData(collectionId).collect {
                 _userCollectionInfo.value = Event(it)
             }
         }
@@ -73,16 +79,6 @@ class ProfileViewModel(private val repository: ProfileRepository) : BaseViewMode
         viewModelScope.launch {
             repository.fetchUserFollowingList().collect {
                 _followingList.value = Event(it)
-            }
-        }
-    }
-
-
-
-    fun fetchUserProfilePic() {
-        viewModelScope.launch {
-            repository.fetchUserProfilePic().collect {
-                _userProfilePic.value = Event(it)
             }
         }
     }

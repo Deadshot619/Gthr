@@ -51,8 +51,8 @@ class CustomFelloView @JvmOverloads constructor(
                 mTvTitle.text = context.getString(R.string.title_sold)
             }
             Type.COLLECTION -> {
-                mIvMain.setImageDrawable(getImageDrawable(R.drawable.ic_sold))
                 mTvTitle.text = context.getString(R.string.lable_collection)
+                mIvMain.setImageDrawable(getImageDrawable(R.drawable.ic_collection_star))
             }
         }
     }
@@ -67,6 +67,10 @@ class CustomFelloView @JvmOverloads constructor(
 
     fun setTypeSold(){
         setCurrentType(mCurrentType)
+    }
+
+    fun setTypeCollection(){
+        setCurrentType(Type.COLLECTION)
     }
 
     fun setCount(count : String ){

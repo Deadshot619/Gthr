@@ -21,9 +21,11 @@ import com.gthr.gthrcollect.utils.extensions.showToast
 class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
     private val repository = ProfileRepository()
 
+
     override val mViewModel: ProfileViewModel by viewModels {
         MyProfileViewModelFactory(
-            repository
+            repository,
+            null
         )
     }
 
@@ -123,11 +125,9 @@ class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
 
     private fun setUpRecyclerView() {
         mAdapter = FollowUserAdapter(object : FollowUserAdapter.FollowUserListener {
-            override fun onClick(followDomainModel: CollectionInfoDomainModel?) {
+            override fun onClick(collectionInfoDomainModel: CollectionInfoDomainModel?) {
                 findNavController().navigate(
-                    FollowFragmentDirections.actionFollowFragment2ToMyProfileFragment(
-                        isOtherUser = true
-                    )
+                    FollowFragmentDirections.actionFollowFragment2ToMyProfileFragment(collectionInfoDomainModel!!.collectionId)
                 )
             }
         })

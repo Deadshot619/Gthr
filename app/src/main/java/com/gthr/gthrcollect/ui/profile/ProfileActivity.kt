@@ -26,10 +26,12 @@ class ProfileActivity : BaseActivity<ProfileViewModel, ActivityProfileBinding>()
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var mType: ProfileNavigationType
+    private var mOtherUserId: String? = null
     private lateinit var mToolbar: Toolbar
 
     override fun onBinding() {
         mType = intent.getSerializableExtra(KEY_TYPE) as ProfileNavigationType
+        mOtherUserId = intent.getStringExtra(KEY_OTHER_USER_ID)
 
         initViews()
         setUpNavGraph()
@@ -47,7 +49,7 @@ class ProfileActivity : BaseActivity<ProfileViewModel, ActivityProfileBinding>()
         findNavController(R.id.nav_host_fragment)
             .setGraph(
                 R.navigation.profile_nav_graph,
-                ProfileNavigationFragmentArgs(type = mType).toBundle()
+                ProfileNavigationFragmentArgs(mType, mOtherUserId).toBundle()
             )
     }
 
@@ -91,10 +93,12 @@ class ProfileActivity : BaseActivity<ProfileViewModel, ActivityProfileBinding>()
 
     companion object {
         private const val KEY_TYPE = "type"
+        private const val KEY_OTHER_USER_ID = "other_user_id"
 
-        fun getInstance(context: Context, type: ProfileNavigationType) =
+        fun getInstance(context: Context, type: ProfileNavigationType, otherUserID: String?) =
             Intent(context, ProfileActivity::class.java).apply {
                 putExtra(KEY_TYPE, type)
+                putExtra(KEY_OTHER_USER_ID, otherUserID)
             }
     }
 }

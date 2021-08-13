@@ -41,7 +41,8 @@ class EditProfileFragment : BaseFragment<ProfileViewModel, EditProfileFragmentBi
 
     override val mViewModel: ProfileViewModel by viewModels {
         MyProfileViewModelFactory(
-            repository
+            repository,
+            null
         )
     }
 

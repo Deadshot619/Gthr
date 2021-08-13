@@ -2,6 +2,7 @@ package com.gthr.gthrcollect.data.repository
 
 import android.net.Uri
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.gthr.gthrcollect.GthrCollect
@@ -9,8 +10,10 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
 import com.gthr.gthrcollect.model.mapper.toCollectionInfoDomainModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.CollectionInfoModel
+import com.gthr.gthrcollect.model.network.firestore.UserInfoFirestoreModel
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.constants.FirebaseStorage
+import com.gthr.gthrcollect.utils.constants.Firestore
 import com.gthr.gthrcollect.utils.extensions.updateCollectionInfoModelData
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
@@ -20,9 +23,26 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
 
 class ProfileRepository {
-
+    private val mFirestore = Firebase.firestore
     private val mFirebaseRD = Firebase.database.reference
     private val mStorageRef = Firebase.storage.reference
+
+    fun fetchOtherUserProfileData(userId: String) =
+        flow<State<CollectionInfoDomainModel>> {
+            emit(State.loading())
+
+/*            val userInfo = mFirestore.collection(Firestore.COLLECTION_USER_INFO).document(userId).get().await().toObject(
+                UserInfoFirestoreModel::class.java)*/
+
+            val collectionInfo = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(userId).get().await()
+                .getValue(CollectionInfoModel::class.java)
+
+            emit(State.Success(collectionInfo!!.toCollectionInfoDomainModel()))
+        }.catch {
+            // If exception is thrown, emit failed state along with message.
+            emit(State.failed(it.message.toString()))
+        }.flowOn(Dispatchers.IO)
 
     fun fetchUserProfileData(collectionId: String) =
         flow<State<CollectionInfoDomainModel>> {
@@ -38,23 +58,6 @@ class ProfileRepository {
             }
 
             emit(State.Success(collectionInfo!!.toCollectionInfoDomainModel()))
-        }.catch {
-            // If exception is thrown, emit failed state along with message.
-            emit(State.failed(it.message.toString()))
-        }.flowOn(Dispatchers.IO)
-
-    fun fetchUserProfilePic() =
-        flow<State<String>> {
-            emit(State.loading())
-
-            val ref = mStorageRef.child(FirebaseStorage.PROFILE_IMAGE)
-                .child(GthrCollect.prefs?.userInfoModel?.collectionId.toString())
-
-            val url = ref.downloadUrl.await()
-
-            emit(State.Success(url.toString()))
-            GthrLogger.e("url", url.toString())
-
         }.catch {
             // If exception is thrown, emit failed state along with message.
             emit(State.failed(it.message.toString()))
@@ -105,16 +108,16 @@ class ProfileRepository {
             val followersList = GthrCollect.prefs?.collectionInfoModel?.followersList
             val arrayList = mutableListOf<CollectionInfoDomainModel>()
 
-            followersList?.forEach {
+            followersList?.forEach { collectionId ->
 
                 val collectionInfo: CollectionInfoDomainModel? =
                     mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                        .child(it).get().await()
+                        .child(collectionId).get().await()
                         .getValue(
                             CollectionInfoModel::class.java
-                        )?.toCollectionInfoDomainModel()
+                        )?.toCollectionInfoDomainModel(collectionId)
 
-                GthrLogger.e("Followers", it.toString())
+                GthrLogger.e("Followers", collectionId.toString())
 
                 if (collectionInfo != null) {
                     arrayList.add(collectionInfo)
@@ -136,16 +139,16 @@ class ProfileRepository {
             val followingList = GthrCollect.prefs?.collectionInfoModel?.favoriteCollectionList
             val arrayList = mutableListOf<CollectionInfoDomainModel>()
 
-            followingList?.forEach {
+            followingList?.forEach { collectionId ->
 
                 val collectionInfo: CollectionInfoDomainModel? =
                     mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                        .child(it).get().await()
+                        .child(collectionId).get().await()
                         .getValue(
                             CollectionInfoModel::class.java
-                        )?.toCollectionInfoDomainModel()
+                        )?.toCollectionInfoDomainModel(collectionId)
 
-                GthrLogger.e("Followers", it.toString())
+                GthrLogger.e("Followers", collectionId.toString())
 
                 if (collectionInfo != null) {
                     arrayList.add(collectionInfo)

@@ -49,6 +49,6 @@ class FollowUserAdapter(
     }
 
     interface FollowUserListener {
-        fun onClick(CollectionInfoDomainModel: CollectionInfoDomainModel?)
+        fun onClick(collectionInfoDomainModel: CollectionInfoDomainModel?)
     }
 }

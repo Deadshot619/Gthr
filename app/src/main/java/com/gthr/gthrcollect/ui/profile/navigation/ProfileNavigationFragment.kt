@@ -14,10 +14,14 @@ class ProfileNavigationFragment: BaseFragment<ProfileViewModel, ProfileNavigatio
     override fun getViewBinding() = ProfileNavigationFragmentBinding.inflate(layoutInflater)
 
     private val args by navArgs<ProfileNavigationFragmentArgs>()
+
     private lateinit var mType: ProfileNavigationType
+    private var mOtherUserCollectionId: String? = null
 
     override fun onBinding() {
         mType = args.type
+        mOtherUserCollectionId = args.otherUserId
+
         navigateTo(mType)
     }
 
@@ -28,6 +32,9 @@ class ProfileNavigationFragment: BaseFragment<ProfileViewModel, ProfileNavigatio
             }
             ProfileNavigationType.FAVOURITES, ProfileNavigationType.SOLD -> {
                 findNavController().navigate(ProfileNavigationFragmentDirections.actionProfileNavigationFragmentToFavSoldFragment(profileNavigationType))
+            }
+            ProfileNavigationType.PROFILE -> {
+                findNavController().navigate(ProfileNavigationFragmentDirections.actionProfileNavigationFragmentToMyProfileFragment(mOtherUserCollectionId))
             }
         }
     }
