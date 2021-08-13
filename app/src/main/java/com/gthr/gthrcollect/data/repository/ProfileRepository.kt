@@ -164,4 +164,31 @@ class ProfileRepository {
 
         }.flowOn(Dispatchers.IO)
 
+    fun followToUser(collectionId: String) =
+        flow<State<String>> {
+            emit(State.loading())
+
+            // Adding another user to my  followersList
+            val fList = mutableListOf<String>()
+            fList.add(collectionId)
+            val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(GthrCollect.prefs?.userInfoModel?.collectionId.toString())
+                .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST)
+            data.setValue(fList).await()
+
+            // Adding Me to  another user's to favoriteCollectionList
+            val foList = mutableListOf<String>()
+            foList.add(GthrCollect.prefs?.userInfoModel?.collectionId.toString())
+            val addToFllower = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(collectionId).child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST)
+            addToFllower.setValue(foList).await()
+
+            emit(State.success(addToFllower.key.toString()))
+
+        }.catch {
+            // If exception is thrown, emit failed state along with message.
+            emit(State.failed(it.message.toString()))
+            GthrLogger.d("Faileeed", it.message.toString())
+        }.flowOn(Dispatchers.IO)
+
 }

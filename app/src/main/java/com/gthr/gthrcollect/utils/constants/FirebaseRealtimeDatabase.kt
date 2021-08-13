@@ -8,7 +8,6 @@ object FirebaseRealtimeDatabase {
     /*Common*/
     const val USER_REF_KEY = "userRefKey"
     const val PROFILE_URL_KEY = "profileImageURL"
-    const val FOLLOWER_LIST="followerList"
     const val DISPLAY_NAME="collectionDisplayName"
 
 

@@ -39,6 +39,10 @@ class ProfileViewModel(private val repository: ProfileRepository, private val ot
     val userCollectionInfoData: LiveData<Event<State<String>>>
         get() = _userCollectionInfoData
 
+    private val _followUser = MutableLiveData<Event<State<String>>>()
+    val followUser: LiveData<Event<State<String>>>
+        get() = _followUser
+
     //Variable to indicate whether user back Id image uploaded
     private val _profileImageUpload = MutableLiveData<Event<State<Boolean>>>()
     val profileImageUpload: LiveData<Event<State<Boolean>>>
@@ -97,6 +101,14 @@ class ProfileViewModel(private val repository: ProfileRepository, private val ot
         uploadImageJob = viewModelScope.launch {
             repository.uploadProfilePic(uri).collect {
                 _profileImageUpload.value = Event(it)
+            }
+        }
+    }
+
+    fun followToUser(collectionId: String) {
+        viewModelScope.launch {
+            repository.followToUser(collectionId).collect {
+                _followUser.value = Event(it)
             }
         }
     }

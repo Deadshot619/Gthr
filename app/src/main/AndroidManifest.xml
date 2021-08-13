@@ -50,6 +50,7 @@
             android:name=".ui.customcameraactivities.ImagePreview"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.receiptdetail.purchasedetails.FullProductImage" />
+        <activity android:name=".ui.profile.AllUsersList" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

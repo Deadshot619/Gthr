@@ -12,6 +12,7 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.SettingsFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
+import com.gthr.gthrcollect.ui.profile.AllUsersList
 import com.gthr.gthrcollect.ui.settings.SettingsViewModel
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.ui.test.TestActivity
@@ -70,7 +71,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToActiveOffersFragment())
         }
         mBtnPayoutInfo.setOnClickListener {
-            startActivity(Intent(requireContext(),TestActivity::class.java))
+            startActivity(Intent(requireContext(),AllUsersList::class.java))
         }
         mBtnTermsAndConditions.setOnClickListener {
             startActivity(

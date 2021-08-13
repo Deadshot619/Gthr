@@ -145,6 +145,25 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 }
             }
         }
+
+        mViewModel.followUser.observe(viewLifecycleOwner, {
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mBtnFollow.mCurrentType = CustomFollowView.Type.FOLLOWING
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        })
+
     }
 
     private fun setUpClickListeners() {
@@ -169,6 +188,12 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                     about = mAbout.text.toString().trim(), imageURl
                 )
             )
+        }
+
+        mBtnFollow.setOnClickListener{
+            mViewModel.followToUser(otherUserId!!)
+
+
         }
 
         mCctvList.forEach { view ->
