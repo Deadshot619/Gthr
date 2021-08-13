@@ -101,28 +101,14 @@
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/iv_product" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:paddingVertical="@dimen/margin_extra_small"
-                    android:id="@+id/tv_recent_sales_see_all"
+
+                <com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
+                    android:id="@+id/csav_recent_sales_see_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:text="@string/text_product_detail_see_all"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_recent_sales"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintTop_toTopOf="@+id/tv_recent_sales" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_recent_sell_see_all"
-                    android:layout_width="@dimen/size_see_all_image_product_detail"
-                    android:layout_height="@dimen/size_see_all_image_product_detail"
-                    android:padding="@dimen/margin_medium"
-                    android:src="@drawable/ic_see_all"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_recent_sales_see_all"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_recent_sales_see_all"
-                    app:layout_constraintTop_toTopOf="@+id/tv_recent_sales_see_all" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_recent_sales"/>
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -147,28 +133,13 @@
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/rv_recent_sell" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_up_for_sell_see_all"
+                <com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
+                    android:id="@+id/csav_up_for_sales_see_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:text="@string/text_product_detail_see_all"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    android:paddingVertical="@dimen/margin_extra_small"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_up_for_sell"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintTop_toTopOf="@+id/tv_up_for_sell" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_up_for_sell_see_all"
-                    android:layout_width="@dimen/size_see_all_image_product_detail"
-                    android:layout_height="@dimen/size_see_all_image_product_detail"
-                    android:padding="@dimen/margin_medium"
-                    android:src="@drawable/ic_see_all"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_up_for_sell_see_all"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_up_for_sell_see_all"
-                    app:layout_constraintTop_toTopOf="@+id/tv_up_for_sell_see_all" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_up_for_sell"/>
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -288,7 +259,7 @@
                     android:id="@+id/group_up_for_sell"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:constraint_referenced_ids=",tv_up_for_sell,rv_up_for_sell,tv_up_for_sell_see_all,iv_up_for_sell_see_all" />
+                    app:constraint_referenced_ids=",tv_up_for_sell,rv_up_for_sell,csav_up_for_sales_see_all" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -128,29 +128,13 @@
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@+id/tv_popular_collections" />
 
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:paddingVertical="@dimen/margin_extra_small"
-            android:id="@+id/tv_popular_collections_see_all"
+        <com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
+            android:id="@+id/csav_popular_collections_see_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato"
-            android:text="@string/text_product_detail_see_all"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_small"
             app:layout_constraintBottom_toBottomOf="@+id/tv_your_favorite_binders"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintTop_toTopOf="@+id/tv_popular_collections" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_popular_collections_see_all"
-            android:layout_width="@dimen/size_see_all_image_product_detail"
-            android:layout_height="@dimen/size_see_all_image_product_detail"
-            android:padding="@dimen/margin_medium"
-            android:src="@drawable/ic_see_all"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_popular_collections_see_all"
-            app:layout_constraintEnd_toStartOf="@+id/tv_popular_collections_see_all"
-            app:layout_constraintTop_toTopOf="@+id/tv_popular_collections_see_all" />
+            app:layout_constraintTop_toTopOf="@+id/tv_popular_collections"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:nestedScrollingEnabled="false"
@@ -161,7 +145,7 @@
             android:layout_marginTop="@dimen/margin_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_popular_collections_see_all" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_your_favorite_binders" />
 
         <!--Progress Bar-->
         <include

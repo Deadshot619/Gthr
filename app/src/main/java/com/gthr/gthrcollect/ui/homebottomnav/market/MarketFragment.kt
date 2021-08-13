@@ -1,7 +1,6 @@
 package com.gthr.gthrcollect.ui.homebottomnav.market
 
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +11,8 @@ import com.gthr.gthrcollect.databinding.MarketFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
-import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
 import com.gthr.gthrcollect.utils.enums.SearchType
 import com.gthr.gthrcollect.utils.extensions.showToast
 import kotlinx.coroutines.Job
@@ -39,8 +38,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
     private lateinit var mFunko: CustomCollectionTypeView
 
     private lateinit var mRvPopularCollections : RecyclerView
-    private lateinit var mIvPopularCollectionsSeeAll : AppCompatImageView
-    private lateinit var mTvPopularCollectionsSeeAll : AppCompatTextView
+    private lateinit var mPopularCollectionsSeeAll : CustomSeeAllView
     private lateinit var mBannerImage : AppCompatImageView
 
     //List of Collection filter views
@@ -61,8 +59,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
             mSealed = cctSealed
             mFunko = cctFunko
             mRvPopularCollections = rvPopularCollections
-            mIvPopularCollectionsSeeAll = ivPopularCollectionsSeeAll
-            mTvPopularCollectionsSeeAll = tvPopularCollectionsSeeAll
+            mPopularCollectionsSeeAll = csavPopularCollectionsSeeAll
             mBannerImage = ivBanner
             mCctvList = listOf(mAll, mCards, mSealed, mFunko)
             initProgressBar(mViewBinding.layoutProgress)
@@ -102,12 +99,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
                 view.selectView()
             }
         }
-
-        mIvPopularCollectionsSeeAll.setOnClickListener {
-            goToSearch()
-        }
-
-        mTvPopularCollectionsSeeAll.setOnClickListener {
+        mPopularCollectionsSeeAll.setOnClickListener {
             goToSearch()
         }
     }

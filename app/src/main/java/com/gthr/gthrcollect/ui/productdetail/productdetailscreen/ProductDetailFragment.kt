@@ -18,6 +18,7 @@ import com.gthr.gthrcollect.ui.productdetail.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
 import com.gthr.gthrcollect.utils.customviews.CustomProductButton
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
+import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
@@ -36,12 +37,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var mMcvDescription : MaterialCardView
     private lateinit var mBtnCenter : CustomProductButton
 
-    private lateinit var mIvRecentSellSeeAll : AppCompatImageView
-    private lateinit var mTvRecentSellSeeAll : AppCompatTextView
-
-    private lateinit var mIvUpForSellSeeAll : AppCompatImageView
-    private lateinit var mTvUpForSellSeeAll : AppCompatTextView
-
+    private lateinit var mRecentSellSeeAll : CustomSeeAllView
+    private lateinit var mUpForSellSeeAll : CustomSeeAllView
 
     private val args by navArgs<ProductDetailFragmentArgs>()
 
@@ -56,16 +53,10 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpOnClickListeners() {
-        mIvRecentSellSeeAll.setOnClickListener {
+        mRecentSellSeeAll.setOnClickListener {
             recentSellSeeAll()
         }
-        mTvRecentSellSeeAll.setOnClickListener {
-            recentSellSeeAll()
-        }
-        mTvUpForSellSeeAll.setOnClickListener {
-            upForSellSeeAll()
-        }
-        mIvUpForSellSeeAll.setOnClickListener {
+        mUpForSellSeeAll.setOnClickListener {
             upForSellSeeAll()
         }
     }
@@ -200,10 +191,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             mFlTop = it.flTop
             mFlDetails = it.flDetail
             mMcvDescription = it.cvCardDescription
-            mIvRecentSellSeeAll = it.ivRecentSellSeeAll
-            mTvRecentSellSeeAll = it.tvRecentSalesSeeAll
-            mIvUpForSellSeeAll = it.ivUpForSellSeeAll
-            mTvUpForSellSeeAll = it.tvUpForSellSeeAll
+            mRecentSellSeeAll = it.csavRecentSalesSeeAll
+            mUpForSellSeeAll = it.csavUpForSalesSeeAll
             mBtnCenter = it.btnCenter
         }
     }
