@@ -115,7 +115,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     }
 
     private fun setViewsForOtherUser(){
-        mAdapter = if(!otherUserId.isNullOrEmpty()){
+        mAdapter = if(isOtherUser()){
             mEdit.gone()
             mBtnFollow.visible()
             mFollowing.setTypeCollection()
@@ -152,7 +152,8 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             goToProfilePage(ProfileNavigationType.FOLLOWERS)
         }
         mFollowing.setOnClickListener {
-            goToProfilePage(ProfileNavigationType.FOLLOWING)
+            if (!isOtherUser())
+                goToProfilePage(ProfileNavigationType.FOLLOWING)
         }
         mSold.setOnClickListener {
             goToProfilePage(ProfileNavigationType.SOLD)
@@ -165,7 +166,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 EditProfileActivity.getInstance(
                     requireContext(),
                     display_name = mDisplayName.text.toString().trim(),
-                    about = mAbout.text.toString().trim(),imageURl
+                    about = mAbout.text.toString().trim(), imageURl
                 )
             )
         }
@@ -181,7 +182,12 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         mAbout.text = data.about
         mDisplayName.text = data.collectionDisplayName
         mFollowers.setCount(data.followersList?.size.toString())
-        mFollowing.setCount(data.favoriteCollectionList?.size.toString())
+        mFollowing.setCount(
+            if (isOtherUser())
+                "0"
+            else
+                data.favoriteCollectionList?.size.toString()
+        )
         imageURl = data.profileImage
         mProfilePic.setImageByUrl(imageURl)
     }
@@ -208,6 +214,9 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             }
         }
     }
+
+    //Method to check if current user is Other User i.e. viewing other's profile
+    private fun isOtherUser() = !otherUserId.isNullOrEmpty()
 
     override fun onDestroy() {
         super.onDestroy()
