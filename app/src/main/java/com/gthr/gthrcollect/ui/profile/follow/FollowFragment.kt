@@ -125,9 +125,9 @@ class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
 
     private fun setUpRecyclerView() {
         mAdapter = FollowUserAdapter(object : FollowUserAdapter.FollowUserListener {
-            override fun onClick(collectionInfoDomainModel: CollectionInfoDomainModel?) {
+            override fun onClick(collectionInfoDomainModel: CollectionInfoDomainModel) {
                 findNavController().navigate(
-                    FollowFragmentDirections.actionFollowFragment2ToMyProfileFragment(collectionInfoDomainModel!!.collectionId)
+                    FollowFragmentDirections.actionFollowFragment2ToMyProfileFragment(collectionInfoDomainModel.collectionId)
                 )
             }
         })

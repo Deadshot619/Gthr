@@ -40,7 +40,7 @@ class FollowUserAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: CollectionInfoDomainModel, callback: FollowUserListener) {
             binding.root.setOnClickListener {
-                callback.onClick(null)
+                callback.onClick(data)
             }
 
             binding.btnEditAccountInfo.mTvTitle.setText(data.collectionDisplayName)
@@ -49,6 +49,6 @@ class FollowUserAdapter(
     }
 
     interface FollowUserListener {
-        fun onClick(collectionInfoDomainModel: CollectionInfoDomainModel?)
+        fun onClick(collectionInfoDomainModel: CollectionInfoDomainModel)
     }
 }

@@ -1,11 +1,14 @@
 package com.gthr.gthrcollect.ui.profile.my_profile
 
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.MyProfileBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
@@ -51,6 +54,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     private var mainJob: Job? = null
 
     private lateinit var mAdapter: FollowUserAdapter
+    private lateinit var mMlMain : MotionLayout
     private lateinit var mRvMain: RecyclerView
     private lateinit var mFollowers: CustomFelloView
     private lateinit var mFollowing: CustomFelloView
@@ -88,6 +92,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
 
     private fun initViews() {
         mViewBinding.run {
+            mMlMain = mlMain
             mRvMain = rvMain
             mFavourites = ccbFavourites
             mFollowers = profileLayout.follower
@@ -114,6 +119,10 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             mEdit.gone()
             mBtnFollow.visible()
             mFollowing.setTypeCollection()
+            mMlMain.getConstraintSet(R.id.start)?.let { startConstraintSet ->
+                startConstraintSet.setVisibility(R.id.linearLayoutCompat, View.GONE)
+                startConstraintSet.setVisibility(R.id.collection_layout, View.GONE)
+            }
         }
     }
 
