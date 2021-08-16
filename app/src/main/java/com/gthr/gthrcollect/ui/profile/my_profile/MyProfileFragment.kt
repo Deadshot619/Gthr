@@ -9,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.MyProfileBinding
 import com.gthr.gthrcollect.model.State
@@ -48,12 +49,13 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             otherUserId
         )
     }
+
     override fun getViewBinding() = MyProfileBinding.inflate(layoutInflater)
 
     private var mainJob: Job? = null
 
     private lateinit var mAdapter: CollectionsAdapter
-    private lateinit var mMlMain : MotionLayout
+    private lateinit var mMlMain: MotionLayout
     private lateinit var mRvMain: RecyclerView
     private lateinit var mFollowers: CustomFelloView
     private lateinit var mFollowing: CustomFelloView
@@ -85,7 +87,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
 
         initViews()
         setUpClickListeners()
-     //   setUpRecyclerView()
+        //   setUpRecyclerView()
         setUpObservers()
     }
 
@@ -114,8 +116,8 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         }
     }
 
-    private fun setViewsForOtherUser(){
-        mAdapter = if(isOtherUser()){
+    private fun setViewsForOtherUser() {
+        mAdapter = if (isOtherUser()) {
             mEdit.gone()
             mBtnFollow.visible()
             mFollowing.setTypeCollection()
@@ -123,9 +125,9 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 startConstraintSet.setVisibility(R.id.linearLayoutCompat, View.GONE)
                 startConstraintSet.setVisibility(R.id.collection_layout, View.GONE)
             }
-            CollectionsAdapter(CustomProductCell.State.FOR_SALE) {  }
-        } else{
-            CollectionsAdapter(CustomProductCell.State.WANT) {  }
+            CollectionsAdapter(CustomProductCell.State.FOR_SALE) { }
+        } else {
+            CollectionsAdapter(CustomProductCell.State.WANT) { }
         }
     }
 
@@ -147,14 +149,34 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         }
 
         mViewModel.followUser.observe(viewLifecycleOwner, {
-            it.contentIfNotHandled.let {
+            it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> {
                         showProgressBar()
                     }
                     is State.Success -> {
                         showProgressBar(false)
-                        mBtnFollow.mCurrentType = CustomFollowView.Type.FOLLOWING
+                        showToast(it.data)
+                        mBtnFollow.setFollowing()
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        })
+
+        mViewModel.unFollowUser.observe(viewLifecycleOwner, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        showToast(it.data)
+                        mBtnFollow.setFollow()
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -190,10 +212,12 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             )
         }
 
-        mBtnFollow.setOnClickListener{
-            mViewModel.followToUser(otherUserId!!)
-
-
+        mBtnFollow.setOnClickListener {
+            if (mBtnFollow.mCurrentType == CustomFollowView.Type.FOLLOW) {
+                mViewModel.followToUser(otherUserId!!)
+            } else {
+                mViewModel.unFollowToUser(otherUserId!!)
+            }
         }
 
         mCctvList.forEach { view ->
@@ -215,11 +239,21 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         )
         imageURl = data.profileImage
         mProfilePic.setImageByUrl(imageURl)
+
+        if (isOtherUser()) {
+            for (item: String in data.followersList!!) {
+                if (item == GthrCollect.prefs?.userInfoModel?.collectionId.toString()) {
+                    mBtnFollow.setFollowing()
+                    break
+                }
+            }
+        }
+
     }
 
     private fun setUpRecyclerView() {
         mRvMain.apply {
-            layoutManager = GridLayoutManager(requireContext(),2)
+            layoutManager = GridLayoutManager(requireContext(), 2)
             mRvMain.adapter = mAdapter
         }
     }

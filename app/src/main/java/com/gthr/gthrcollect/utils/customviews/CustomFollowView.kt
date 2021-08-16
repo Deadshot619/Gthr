@@ -50,6 +50,7 @@ class CustomFollowView @JvmOverloads constructor(
             Type.FOLLOWING -> {
                 this.text = context.getString(R.string.text_following)
                 this.background = getImageDrawable(R.drawable.bg_custom_collection_type_blue)
+                this.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                 this.setTextColor(getResolvedColor(R.color.white))
             }
             Type.FOLLOW -> {
@@ -68,6 +69,14 @@ class CustomFollowView @JvmOverloads constructor(
                 this.setTextColor(getResolvedColor(R.color.text_color_dark_grey))
             }
         }
+    }
+
+    fun setFollow(){
+        setType(Type.FOLLOW)
+    }
+
+    fun setFollowing(){
+        setType(Type.FOLLOWING)
     }
 
     enum class Type {

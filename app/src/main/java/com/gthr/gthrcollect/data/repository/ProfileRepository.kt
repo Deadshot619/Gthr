@@ -1,6 +1,8 @@
 package com.gthr.gthrcollect.data.repository
 
 import android.net.Uri
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -10,10 +12,8 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
 import com.gthr.gthrcollect.model.mapper.toCollectionInfoDomainModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.CollectionInfoModel
-import com.gthr.gthrcollect.model.network.firestore.UserInfoFirestoreModel
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.constants.FirebaseStorage
-import com.gthr.gthrcollect.utils.constants.Firestore
 import com.gthr.gthrcollect.utils.extensions.updateCollectionInfoModelData
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
@@ -170,20 +170,96 @@ class ProfileRepository {
 
             // Adding another user to my  followersList
             val fList = mutableListOf<String>()
-            fList.add(collectionId)
-            val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(GthrCollect.prefs?.userInfoModel?.collectionId.toString())
-                .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST)
-            data.setValue(fList).await()
+            val myCollectionId = GthrCollect.prefs?.userInfoModel?.collectionId.toString()
+
+            // Checking My following list has data
+            val isFollowersAvailable =
+                mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                    .child(collectionId)
+                    .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST).get().await().hasChildren()
+
+            // Retriving Follower's list
+            if (isFollowersAvailable) {
+                val getList = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                    .child(collectionId)
+                    .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST).get().await().getValue()
+                fList.addAll(getList as ArrayList<String>)
+            }
+            fList.add(myCollectionId)
+            // updating the List
+            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(collectionId)
+                .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST).setValue(fList).await()
 
             // Adding Me to  another user's to favoriteCollectionList
             val foList = mutableListOf<String>()
-            foList.add(GthrCollect.prefs?.userInfoModel?.collectionId.toString())
-            val addToFllower = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(collectionId).child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST)
-            addToFllower.setValue(foList).await()
 
-            emit(State.success(addToFllower.key.toString()))
+            // Checking other user has follower data
+            val isFollowing = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(myCollectionId)
+                .child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST).get().await()
+                .hasChildren()
+
+            // Retriving Following list
+            if (isFollowing) {
+                val favList = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                    .child(myCollectionId)
+                    .child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST).get().await()
+                    .getValue()
+
+                foList.addAll(favList as ArrayList<String>)
+            }
+            foList.add(collectionId)
+            // updating the List
+            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(myCollectionId).child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST)
+                .setValue(foList).await()
+
+            emit(State.success("Followed"))
+
+        }.catch {
+            // If exception is thrown, emit failed state along with message.
+            emit(State.failed(it.message.toString()))
+            GthrLogger.d("Faileeed", it.message.toString())
+        }.flowOn(Dispatchers.IO)
+
+    fun unFollowToUser(collectionId: String) =
+        flow<State<String>> {
+            emit(State.loading())
+
+            // Adding another user to my  followersList
+            val fList = mutableListOf<String>()
+            val myCollectionId = GthrCollect.prefs?.userInfoModel?.collectionId.toString()
+
+            // Retriving Follower's list
+            val getList = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(collectionId)
+                .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST).get().await().getValue()
+            fList.addAll(getList as ArrayList<String>)
+            fList.remove(myCollectionId)
+
+            // updating the List
+            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(collectionId)
+                .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST).setValue(fList).await()
+
+            // Adding Me to  another user's to favoriteCollectionList
+            val foList = mutableListOf<String>()
+
+            // Retriving Following list
+            val favList = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(myCollectionId)
+                .child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST).get().await().getValue()
+
+            foList.addAll(favList as ArrayList<String>)
+            foList.remove(collectionId)
+
+            // updating the List
+            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(myCollectionId).child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST)
+                .setValue(foList).await()
+
+            emit(State.success("Un-Followed"))
 
         }.catch {
             // If exception is thrown, emit failed state along with message.
