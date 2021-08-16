@@ -2,8 +2,6 @@ package com.gthr.gthrcollect.ui.productdetail.productdetailscreen
 
 
 import android.widget.FrameLayout
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.*
+import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
 import com.gthr.gthrcollect.ui.productdetail.adapter.ProductAdapter
@@ -35,7 +34,10 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var mFlTop : FrameLayout
     private lateinit var mFlDetails : FrameLayout
     private lateinit var mMcvDescription : MaterialCardView
-    private lateinit var mBtnCenter : CustomProductButton
+
+    private lateinit var mBtnBuy : CustomProductButton
+    private lateinit var mBtnCollect : CustomProductButton
+    private lateinit var mBtnSell : CustomProductButton
 
     private lateinit var mRecentSellSeeAll : CustomSeeAllView
     private lateinit var mUpForSellSeeAll : CustomSeeAllView
@@ -58,6 +60,9 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         }
         mUpForSellSeeAll.setOnClickListener {
             upForSellSeeAll()
+        }
+        mBtnSell.setOnClickListener {
+            startActivity(AskFlowActivity.getInstance(requireContext()))
         }
     }
 
@@ -82,7 +87,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpFunko() {
-        mBtnCenter.text = getString(R.string.text_btn_product_detail)
         val topView = LayoutProductDetailToyTopBinding.inflate(layoutInflater)
         mFlTop.addView(topView.root)
 
@@ -102,7 +106,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpSealed() {
-        mBtnCenter.text = getString(R.string.text_btn_product_detail)
         val topView = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
         mFlTop.addView(topView.root)
 
@@ -111,7 +114,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun seUpYugioh() {
-        mBtnCenter.text = getString(R.string.text_btn_product_detail)
         val topView = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
         mFlTop.addView(topView.root)
 
@@ -132,7 +134,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpMGT() {
-        mBtnCenter.text = getString(R.string.text_btn_product_detail)
         val topView = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
         mFlTop.addView(topView.root)
 
@@ -193,7 +194,10 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             mMcvDescription = it.cvCardDescription
             mRecentSellSeeAll = it.csavRecentSalesSeeAll
             mUpForSellSeeAll = it.csavUpForSalesSeeAll
-            mBtnCenter = it.btnCenter
+
+            mBtnBuy = it.btnBuy
+            mBtnCollect = it.btnCollect
+            mBtnSell = it.btnSell
         }
     }
 }

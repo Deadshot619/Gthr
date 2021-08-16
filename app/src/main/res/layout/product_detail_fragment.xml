@@ -273,9 +273,7 @@
                     android:layout_height="wrap_content"
                     app:constraint_referenced_ids=",tv_up_for_sell,rv_up_for_sell,csav_up_for_sales_see_all" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </ScrollView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -291,6 +289,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.gthr.gthrcollect.utils.customviews.CustomProductButton
+                android:id="@+id/btn_buy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -298,15 +297,16 @@
                 app:custom_product_button_state="BUY" />
 
             <com.gthr.gthrcollect.utils.customviews.CustomProductButton
-                android:id="@+id/btn_center"
+                android:id="@+id/btn_collect"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_extra_small"
                 android:layout_weight="1"
-                android:text="@string/text_btn_own_product_detail"
+                android:text="@string/text_btn_collect_product_detail"
                 app:custom_product_button_state="OWN" />
 
             <com.gthr.gthrcollect.utils.customviews.CustomProductButton
+                android:id="@+id/btn_sell"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -314,6 +314,5 @@
                 app:custom_product_button_state="SELL" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
