@@ -1,6 +1,8 @@
 package com.gthr.gthrcollect.ui.homebottomnav.feed
 
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.FeedFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
@@ -20,12 +22,22 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
     private lateinit var mSealed: CustomCollectionTypeView
     private lateinit var mFunko: CustomCollectionTypeView
 
+    private lateinit var mRvMain : RecyclerView
+
     //List of Collection filter views
     private lateinit var mCctvList: List<CustomCollectionTypeView>
 
     override fun onBinding() {
         initViews()
         setUpClickListeners()
+        setUpFeedRecyclerView()
+    }
+
+    private fun setUpFeedRecyclerView() {
+        mRvMain.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = FeedAdapter()
+        }
     }
 
     private fun initViews() {
@@ -34,6 +46,7 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
             mCards = cctCards
             mSealed = cctSealed
             mFunko = cctFunko
+            mRvMain = rvMain
             mCctvList = listOf(mAll, mCards, mSealed, mFunko)
         }
     }
