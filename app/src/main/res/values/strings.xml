@@ -404,6 +404,13 @@
     <string name="text_popular_collections_market">Popular Collections</string>
     <string name="text_your_favorite_binders_market">Your Favorite Binders</string>
 
+    <!-- feed -->
+    <string name="text_feed_new_to_collection">New To Collection</string>
+    <string name="text_feed_new_ask">New Ask</string>
+    <string name="text_feed_new_to_buy_list">New To Buylist</string>
+    <string name="text_feed_license">License</string>
+    <string name="text_feed_hash">#</string>
+
     <!--Ask flow-->
     <string name="text_place_an_ask">Place an Ask</string>
 </resources>

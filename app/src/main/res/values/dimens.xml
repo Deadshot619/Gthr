@@ -246,5 +246,8 @@
     <!-- Market -->
     <dimen name="height_banner_market">94dp</dimen>
 
+    <!-- Feed -->
+    <dimen name="margin_bottom_feed">40dp</dimen>
+
 
 </resources>

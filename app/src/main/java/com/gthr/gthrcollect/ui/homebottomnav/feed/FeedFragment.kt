@@ -1,13 +1,6 @@
 package com.gthr.gthrcollect.ui.homebottomnav.feed
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.FeedFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
