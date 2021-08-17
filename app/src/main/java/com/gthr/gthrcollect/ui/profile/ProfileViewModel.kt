@@ -77,15 +77,15 @@ class ProfileViewModel(private val repository: ProfileRepository, private val ot
 
     fun followersData() {
         viewModelScope.launch {
-            repository.fetchUserFollowerList().collect {
+            repository.fetchMyFollowing().collect {
                 _followersList.value = Event(it)
             }
         }
     }
 
-    fun followingsData() {
+    fun myFollowers(collectionId: String) {
         viewModelScope.launch {
-            repository.fetchUserFollowingList().collect {
+            repository.fetchMyFollowersList(collectionId).collect {
                 _followingList.value = Event(it)
             }
         }

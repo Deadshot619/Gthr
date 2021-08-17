@@ -28,7 +28,7 @@ class ProfileNavigationFragment: BaseFragment<ProfileViewModel, ProfileNavigatio
     private fun navigateTo(profileNavigationType: ProfileNavigationType){
         when(profileNavigationType){
             ProfileNavigationType.FOLLOWERS, ProfileNavigationType.FOLLOWING -> {
-                findNavController().navigate(ProfileNavigationFragmentDirections.actionProfileNavigationFragmentToFollowFragment2(profileNavigationType))
+                findNavController().navigate(ProfileNavigationFragmentDirections.actionProfileNavigationFragmentToFollowFragment2(profileNavigationType,mOtherUserCollectionId))
             }
             ProfileNavigationType.FAVOURITES, ProfileNavigationType.SOLD -> {
                 findNavController().navigate(ProfileNavigationFragmentDirections.actionProfileNavigationFragmentToFavSoldFragment(profileNavigationType))

@@ -100,9 +100,8 @@ class ProfileRepository {
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
-    fun fetchUserFollowerList() =
+    fun fetchMyFollowing() =
         flow<State<List<CollectionInfoDomainModel>>> {
-
             emit(State.loading())
 
             val followersList = GthrCollect.prefs?.collectionInfoModel?.followersList
@@ -132,35 +131,43 @@ class ProfileRepository {
 
         }.flowOn(Dispatchers.IO)
 
-    fun fetchUserFollowingList() =
+    fun fetchMyFollowersList(collectionId: String) =
         flow<State<List<CollectionInfoDomainModel>>> {
 
             emit(State.loading())
-            val followingList = GthrCollect.prefs?.collectionInfoModel?.favoriteCollectionList
+
+            val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(collectionId)
+                .child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST).get().await()
+
             val arrayList = mutableListOf<CollectionInfoDomainModel>()
 
-            followingList?.forEach { collectionId ->
+            if (data.hasChildren()) {
+                val followingList = data.getValue() as List<String>
 
-                val collectionInfo: CollectionInfoDomainModel? =
-                    mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                        .child(collectionId).get().await()
-                        .getValue(
-                            CollectionInfoModel::class.java
-                        )?.toCollectionInfoDomainModel(collectionId)
+                followingList.forEach { collectionId ->
 
-                GthrLogger.e("Followers", collectionId.toString())
+                    val collectionInfo: CollectionInfoDomainModel? =
+                        mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                            .child(collectionId).get().await()
+                            .getValue(
+                                CollectionInfoModel::class.java
+                            )?.toCollectionInfoDomainModel(collectionId)
 
-                if (collectionInfo != null) {
-                    arrayList.add(collectionInfo)
+                    GthrLogger.e("MyFollowers", collectionId.toString())
+
+                    if (collectionInfo != null) {
+                        arrayList.add(collectionInfo)
+                    }
                 }
-
             }
             emit(State.Success(arrayList))
 
         }.catch {
             // If exception is thrown, emit failed state along with message.
             emit(State.failed(it.message.toString()))
-            GthrLogger.e("Followers", it.message.toString())
+            print(it.cause?.message)
+            GthrLogger.e("MyFollowers", it.message.toString())
 
         }.flowOn(Dispatchers.IO)
 

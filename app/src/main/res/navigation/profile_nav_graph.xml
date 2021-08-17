@@ -38,6 +38,12 @@
         <argument
             android:name="type"
             app:argType="com.gthr.gthrcollect.utils.enums.ProfileNavigationType" />
+        <argument
+            android:name="userCId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="" />
+
         <action
             android:id="@+id/action_followFragment2_to_myProfileFragment"
             app:destination="@id/myProfileFragment" />

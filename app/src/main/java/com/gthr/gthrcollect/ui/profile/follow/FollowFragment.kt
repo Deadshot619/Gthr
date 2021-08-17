@@ -5,6 +5,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.FollowFragmentBinding
 import com.gthr.gthrcollect.model.State
@@ -33,6 +34,7 @@ class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
 
     private val args by navArgs<FollowFragmentArgs>()
     private lateinit var mType: ProfileNavigationType
+    private var otherUserId: String? =null
 
     private lateinit var mAdapter: FollowUserAdapter
     private lateinit var mRvMain: RecyclerView
@@ -40,6 +42,7 @@ class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
 
     override fun onBinding() {
         mType = args.type
+        otherUserId = args.userCId
 
         initViews()
         setUpViews(mType)
@@ -47,9 +50,12 @@ class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
         setUpObservers()
 
         if (mType == ProfileNavigationType.FOLLOWERS) {
-            mViewModel.followersData()
+            if (otherUserId.isNullOrEmpty())
+                mViewModel.myFollowers(GthrCollect.prefs?.userInfoModel?.collectionId.toString())
+            else
+                mViewModel.myFollowers(otherUserId!!)
         } else {
-            mViewModel.followingsData()
+            mViewModel.followersData()
         }
 
     }

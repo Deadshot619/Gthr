@@ -190,7 +190,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
 
     private fun setUpClickListeners() {
         mFollowers.setOnClickListener {
-            goToProfilePage(ProfileNavigationType.FOLLOWERS)
+            goToProfilePage(ProfileNavigationType.FOLLOWERS,otherUserId)
         }
         mFollowing.setOnClickListener {
             if (!isOtherUser())
@@ -230,12 +230,12 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     private fun setData(data: CollectionInfoDomainModel) {
         mAbout.text = data.about
         mDisplayName.text = data.collectionDisplayName
-        mFollowers.setCount(data.followersList?.size.toString())
+        mFollowers.setCount(data.favoriteCollectionList?.size.toString())
         mFollowing.setCount(
             if (isOtherUser())
                 "0"
             else
-                data.favoriteCollectionList?.size.toString()
+                data.followersList?.size.toString()
         )
         imageURl = data.profileImage
         mProfilePic.setImageByUrl(imageURl)
@@ -258,8 +258,8 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         }
     }
 
-    private fun goToProfilePage(type: ProfileNavigationType) {
-        startActivity(ProfileActivity.getInstance(requireContext(), type, null))
+    private fun goToProfilePage(type: ProfileNavigationType, userId : String?=null) {
+        startActivity(ProfileActivity.getInstance(requireContext(), type,  userId))
     }
 
     //Method to select Single Collection Filter
