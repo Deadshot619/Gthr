@@ -32,6 +32,7 @@ import com.gthr.gthrcollect.utils.logger.GthrLogger
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -190,7 +191,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
 
     private fun setUpClickListeners() {
         mFollowers.setOnClickListener {
-            goToProfilePage(ProfileNavigationType.FOLLOWERS,otherUserId)
+            goToProfilePage(ProfileNavigationType.FOLLOWERS, otherUserId)
         }
         mFollowing.setOnClickListener {
             if (!isOtherUser())
@@ -230,12 +231,12 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     private fun setData(data: CollectionInfoDomainModel) {
         mAbout.text = data.about
         mDisplayName.text = data.collectionDisplayName
-        mFollowers.setCount(data.favoriteCollectionList?.size.toString())
+        mFollowers.setCount(data.followersList?.size.toString())
         mFollowing.setCount(
             if (isOtherUser())
                 "0"
             else
-                data.followersList?.size.toString()
+                data.favoriteCollectionList?.size.toString()
         )
         imageURl = data.profileImage
         mProfilePic.setImageByUrl(imageURl)

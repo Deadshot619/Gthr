@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.ui.profile.editprofile
+package com.gthr.gthrcollect.ui.editprofile.editprofileview
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
@@ -17,6 +17,8 @@ import com.gthr.gthrcollect.databinding.EditProfileFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.editprofile.EditProfileViewModel
+import com.gthr.gthrcollect.ui.editprofile.EditProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileViewModel
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
@@ -32,17 +34,16 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.IOException
 
-class EditProfileFragment : BaseFragment<ProfileViewModel, EditProfileFragmentBinding>() {
+class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragmentBinding>() {
 
     val REQUEST_IMAGE_CAPTURE = 1
     private val repository = ProfileRepository()
     private var latestTmpUri: Uri? = null
     lateinit var uri: Uri
 
-    override val mViewModel: ProfileViewModel by viewModels {
-        MyProfileViewModelFactory(
-            repository,
-            null
+    override val mViewModel: EditProfileViewModel by viewModels {
+        EditProfileViewModelFactory(
+            repository
         )
     }
 
@@ -213,12 +214,14 @@ class EditProfileFragment : BaseFragment<ProfileViewModel, EditProfileFragmentBi
                         mViewModel.uploadProfileImage(uri)
                     } catch (e: IOException) {
                         e.printStackTrace()
+                        print(e.message)
                         GthrLogger.e("Exception", e.message!!)
                         //    showToast(e.message!!)
                     }
                 } catch (e: IllegalArgumentException) {
                     GthrLogger.e("Exception", e.message!!)
                     e.printStackTrace()
+                    print(e.message)
                     //  showToast(e.message!!)
                 }
             }
@@ -233,6 +236,7 @@ class EditProfileFragment : BaseFragment<ProfileViewModel, EditProfileFragmentBi
 
                 } catch (ex: Exception) {
                     ex.printStackTrace()
+                    print(ex.message)
                 }
             }
 

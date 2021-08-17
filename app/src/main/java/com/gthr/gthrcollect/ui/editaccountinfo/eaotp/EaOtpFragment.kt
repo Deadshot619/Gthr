@@ -145,7 +145,9 @@ class EaOtpFragment : BaseFragment<EditAccountInfoViewModel, EaOtpFragmentBindin
                     }
                     is State.Success -> {
                         showProgressBar(false)
-                        mViewModel.addUserDataFirestore(mViewModel.userInfoLiveData.value!!, it.data)
+                        mViewModel.addUserDataFirestore(mViewModel.userInfoLiveData.value!!.apply {
+                            this.collectionId = it.data
+                        }, it.data)
                         prefs?.updateCollectionInfoModelData(mViewModel.userInfoLiveData.value!!.toRealtimeDatabaseModel().toCollectionInfoDomainModel())
                     }
                     is State.Failed -> {

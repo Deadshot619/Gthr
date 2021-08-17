@@ -14,7 +14,7 @@ import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityEditProfileBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
-import com.gthr.gthrcollect.ui.profile.editprofile.EditProfileFragment
+import com.gthr.gthrcollect.ui.editprofile.editprofileview.EditProfileFragment
 import com.gthr.gthrcollect.ui.settings.SettingsActivity
 
 class EditProfileActivity : BaseActivity<EditProfileViewModel, ActivityEditProfileBinding>() {

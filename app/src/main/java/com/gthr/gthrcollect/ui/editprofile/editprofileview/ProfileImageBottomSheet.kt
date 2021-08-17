@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.ui.profile.editprofile
+package com.gthr.gthrcollect.ui.editprofile.editprofileview
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -60,8 +60,8 @@
             android:layout_height="wrap_content"
             android:text="@string/title_account"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_normal"
-            android:textStyle="bold"
+            android:textSize="@dimen/text_size_medium"
+            android:fontFamily="@font/lato_bold"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toTopOf="@id/guideline_top" />

@@ -18,3 +18,5 @@ fun Prefs.updateShippingAddress(shippingAddressList: List<ShippingAddressDomainM
 fun Prefs.updateCollectionInfoModelData(collectionInfoDomainModel: CollectionInfoDomainModel){
     this.collectionInfoModel = collectionInfoDomainModel
 }
+
+fun Prefs.getUserCollectionId(): String? = userInfoModel?.collectionId

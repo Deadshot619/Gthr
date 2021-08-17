@@ -13,7 +13,8 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <!--Progress Bar-->
         <ProgressBar

@@ -9,5 +9,5 @@
         android:id="@+id/editProfileFragment"
         android:label="EditProfileFragment"
         tools:layout="@layout/edit_profile_fragment"
-        android:name="com.gthr.gthrcollect.ui.profile.editprofile.EditProfileFragment"/>
+        android:name="com.gthr.gthrcollect.ui.editprofile.editprofileview.EditProfileFragment"/>
 </navigation>

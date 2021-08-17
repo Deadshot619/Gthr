@@ -17,6 +17,7 @@ import com.gthr.gthrcollect.ui.profile.ProfileViewModel
 import com.gthr.gthrcollect.data.repository.ProfileRepository
 import com.gthr.gthrcollect.utils.customviews.CustomSearchView
 import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
+import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
 import com.gthr.gthrcollect.utils.extensions.showToast
 
 class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
@@ -51,13 +52,12 @@ class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
 
         if (mType == ProfileNavigationType.FOLLOWERS) {
             if (otherUserId.isNullOrEmpty())
-                mViewModel.myFollowers(GthrCollect.prefs?.userInfoModel?.collectionId.toString())
+                mViewModel.fetchFollowersData(GthrCollect.prefs?.getUserCollectionId().toString())
             else
-                mViewModel.myFollowers(otherUserId!!)
+                mViewModel.fetchFollowersData(otherUserId!!)
         } else {
-            mViewModel.followersData()
+            mViewModel.fetchFollowingData(GthrCollect.prefs?.getUserCollectionId().toString())
         }
-
     }
 
     private fun setUpObservers() {
@@ -69,7 +69,6 @@ class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
                         showProgressBar()
                     }
                     is State.Success -> {
-
                         mAdapter.submitList(it.data)
                         showProgressBar(false)
                     }

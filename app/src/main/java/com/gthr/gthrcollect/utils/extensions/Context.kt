@@ -18,7 +18,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.gthr.gthrcollect.R
-import com.gthr.gthrcollect.ui.profile.editprofile.EditProfileFragment
+import com.gthr.gthrcollect.ui.editprofile.editprofileview.EditProfileFragment
 import java.io.File
 
 
