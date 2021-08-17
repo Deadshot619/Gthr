@@ -8,8 +8,10 @@
         <entry key="app/src/main/res/drawable/bg_btn_secondary_blue_gradint.xml" value="0.29739583333333336" />
         <entry key="app/src/main/res/drawable/bg_btn_secondary_yellow.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/drawable/bg_custom_collection_type_blue.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/drawable/bg_light_blue_product_details.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/drawable/bg_product_bottom.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/drawable/bg_product_for_green.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/drawable/bg_recipt_bottom.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/drawable/bottom_nav_bg.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/drawable/ic_blue_edit.xml" value="0.1734375" />
         <entry key="app/src/main/res/drawable/ic_see_all.xml" value="0.15885416666666666" />
@@ -19,7 +21,7 @@
         <entry key="app/src/main/res/layout/activity_edit_account_info.xml" value="0.17916666666666667" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/activity_home_bottom_nav.xml" value="0.1765625" />
-        <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.26403985507246375" />
         <entry key="app/src/main/res/layout/activity_receipt.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/activity_receipt_detail.xml" value="0.15520833333333334" />
@@ -35,7 +37,8 @@
         <entry key="app/src/main/res/layout/item_test_product.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/layout_custom_collection_type.xml" value="0.1765625" />
         <entry key="app/src/main/res/layout/layout_custom_product_cell.xml" value="0.6482758620689655" />
-        <entry key="app/src/main/res/layout/layout_product_detail_main_details.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/layout_product_detail_card_top.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/layout_product_detail_main_details.xml" value="0.67" />
         <entry key="app/src/main/res/layout/market_fragment.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/my_profile.xml" value="0.2522585128561501" />
         <entry key="app/src/main/res/layout/place_ask_fragment.xml" value="0.16770833333333332" />
