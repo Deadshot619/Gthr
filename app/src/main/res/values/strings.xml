@@ -415,4 +415,31 @@
 
     <!--Ask flow-->
     <string name="text_place_an_ask">Place an Ask</string>
+    <string name="label_config_card">Configure Your Card</string>
+    <string name="label_add_pic">Add pictures</string>
+    <string name="condition">Condition</string>
+    <string name="language">Language</string>
+    <string name="raw">Raw</string>
+    <string name="psa">PSA</string>
+    <string name="bgs">BGS</string>
+    <string name="cgc">CGC</string>
+
+    <string name="bl_bgs">BL BGS/n10</string>
+    <string name="bgs_9.5">BGS 9.5</string>
+    <string name="chinese">Chinese (T)</string>
+    <string name="french">French</string>
+    <string name="english">English</string>
+    <string name="cheneses">Chinese (S)</string>
+    <string name="edition">Edition</string>
+    <string name="foil">Foil</string>
+    <string name="first_edition">1st Edition</string>
+    <string name="rev_holo">Rev. Holo</string>
+    <string name="asdasd">asdasd</string>
+
+    <string name="note_f_camera">Take a picture of the front</string>
+    <string name="note_b_camera">Take a picture of the back</string>
+
+    <string name="finish_picture">Finish &amp; Skip Pictures</string>
+    <string name="ask_sell">Ask/Sell</string>
+
 </resources>

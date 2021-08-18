@@ -249,5 +249,8 @@
     <!-- Feed -->
     <dimen name="margin_bottom_feed">40dp</dimen>
 
+    <!-- Ask -->
+    <dimen name="margin_bottom_back">40dp</dimen>
+
 
 </resources>
