@@ -1,23 +1,16 @@
 package com.gthr.gthrcollect.ui.productdetail.upforsell
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.LayoutProductDetailCardTopBinding
 import com.gthr.gthrcollect.databinding.LayoutProductDetailToyTopBinding
 import com.gthr.gthrcollect.databinding.UpForSellFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.productdetail.recentsell.RecentSellFragmentArgs
-import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.enums.ProductTypeOld
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
 
@@ -54,11 +47,11 @@ class UpForSellFragment : BaseFragment<UpForSellViewModel,UpForSellFragmentBindi
 
     private fun setUpProductType() {
         when (args.type) {
-            ProductType.POKEMON -> setUpCardTopView(true)
-            ProductType.MTG -> setUpCardTopView(true)
-            ProductType.YUGIOH -> setUpCardTopView(true)
-            ProductType.SEALED -> setUpCardTopView(false)
-            ProductType.FUNKO -> setUpFunko()
+            ProductTypeOld.POKEMON -> setUpCardTopView(true)
+            ProductTypeOld.MTG -> setUpCardTopView(true)
+            ProductTypeOld.YUGIOH -> setUpCardTopView(true)
+            ProductTypeOld.SEALED -> setUpCardTopView(false)
+            ProductTypeOld.FUNKO -> setUpFunko()
         }
     }
 

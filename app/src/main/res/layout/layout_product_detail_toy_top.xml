@@ -6,6 +6,13 @@
 
     </data>
 
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="1dp"
+        app:cardCornerRadius="@dimen/radius_product_detail">
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -29,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_normal"
-            android:layout_marginVertical="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
             android:background="@drawable/bg_recipt_bottom"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -66,6 +73,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra_small"
             android:layout_marginHorizontal="@dimen/margin_normal"
             android:layout_marginBottom="@dimen/margin_small"
             android:layout_weight="1"
@@ -103,4 +111,6 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
 </layout>

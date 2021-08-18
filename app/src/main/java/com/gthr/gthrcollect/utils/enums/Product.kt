@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.utils
+package com.gthr.gthrcollect.utils.enums
 
 enum class ProductCategory(val title: String) {
     TOYS("toys"),

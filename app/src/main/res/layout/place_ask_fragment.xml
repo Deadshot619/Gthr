@@ -15,7 +15,7 @@
 
         <include layout="@layout/add_pic_config_card" />
 
-        <include layout="@layout/edition_configure_card" />
+        <include layout="@layout/af_edition_fragment" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

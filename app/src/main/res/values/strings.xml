@@ -299,8 +299,8 @@
     <string name="text_buylist_price">Buylist Price</string>
     <string name="text_sale_price">Sale Price</string>
     <string name="text_sold">Sold</string>
-    <string name="text_product_name">Name</string>
-    <string name="text_product_set">Set</string>
+    <string name="text_product_name">Name:</string>
+    <string name="text_product_set">Set:</string>
     <string name="text_hash_colon">#:</string>
 
     <!--My profile-->

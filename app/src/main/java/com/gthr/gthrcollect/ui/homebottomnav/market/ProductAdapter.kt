@@ -9,10 +9,10 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ItemUpForSellBinding
 import com.gthr.gthrcollect.model.domain.UpForSellDomainModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
-import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.enums.ProductTypeOld
 import com.gthr.gthrcollect.utils.extensions.getScreenWidth
 
-class ProductAdapter(val productType: ProductType,val state: CustomProductCell.State) : ListAdapter<UpForSellDomainModel,ProductAdapter.UpForSellViewHolder>(DriftUtils)  {
+class ProductAdapter(val productType: ProductTypeOld, val state: CustomProductCell.State) : ListAdapter<UpForSellDomainModel,ProductAdapter.UpForSellViewHolder>(DriftUtils)  {
 
     companion object DriftUtils : DiffUtil.ItemCallback<UpForSellDomainModel>() {
         override fun areItemsTheSame(oldItem: UpForSellDomainModel, newItem: UpForSellDomainModel): Boolean {
@@ -29,11 +29,11 @@ class ProductAdapter(val productType: ProductType,val state: CustomProductCell.S
           fun bind(position: Int){
               binding.cpsMain.setState(state)
               when(productType) {
-                  ProductType.FUNKO -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
-                  ProductType.POKEMON -> binding.cpsMain.setType(CustomProductCell.Type.HOLO_RARE)
-                  ProductType.MTG -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
-                  ProductType.YUGIOH -> binding.cpsMain.setType(CustomProductCell.Type.SECRET_RARE)
-                  ProductType.SEALED -> binding.cpsMain.setType(CustomProductCell.Type.SEALED)
+                  ProductTypeOld.FUNKO -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
+                  ProductTypeOld.POKEMON -> binding.cpsMain.setType(CustomProductCell.Type.HOLO_RARE)
+                  ProductTypeOld.MTG -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
+                  ProductTypeOld.YUGIOH -> binding.cpsMain.setType(CustomProductCell.Type.SECRET_RARE)
+                  ProductTypeOld.SEALED -> binding.cpsMain.setType(CustomProductCell.Type.SEALED)
               }
           }
     }

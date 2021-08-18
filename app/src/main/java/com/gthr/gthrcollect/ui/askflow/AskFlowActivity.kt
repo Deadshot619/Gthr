@@ -2,8 +2,8 @@ package com.gthr.gthrcollect.ui.askflow
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
@@ -14,9 +14,8 @@ import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityAskFlowBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
-import com.gthr.gthrcollect.ui.profile.ProfileActivity
-import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
-import com.gthr.gthrcollect.utils.extensions.getImageDrawable
+import com.gthr.gthrcollect.utils.enums.ProductCategory
+import com.gthr.gthrcollect.utils.enums.ProductTypeOld
 
 class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>() {
 
@@ -26,6 +25,8 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var mToolbar: Toolbar
+
+    private lateinit var mFlInfo: FrameLayout
 
     override fun onBinding() {
         initViews()
@@ -64,7 +65,6 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         return false
     }
 
-
     fun setToolbarTitle(title: String) {
         mViewBinding.toolbarTitle.text = title
     }
@@ -72,6 +72,20 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     private fun upButtonVisibility(isVisible: Boolean) {
         supportActionBar?.setDisplayShowHomeEnabled(isVisible)
         supportActionBar?.setDisplayHomeAsUpEnabled(isVisible)
+    }
+
+    fun setInfoView(type: ProductCategory){
+        when(type){
+            ProductCategory.TOYS -> {
+
+            }
+            ProductCategory.SEALED -> {
+
+            }
+            ProductCategory.CARDS -> {
+
+            }
+        }
     }
 
     companion object {

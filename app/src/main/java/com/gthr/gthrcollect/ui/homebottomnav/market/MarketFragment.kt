@@ -17,7 +17,7 @@ import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
 import com.gthr.gthrcollect.utils.enums.ProductCategoryFilter
 import com.gthr.gthrcollect.utils.enums.ProductSortFilter
-import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.enums.ProductTypeOld
 import com.gthr.gthrcollect.utils.enums.SearchType
 import com.gthr.gthrcollect.utils.extensions.showToast
 import kotlinx.coroutines.Job
@@ -114,14 +114,14 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
     private fun setUpLowestAsk() {
         mRvLowestAsk.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
-            adapter = ProductAdapter(ProductType.FUNKO, CustomProductCell.State.FOR_SALE)
+            adapter = ProductAdapter(ProductTypeOld.FUNKO, CustomProductCell.State.FOR_SALE)
         }
     }
 
     private fun setUpHighestAsk() {
         mRvHighestAsk.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
-            adapter = ProductAdapter(ProductType.FUNKO,CustomProductCell.State.FOR_SALE)
+            adapter = ProductAdapter(ProductTypeOld.FUNKO,CustomProductCell.State.FOR_SALE)
         }
     }
 

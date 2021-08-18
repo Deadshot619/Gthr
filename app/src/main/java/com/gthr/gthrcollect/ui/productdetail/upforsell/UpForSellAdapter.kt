@@ -8,11 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.ItemTestProductBinding
 import com.gthr.gthrcollect.model.domain.FavSoldDomainModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
-import com.gthr.gthrcollect.utils.enums.ProductType
-import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
-import com.gthr.gthrcollect.utils.logger.GthrLogger
+import com.gthr.gthrcollect.utils.enums.ProductTypeOld
 
-class UpForSellAdapter(val productType: ProductType, val callback: (FavSoldDomainModel) -> Unit) :
+class UpForSellAdapter(val productType: ProductTypeOld, val callback: (FavSoldDomainModel) -> Unit) :
     ListAdapter<FavSoldDomainModel, UpForSellAdapter.FavSoldViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<FavSoldDomainModel>() {
@@ -36,11 +34,11 @@ class UpForSellAdapter(val productType: ProductType, val callback: (FavSoldDomai
         holder.bind()
         holder.binding.item.setState(CustomProductCell.State.FOR_SALE)
         when(productType) {
-            ProductType.FUNKO -> holder. binding.item.setType(CustomProductCell.Type.FUNKO)
-            ProductType.POKEMON -> holder. binding.item.setType(CustomProductCell.Type.HOLO_RARE)
-            ProductType.MTG -> holder. binding.item.setType(CustomProductCell.Type.FUNKO)
-            ProductType.YUGIOH -> holder. binding.item.setType(CustomProductCell.Type.HOLO_RARE)
-            ProductType.SEALED -> holder. binding.item.setType(CustomProductCell.Type.HOLO_RARE)
+            ProductTypeOld.FUNKO -> holder. binding.item.setType(CustomProductCell.Type.FUNKO)
+            ProductTypeOld.POKEMON -> holder. binding.item.setType(CustomProductCell.Type.HOLO_RARE)
+            ProductTypeOld.MTG -> holder. binding.item.setType(CustomProductCell.Type.FUNKO)
+            ProductTypeOld.YUGIOH -> holder. binding.item.setType(CustomProductCell.Type.HOLO_RARE)
+            ProductTypeOld.SEALED -> holder. binding.item.setType(CustomProductCell.Type.HOLO_RARE)
         }
     }
 

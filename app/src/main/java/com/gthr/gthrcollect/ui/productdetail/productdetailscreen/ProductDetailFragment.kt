@@ -18,7 +18,7 @@ import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
 import com.gthr.gthrcollect.utils.customviews.CustomProductButton
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
-import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.enums.ProductTypeOld
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
 
@@ -78,11 +78,11 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
 
     private fun setUpProductType() {
         when (args.type) {
-            ProductType.POKEMON -> setUpPokemon()
-            ProductType.MTG -> setUpMGT()
-            ProductType.YUGIOH -> seUpYugioh()
-            ProductType.SEALED -> setUpSealed()
-            ProductType.FUNKO -> setUpFunko()
+            ProductTypeOld.POKEMON -> setUpPokemon()
+            ProductTypeOld.MTG -> setUpMGT()
+            ProductTypeOld.YUGIOH -> seUpYugioh()
+            ProductTypeOld.SEALED -> setUpSealed()
+            ProductTypeOld.FUNKO -> setUpFunko()
         }
     }
 
