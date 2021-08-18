@@ -29,6 +29,7 @@ class FeedAdapter : ListAdapter<FeedDomainModel, FeedAdapter.FeedViewHolder>(Dif
 
     inner class FeedViewHolder(val binding : ItemFeedBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(){
+            binding.ivProduct.clipToOutline = true
             when(layoutPosition%3){
                 0 -> {
                     setBuyList(binding)

@@ -412,6 +412,7 @@
     <string name="text_feed_new_to_buy_list">New To Buylist</string>
     <string name="text_feed_license">License</string>
     <string name="text_feed_hash">#</string>
+    <string name="text_buy_now_feed">Buy Now</string>
 
     <!--Ask flow-->
     <string name="text_place_an_ask">Place an Ask</string>
