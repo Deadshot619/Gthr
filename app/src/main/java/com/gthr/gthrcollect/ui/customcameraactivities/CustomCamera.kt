@@ -30,7 +30,6 @@ import androidx.core.content.ContextCompat
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.utils.enums.CameraViews
 import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import java.io.File
@@ -38,7 +37,6 @@ import java.io.FileOutputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class CustomCamera : AppCompatActivity() {
 
@@ -409,11 +407,14 @@ class CustomCamera : AppCompatActivity() {
             matrix.postRotate((90 * (rotation - 2)).toFloat(), centerX, centerY)
         }
         mTextureView!!.setTransform(matrix)
+
     }
 
     private fun createCameraPreview() {
         val texture = mTextureView!!.surfaceTexture!!
         texture.setDefaultBufferSize(mImageDimensions!!.width, mImageDimensions!!.height)
+     // texture.setDefaultBufferSize(mPreview_layout!!.height, mPreview_layout!!.width)
+
         val surface = Surface(texture)
         try {
             mCaptureRequestBuilder =
@@ -461,9 +462,11 @@ class CustomCamera : AppCompatActivity() {
         val cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
         try {
             //    cameraId = cameraManager.cameraIdList[0]
+
+            
             val cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId!!)
-            val map =
-                cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!
+            val map: StreamConfigurationMap = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!
+
             mImageDimensions = map.getOutputSizes(SurfaceTexture::class.java)[0]
 
             //  val []permissions={Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE}
@@ -495,10 +498,14 @@ class CustomCamera : AppCompatActivity() {
 
     var textureListener: SurfaceTextureListener = object : SurfaceTextureListener {
         override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture, i: Int, i1: Int) {
+            GthrLogger.e("aaa","i= ${i} i1 ${i1} ")
             openCamera()
         }
 
-        override fun onSurfaceTextureSizeChanged(surfaceTexture: SurfaceTexture, i: Int, i1: Int) {}
+        override fun onSurfaceTextureSizeChanged(surfaceTexture: SurfaceTexture, i: Int, i1: Int) {
+            GthrLogger.e("aaa","i= ${i} i1 ${i1} ")
+
+        }
 
 
         override fun onSurfaceTextureDestroyed(surfaceTexture: SurfaceTexture): Boolean {

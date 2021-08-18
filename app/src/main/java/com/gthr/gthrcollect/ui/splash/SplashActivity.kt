@@ -7,7 +7,9 @@ import android.os.Vibrator
 import androidx.activity.viewModels
 import com.gthr.gthrcollect.databinding.ActivitySplashBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
+import com.gthr.gthrcollect.ui.customcameraactivities.CustomCamera
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
+import com.gthr.gthrcollect.utils.enums.CameraViews
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
