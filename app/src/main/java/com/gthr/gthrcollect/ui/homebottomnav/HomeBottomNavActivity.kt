@@ -12,7 +12,8 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityHomeBottomNavBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.homebottomnav.search.SearchFragmentArgs
-import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
+import com.gthr.gthrcollect.utils.enums.ProductCategoryFilter
+import com.gthr.gthrcollect.utils.enums.ProductSortFilter
 import com.gthr.gthrcollect.utils.enums.SearchType
 
 class HomeBottomNavActivity : BaseActivity<HomeBottomNavViewModel, ActivityHomeBottomNavBinding>() {
@@ -39,8 +40,8 @@ class HomeBottomNavActivity : BaseActivity<HomeBottomNavViewModel, ActivityHomeB
         mBottomNavView.menu.getItem(2).isChecked = true
     }
 
-    fun goToSearch(type : SearchType){
-        findNavController(R.id.nav_host_fragment).navigate(R.id.searchFragment, SearchFragmentArgs(type = type).toBundle())
+    fun goToSearch(type : SearchType,sortFilter : ProductSortFilter,categoryFilter : ProductCategoryFilter){
+        findNavController(R.id.nav_host_fragment).navigate(R.id.searchFragment, SearchFragmentArgs(type = type,sortFilter =sortFilter,categoryFilter = categoryFilter).toBundle())
     }
 
     companion object {

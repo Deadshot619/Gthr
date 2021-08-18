@@ -403,6 +403,8 @@
     <!-- market -->
     <string name="text_popular_collections_market">Popular Collections</string>
     <string name="text_your_favorite_binders_market">Your Favorite Binders</string>
+    <string name="text_lowest_ask_market">Lowest Ask</string>
+    <string name="text_highest_ask_market">Highest Ask</string>
 
     <!-- feed -->
     <string name="text_feed_new_to_collection">New To Collection</string>

@@ -14,11 +14,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.SearchFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.SearchCollectionAdapter
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterCategoryView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterSubCategoryView
+import com.gthr.gthrcollect.utils.customviews.CustomProductCell
+import com.gthr.gthrcollect.utils.enums.ProductCategoryFilter
+import com.gthr.gthrcollect.utils.enums.ProductSortFilter
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.enums.SearchType
 import com.gthr.gthrcollect.utils.extensions.animateVisibility
@@ -70,6 +74,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     private lateinit var mSealedSubCategories: List<CustomFilterSubCategoryView>
 
     private lateinit var mAdapterSC : SearchCollectionAdapter
+    private lateinit var mProductAdapter: ProductAdapter
 
     private val args by navArgs<SearchFragmentArgs>()
 
@@ -80,6 +85,19 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
         if(args.type==SearchType.COLLECTIONS){
             setCollectionSelected()
+        }
+        else if(args.type==SearchType.PRODUCT){
+            when(args.sortFilter){
+                ProductSortFilter.LOWEST_ASK -> selectSortingCategory(mCfcvAskLowest)
+                ProductSortFilter.HIGHEST_ASK -> selectSortingCategory(mCfcvAskHighest)
+                ProductSortFilter.NONE -> {}
+            }
+            when(args.categoryFilter){
+                ProductCategoryFilter.CARD -> selectCard()
+                ProductCategoryFilter.TOY -> selectToys()
+                ProductCategoryFilter.SEALED -> selectSealed()
+                ProductCategoryFilter.NONE -> {}
+            }
         }
     }
 
@@ -93,19 +111,22 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 it%5==4 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductType.FUNKO))
             }
         }
+        mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL){}
         mRvMain.apply {
             layoutManager = GridLayoutManager(requireContext(),spanCount)
+            adapter = mProductAdapter
         }
+
     }
 
     private fun setUpOnClickListeners() {
         mCctProduct.setOnClickListener {
             setSelectedCct(mCctProduct)
-            mRvMain.adapter = null
+            mRvMain.adapter = mProductAdapter
         }
         mCctForSale.setOnClickListener {
             setSelectedCct(mCctForSale)
-            mRvMain.adapter = null
+            mRvMain.adapter = mProductAdapter
         }
         mCctCollections.setOnClickListener {
             setCollectionSelected()
@@ -147,11 +168,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
 
         mCfcvToys.setOnClickListener {
-            mCfcvToys.setActive(!mCfcvToys.mIsActive)
-            mLayoutCards.animateVisibility(false)
-            mLayoutSealed.animateVisibility(false)
-            setCardSubCategoryUnSelected()
-            setSealedSubCategoryUnSelected()
+            selectToys()
         }
 
         mCfscvSealedPokemon.setOnClickListener {
@@ -170,37 +187,51 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
 
         mCfcvCards.setOnClickListener {
-            mToggleCards = if (mToggleCards) {
-                mLayoutCards.animateVisibility(mToggleCards)
-                mLayoutSealed.animateVisibility(false)
-                selectCategory(mCfcvCards)
-                setSealedSubCategoryUnSelected()
-                !mToggleCards
-            } else {
-                mCfcvCards.setActive(false)
-                setCardSubCategoryUnSelected()
-                mLayoutCards.animateVisibility(mToggleCards)
-                !mToggleCards
-            }
-
+            selectCard()
         }
 
         mCfcvSealed.setOnClickListener {
-            mToggleSealed = if (mToggleSealed) {
-                mLayoutSealed.animateVisibility(mToggleSealed)
-                mLayoutCards.animateVisibility(false)
-                selectCategory(mCfcvSealed)
-                setCardSubCategoryUnSelected()
-                !mToggleSealed
-            } else {
-                mCfcvSealed.setActive(false)
-                setSealedSubCategoryUnSelected()
-                mLayoutSealed.animateVisibility(mToggleSealed)
-                !mToggleSealed
-            }
-
+            selectSealed()
         }
 
+    }
+
+    private fun selectToys() {
+        mCfcvToys.setActive(!mCfcvToys.mIsActive)
+        mLayoutCards.animateVisibility(false)
+        mLayoutSealed.animateVisibility(false)
+        setCardSubCategoryUnSelected()
+        setSealedSubCategoryUnSelected()
+    }
+
+    private fun selectSealed() {
+        mToggleSealed = if (mToggleSealed) {
+            mLayoutSealed.animateVisibility(mToggleSealed)
+            mLayoutCards.animateVisibility(false)
+            selectCategory(mCfcvSealed)
+            setCardSubCategoryUnSelected()
+            !mToggleSealed
+        } else {
+            mCfcvSealed.setActive(false)
+            setSealedSubCategoryUnSelected()
+            mLayoutSealed.animateVisibility(mToggleSealed)
+            !mToggleSealed
+        }
+    }
+
+    private fun selectCard() {
+        mToggleCards = if (mToggleCards) {
+            mLayoutCards.animateVisibility(mToggleCards)
+            mLayoutSealed.animateVisibility(false)
+            selectCategory(mCfcvCards)
+            setSealedSubCategoryUnSelected()
+            !mToggleCards
+        } else {
+            mCfcvCards.setActive(false)
+            setCardSubCategoryUnSelected()
+            mLayoutCards.animateVisibility(mToggleCards)
+            !mToggleCards
+        }
     }
 
     private fun setCollectionSelected() {

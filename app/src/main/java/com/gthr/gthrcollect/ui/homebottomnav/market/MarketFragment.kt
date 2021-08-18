@@ -11,8 +11,13 @@ import com.gthr.gthrcollect.databinding.MarketFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
+import com.gthr.gthrcollect.ui.productdetail.adapter.ProductAdapter
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
+import com.gthr.gthrcollect.utils.enums.ProductCategoryFilter
+import com.gthr.gthrcollect.utils.enums.ProductSortFilter
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.enums.SearchType
 import com.gthr.gthrcollect.utils.extensions.showToast
 import kotlinx.coroutines.Job
@@ -41,13 +46,23 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
     private lateinit var mPopularCollectionsSeeAll : CustomSeeAllView
     private lateinit var mBannerImage : AppCompatImageView
 
+    private lateinit var mRvLowestAsk : RecyclerView
+    private lateinit var mLowestAskSeeAll : CustomSeeAllView
+
+    private lateinit var mRvHighestAsk : RecyclerView
+    private lateinit var mHighestAskSeeAll : CustomSeeAllView
+
+    private var mCurrentMarketType = MarketType.ALL
+
     //List of Collection filter views
     private lateinit var mCctvList: List<CustomCollectionTypeView>
 
     override fun onBinding() {
         initViews()
         setUpClickListeners()
-        setUpUpForSell()
+        setUpPopularCollections()
+        setUpLowestAsk()
+        setUpHighestAsk()
         setUpObservers()
         mViewModel.fetchBannerImage()
     }
@@ -61,6 +76,10 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
             mRvPopularCollections = rvPopularCollections
             mPopularCollectionsSeeAll = csavPopularCollectionsSeeAll
             mBannerImage = ivBanner
+            mRvLowestAsk = rvLowestAskCollections
+            mLowestAskSeeAll = csavLowestAskSeeAll
+            mRvHighestAsk = rvHighestAskCollections
+            mHighestAskSeeAll = csavHighestAskSeeAll
             mCctvList = listOf(mAll, mCards, mSealed, mFunko)
             initProgressBar(mViewBinding.layoutProgress)
         }
@@ -85,27 +104,71 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
         }
     }
 
-    private fun setUpUpForSell() {
+    private fun setUpPopularCollections() {
         mRvPopularCollections.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
             adapter = PopularCollectionAdapter()
         }
     }
 
-
-    private fun setUpClickListeners() {
-        mCctvList.forEach { view ->
-            view.setOnClickListener {
-                view.selectView()
-            }
-        }
-        mPopularCollectionsSeeAll.setOnClickListener {
-            goToSearch()
+    private fun setUpLowestAsk() {
+        mRvLowestAsk.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+            adapter = ProductAdapter(ProductType.FUNKO, CustomProductCell.State.FOR_SALE)
         }
     }
 
-    private fun goToSearch() {
-        (requireActivity() as HomeBottomNavActivity).goToSearch(SearchType.COLLECTIONS)
+    private fun setUpHighestAsk() {
+        mRvHighestAsk.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+            adapter = ProductAdapter(ProductType.FUNKO,CustomProductCell.State.FOR_SALE)
+        }
+    }
+
+
+    private fun setUpClickListeners() {
+        mAll.setOnClickListener {
+            mCurrentMarketType = MarketType.ALL
+            mAll.selectView()
+        }
+
+        mCards.setOnClickListener {
+            mCurrentMarketType = MarketType.CARDS
+            mCards.selectView()
+        }
+
+        mSealed.setOnClickListener {
+            mCurrentMarketType = MarketType.SEALED
+            mSealed.selectView()
+        }
+
+        mFunko.setOnClickListener {
+            mCurrentMarketType = MarketType.FUNKO
+            mFunko.selectView()
+        }
+
+        mPopularCollectionsSeeAll.setOnClickListener {
+            goToSearch(SearchType.COLLECTIONS,ProductSortFilter.NONE,getProductCategoryFilter())
+        }
+        mLowestAskSeeAll.setOnClickListener {
+            goToSearch(SearchType.PRODUCT,ProductSortFilter.LOWEST_ASK,getProductCategoryFilter())
+        }
+        mHighestAskSeeAll.setOnClickListener {
+            goToSearch(SearchType.PRODUCT,ProductSortFilter.HIGHEST_ASK,getProductCategoryFilter())
+        }
+    }
+
+    private fun getProductCategoryFilter(): ProductCategoryFilter {
+        return when(mCurrentMarketType){
+            MarketType.ALL -> ProductCategoryFilter.NONE
+            MarketType.CARDS -> ProductCategoryFilter.CARD
+            MarketType.SEALED -> ProductCategoryFilter.SEALED
+            MarketType.FUNKO -> ProductCategoryFilter.TOY
+        }
+    }
+
+    private fun goToSearch(type : SearchType,filter: ProductSortFilter,categoryFilter : ProductCategoryFilter) {
+        (requireActivity() as HomeBottomNavActivity).goToSearch(type,filter,categoryFilter)
     }
 
     //Method to select Single Collection Filter
@@ -123,5 +186,9 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         mainJob?.cancel()
+    }
+
+    enum class MarketType{
+        ALL,CARDS,SEALED,FUNKO
     }
 }

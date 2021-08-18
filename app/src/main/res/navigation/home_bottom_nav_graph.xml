@@ -37,6 +37,14 @@
             android:name="type"
             app:argType="com.gthr.gthrcollect.utils.enums.SearchType"
             android:defaultValue="PRODUCT" />
+        <argument
+            android:name="sortFilter"
+            android:defaultValue="NONE"
+            app:argType="com.gthr.gthrcollect.utils.enums.ProductSortFilter" />
+        <argument
+            android:name="categoryFilter"
+            app:argType="com.gthr.gthrcollect.utils.enums.ProductCategoryFilter"
+            android:defaultValue="NONE" />
     </fragment>
 
     <fragment
