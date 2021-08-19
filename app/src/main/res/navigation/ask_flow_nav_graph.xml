@@ -1,11 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ask_flow_nav_graph"
-    app:startDestination="@id/placeAskFragment">
+    app:startDestination="@id/afCardLanguageFragment">
 
     <fragment
-        android:id="@+id/placeAskFragment"
-        android:name="com.gthr.gthrcollect.ui.askflow.placeask.PlaceAskFragment"
-        android:label="PlaceAskFragment" />
+        android:id="@+id/afCardLanguageFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragment"
+        android:label="AfCardLanguageFragment" >
+        <action
+            android:id="@+id/action_afCardLanguageFragment_to_afEditionFragment"
+            app:destination="@id/afEditionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/afEditionFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afedition.AfEditionFragment"
+        android:label="AfEditionFragment" >
+        <action
+            android:id="@+id/action_afEditionFragment_to_afConfigureCardFragment"
+            app:destination="@id/afConfigureCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/afConfigureCardFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afconfigurecard.AfConfigureCardFragment"
+        android:label="AfConfigureCardFragment" >
+        <action
+            android:id="@+id/action_afConfigureCardFragment_to_afAddPicFragment"
+            app:destination="@id/afAddPicFragment" />
+        <action
+            android:id="@+id/action_afConfigureCardFragment_to_afWantToSellFragment"
+            app:destination="@id/afWantToSellFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/afWantToSellFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afwanttosell.AfWantToSellFragment"
+        android:label="af_want_to_sell_fragment"
+        tools:layout="@layout/af_want_to_sell_fragment" >
+        <action
+            android:id="@+id/action_afWantToSellFragment_to_afAddPicFragment"
+            app:destination="@id/afAddPicFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/afAddPicFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afaddpic.AfAddPicFragment"
+        android:label="AfAddPicFragment" />
 </navigation>

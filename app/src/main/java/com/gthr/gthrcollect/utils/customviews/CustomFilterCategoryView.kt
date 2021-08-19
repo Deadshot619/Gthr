@@ -38,6 +38,4 @@ class CustomFilterCategoryView @JvmOverloads constructor(
             this.background = getImageDrawable(R.drawable.bg_filter_gray)
         }
     }
-
-
 }

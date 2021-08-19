@@ -55,11 +55,11 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             mToolbar.title = ""     //Set Title as empty as we have used custom title
             upButtonVisibility(isVisible = true)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_up_button) //Set up button as <
+            setToolbarTitle(getString(R.string.text_place_an_ask))
 
             when (nd.id) {
-                R.id.placeAskFragment -> {
-                    setToolbarTitle(getString(R.string.text_place_an_ask))
-                }
+                /*R.id.placeAskFragment -> {
+                }*/
             }
         }
     }
