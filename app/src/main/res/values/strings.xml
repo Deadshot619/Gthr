@@ -442,5 +442,7 @@
 
     <string name="finish_picture">Finish &amp; Skip Pictures</string>
     <string name="ask_sell">Ask/Sell</string>
+    <string name="do_you_want_to_sell">Do You Want To Sell?</string>
+    <string name="add_pictures">Add Pictures</string>
 
 </resources>

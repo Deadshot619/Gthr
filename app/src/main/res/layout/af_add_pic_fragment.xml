@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            app:cardUseCompatPadding="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_card_view_ask_flow"
+            android:elevation="@dimen/text_size_normal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_address_lable"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_normal"
+                    android:layout_marginStart="@dimen/margin_extra_large"
+                    android:text="@string/label_add_pic"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:id="@+id/front_id_capture"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/margin_pick_image_ask_flow"
+                    app:cardBackgroundColor="@color/grey_color"
+                    app:cardCornerRadius="@dimen/dp_8"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_next"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toStartOf="@+id/back_id_capture"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_address_lable">
+
+                    <LinearLayout
+                        android:id="@+id/front_repls"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="25dp"
+                        android:orientation="vertical"
+                        android:padding="3dp">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@drawable/bg_btn_secondary_blue"
+                            android:contentDescription="@string/id_verification"
+                            android:padding="5dp"
+                            android:src="@drawable/camera_icon" />
+
+                        <TextView
+                            android:id="@+id/tv_front_lable"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/note_f_camera"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_12" />
+                    </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/back_id_capture"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginEnd="@dimen/margin_pick_image_ask_flow"
+                    app:cardBackgroundColor="@color/grey_color"
+                    app:cardCornerRadius="@dimen/dp_8"
+                    app:layout_constraintBottom_toBottomOf="@+id/front_id_capture"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/front_id_capture"
+                    app:layout_constraintTop_toTopOf="@+id/front_id_capture">
+
+                    <LinearLayout
+                        android:id="@+id/back_repls"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="25dp"
+                        android:orientation="vertical"
+                        android:padding="3dp">
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@drawable/bg_btn_secondary_blue"
+                            android:padding="@dimen/dp_5"
+                            android:src="@drawable/camera_icon" />
+
+                        <TextView
+                            android:id="@+id/tv_back_lable"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/note_b_camera"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_12" />
+                    </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_front_image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:contentDescription="@string/id_verification"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="@+id/front_id_capture"
+                    app:layout_constraintEnd_toEndOf="@+id/front_id_capture"
+                    app:layout_constraintStart_toStartOf="@+id/front_id_capture"
+                    app:layout_constraintTop_toTopOf="@+id/front_id_capture" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_back_image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:contentDescription="@string/id_verification"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="@+id/back_id_capture"
+                    app:layout_constraintEnd_toEndOf="@+id/back_id_capture"
+                    app:layout_constraintStart_toStartOf="@+id/back_id_capture"
+                    app:layout_constraintTop_toTopOf="@+id/back_id_capture" />
+
+
+                <ImageView
+                    android:id="@+id/iv_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_small"
+                    android:src="@drawable/blue_back_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_address_lable"
+                    app:layout_constraintTop_toBottomOf="@+id/front_id_capture" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_bottom_back"
+            android:layout_marginBottom="@dimen/dp_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start">
+
+            <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+                android:id="@+id/btn_skip_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/finish_picture"
+                android:textSize="@dimen/text_size_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_complete_account"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:secondary_button_state="BLUE" />
+
+            <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+                android:id="@+id/btn_complete_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_extra_small"
+                android:drawableEnd="@drawable/ic_next_arrow"
+                android:drawablePadding="@dimen/dp_5"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/ask_sell"
+                android:textSize="@dimen/text_size_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btn_skip_id"
+                app:secondary_button_state="BLUE" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

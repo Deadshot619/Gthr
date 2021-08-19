@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:elevation="@dimen/size_elevation"
-    android:layout_height="wrap_content">
+    app:cardUseCompatPadding="true"
+    android:layout_height="@dimen/height_card_view_ask_flow">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,82 +23,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ll_market_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_search_white"
-            android:elevation="@dimen/elevation_search_type"
-            android:gravity="center"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:orientation="horizontal"
-            android:paddingVertical="@dimen/padding_mini"
-            android:weightSum="4"
-            android:layout_marginTop="@dimen/margin_mini"
-            android:layout_marginStart="@dimen/dp_100"
-            app:layout_constraintTop_toBottomOf="@id/config"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-                android:id="@+id/cct_all"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:cccv_text="@string/raw"/>
-
-            <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-                android:id="@+id/cct_cards"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:cccv_text="@string/psa"
-                app:ccv_isActive="true" />
-
-            <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-                android:id="@+id/cct_sealed"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:cccv_text="@string/bgs" />
-
-            <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-                android:id="@+id/cct_funko"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:cccv_text="@string/cgc" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
         <TextView
-            android:id="@+id/condition"
+            android:id="@+id/tv_language"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
-            android:text="@string/condition"
+            android:text="@string/language"
             android:textColor="@color/blue"
             android:textSize="@dimen/text_size_normal"
-
-            app:layout_constraintBottom_toTopOf="@+id/tv_condition_types"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/config" />
+
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/tv_condition_types"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/margin_mini"
-            android:layout_marginTop="12dp"
+            android:layout_margin="@dimen/margin_small"
             android:weightSum="4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_market_type">
+            app:layout_constraintTop_toBottomOf="@id/tv_language">
 
 
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
@@ -151,14 +101,6 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_bottom_back"
-            android:padding="@dimen/padding_normal"
-            android:src="@drawable/blue_back_btn"
-            app:layout_constraintStart_toStartOf="@+id/tv_condition_types"
-            app:layout_constraintTop_toBottomOf="@+id/tv_condition_types" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

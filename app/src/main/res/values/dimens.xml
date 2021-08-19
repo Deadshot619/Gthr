@@ -251,6 +251,8 @@
 
     <!-- Ask -->
     <dimen name="margin_bottom_back">40dp</dimen>
+    <dimen name="height_card_view_ask_flow">250dp</dimen>
+    <dimen name="margin_pick_image_ask_flow">50dp</dimen>
 
 
 </resources>
