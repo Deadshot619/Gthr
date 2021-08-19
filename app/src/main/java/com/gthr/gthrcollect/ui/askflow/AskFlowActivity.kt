@@ -13,6 +13,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityAskFlowBinding
+import com.gthr.gthrcollect.databinding.LayoutProductDetailCardTopBinding
+import com.gthr.gthrcollect.databinding.LayoutProductDetailToyTopBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductTypeOld
@@ -32,11 +34,13 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         initViews()
         setSupportActionBar(mToolbar)
         setUpNavigationAndActionBar()
+        setInfoView(ProductCategory.CARDS)
     }
 
     private fun initViews(){
         mViewBinding.run {
             mToolbar = toolbar
+            mFlInfo = flInfo
         }
     }
 
@@ -74,16 +78,16 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         supportActionBar?.setDisplayHomeAsUpEnabled(isVisible)
     }
 
-    fun setInfoView(type: ProductCategory){
+    private fun setInfoView(type: ProductCategory){
         when(type){
             ProductCategory.TOYS -> {
-
+                mFlInfo.addView(LayoutProductDetailToyTopBinding.inflate(layoutInflater).root)
             }
             ProductCategory.SEALED -> {
-
+                mFlInfo.addView(LayoutProductDetailCardTopBinding.inflate(layoutInflater).root)
             }
             ProductCategory.CARDS -> {
-
+                mFlInfo.addView(LayoutProductDetailCardTopBinding.inflate(layoutInflater).root)
             }
         }
     }
