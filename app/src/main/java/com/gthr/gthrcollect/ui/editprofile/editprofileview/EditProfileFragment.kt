@@ -23,6 +23,7 @@ import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileViewModel
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
 import com.gthr.gthrcollect.utils.customviews.CustomEditText
+import com.gthr.gthrcollect.utils.extensions.setProfileImage
 import com.gthr.gthrcollect.utils.extensions.showPermissionSnackBar
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.logger.GthrLogger
@@ -125,8 +126,7 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragme
     private fun setUpProfile() {
         mEt_display_name.mEtMain.setText(arguments?.getString(D_NAME_KEY))
         mEtBio.setText(arguments?.getString(ABOUT_KEY))
-        Glide.with(this).load(arguments?.getString(PROFILE_URL)).into(mIvProfilePic)
-
+        mIvProfilePic.setProfileImage(arguments?.getString(PROFILE_URL).toString())
     }
 
     private fun checkMultiplePermissions(

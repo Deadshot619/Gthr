@@ -24,10 +24,7 @@ import com.gthr.gthrcollect.model.domain.FollowDomainModel
 import com.gthr.gthrcollect.ui.profile.follow.FollowUserAdapter
 import com.gthr.gthrcollect.utils.customviews.*
 import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
-import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.setImageByUrl
-import com.gthr.gthrcollect.utils.extensions.showToast
-import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Job
@@ -239,7 +236,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 data.favoriteCollectionList?.size.toString()
         )
         imageURl = data.profileImage
-        mProfilePic.setImageByUrl(imageURl)
+        mProfilePic.setProfileImage(imageURl)
 
         if (isOtherUser()) {
             for (item: String in data.followersList!!) {
