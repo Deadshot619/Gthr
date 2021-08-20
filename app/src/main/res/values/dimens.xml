@@ -21,13 +21,14 @@
     <dimen name="bottom_nav_padding_bottom">12dp</dimen>
 
     <!--Text Size-->
+    <dimen name="text_size_xxx_small">8sp</dimen>
+    <dimen name="text_size_extra_small">10sp</dimen>
     <dimen name="text_size_semi_small">11sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_medium">14sp</dimen>
     <dimen name="text_size_normal">16sp</dimen>
-    <dimen name="text_size_extra_large">24sp</dimen>
     <dimen name="text_size_large">20sp</dimen>
-    <dimen name="text_size_extra_small">10sp</dimen>
+    <dimen name="text_size_extra_large">24sp</dimen>
 
     <!--Margin-->
     <dimen name="margin_mini">4dp</dimen>
@@ -196,11 +197,11 @@
     <!--Custom Product-->
     <dimen name="radius_custom_product">8dp</dimen>
     <dimen name="margin_small_custom_product">4dp</dimen>
-    <dimen name="padding_custom_product">6dp</dimen>
+    <dimen name="padding_custom_product">3dp</dimen>
     <dimen name="height_image_custom_product">170dp</dimen>
     <dimen name="elevation_custom_product">10dp</dimen>
     <dimen name="size_icon_custom_product">32dp</dimen>
-    <dimen name="size_glob">12dp</dimen>
+    <dimen name="size_glob">10dp</dimen>
 
     <!--Follower/following user List size-->
     <dimen name="size_follow_image">45dp</dimen>

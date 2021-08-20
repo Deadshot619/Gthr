@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <com.google.android.material.card.MaterialCardView
-        android:elevation="2dp"
+<com.google.android.material.card.MaterialCardView
+        app:cardElevation="2dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/margin_small_custom_product"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="@dimen/radius_cardview_product_recent_sale"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,14 +24,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_end="@dimen/guideline_extra_small" />
+                app:layout_constraintGuide_end="@dimen/guideline_small" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/guideline_extra_small"
+                app:layout_constraintGuide_begin="@dimen/guideline_small"
                 app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -60,7 +58,7 @@
                 android:paddingVertical="@dimen/padding_custom_product"
                 android:text="For sale"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_small"
+                android:textSize="@dimen/text_size_extra_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,7 +84,7 @@
                 android:paddingVertical="@dimen/padding_custom_product"
                 android:text="Funko"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small"
+                android:textSize="@dimen/text_size_extra_small"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_main"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                 app:layout_constraintTop_toBottomOf="@+id/iv_main"
@@ -109,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:text="For sale"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small"
+                android:textSize="@dimen/text_size_extra_small"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_price"
                 app:layout_constraintEnd_toStartOf="@+id/tv_price"
@@ -122,12 +120,13 @@
                 android:id="@+id/tv_price"
                 android:layout_width="0dp"
                 android:gravity="end"
-                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintWidth_percent="0.46"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_small"
                 android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_mini"
                 android:background="@drawable/bg_product_price"
-                android:paddingHorizontal="@dimen/padding_small"
+                android:paddingHorizontal="@dimen/padding_extra_small"
                 android:paddingVertical="@dimen/padding_custom_product"
                 android:text="$694.69"
                 android:textColor="@color/white"
@@ -143,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:text="#:"
                 android:textColor="@color/product_text_gray"
-                android:textSize="@dimen/text_size_small"
+                android:textSize="@dimen/text_size_extra_small"
                 app:layout_constraintEnd_toStartOf="@+id/tv_row1_collum2"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
@@ -161,7 +160,7 @@
                 android:maxLines="2"
                 android:text="Chilling Reign Booster"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small"
+                android:textSize="@dimen/text_size_extra_small"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                 app:layout_constraintStart_toEndOf="@+id/tv_row1_collum1"
                 app:layout_constraintTop_toBottomOf="@+id/tv_price" />
@@ -173,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:text="#:"
                 android:textColor="@color/product_text_gray"
-                android:textSize="@dimen/text_size_small"
+                android:textSize="@dimen/text_size_extra_small"
                 app:layout_constraintEnd_toStartOf="@+id/tv_row2_collum2"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
@@ -191,7 +190,7 @@
                 android:maxLines="1"
                 android:text="97"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small"
+                android:textSize="@dimen/text_size_extra_small"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                 app:layout_constraintStart_toEndOf="@+id/tv_row2_collum1"
                 app:layout_constraintBottom_toTopOf="@id/cl_Bottom"
@@ -227,7 +226,7 @@
                     android:layout_marginStart="@dimen/margin_small_custom_product"
                     android:text="Jp"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_extra_small"
+                    android:textSize="@dimen/text_size_xxx_small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iv_glob"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -249,7 +248,7 @@
                     android:layout_marginStart="@dimen/margin_extra_small"
                     android:text="PSA"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/text_size_extra_small"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/line_glob"
@@ -262,7 +261,7 @@
                     android:layout_marginStart="@dimen/margin_small_custom_product"
                     android:text="10"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_extra_small"
+                    android:textSize="@dimen/text_size_xxx_small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_psa"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -288,7 +287,7 @@
                     android:maxLines="1"
                     android:text="Non-Foil"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_extra_small"
+                    android:textSize="@dimen/text_size_xxx_small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/line_psa"
@@ -311,5 +310,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
 

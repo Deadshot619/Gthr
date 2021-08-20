@@ -11,8 +11,11 @@
         <entry key="app/src/main/res/drawable/bg_light_blue_product_details.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/drawable/bg_product_bottom.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/drawable/bg_product_for_green.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/drawable/bg_product_for_red.xml" value="0.20520833333333333" />
+        <entry key="app/src/main/res/drawable/bg_product_price.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/drawable/bg_recipt_bottom.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/drawable/bottom_nav_bg.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/drawable/collection_image_bg.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/drawable/ic_blue_edit.xml" value="0.1734375" />
         <entry key="app/src/main/res/drawable/ic_see_all.xml" value="0.15885416666666666" />
         <entry key="app/src/main/res/drawable/toolbar_bg.xml" value="0.20520833333333333" />
@@ -38,7 +41,7 @@
         <entry key="app/src/main/res/layout/item_recent_sele_herder.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_test_product.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/layout_custom_collection_type.xml" value="0.1765625" />
-        <entry key="app/src/main/res/layout/layout_custom_product_cell.xml" value="0.6482758620689655" />
+        <entry key="app/src/main/res/layout/layout_custom_product_cell.xml" value="0.4747225647348952" />
         <entry key="app/src/main/res/layout/layout_product_detail_card_top.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_product_detail_main_details.xml" value="0.67" />
         <entry key="app/src/main/res/layout/layout_product_detail_toy_top.xml" value="0.4407826982492276" />

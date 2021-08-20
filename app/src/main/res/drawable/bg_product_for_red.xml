@@ -4,6 +4,6 @@
         android:startColor="@color/red_gradient_start_color"
         android:endColor="@color/red_gradient_end_color"
         android:angle="0"/>
-    <corners android:topLeftRadius="8dp"
-        android:bottomLeftRadius="@dimen/radius_custom_product"/>
+    <corners android:topLeftRadius="4dp"
+        android:bottomLeftRadius="4dp"/>
 </shape>

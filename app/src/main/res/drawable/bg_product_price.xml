@@ -4,5 +4,5 @@
         android:startColor="@color/blue"
         android:endColor="@color/light_blue"
         android:angle="0"/>
-    <corners android:radius="@dimen/radius_custom_product" />
+    <corners android:radius="4dp" />
 </shape>
