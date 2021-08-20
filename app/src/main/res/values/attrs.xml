@@ -159,6 +159,7 @@
         <attr name="ccv_isActive" format="boolean"/>
         <attr name="ccv_isUpdate" format="boolean"/>
         <attr name="cccv_text" format="string" />
+        <attr name="cccv_horizontalPadding" format="dimension" />
     </declare-styleable>
 
 

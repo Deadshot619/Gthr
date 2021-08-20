@@ -78,7 +78,7 @@ class CustomSecondaryButton @JvmOverloads constructor(
             State.BLUE_GRADIENT -> {
                 this.isEnabled = true
                 this.setTextColor(getResolvedColor(R.color.white))
-                this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.light_blue))
+                this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.white))
                 getImageDrawable(R.drawable.bg_btn_secondary_blue_gradint)
             }
         }

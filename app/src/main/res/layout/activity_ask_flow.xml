@@ -102,11 +102,13 @@
                     android:name="androidx.navigation.fragment.NavHostFragment"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginVertical="@dimen/margin_normal"
+
                     app:defaultNavHost="true"
                     app:navGraph="@navigation/ask_flow_nav_graph"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cpc_product_item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

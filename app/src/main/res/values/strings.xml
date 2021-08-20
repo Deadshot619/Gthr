@@ -425,7 +425,7 @@
     <string name="bgs">BGS</string>
     <string name="cgc">CGC</string>
 
-    <string name="bl_bgs">BL BGS/n10</string>
+    <string name="bl_bgs">BL BGS 10</string>
     <string name="bgs_9.5">BGS 9.5</string>
     <string name="chinese">Chinese (T)</string>
     <string name="french">French</string>
@@ -444,6 +444,17 @@
     <string name="ask_sell">Ask/Sell</string>
     <string name="do_you_want_to_sell">Do You Want To Sell?</string>
     <string name="add_pictures">Add Pictures</string>
+    <string name="text_type_ask_here_ask_flow">Type Ask Here</string>
+    <string name="text_selling_fee_8_5_ask_flow">Selling Fee (8.5%)</string>
+    <string name="text_payment_processing_2_9_ask_flow">Payment Processing (2.9%)</string>
+    <string name="text_shipping_reimbursement_ask_flow">Shipping Reimbursement</string>
+    <string name="text_promo_code_ask_flow">Promo Code</string>
+    <string name="text_place_your_ask_flow">Place your Ask</string>
+    <string name="text_add_ask_flow">+ Add</string>
+    <string name="text_address_ask_type">Address</string>
+    <string name="text_payout_ask_type">Payout</string>
+    <string name="text_place_your_ask">Place your Ask</string>
+
 
     <string name="back_label">Back</string>
     <string name="front_lalel">Front</string>

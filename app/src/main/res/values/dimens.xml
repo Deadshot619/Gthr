@@ -72,7 +72,9 @@
 
     <!--Padding-->
     <dimen name="padding_mini">4dp</dimen>
+    <dimen name="padding_light">6dp</dimen>
     <dimen name="padding_extra_small">8dp</dimen>
+    <dimen name="padding_size_semi_small">10dp</dimen>
     <dimen name="padding_small">12dp</dimen>
     <dimen name="padding_medium">14dp</dimen>
     <dimen name="padding_normal">16dp</dimen>
@@ -254,7 +256,8 @@
 
     <!-- Ask -->
     <dimen name="margin_bottom_back">40dp</dimen>
-    <dimen name="height_card_view_ask_flow">250dp</dimen>
+    <dimen name="height_card_view_ask_flow">200dp</dimen>
+    <dimen name="height_card_view_review_ask_flow">280dp</dimen>
     <dimen name="margin_pick_image_ask_flow">50dp</dimen>
 
 

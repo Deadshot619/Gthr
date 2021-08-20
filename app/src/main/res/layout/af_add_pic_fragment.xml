@@ -13,10 +13,11 @@
         android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
+            android:elevation="@dimen/size_elevation"
             app:cardUseCompatPadding="true"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_card_view_ask_flow"
-            android:elevation="@dimen/text_size_normal">
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/height_card_view_ask_flow">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -68,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="25dp"
+                        android:layout_marginHorizontal="@dimen/margin_normal"
                         android:orientation="vertical"
                         android:padding="3dp">
 
@@ -127,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="25dp"
+                        android:layout_marginHorizontal="@dimen/margin_normal"
                         android:orientation="vertical"
                         android:padding="3dp">
 
@@ -161,8 +162,9 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_small"
                     android:src="@drawable/blue_back_btn"
+                    android:layout_marginStart="@dimen/margin_extra_small"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/tv_address_lable"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/front_id_capture" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -186,13 +188,13 @@
                 android:text="@string/finish_picture"
                 android:textSize="@dimen/text_size_small"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_complete_account"
+                app:layout_constraintEnd_toStartOf="@+id/btn_next"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:secondary_button_state="BLUE" />
+                app:secondary_button_state="BLUE_GRADIENT" />
 
             <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-                android:id="@+id/btn_complete_account"
+                android:id="@+id/btn_next"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_extra_small"
@@ -206,7 +208,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_skip_id"
-                app:secondary_button_state="BLUE" />
+                app:secondary_button_state="BLUE_GRADIENT" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

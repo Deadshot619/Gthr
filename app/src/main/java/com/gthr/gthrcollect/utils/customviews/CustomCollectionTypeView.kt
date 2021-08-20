@@ -1,13 +1,11 @@
 package com.gthr.gthrcollect.utils.customviews
 
 import android.content.Context
-import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.res.ResourcesCompat
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.utils.extensions.getImageDrawable
@@ -34,6 +32,13 @@ class CustomCollectionTypeView @JvmOverloads constructor(
         attrs.getString(R.styleable.CustomCollectionTypeView_cccv_text)?.let { mTvTitle.text = it }
         mIsActive = attrs.getBoolean(R.styleable.CustomCollectionTypeView_ccv_isActive, false)
         mIsUpdate = attrs.getBoolean(R.styleable.CustomCollectionTypeView_ccv_isUpdate, false)
+        val paddingHorizontal = attrs.getDimension(R.styleable.CustomCollectionTypeView_cccv_horizontalPadding, 0.0f)
+
+        if(paddingHorizontal!=0.0f){
+            val paddingVertical = resources.getDimensionPixelOffset(R.dimen.padding_light)
+            mTvTitle.setPadding(paddingHorizontal.toInt(), paddingVertical, paddingHorizontal.toInt(), paddingVertical)
+        }
+
         setActive(mIsActive)
         setUpdate(mIsUpdate)
         attrs.recycle()

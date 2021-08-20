@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/afEditionFragment"
-        android:name="com.gthr.gthrcollect.ui.askflow.afedition.AfEditionFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afcardedition.AfCardEditionFragment"
         android:label="AfEditionFragment" >
         <action
             android:id="@+id/action_afEditionFragment_to_afConfigureCardFragment"
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/afConfigureCardFragment"
-        android:name="com.gthr.gthrcollect.ui.askflow.afconfigurecard.AfConfigureCardFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afcardcondition.AfCardConditionFragment"
         android:label="AfConfigureCardFragment" >
         <action
             android:id="@+id/action_afConfigureCardFragment_to_afAddPicFragment"
@@ -44,5 +44,23 @@
     <fragment
         android:id="@+id/afAddPicFragment"
         android:name="com.gthr.gthrcollect.ui.askflow.afaddpic.AfAddPicFragment"
-        android:label="AfAddPicFragment" />
+        android:label="AfAddPicFragment" >
+        <action
+            android:id="@+id/action_afAddPicFragment_to_afReviewYourAskFragment"
+            app:destination="@id/afReviewYourAskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/afReviewYourAskFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afreviewyourask.AfReviewYourAskFragment"
+        android:label="af_review_your_ask_fragment"
+        tools:layout="@layout/af_review_your_ask_fragment" >
+        <action
+            android:id="@+id/action_afReviewYourAskFragment_to_afPlaceYourAskFragment"
+            app:destination="@id/afPlaceYourAskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/afPlaceYourAskFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afplaceyourask.AfPlaceYourAskFragment"
+        android:label="af_place_your_ask_fragment"
+        tools:layout="@layout/af_place_your_ask_fragment" />
 </navigation>

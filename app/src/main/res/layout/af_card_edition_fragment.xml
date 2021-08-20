@@ -8,22 +8,26 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_card_view_ask_flow"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        android:minHeight="@dimen/height_card_view_ask_flow"
         android:elevation="@dimen/size_elevation">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/height_card_view_ask_flow">
 
             <TextView
                 android:id="@+id/config"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_small"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_normal"
                 android:text="@string/label_config_card"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_normal"
+                android:textSize="@dimen/text_size_small"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -32,10 +36,11 @@
                 android:id="@+id/tv_language"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_small"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/edition"
                 android:textColor="@color/blue"
-                android:textSize="@dimen/text_size_normal"
+                android:textSize="@dimen/text_size_small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/config" />
 
@@ -44,7 +49,8 @@
                 android:id="@+id/tv_condition_types"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_small"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_small"
                 android:weightSum="4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -52,54 +58,69 @@
 
 
                 <TextView
+                    android:id="@+id/tv_fail"
+                    android:textColor="@color/text_color_dark_grey"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
                     android:layout_weight="1"
-                    android:background="@drawable/config_card_tabs_background"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:background="@drawable/bg_light_gray_ask_flow"
                     android:gravity="center"
-                    android:padding="@dimen/padding_small"
+                    android:padding="@dimen/padding_size_semi_small"
                     android:text="@string/foil"
                     android:textAlignment="center"
-                    android:textSize="@dimen/text_size_small" />
+                    android:textSize="@dimen/text_size_extra_small" />
 
                 <TextView
+                    android:id="@+id/tv_first_edition"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/text_color_dark_grey"
+                    android:layout_marginStart="@dimen/margin_extra_small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
                     android:layout_weight="1"
-                    android:background="@drawable/config_card_tabs_background"
+                    android:background="@drawable/bg_light_gray_ask_flow"
                     android:gravity="center"
-                    android:padding="@dimen/padding_small"
+                    android:padding="@dimen/padding_size_semi_small"
                     android:text="@string/first_edition"
                     android:textAlignment="center"
-                    android:textSize="@dimen/text_size_small" />
+                    android:textSize="@dimen/text_size_extra_small" />
 
 
                 <TextView
+                    android:id="@+id/tv_rev_holo"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
                     android:layout_weight="1"
-                    android:background="@drawable/config_card_tabs_background"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    android:background="@drawable/bg_light_gray_ask_flow"
                     android:gravity="center"
-                    android:padding="@dimen/padding_small"
+                    android:textColor="@color/text_color_dark_grey"
+                    android:padding="@dimen/padding_size_semi_small"
                     android:text="@string/rev_holo"
                     android:textAlignment="center"
-                    android:textSize="@dimen/text_size_small" />
+                    android:textSize="@dimen/text_size_extra_small" />
 
 
                 <TextView
+                    android:id="@+id/tv_asdasd"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/text_color_dark_grey"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
                     android:layout_weight="1"
-                    android:background="@drawable/config_card_tabs_background"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    android:background="@drawable/bg_light_gray_ask_flow"
                     android:gravity="center"
-                    android:padding="@dimen/padding_small"
+                    android:padding="@dimen/padding_size_semi_small"
                     android:text="@string/asdasd"
                     android:textAlignment="center"
-                    android:textSize="@dimen/text_size_small" />
+                    android:textSize="@dimen/text_size_extra_small" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -112,8 +133,9 @@
                 android:contentDescription="back btn"
                 android:padding="@dimen/padding_normal"
                 android:src="@drawable/blue_back_btn"
+                android:layout_marginStart="@dimen/margin_extra_small"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_condition_types"
+                app:layout_constraintStart_toStartOf="parent"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

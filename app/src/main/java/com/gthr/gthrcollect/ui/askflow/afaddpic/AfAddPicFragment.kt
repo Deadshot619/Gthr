@@ -14,7 +14,10 @@ import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AfAddPicFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
+import com.gthr.gthrcollect.ui.askflow.afcardcondition.AfCardConditionFragmentDirections
+import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentDirections
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.ui.customcameraactivities.CustomCamera
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.CameraViews
@@ -45,6 +48,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
     override fun getViewBinding() = AfAddPicFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mIvBack: ImageView
+    private lateinit var mBtnNext: CustomSecondaryButton
 
     override fun onBinding() {
 
@@ -65,6 +69,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
             mSkipBtn = btnSkipId
             mAskSellBtn = btnCompleteAccount
 
+            mBtnNext = btnNext
         }
 
         mIvFrontImage.gone()
@@ -169,6 +174,9 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
 
     private fun setUpClickListeners(){
         mViewBinding.run {
+            mBtnNext.setOnClickListener {
+                findNavController().navigate(AfAddPicFragmentDirections.actionAfAddPicFragmentToAfReviewYourAskFragment())
+            }
             mIvBack.setOnClickListener {
                 findNavController().navigateUp()
             }
