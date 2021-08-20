@@ -44,11 +44,24 @@
                     android:layout_marginStart="@dimen/margin_pick_image_ask_flow"
                     app:cardBackgroundColor="@color/grey_color"
                     app:cardCornerRadius="@dimen/dp_8"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_next"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toStartOf="@+id/back_id_capture"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_address_lable">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_front_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/id_verification"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/profile_pic"
+                        android:src="@drawable/profile_pic"
+                        app:layout_constraintBottom_toBottomOf="@+id/front_id_capture"
+                        app:layout_constraintEnd_toEndOf="@+id/front_id_capture"
+                        app:layout_constraintStart_toStartOf="@+id/front_id_capture"
+                        app:layout_constraintTop_toTopOf="@+id/front_id_capture" />
+
 
                     <LinearLayout
                         android:id="@+id/front_repls"
@@ -96,6 +109,19 @@
                     app:layout_constraintStart_toEndOf="@+id/front_id_capture"
                     app:layout_constraintTop_toTopOf="@+id/front_id_capture">
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_back_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/id_verification"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/profile_pic"
+                        app:layout_constraintBottom_toBottomOf="@+id/back_id_capture"
+                        app:layout_constraintEnd_toEndOf="@+id/back_id_capture"
+                        app:layout_constraintStart_toStartOf="@+id/back_id_capture"
+                        app:layout_constraintTop_toTopOf="@+id/back_id_capture" />
+
+
                     <LinearLayout
                         android:id="@+id/back_repls"
                         android:layout_width="wrap_content"
@@ -127,29 +153,6 @@
 
 
                 </com.google.android.material.card.MaterialCardView>
-
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_front_image"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:contentDescription="@string/id_verification"
-                    android:scaleType="fitXY"
-                    app:layout_constraintBottom_toBottomOf="@+id/front_id_capture"
-                    app:layout_constraintEnd_toEndOf="@+id/front_id_capture"
-                    app:layout_constraintStart_toStartOf="@+id/front_id_capture"
-                    app:layout_constraintTop_toTopOf="@+id/front_id_capture" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_back_image"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:contentDescription="@string/id_verification"
-                    android:scaleType="fitXY"
-                    app:layout_constraintBottom_toBottomOf="@+id/back_id_capture"
-                    app:layout_constraintEnd_toEndOf="@+id/back_id_capture"
-                    app:layout_constraintStart_toStartOf="@+id/back_id_capture"
-                    app:layout_constraintTop_toTopOf="@+id/back_id_capture" />
 
 
                 <ImageView

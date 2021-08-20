@@ -1,113 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
     tools:context=".ui.customcameraactivities.ImagePreview">
+
+    <TextView
+        android:id="@+id/tv_label_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textSize="@dimen/text_size_normal"
+        android:layout_marginTop="@dimen/margin_extra_large"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_idImage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginHorizontal="20dp"
-        android:scaleType="fitXY"
         android:background="@drawable/border"
-        android:src="@drawable/ic_launcher_background"
-        android:layout_centerHorizontal="true" />
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher_background" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_cardImage"
         android:layout_width="match_parent"
         android:layout_height="380dp"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginHorizontal="20dp"
-        android:scaleType="fitXY"
         android:background="@drawable/border"
-        android:src="@drawable/ic_launcher_background"
-        android:layout_centerHorizontal="true" />
-
-
-    <!--
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="50dp">
-
-            <TextView
-                android:id="@+id/retake"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Retake"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:padding="3dp"
-                android:gravity="center"
-                android:layout_margin="3dp"
-                android:textColor="#3C92F1"/>
-
-            <TextView
-                android:id="@+id/savePicture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Save Picture"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:padding="3dp"
-
-                android:background="@color/button_color_yello"
-                android:layout_margin="3dp"
-                android:textColor="@color/white"/>
-
-        </LinearLayout>
-    -->
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher_background" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-
         android:layout_alignParentBottom="true"
-        >
+
+        android:layout_marginBottom="25dp">
 
         <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
             android:id="@+id/retake"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:secondary_button_state="BLUE"
+            android:layout_gravity="start"
             android:layout_margin="3dp"
             android:layout_weight="1"
             android:drawableStart="@drawable/ic_retack"
             android:text="@string/retake"
-            android:layout_gravity="start"
-            />
-
-
-
-
+            app:secondary_button_state="BLUE" />
 
         <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
             android:id="@+id/savePicture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:secondary_button_state="YELLOW"
+            android:layout_gravity="end"
             android:layout_margin="3dp"
             android:layout_weight="1"
-           android:maxLines="1"
-            android:ellipsize="end"
-            android:drawablePadding="2dp"
             android:drawableEnd="@drawable/ic_next_arrow"
-            android:layout_gravity="end"
+            android:drawablePadding="2dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="Save Picture"
+            app:secondary_button_state="YELLOW"
 
             />
-
-
-
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

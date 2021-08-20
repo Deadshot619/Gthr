@@ -445,4 +445,7 @@
     <string name="do_you_want_to_sell">Do You Want To Sell?</string>
     <string name="add_pictures">Add Pictures</string>
 
+    <string name="back_label">Back</string>
+    <string name="front_lalel">Front</string>
+
 </resources>

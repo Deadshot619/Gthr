@@ -67,7 +67,6 @@ class EaIdVerificationFragment :
     var storageRef = storage.reference
     var spaceRef = storageRef.child("government_ID")
 
-
     override fun onBinding() {
         initViews()
         addListeners()
@@ -108,7 +107,8 @@ class EaIdVerificationFragment :
                     CustomCamera.getInstance(
                         requireContext(),
                         CameraViews.ID_VERIFICATION,
-                        isFront = true
+                        isFront = true,
+                        getString(R.string.preview_note_front)
                     ),
                     REQUEST_CODE_FRONT_ID
                 )
@@ -121,7 +121,8 @@ class EaIdVerificationFragment :
                     CustomCamera.getInstance(
                         requireContext(),
                         CameraViews.ID_VERIFICATION,
-                        isFront = false
+                        isFront = false,
+                        getString(R.string.preview_note_back)
                     ),
                     REQUEST_CODE_BACK_ID
                 )
@@ -245,7 +246,6 @@ class EaIdVerificationFragment :
 
     }
       */
-
 
     private fun checkMultiplePermissions(onPermissionGranted: () -> Unit) {
         Dexter.withContext(requireContext())

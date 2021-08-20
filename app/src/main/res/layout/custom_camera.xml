@@ -62,7 +62,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp_80"
             android:layout_marginTop="@dimen/dp_55"
-            android:text="@string/preview_note_front"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_14"

@@ -62,6 +62,8 @@ class CustomCamera : AppCompatActivity() {
 
     var mCameraViews: String? = null;
     var mIsFrontView: Boolean = false
+    var mLabelMsg: String? = null;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,10 +96,11 @@ class CustomCamera : AppCompatActivity() {
 
         mCameraViews = intent.getStringExtra(CAMERA_VIEW)
         mIsFrontView = intent.getBooleanExtra(IS_FRONT, false)
+        mLabelMsg =  intent.getStringExtra(LABEL_MSG)
 
         if (mCameraViews!!.equals(CameraViews.ID_VERIFICATION.toString())) {
-            mPreviewTextView?.text =
-                if (mIsFrontView) getString(R.string.preview_note_front) else getString(R.string.preview_note_back)
+            mPreviewTextView?.text =mLabelMsg
+            //    if (mIsFrontView) getString(R.string.preview_note_front) else getString(R.string.preview_note_back)
             mIdLayout.visible()
             mCardLayout.gone()
         } else {
@@ -412,8 +415,8 @@ class CustomCamera : AppCompatActivity() {
 
     private fun createCameraPreview() {
         val texture = mTextureView!!.surfaceTexture!!
-        texture.setDefaultBufferSize(mImageDimensions!!.width, mImageDimensions!!.height)
-     // texture.setDefaultBufferSize(mPreview_layout!!.height, mPreview_layout!!.width)
+     //   texture.setDefaultBufferSize(mImageDimensions!!.width, mImageDimensions!!.height)
+          texture.setDefaultBufferSize(mPreview_layout.height, mPreview_layout.width)
 
         val surface = Surface(texture)
         try {
@@ -605,7 +608,7 @@ class CustomCamera : AppCompatActivity() {
             }
 
             startActivityForResult(
-                ImagePreview.getInstance(this, mFile.path, mCameraViews!!), REQUEST_CODE_PREVIEW
+                ImagePreview.getInstance(this, mFile.path, mCameraViews!!,mLabelMsg), REQUEST_CODE_PREVIEW
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -633,6 +636,7 @@ class CustomCamera : AppCompatActivity() {
 
         const val CAMERA_VIEW = "camera_view"
         const val IS_FRONT = "is_front"
+        const val LABEL_MSG = "label_msg"
 
         const val CAMERA_FRONT = "1"
         const val CAMERA_BACK = "0"
@@ -644,10 +648,11 @@ class CustomCamera : AppCompatActivity() {
             ORIENTATIONS.append(Surface.ROTATION_270, 180)
         }
 
-        fun getInstance(context: Context, cameraViewType: CameraViews, isFront: Boolean) =
+        fun getInstance(context: Context, cameraViewType: CameraViews, isFront: Boolean, label_msg : String) =
             Intent(context, CustomCamera::class.java).apply {
                 putExtra(CAMERA_VIEW, cameraViewType.toString())
                 putExtra(IS_FRONT, isFront)
+                putExtra(LABEL_MSG, label_msg)
             }
 
         const val REQUEST_CODE_PREVIEW = 1
