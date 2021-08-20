@@ -304,8 +304,8 @@
     <string name="text_hash_colon">#:</string>
 
     <!--My profile-->
-    <string name="user_name">user_name</string>
-    <string name="user_bio">user bio</string>
+    <string name="user_name">---</string>
+    <string name="user_bio">---</string>
     <string name="lable_stats">Stats</string>
     <string name="lable_collection">Collection</string>
     <string name="hint_Search_collection">Search the collection</string>

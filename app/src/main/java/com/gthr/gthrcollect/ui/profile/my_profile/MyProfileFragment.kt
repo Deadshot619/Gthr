@@ -1,5 +1,8 @@
 package com.gthr.gthrcollect.ui.profile.my_profile
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -201,12 +204,13 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             goToProfilePage(ProfileNavigationType.FAVOURITES)
         }
         mEdit.setOnClickListener {
-            startActivity(
+            startActivityForResult(
                 EditProfileActivity.getInstance(
                     requireContext(),
                     display_name = mDisplayName.text.toString().trim(),
                     about = mAbout.text.toString().trim(), imageURl
-                )
+                ),
+                REQUEST_CODE_EDIT_PROFILE
             )
         }
 
@@ -275,8 +279,24 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     //Method to check if current user is Other User i.e. viewing other's profile
     private fun isOtherUser() = !otherUserId.isNullOrEmpty()
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        data?.let {
+            when(requestCode) {
+                REQUEST_CODE_EDIT_PROFILE -> {
+                    if (resultCode == RESULT_OK)
+                        mViewModel.fetchUserProfileData(GthrCollect.prefs?.getUserCollectionId().toString())
+                }
+            }
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         mainJob?.cancel()
+    }
+
+    companion object {
+        private const val REQUEST_CODE_EDIT_PROFILE = 69
     }
 }

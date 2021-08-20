@@ -45,21 +45,10 @@ class ProfileViewModel(private val repository: ProfileRepository, private val ot
         get() = _unFollowUser
 
     init {
-        if (otherUserId == null)
-            fetchUserProfileData()
-        else
-            fetchCollectionDataFromUserId(otherUserId)
+        fetchUserProfileData(otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString())
     }
 
-    private fun fetchCollectionDataFromUserId(userRefKey: String){
-        viewModelScope.launch {
-            repository.fetchOtherUserProfileData(userRefKey).collect {
-                _userCollectionInfo.value = Event(it)
-            }
-        }
-    }
-
-    private fun fetchUserProfileData(collectionId: String = GthrCollect.prefs?.getUserCollectionId().toString()) {
+    fun fetchUserProfileData(collectionId: String) {
         viewModelScope.launch {
             repository.fetchUserProfileData(collectionId).collect {
                 _userCollectionInfo.value = Event(it)

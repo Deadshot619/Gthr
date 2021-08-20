@@ -78,6 +78,8 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragme
                     is State.Success -> {
                         showProgressBar(false)
                         showToast(getString(R.string.success_note))
+                        activity?.setResult(RESULT_OK, Intent())
+                        activity?.finish()
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -96,6 +98,7 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragme
                     is State.Success -> {
                         showProgressBar(false)
                         GthrLogger.e("uploadTask", "BackFrag")
+                        activity?.setResult(RESULT_OK, Intent())
                         showToast(getString(R.string.success_note))
                     }
                     is State.Failed -> {

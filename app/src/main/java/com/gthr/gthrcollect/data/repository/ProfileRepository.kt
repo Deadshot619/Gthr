@@ -26,31 +26,17 @@ class ProfileRepository {
     private val mFirebaseRD = Firebase.database.reference
     private val mStorageRef = Firebase.storage.reference
 
-    fun fetchOtherUserProfileData(userId: String) =
-        flow<State<CollectionInfoDomainModel>> {
-            emit(State.loading())
-
-/*            val userInfo = mFirestore.collection(Firestore.COLLECTION_USER_INFO).document(userId).get().await().toObject(
-                UserInfoFirestoreModel::class.java)*/
-
-            val collectionInfo = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(userId).get().await().getValue(CollectionInfoModel::class.java)
-
-            emit(State.Success(collectionInfo!!.toCollectionInfoDomainModel()))
-        }.catch {
-            // If exception is thrown, emit failed state along with message.
-            emit(State.failed(it.message.toString()))
-        }.flowOn(Dispatchers.IO)
-
     fun fetchUserProfileData(collectionId: String) =
         flow<State<CollectionInfoDomainModel>> {
             emit(State.loading())
             val collectionInfo = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
                 .child(collectionId).get().await().getValue(CollectionInfoModel::class.java)
 
-            collectionInfo?.let {
-                GthrCollect.prefs?.updateCollectionInfoModelData(it.toCollectionInfoDomainModel())
-            }
+            //If the user is Logged in user, then save the data
+            if (collectionId == GthrCollect.prefs?.getUserCollectionId())
+                collectionInfo?.let {
+                    GthrCollect.prefs?.updateCollectionInfoModelData(it.toCollectionInfoDomainModel())
+                }
 
             emit(State.Success(collectionInfo!!.toCollectionInfoDomainModel()))
         }.catch {
@@ -63,7 +49,8 @@ class ProfileRepository {
             emit(State.loading())
 
             val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(GthrCollect.prefs?.userInfoModel?.collectionId.toString()).child(FirebaseRealtimeDatabase.ABOUT)
+                .child(GthrCollect.prefs?.userInfoModel?.collectionId.toString())
+                .child(FirebaseRealtimeDatabase.ABOUT)
             data.setValue(collectionInfoModel.about).await()
 
             emit(State.success(data.key.toString()))
@@ -105,7 +92,7 @@ class ProfileRepository {
 
             val arrayList = mutableListOf<CollectionInfoDomainModel>()
 
-            if (followingData.hasChildren()){
+            if (followingData.hasChildren()) {
                 val followingList = followingData.value as List<String>
 
                 //Retrieve Following Users data with respect to its collection id
