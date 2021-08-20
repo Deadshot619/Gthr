@@ -131,7 +131,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/tv_title"
                     app:layout_constraintEnd_toStartOf="@+id/btn_buy_now"
                     app:layout_constraintTop_toTopOf="@+id/tv_title"
-                    app:srcCompat="@drawable/ic_share" />
+                    app:srcCompat="@drawable/ic_share_blue" />
 
 
                 <androidx.appcompat.widget.AppCompatTextView

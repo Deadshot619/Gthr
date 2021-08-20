@@ -22,8 +22,8 @@
     <declare-styleable name="CustomProductButton">
         <attr name="custom_product_button_state" format="enum">
             <enum name="BUY" value="0"/>
-            <enum name="SELL" value="1"/>
-            <enum name="OWN" value="2"/>
+            <enum name="OWN" value="1"/>
+            <enum name="SELL" value="2"/>
         </attr>
     </declare-styleable>
 

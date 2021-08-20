@@ -11,19 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/guideline_profile" />
-
         <View
             android:id="@+id/topView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/bg_blue_view_height"
             android:background="@drawable/toolbar_bg"
-            app:layout_constraintBottom_toTopOf="@id/guideline_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -106,7 +98,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="@dimen/radius_cardview_product_recent_sale"
-                    android:layout_marginVertical="@dimen/margin_normal"
+                    android:layout_marginVertical="@dimen/margin_small"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/tv_recent_sales">
@@ -147,7 +139,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_normal"
-                    android:layout_marginVertical="@dimen/margin_normal"
+                    android:layout_marginVertical="@dimen/margin_small"
                     android:layout_marginTop="52dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -170,7 +162,7 @@
                     android:id="@+id/fl_Detail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_extra_small"
                     app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/tv_details" />
@@ -250,7 +242,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_normal"
-                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginBottom="@dimen/margin_normal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

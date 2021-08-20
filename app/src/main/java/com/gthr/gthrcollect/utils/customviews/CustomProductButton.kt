@@ -62,5 +62,4 @@ class CustomProductButton @JvmOverloads constructor(
     enum class State {
         BUY,OWN,SELL
     }
-
 }

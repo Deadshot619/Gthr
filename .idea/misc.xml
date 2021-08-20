@@ -17,7 +17,9 @@
         <entry key="app/src/main/res/drawable/bottom_nav_bg.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/drawable/collection_image_bg.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/drawable/ic_blue_edit.xml" value="0.1734375" />
+        <entry key="app/src/main/res/drawable/ic_heart.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/drawable/ic_see_all.xml" value="0.15885416666666666" />
+        <entry key="app/src/main/res/drawable/ic_share.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/drawable/toolbar_bg.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/account_fragment.xml" value="0.13722826086956522" />
         <entry key="app/src/main/res/layout/activity_ask_flow.xml" value="0.33" />
@@ -44,6 +46,7 @@
         <entry key="app/src/main/res/layout/layout_custom_product_cell.xml" value="0.4747225647348952" />
         <entry key="app/src/main/res/layout/layout_product_detail_card_top.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_product_detail_main_details.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/layout_product_detail_mtg_detail.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_product_detail_toy_top.xml" value="0.4407826982492276" />
         <entry key="app/src/main/res/layout/layout_progress_bar.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/market_fragment.xml" value="0.34270833333333334" />
@@ -55,6 +58,7 @@
         <entry key="app/src/main/res/layout/recent_sell_fragment.xml" value="0.19427083333333334" />
         <entry key="app/src/main/res/layout/search_fragment.xml" value="0.1765625" />
         <entry key="app/src/main/res/layout/sign_up_fragment.xml" value="0.14739583333333334" />
+        <entry key="app/src/main/res/layout/up_for_sell_fragment.xml" value="0.18125" />
         <entry key="app/src/main/res/menu/edit_profile_menu.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/menu/home_bottom_nav_menu.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/menu/product_detail_menu.xml" value="0.25" />

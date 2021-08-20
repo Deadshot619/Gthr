@@ -38,46 +38,30 @@
         <View
             android:id="@+id/topView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/bg_blue_view_height"
             android:background="@drawable/toolbar_bg"
-            app:layout_constraintBottom_toTopOf="@id/guideline_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/mcv_detail"
+        <FrameLayout
+            android:id="@+id/fl_top"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/guideline_edit_account_info"
-            app:cardCornerRadius="@dimen/radius_product_detail"
-            app:cardElevation="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <FrameLayout
-                android:id="@+id/fl_top"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </com.google.android.material.card.MaterialCardView>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_up_for_sell"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginVertical="@dimen/margin_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/mcv_detail"
+            app:layout_constraintTop_toBottomOf="@+id/fl_top"
             app:layout_constraintVertical_bias="0.0" />
-
-
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
