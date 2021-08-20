@@ -11,10 +11,8 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavViewModel
 import com.gthr.gthrcollect.ui.homebottomnav.feed.FeedFragment
 import com.gthr.gthrcollect.ui.homebottomnav.market.MarketFragment
-import com.gthr.gthrcollect.utils.viewpager.CommonPagerAdapter
-import com.gthr.gthrcollect.ui.profile.my_profile.MyProfileFragment
-import com.gthr.gthrcollect.ui.profile.reciepts.ReceiptsFragment
 import com.gthr.gthrcollect.utils.extensions.setStyleOfTabLayout
+import com.gthr.gthrcollect.utils.viewpager.CommonPagerAdapter
 
 class BottomFeedFragment : BaseFragment<HomeBottomNavViewModel, BottomFeedFragmentBinding>() {
 

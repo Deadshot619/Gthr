@@ -82,6 +82,10 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
             mHighestAskSeeAll = csavHighestAskSeeAll
             mCctvList = listOf(mAll, mCards, mSealed, mFunko)
             initProgressBar(mViewBinding.layoutProgress)
+
+            mRvPopularCollections.setNestedScrollingEnabled(false)
+            mRvLowestAsk.setNestedScrollingEnabled(false)
+            mRvHighestAsk.setNestedScrollingEnabled(false)
         }
     }
 
@@ -106,6 +110,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
 
     private fun setUpPopularCollections() {
         mRvPopularCollections.apply {
+
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
             adapter = PopularCollectionAdapter()
         }
@@ -113,6 +118,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
 
     private fun setUpLowestAsk() {
         mRvLowestAsk.apply {
+
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
             adapter = ProductAdapter(ProductTypeOld.FUNKO, CustomProductCell.State.FOR_SALE)
         }
@@ -120,6 +126,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
 
     private fun setUpHighestAsk() {
         mRvHighestAsk.apply {
+
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
             adapter = ProductAdapter(ProductTypeOld.FUNKO,CustomProductCell.State.FOR_SALE)
         }

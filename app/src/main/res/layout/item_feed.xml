@@ -16,6 +16,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:cardCornerRadius="@dimen/margin_medium"
+            app:cardElevation="@dimen/size_elevation"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -38,11 +40,11 @@
                     android:id="@+id/tv_user_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginStart="@dimen/margin_medium"
                     android:fontFamily="@font/lato_bold"
                     android:text="Dark Magician Girl"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_normal"
+                    android:textSize="@dimen/text_size_medium"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_user"
                     app:layout_constraintStart_toEndOf="@+id/iv_user"
                     app:layout_constraintTop_toTopOf="@+id/iv_user" />
@@ -120,7 +122,7 @@
                     android:fontFamily="@font/lato_bold"
                     android:text="Dark Magician Girl"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_normal"
+                    android:textSize="@dimen/text_size_medium"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/iv_product" />
 
