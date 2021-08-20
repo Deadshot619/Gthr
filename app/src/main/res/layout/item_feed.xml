@@ -16,7 +16,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:cardCornerRadius="@dimen/margin_medium"
+            app:cardCornerRadius="@dimen/radius"
             app:cardElevation="@dimen/size_elevation"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                     android:fontFamily="@font/lato"
                     android:text="New To Buylist"
                     android:textColor="@color/text_color_dark_green"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/text_size_extra_small"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_user"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/iv_user" />
@@ -86,10 +86,10 @@
                     android:fontFamily="@font/lato"
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/padding_custom_product"
-                    android:paddingVertical="@dimen/padding_extra_small"
+                    android:paddingVertical="@dimen/padding_light"
                     android:text="Funko"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_product"
                     app:layout_constraintEnd_toEndOf="@+id/iv_product"
                     app:layout_constraintWidth_percent="0.3" />
@@ -101,13 +101,13 @@
                     android:layout_margin="@dimen/margin_extra_small"
                     android:background="@drawable/bg_feed_product_price"
                     android:elevation="1dp"
-                    android:fontFamily="@font/lato_bold"
+                    android:textStyle="bold"
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/padding_custom_product"
-                    android:paddingVertical="@dimen/padding_extra_small"
+                    android:paddingVertical="@dimen/padding_light"
                     android:text="$100"
                     android:textColor="@color/text_color_dark_green"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/text_size_medium"
                     app:layout_constraintEnd_toEndOf="@+id/iv_product"
                     app:layout_constraintTop_toTopOf="@+id/iv_product"
                     app:layout_constraintWidth_percent="0.3" />
@@ -166,15 +166,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_title"
                     app:layout_constraintWidth_percent="0.6">
 
-
                     <TextView
                         android:id="@+id/tv_row1_column2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_small"
                         android:text="@string/text_set_product_details"
-                        android:textColor="@color/light_blue"
-                        android:textSize="@dimen/text_size_small" />
+                        style="@style/ProductBlueTextTitle"/>
 
                     <TextView
                         android:id="@+id/tv_row1_colum2"
@@ -182,10 +180,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:layout_weight="7"
-                        android:fontFamily="@font/lato"
                         android:text="Collector's Edition"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_small" />
+                        style="@style/ProductBlueTextValue" />
 
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -204,15 +200,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_title"
                     app:layout_constraintWidth_percent="0.28">
 
-
                     <TextView
                         android:id="@+id/tv_hash"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_small"
                         android:text="#"
-                        android:textColor="@color/light_blue"
-                        android:textSize="@dimen/text_size_small" />
+                        style="@style/ProductBlueTextTitle"/>
 
                     <TextView
                         android:id="@+id/tv_hash_value"
@@ -220,13 +214,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:layout_weight="7"
-                        android:fontFamily="@font/lato"
                         android:gravity="center"
                         android:text="-"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_small" />
-
-
+                        style="@style/ProductBlueTextValue" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -245,7 +235,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ll_set">
 
-
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_glob"
                         android:layout_width="@dimen/size_glob"
@@ -262,13 +251,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:layout_weight="7"
-                        android:fontFamily="@font/lato"
                         android:gravity="center"
                         android:text="English"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_small" />
-
-
+                        style="@style/ProductBlueTextValue"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -286,16 +271,13 @@
                     app:layout_constraintStart_toEndOf="@+id/ll_language"
                     app:layout_constraintTop_toTopOf="@+id/ll_language">
 
-
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_psa"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_extra_small"
                         android:text="@string/text_product_psa"
-                        android:textColor="@color/blue"
-                        android:textSize="@dimen/text_size_small"
-                        android:textStyle="bold"
+                        style="@style/ProductBlueTextTitle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/line_glob"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -305,13 +287,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:layout_weight="7"
-                        android:fontFamily="@font/lato"
                         android:gravity="center"
                         android:text="English"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_small" />
-
-
+                        style="@style/ProductBlueTextValue"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -329,19 +307,14 @@
                     app:layout_constraintStart_toEndOf="@+id/ll_psa"
                     app:layout_constraintTop_toTopOf="@+id/ll_language">
 
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:layout_weight="7"
-                        android:fontFamily="@font/lato"
                         android:gravity="center"
                         android:text="English"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_small" />
-
-
+                        style="@style/ProductBlueTextValue"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat

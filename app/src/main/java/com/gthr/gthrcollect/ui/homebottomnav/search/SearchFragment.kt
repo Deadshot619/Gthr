@@ -111,7 +111,15 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 it%5==4 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.FUNKO))
             }
         }
-        mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL){}
+        mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL){
+            when {
+                it%5==0 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.POKEMON))
+                it%5==1 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.MTG))
+                it%5==2 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.YUGIOH))
+                it%5==3 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.SEALED))
+                it%5==4 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.FUNKO))
+            }
+        }
         mRvMain.apply {
             layoutManager = GridLayoutManager(requireContext(),spanCount)
             adapter = mProductAdapter

@@ -18,6 +18,7 @@ import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
 import com.gthr.gthrcollect.utils.customviews.CustomProductButton
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
+import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductTypeOld
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
@@ -61,8 +62,14 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         mUpForSellSeeAll.setOnClickListener {
             upForSellSeeAll()
         }
+        mBtnBuy.setOnClickListener {
+//            startActivity(AskFlowActivity.getInstance(requireContext(), AskFlowType.COLLECT))
+        }
+        mBtnCollect.setOnClickListener {
+            startActivity(AskFlowActivity.getInstance(requireContext(), AskFlowType.COLLECT))
+        }
         mBtnSell.setOnClickListener {
-            startActivity(AskFlowActivity.getInstance(requireContext()))
+            startActivity(AskFlowActivity.getInstance(requireContext(), AskFlowType.SELL))
         }
     }
 

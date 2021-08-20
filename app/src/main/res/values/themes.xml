@@ -101,6 +101,20 @@
         <item name="android:textColor">@color/light_blue</item>
     </style>
 
+    <style name="ProductBlueTextTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/text_size_extra_small</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
+        <item name="android:textColor">@color/light_blue</item>
+    </style>
+
+    <style name="ProductBlueTextValue" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/text_size_semi_small</item>
+        <item name="android:fontFamily">@font/lato</item>
+        <item name="android:textColor">@color/text_color_black</item>
+    </style>
+
+
+
     <style name="CustomCardProductDetail" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners</item>
         <item name="cardUseCompatPadding">true</item>

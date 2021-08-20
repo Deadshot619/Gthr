@@ -16,6 +16,8 @@ import com.gthr.gthrcollect.databinding.ActivityAskFlowBinding
 import com.gthr.gthrcollect.databinding.LayoutProductDetailCardTopBinding
 import com.gthr.gthrcollect.databinding.LayoutProductDetailToyTopBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
+import com.gthr.gthrcollect.utils.customviews.CustomProductCell
+import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductTypeOld
 
@@ -27,10 +29,14 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var mToolbar: Toolbar
+    private lateinit var mAskFlowType: AskFlowType
 
     private lateinit var mFlInfo: FrameLayout
+    private lateinit var mProductItem: CustomProductCell
 
     override fun onBinding() {
+        mAskFlowType = intent?.getSerializableExtra(KEY_ASK_FLOW_TYPE) as AskFlowType
+
         initViews()
         setSupportActionBar(mToolbar)
         setUpNavigationAndActionBar()
@@ -41,6 +47,12 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         mViewBinding.run {
             mToolbar = toolbar
             mFlInfo = flInfo
+            mProductItem = cpcProductItem
+
+            mProductItem.mTvPrice.text = "$-"
+            mProductItem.mTvGlob.text = "-"
+            mProductItem.mTvPsaValue.text = "-"
+            mProductItem.mTvFoil.text = "-"
         }
     }
 
@@ -55,7 +67,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             mToolbar.title = ""     //Set Title as empty as we have used custom title
             upButtonVisibility(isVisible = true)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_up_button) //Set up button as <
-            setToolbarTitle(getString(R.string.text_place_an_ask))
+            setToolbarTitle(mAskFlowType)
 
             when (nd.id) {
                 /*R.id.placeAskFragment -> {
@@ -69,8 +81,12 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         return false
     }
 
-    fun setToolbarTitle(title: String) {
-        mViewBinding.toolbarTitle.text = title
+    fun setToolbarTitle(askFlowType: AskFlowType) {
+        mViewBinding.toolbarTitle.text = when (askFlowType) {
+            AskFlowType.BUY -> getString(R.string.text_add_to_buylist)
+            AskFlowType.COLLECT -> getString(R.string.text_add_to_collection)
+            AskFlowType.SELL -> getString(R.string.text_place_an_ask)
+        }
     }
 
     private fun upButtonVisibility(isVisible: Boolean) {
@@ -92,7 +108,13 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         }
     }
 
+    internal fun getAskFlowType(): AskFlowType = mAskFlowType
+
     companion object {
-        fun getInstance(context: Context) = Intent(context, AskFlowActivity::class.java)
+        private const val KEY_ASK_FLOW_TYPE = "key_ask_flow_type"
+
+        fun getInstance(context: Context, askFlowType: AskFlowType) = Intent(context, AskFlowActivity::class.java).apply {
+            putExtra(KEY_ASK_FLOW_TYPE, askFlowType)
+        }
     }
 }

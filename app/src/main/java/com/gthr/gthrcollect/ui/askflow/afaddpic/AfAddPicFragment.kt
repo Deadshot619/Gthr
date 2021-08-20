@@ -19,7 +19,6 @@ import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentDire
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.ui.customcameraactivities.CustomCamera
-import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.CameraViews
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.invisible
@@ -67,7 +66,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
             mFront_repls = frontRepls
             mBack_repls = backRepls
             mSkipBtn = btnSkipId
-            mAskSellBtn = btnCompleteAccount
+//            mAskSellBtn = btnCompleteAccount
 
             mBtnNext = btnNext
         }

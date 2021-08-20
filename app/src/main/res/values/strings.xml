@@ -295,7 +295,7 @@
     <string name="text_want">Want</string>
     <string name="text_offer">Offer</string>
     <string name="text_offer_price">Offer Price</string>
-    <string name="text_market_price">Market Price</string>
+    <string name="text_market_price">Lowest Ask</string>
     <string name="text_buylist_price">Buylist Price</string>
     <string name="text_sale_price">Sale Price</string>
     <string name="text_sold">Sold</string>
@@ -416,6 +416,8 @@
 
     <!--Ask flow-->
     <string name="text_place_an_ask">Place an Ask</string>
+    <string name="text_add_to_buylist">Add to Buylist</string>
+    <string name="text_add_to_collection">Add to Collection</string>
     <string name="label_config_card">Configure Your Card</string>
     <string name="label_add_pic">Add pictures</string>
     <string name="condition">Condition</string>

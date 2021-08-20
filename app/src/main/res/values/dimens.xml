@@ -190,7 +190,7 @@
     <dimen name="height_search_collection_cell">170dp</dimen>
     <dimen name="margin_search_collection_cell">2dp</dimen>
     <dimen name="margin_start_search_collection_image">2dp</dimen>
-    <dimen name="size_user_image_search_collection_cell">40dp</dimen>
+    <dimen name="size_user_image_search_collection_cell">35dp</dimen>
     <dimen name="elevation_user_name_search_collection_cell">4dp</dimen>
     <dimen name="padding_vertical_search_collection_cell">6dp</dimen>
     <dimen name="margin_start_search_collection_cell">25dp</dimen>

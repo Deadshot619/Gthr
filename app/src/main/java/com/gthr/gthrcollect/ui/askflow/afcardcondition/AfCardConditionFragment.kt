@@ -5,9 +5,11 @@ import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.gthr.gthrcollect.databinding.AfCardConditionFragmentBinding
+import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+import com.gthr.gthrcollect.utils.enums.AskFlowType
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -55,16 +57,16 @@ class AfCardConditionFragment : BaseFragment<AskFlowViewModel, AfCardConditionFr
     private fun setUpClickListeners(){
         mViewBinding.run {
             mTvChineseT.setOnClickListener {
-                goToWantToSell()
+                goToNextPage()
             }
             mTvFrench.setOnClickListener {
-                goToWantToSell()
+                goToNextPage()
             }
             mTvBgs.setOnClickListener {
-                goToWantToSell()
+                goToNextPage()
             }
             mTvBgs9.setOnClickListener {
-                goToWantToSell()
+                goToNextPage()
             }
             mIvBack.setOnClickListener {
                 findNavController().navigateUp()
@@ -88,8 +90,14 @@ class AfCardConditionFragment : BaseFragment<AskFlowViewModel, AfCardConditionFr
         }
     }
 
-    private fun goToWantToSell() {
-        findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfWantToSellFragment())
+    private fun goToNextPage() {
+        if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.SELL)
+            findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfWantToSellFragment())
+        else
+            findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfAddPicFragment())
+    }
+
+    private fun goToAddPictures() {
     }
 
     override fun onDestroy() {

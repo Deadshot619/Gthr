@@ -27,81 +27,83 @@
                 android:layout_marginTop="@dimen/margin_normal"
                 android:text="@string/label_config_card"
                 android:textColor="@color/black"
-                android:textStyle="bold"
+                android:fontFamily="@font/lato_bold"
                 android:textSize="@dimen/text_size_small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ll_market_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_extra_small"
                 android:layout_marginTop="@dimen/margin_mini"
-                android:background="@drawable/bg_search_white"
-                android:elevation="@dimen/elevation_search_type"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingVertical="@dimen/padding_mini"
-                android:weightSum="4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/config"
-                >
+                app:layout_constraintTop_toBottomOf="@id/config">
 
-                <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-                    android:id="@+id/cct_raw"
-                    android:layout_width="0dp"
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:cccv_horizontalPadding="@dimen/padding_size_semi_small"
-                    app:cccv_text="@string/raw" />
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/padding_mini"
+                    android:paddingHorizontal="@dimen/padding_size_semi_small"
+                    android:weightSum="4">
 
-                <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-                    android:id="@+id/cct_psa"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:cccv_horizontalPadding="@dimen/padding_size_semi_small"
-                    app:cccv_text="@string/psa"
-                    app:ccv_isActive="true" />
+                    <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+                        android:id="@+id/cct_raw"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:cccv_horizontalPadding="@dimen/padding_size_semi_small"
+                        app:cccv_text="@string/raw" />
 
-                <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-                    android:id="@+id/cct_bgs"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:cccv_horizontalPadding="@dimen/padding_size_semi_small"
-                    app:cccv_text="@string/bgs" />
+                    <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+                        android:id="@+id/cct_psa"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:cccv_horizontalPadding="@dimen/padding_size_semi_small"
+                        app:cccv_text="@string/psa"
+                        app:ccv_isActive="true" />
 
-                <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-                    android:id="@+id/cct_cgc"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:cccv_horizontalPadding="@dimen/padding_size_semi_small"
-                    app:cccv_text="@string/cgc" />
+                    <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+                        android:id="@+id/cct_bgs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:cccv_horizontalPadding="@dimen/padding_size_semi_small"
+                        app:cccv_text="@string/bgs" />
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                    <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
+                        android:id="@+id/cct_cgc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:cccv_horizontalPadding="@dimen/padding_size_semi_small"
+                        app:cccv_text="@string/cgc" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/condition"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/condition"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/text_size_small"
-                app:layout_constraintTop_toBottomOf="@+id/ll_market_type"
+                app:layout_constraintBottom_toBottomOf="@+id/ll_market_type"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/tv_condition_types"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/margin_mini"
                 android:layout_marginEnd="@dimen/margin_extra_small"
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_normal"

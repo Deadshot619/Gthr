@@ -29,16 +29,16 @@ class CustomProductCell @JvmOverloads constructor(
     private val mTvCardState: AppCompatTextView = mView.findViewById(R.id.tv_card_state)
     private val mTvProductType: AppCompatTextView = mView.findViewById(R.id.tv_product_type)
     private val mTvTitle: AppCompatTextView = mView.findViewById(R.id.tv_title)
-    private val mTvPrice: AppCompatTextView = mView.findViewById(R.id.tv_price)
+    val mTvPrice: AppCompatTextView = mView.findViewById(R.id.tv_price)
 
     private val mTvRow1Collum1: AppCompatTextView = mView.findViewById(R.id.tv_row1_collum1)
     private val mTvRow1Collum2: AppCompatTextView = mView.findViewById(R.id.tv_row1_collum2)
     private val mTvRow2Collum1: AppCompatTextView = mView.findViewById(R.id.tv_row2_collum1)
     private val mTvRow2Collum2: AppCompatTextView = mView.findViewById(R.id.tv_row2_collum2)
 
-    private val mTvGlob: AppCompatTextView = mView.findViewById(R.id.tv_glob)
-    private val mTvPsaValue: AppCompatTextView = mView.findViewById(R.id.tv_psa_value)
-    private val mTvFoil: AppCompatTextView = mView.findViewById(R.id.tv_foil)
+    val mTvGlob: AppCompatTextView = mView.findViewById(R.id.tv_glob)
+    val mTvPsaValue: AppCompatTextView = mView.findViewById(R.id.tv_psa_value)
+    val mTvFoil: AppCompatTextView = mView.findViewById(R.id.tv_foil)
 
     private val mGroupGlob: Group = mView.findViewById(R.id.group_glob)
     private val mGroupPsa: Group = mView.findViewById(R.id.group_psa)

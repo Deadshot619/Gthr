@@ -9,7 +9,7 @@ import com.gthr.gthrcollect.databinding.ItemTestProductBinding
 import com.gthr.gthrcollect.model.domain.CollectionProductDomainModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 
-class ProductAdapter(val state: CustomProductCell.State, val callback: (CollectionProductDomainModel) -> Unit) :
+class ProductAdapter(val state: CustomProductCell.State, val callback : (position : Int) -> Unit) :
     ListAdapter<CollectionProductDomainModel, ProductAdapter.FavSoldViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<CollectionProductDomainModel>() {
@@ -40,7 +40,7 @@ class ProductAdapter(val state: CustomProductCell.State, val callback: (Collecti
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
             binding.root.setOnClickListener {
-
+                callback(layoutPosition)
             }
         }
     }
