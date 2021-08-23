@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/margin_search_collection_cell"
-            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_start_collection"
             android:layout_marginTop="@dimen/margin_search_collection_cell"
             android:layout_marginBottom="@dimen/margin_small"
             app:cardCornerRadius="@dimen/radius_card_view_search_collection_cell"

@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.2046875" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/activity_product_detail.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_add_pic_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_place_your_ask_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/bottom_feed_fragment.xml" value="0.23125" />
@@ -13,6 +14,7 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_custom_product_cell.xml" value="0.3262307127112417" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_product_detail_mtg_detail.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/market_fragment.xml" value="0.18392709196354598" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/product_detail_fragment.xml" value="0.23125" />
         <entry key="app/src/main/res/drawable/bg_btn_delivery_yellow.xml" value="0.35333333333333333" />
         <entry key="app/src/main/res/drawable/bg_btn_secondary_blue_gradint.xml" value="0.29739583333333336" />
         <entry key="app/src/main/res/drawable/bg_btn_secondary_yellow.xml" value="0.20520833333333333" />

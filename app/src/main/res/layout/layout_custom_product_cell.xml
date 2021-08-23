@@ -6,7 +6,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_small_custom_product"
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="@dimen/radius_cardview_product_recent_sale"
         app:layout_constraintBottom_toBottomOf="parent"

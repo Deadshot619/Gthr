@@ -10,6 +10,7 @@ import com.gthr.gthrcollect.databinding.ItemUpForSellBinding
 import com.gthr.gthrcollect.model.domain.UpForSellDomainModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.enums.ProductTypeOld
+import com.gthr.gthrcollect.utils.extensions.getCellWidth
 import com.gthr.gthrcollect.utils.extensions.getScreenWidth
 
 class ProductAdapter(val productType: ProductTypeOld, val state: CustomProductCell.State) : ListAdapter<UpForSellDomainModel,ProductAdapter.UpForSellViewHolder>(DriftUtils)  {
@@ -40,7 +41,7 @@ class ProductAdapter(val productType: ProductTypeOld, val state: CustomProductCe
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : UpForSellViewHolder {
         val binding = ItemUpForSellBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        binding.root.layoutParams.width = (((binding.root.context.getScreenWidth()) - (2*binding.root.context.resources.getDimensionPixelOffset(R.dimen.margin_normal))) / 2) /// THIS LINE WILL DIVIDE OUR VIEW INTO NUMBERS OF PARTS
+        binding.root.layoutParams.width = binding.root.getCellWidth()
         return UpForSellViewHolder(binding)
     }
 

@@ -196,6 +196,8 @@
     <dimen name="margin_start_search_collection_cell">25dp</dimen>
     <dimen name="padding_start_search_collection_cell">20dp</dimen>
     <dimen name="margin_end_search_collection_cell">30dp</dimen>
+    <dimen name="margin_start_collection">6dp</dimen>
+
 
     <!--Custom Product-->
     <dimen name="radius_custom_product">8dp</dimen>

@@ -2,6 +2,7 @@ package com.gthr.gthrcollect.utils.extensions
 
 import android.animation.Animator
 import android.animation.ValueAnimator
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +17,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.ui.receiptdetail.purchasedetails.FullProductImage
 
 private const val DURATION = 300
@@ -30,6 +32,10 @@ fun View.invisible() {
 
 fun View.gone() {
     visibility = View.GONE
+}
+
+fun View.getCellWidth() : Int {
+    return (((this.context.getScreenWidth()) - (2*this.context.resources.getDimensionPixelOffset(R.dimen.margin_large))) / 2)
 }
 
 fun View.getImageDrawable(@DrawableRes id: Int): Drawable? = context.getImageDrawable(id)

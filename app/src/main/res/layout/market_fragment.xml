@@ -160,15 +160,15 @@
 
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:nestedScrollingEnabled="false"
-                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                    android:paddingEnd="@dimen/margin_extra_small"
+                    android:paddingStart="@dimen/margin_extra_small"
+                    android:clipToPadding="false"
                     android:id="@+id/rv_popular_collections"
                     android:layout_width="0dp"
                     android:overScrollMode="always"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_mini"
                     android:fitsSystemWindows="true"
-                    tools:listitem="@layout/item_collection"
                     app:spanCount="2"
                     android:animateLayoutChanges="false"
                     app:layout_constraintStart_toStartOf="parent"
@@ -195,20 +195,18 @@
                     app:layout_constraintBottom_toBottomOf="@+id/csav_lowest_ask_see_all"/>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:nestedScrollingEnabled="false"
-                    android:layout_marginHorizontal="@dimen/margin_normal"
+                    android:paddingEnd="@dimen/margin_large"
+                    android:paddingStart="@dimen/margin_large"
+                    android:clipToPadding="false"
                     android:id="@+id/rv_lowest_ask_collections"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_collection"
                     android:animateLayoutChanges="false"
                     app:spanCount="2"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/csav_lowest_ask_see_all" />
-
-
 
                 <com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
                     android:layout_marginTop="@dimen/margin_extra_small"
@@ -230,8 +228,9 @@
                     app:layout_constraintBottom_toBottomOf="@+id/csav_highest_ask_see_all"/>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:nestedScrollingEnabled="false"
-                    android:layout_marginHorizontal="@dimen/margin_normal"
+                    android:paddingEnd="@dimen/margin_large"
+                    android:paddingStart="@dimen/margin_large"
+                    android:clipToPadding="false"
                     android:id="@+id/rv_highest_ask_collections"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
