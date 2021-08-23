@@ -128,4 +128,11 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
+
+    <!--Purchase Detail-->
+    <style name="PurchaseDetailCardInfoBlueStyle">
+        <item name="android:background">@drawable/bg_recipt_bottom</item>
+        <item name="android:paddingTop">@dimen/padding_extra_light</item>
+        <item name="android:paddingBottom">@dimen/padding_extra_light</item>
+    </style>
 </resources>

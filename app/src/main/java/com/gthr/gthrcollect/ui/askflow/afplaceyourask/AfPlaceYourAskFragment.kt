@@ -14,8 +14,10 @@ import com.gthr.gthrcollect.databinding.AfPlaceYourAskFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
+import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ReceiptType
 import com.gthr.gthrcollect.utils.enums.WebViewType
 
@@ -52,6 +54,15 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 toggleTnC(false)
             }
         }
+        mBtnNext.setOnClickListener {
+            startActivity(
+                ReceiptDetailActivity.getInstance(
+                    requireContext(),
+                    ReceiptType.SOLD,
+                    ProductCategory.CARDS,
+                    CustomDeliveryButton.Type.ASK_PLACED
+                )
+            )
 
         mTvTermsAndConditions.setOnClickListener {
             startActivity(

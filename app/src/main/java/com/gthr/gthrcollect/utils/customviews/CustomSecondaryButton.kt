@@ -7,7 +7,6 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.content.ContextCompat
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.utils.extensions.getImageDrawable
 import com.gthr.gthrcollect.utils.extensions.getResolvedColor
@@ -29,7 +28,8 @@ class CustomSecondaryButton @JvmOverloads constructor(
 
         this.textAlignment = View.TEXT_ALIGNMENT_CENTER
         val padding = resources.getDimensionPixelOffset(R.dimen.padding_large)
-        val paddingVertical = resources.getDimensionPixelOffset(R.dimen.padding_small)
+        val paddingVertical =
+            resources.getDimensionPixelOffset(R.dimen.custom_secondary_button_padding_vertical)
         this.setPadding(padding, paddingVertical, padding, paddingVertical)
 
         setState(state)

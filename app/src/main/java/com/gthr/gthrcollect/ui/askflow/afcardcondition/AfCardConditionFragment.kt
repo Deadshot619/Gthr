@@ -107,7 +107,7 @@ class AfCardConditionFragment : BaseFragment<AskFlowViewModel, AfCardConditionFr
     }
 
     private fun goToNextPage() {
-        if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.SELL)
+        if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.COLLECT)
             findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfWantToSellFragment())
         else
             findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfAddPicFragment())

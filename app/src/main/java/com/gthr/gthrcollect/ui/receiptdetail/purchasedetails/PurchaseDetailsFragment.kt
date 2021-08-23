@@ -12,6 +12,7 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.constants.MailConstants
 import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ReceiptType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.sendMail
@@ -23,6 +24,10 @@ class PurchaseDetailsFragment :
     override fun getViewBinding() = PurchaseDetailsFragmentBinding.inflate(layoutInflater)
 
     private val args by navArgs<PurchaseDetailsFragmentArgs>()
+
+    private lateinit var mReceiptType: ReceiptType
+    private lateinit var mProductCategory: ProductCategory
+    private lateinit var mButtonType: CustomDeliveryButton.Type
 
     private lateinit var mBtnReportIssue: CustomSecondaryButton
     private lateinit var mBtnConfirmReceived: CustomSecondaryButton
@@ -82,9 +87,13 @@ class PurchaseDetailsFragment :
     }
 
     override fun onBinding() {
+        mReceiptType = args.receiptType
+        mProductCategory = args.productCategory
+        mButtonType = args.buttonType
+
         initViews()
-        setUpCardTypeViews("cards")
-        setUpReceiptTypeViews(args.receiptType)
+        setUpCardTypeViews(ProductCategory.CARDS)
+        setUpReceiptTypeViews(mReceiptType)
         initClickListeners()
     }
 
@@ -160,27 +169,40 @@ class PurchaseDetailsFragment :
                 mTvSummaryR1C2.text = "$22.00"
                 mTvSummaryR2C1.text = String.format(getString(R.string.text_selling_fee), "8.5")
                 mTvSummaryR2C2.text = "- \$5.23"
-                mTvSummaryR3C1.text = String.format(getString(R.string.text_payment_processing), "2.9")
+                mTvSummaryR3C1.text =
+                    String.format(getString(R.string.text_payment_processing), "2.9")
                 mTvSummaryR3C2.text = "- \$1.60"
                 mTvSummaryR4C1.text = getString(R.string.text_shipping_reimbursement)
                 mTvSummaryR4C2.text = "+ \$0.55"
 
-                mCdbOrderStatus.setType(CustomDeliveryButton.Type.PENDING)
-                mBtnConfirmReceived.text = getString(R.string.dialog_confirm_shipped_title)
+                if (mButtonType == CustomDeliveryButton.Type.ASK_PLACED) {
+                    mCdbOrderStatus.setType(CustomDeliveryButton.Type.ASK_PLACED)
+                    mBtnReportIssue.gone()
+                    mBtnConfirmReceived.text = getString(R.string.finish)
+                    mBtnConfirmReceived.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.ic_next_arrow,
+                        0
+                    )
+                } else {
+                    mCdbOrderStatus.setType(CustomDeliveryButton.Type.PENDING)
+                    mBtnConfirmReceived.text = getString(R.string.dialog_confirm_shipped_title)
+                }
             }
         }
     }
 
-    private fun setUpCardTypeViews(type: String) {
+    private fun setUpCardTypeViews(type: ProductCategory) {
         when (type) {
-            "cards" -> {
+            ProductCategory.CARDS -> {
                 llCondition.gone()
             }
-            "sealed" -> {
+            ProductCategory.SEALED -> {
                 llNumberRarity.gone()
                 llDetails.gone()
             }
-            "funko" -> {
+            ProductCategory.TOYS -> {   //Funko
                 llRarity.gone()
                 llDetails.gone()
 

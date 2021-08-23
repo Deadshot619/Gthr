@@ -259,6 +259,7 @@
     <string name="text_pending">Pending</string>
     <string name="text_delivered">Delivered</string>
     <string name="text_transit">Transit</string>
+    <string name="text_ask_placed">Ask Placed</string>
 
     <!--Search -->
     <string name="text_search">Search</string>
