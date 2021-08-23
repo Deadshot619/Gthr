@@ -53,6 +53,7 @@ class AccountFragment : BaseFragment<AccountViewModel, AccountFragmentBinding>()
     private fun initViewPager() {
         mViewPager.adapter = mAdapter
 
+        mViewPager.isUserInputEnabled = false
         TabLayoutMediator(mTabLayout, mViewPager) { tab, pos ->
             tab.text = mViews[pos].first
             mViewPager.setCurrentItem(tab.position, true)
