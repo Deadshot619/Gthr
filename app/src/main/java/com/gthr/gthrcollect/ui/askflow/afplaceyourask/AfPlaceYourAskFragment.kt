@@ -1,11 +1,5 @@
 package com.gthr.gthrcollect.ui.askflow.afplaceyourask
 
-import android.os.Build
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.viewModels
@@ -14,8 +8,8 @@ import com.gthr.gthrcollect.databinding.AfPlaceYourAskFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
-import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
+import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ReceiptType
@@ -39,21 +33,18 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
     }
 
     private fun setUpOnClickListeners() {
-        mBtnNext.setOnClickListener {
-            startActivity(ReceiptDetailActivity.getInstance(requireContext(), ReceiptType.SOLD))
-        }
         mIvTermsAndConditions.setOnClickListener {
             if (!isTnCCheked) {
                 isTnCCheked = !isTnCCheked
                 toggleTnC(true)
+                mBtnNext.setState(CustomSecondaryButton.State.BLUE_GRADIENT)
             } else {
                 isTnCCheked = !isTnCCheked
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
-                }
+                mBtnNext.setState(CustomSecondaryButton.State.DISABLE)
                 toggleTnC(false)
             }
         }
+
         mBtnNext.setOnClickListener {
             startActivity(
                 ReceiptDetailActivity.getInstance(
@@ -63,6 +54,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     CustomDeliveryButton.Type.ASK_PLACED
                 )
             )
+        }
 
         mTvTermsAndConditions.setOnClickListener {
             startActivity(

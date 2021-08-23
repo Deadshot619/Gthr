@@ -134,7 +134,7 @@
     <!--CustomSecondaryButton-->
     <dimen name="custom_secondary_button_border_width">1dp</dimen>
     <dimen name="custom_secondary_button_border_radius">20dp</dimen>
-    <dimen name="custom_secondary_button_padding_vertical">12dp</dimen>
+    <dimen name="custom_secondary_button_padding_vertical">8dp</dimen>
 
 
     <!--Edit Account Info-->
