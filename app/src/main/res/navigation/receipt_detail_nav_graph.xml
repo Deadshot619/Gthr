@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/receipt_detail_nav_graph"
     app:startDestination="@id/purchaseDetailsFragment">
     <fragment
         android:id="@+id/purchaseDetailsFragment"
         android:name="com.gthr.gthrcollect.ui.receiptdetail.purchasedetails.PurchaseDetailsFragment"
-        android:label="PurchaseDetailsFragment" >
+        android:label="PurchaseDetailsFragment">
         <argument
             android:name="receiptType"
             app:argType="com.gthr.gthrcollect.utils.enums.ReceiptType" />
+        <argument
+            android:name="productCategory"
+            app:argType="com.gthr.gthrcollect.utils.enums.ProductCategory" />
+        <argument
+            android:name="buttonType"
+            android:defaultValue="DELIVERED"
+            app:argType="com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton$Type" />
     </fragment>
 </navigation>

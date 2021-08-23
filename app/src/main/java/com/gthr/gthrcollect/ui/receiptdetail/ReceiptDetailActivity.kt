@@ -2,7 +2,6 @@ package com.gthr.gthrcollect.ui.receiptdetail
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
@@ -14,12 +13,10 @@ import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityReceiptDetailBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
-import com.gthr.gthrcollect.ui.profile.ProfileActivity
-import com.gthr.gthrcollect.ui.profile.navigation.ProfileNavigationFragmentArgs
 import com.gthr.gthrcollect.ui.receiptdetail.purchasedetails.PurchaseDetailsFragmentArgs
-import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
+import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
+import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ReceiptType
-import com.gthr.gthrcollect.utils.extensions.getImageDrawable
 
 class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityReceiptDetailBinding>() {
     override val mViewModel: ReceiptDetailViewModel by viewModels()
@@ -28,10 +25,15 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var mToolbar: Toolbar
-    private lateinit var mType: ReceiptType
+
+    private lateinit var mReceiptType: ReceiptType
+    private lateinit var mProductCategory: ProductCategory
+    private lateinit var mButtonType: CustomDeliveryButton.Type
 
     override fun onBinding() {
-        mType = intent.getSerializableExtra(KEY_RECEIPT_TYPE) as ReceiptType
+        mReceiptType = intent.getSerializableExtra(KEY_RECEIPT_TYPE) as ReceiptType
+        mProductCategory = intent.getSerializableExtra(KEY_PRODUCT_CATEGORY) as ProductCategory
+        mButtonType = intent.getSerializableExtra(KEY_BUTTON_TYPE) as CustomDeliveryButton.Type
 
         initViews()
         setUpNavGraph()
@@ -49,7 +51,11 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
         findNavController(R.id.nav_host_fragment)
             .setGraph(
                 R.navigation.receipt_detail_nav_graph,
-                PurchaseDetailsFragmentArgs(receiptType = mType).toBundle()
+                PurchaseDetailsFragmentArgs(
+                    receiptType = mReceiptType,
+                    mProductCategory,
+                    mButtonType
+                ).toBundle()
             )
     }
 
@@ -67,9 +73,9 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
 
             when (nd.id) {
                 R.id.purchaseDetailsFragment -> {
-                    if (mType == ReceiptType.PURCHASED)
+                    if (mReceiptType == ReceiptType.PURCHASED)
                         setToolbarTitle(getString(R.string.text_purchase_detail))
-                    else if (mType == ReceiptType.SOLD)
+                    else if (mReceiptType == ReceiptType.SOLD)
                         setToolbarTitle(getString(R.string.text_sold_details))
                 }
             }
@@ -92,9 +98,19 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
 
     companion object {
         private const val KEY_RECEIPT_TYPE = "key_receipt_type"
+        private const val KEY_PRODUCT_CATEGORY = "key_product_category"
+        private const val KEY_BUTTON_TYPE = "key_button_type"
 
-        fun getInstance(context: Context, receiptType: ReceiptType) = Intent(context, ReceiptDetailActivity::class.java).apply {
-            putExtra(KEY_RECEIPT_TYPE, receiptType)
-        }
+        fun getInstance(
+            context: Context,
+            receiptType: ReceiptType,
+            productCategory: ProductCategory,
+            buttonType: CustomDeliveryButton.Type = CustomDeliveryButton.Type.DELIVERED
+        ) =
+            Intent(context, ReceiptDetailActivity::class.java).apply {
+                putExtra(KEY_RECEIPT_TYPE, receiptType)
+                putExtra(KEY_PRODUCT_CATEGORY, productCategory)
+                putExtra(KEY_BUTTON_TYPE, buttonType)
+            }
     }
 }

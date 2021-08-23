@@ -52,21 +52,24 @@ class CustomDeliveryButton  @JvmOverloads constructor(
             }
             Type.PENDING -> {
                 this.text = context.getString(R.string.text_pending)
-                val  drawable = getImageDrawable(R.drawable.ic_pending)
+                val drawable = getImageDrawable(R.drawable.ic_pending)
                 this.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable!!, null)
                 this.background = getImageDrawable(R.drawable.bg_btn_delivery_yellow)
                 this.setTextColor(getResolvedColor(R.color.white))
             }
-            Type.DELIVERED -> {
-                this.text = context.getString(R.string.text_delivered)
-                val  drawable = getImageDrawable(R.drawable.ic_delivered)
+            Type.DELIVERED, Type.ASK_PLACED -> {
+                this.text = if (type == Type.DELIVERED)
+                    context.getString(R.string.text_delivered)
+                else
+                    context.getString(R.string.text_ask_placed)
+                val drawable = getImageDrawable(R.drawable.ic_delivered)
                 this.background = getImageDrawable(R.drawable.bg_btn_delivery_blue_border)
                 this.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable!!, null)
                 this.setTextColor(getResolvedColor(R.color.blue))
             }
             Type.TRANSIT -> {
                 this.text = context.getString(R.string.text_transit)
-                val  drawable = getImageDrawable(R.drawable.ic_transit)
+                val drawable = getImageDrawable(R.drawable.ic_transit)
                 this.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable!!, null)
                 this.background = getImageDrawable(R.drawable.bg_btn_delivery_green)
                 this.setTextColor(getResolvedColor(R.color.white))
@@ -75,8 +78,8 @@ class CustomDeliveryButton  @JvmOverloads constructor(
     }
 
 
-    enum class Type{
-        PRICE,PENDING,TRANSIT,DELIVERED
+    enum class Type {
+        PRICE, PENDING, TRANSIT, DELIVERED, ASK_PLACED
     }
 
 }

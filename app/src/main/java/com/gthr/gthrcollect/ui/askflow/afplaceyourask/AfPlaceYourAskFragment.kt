@@ -1,10 +1,5 @@
 package com.gthr.gthrcollect.ui.askflow.afplaceyourask
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.viewModels
 import com.gthr.gthrcollect.R
@@ -12,7 +7,9 @@ import com.gthr.gthrcollect.databinding.AfPlaceYourAskFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
+import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ReceiptType
 
 class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFragmentBinding>() {
@@ -43,7 +40,14 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
         }
         mBtnNext.setOnClickListener {
-            startActivity(ReceiptDetailActivity.getInstance(requireContext(), ReceiptType.SOLD))
+            startActivity(
+                ReceiptDetailActivity.getInstance(
+                    requireContext(),
+                    ReceiptType.SOLD,
+                    ProductCategory.CARDS,
+                    CustomDeliveryButton.Type.ASK_PLACED
+                )
+            )
         }
     }
 
