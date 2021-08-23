@@ -33,6 +33,7 @@
 
     <!--Margin-->
     <dimen name="margin_mini">4dp</dimen>
+    <dimen name="margin_semi_small">6dp</dimen>
     <dimen name="margin_extra_5dp_small">5dp</dimen>
     <dimen name="margin_extra_small">8dp</dimen>
     <dimen name="margin_medium">10dp</dimen>
@@ -259,8 +260,9 @@
     <!-- Ask -->
     <dimen name="margin_bottom_back">40dp</dimen>
     <dimen name="height_card_view_ask_flow">200dp</dimen>
-    <dimen name="height_card_view_review_ask_flow">280dp</dimen>
+    <dimen name="height_card_view_review_ask_flow">260dp</dimen>
     <dimen name="margin_pick_image_ask_flow">50dp</dimen>
+    <dimen name="margin_ask_flow_tnc">2dp</dimen>
 
 
 </resources>

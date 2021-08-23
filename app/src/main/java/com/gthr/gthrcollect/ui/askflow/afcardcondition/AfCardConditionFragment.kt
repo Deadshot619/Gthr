@@ -4,9 +4,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AfCardConditionFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
+import com.gthr.gthrcollect.ui.askflow.ConfigurationAdapter
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.enums.AskFlowType
@@ -21,11 +25,6 @@ class AfCardConditionFragment : BaseFragment<AskFlowViewModel, AfCardConditionFr
 
     private lateinit var mIvBack: ImageView
 
-    private lateinit var mTvChineseT : TextView
-    private lateinit var mTvFrench : TextView
-    private lateinit var mTvBgs : TextView
-    private lateinit var mTvBgs9 : TextView
-
     private lateinit var mCctRaw : CustomCollectionTypeView
     private lateinit var mCctPsa : CustomCollectionTypeView
     private lateinit var mCctBgs : CustomCollectionTypeView
@@ -34,40 +33,57 @@ class AfCardConditionFragment : BaseFragment<AskFlowViewModel, AfCardConditionFr
     private lateinit var mCctvList: List<CustomCollectionTypeView>
     private var mainJob: Job? = null
 
+    private lateinit var mRvMain : RecyclerView
+    private lateinit var mAdapter: ConfigurationAdapter
+
     override fun onBinding() {
         initViews()
         setUpClickListeners()
+        setUpCondition()
     }
 
-    private fun initViews() {
+    private fun setUpCondition() {
+        mAdapter = ConfigurationAdapter{
+            goToNextPage()
+        }
+        mRvMain.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+            adapter = mAdapter
+        }
+        mAdapter.submitList(getCondition())
+    }
+
+    private fun getCondition(): List<String> {
+        val list = arrayListOf<String>()
+        list.add(getString(R.string.bl_bgs))
+        list.add(getString(R.string.bgs_9))
+        list.add(getString(R.string.chinese))
+        list.add(getString(R.string.french))
+        list.add(getString(R.string.bl_bgs))
+        list.add(getString(R.string.bgs_9))
+        list.add(getString(R.string.chinese))
+        list.add(getString(R.string.french))
+        list.add(getString(R.string.bl_bgs))
+        list.add(getString(R.string.bgs_9))
+        list.add(getString(R.string.chinese))
+        list.add(getString(R.string.french))
+        return list
+    }
+
+        private fun initViews() {
         mViewBinding.run {
             mIvBack = ivBack
-            mTvBgs = tvBlBgs
-            mTvBgs9 = tvBgs95
-            mTvChineseT = tvChineseT
-            mTvFrench = tvFrench
             mCctRaw = cctRaw
             mCctPsa = cctPsa
             mCctBgs = cctBgs
             mCctCgc = cctCgc
+            mRvMain = rvMain
             mCctvList = listOf(mCctRaw, mCctPsa, mCctBgs, mCctCgc)
         }
     }
 
     private fun setUpClickListeners(){
         mViewBinding.run {
-            mTvChineseT.setOnClickListener {
-                goToNextPage()
-            }
-            mTvFrench.setOnClickListener {
-                goToNextPage()
-            }
-            mTvBgs.setOnClickListener {
-                goToNextPage()
-            }
-            mTvBgs9.setOnClickListener {
-                goToNextPage()
-            }
             mIvBack.setOnClickListener {
                 findNavController().navigateUp()
             }
@@ -95,9 +111,6 @@ class AfCardConditionFragment : BaseFragment<AskFlowViewModel, AfCardConditionFr
             findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfWantToSellFragment())
         else
             findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfAddPicFragment())
-    }
-
-    private fun goToAddPictures() {
     }
 
     override fun onDestroy() {

@@ -4,8 +4,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AfCardEditionFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
+import com.gthr.gthrcollect.ui.askflow.ConfigurationAdapter
 import com.gthr.gthrcollect.ui.base.BaseFragment
 
 class AfCardEditionFragment : BaseFragment<AskFlowViewModel, AfCardEditionFragmentBinding>() {
@@ -14,48 +18,50 @@ class AfCardEditionFragment : BaseFragment<AskFlowViewModel, AfCardEditionFragme
     override fun getViewBinding() = AfCardEditionFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mIvBack: ImageView
-    private lateinit var mTvFail: TextView
-    private lateinit var mTvFirstEdition: TextView
-    private lateinit var mTvRevHolo: TextView
-    private lateinit var mTvvAsdasd: TextView
-
+    private lateinit var mRvMain : RecyclerView
+    private lateinit var mAdapter: ConfigurationAdapter
 
     override fun onBinding() {
         initViews()
-        setUpClickListeners()
+        setUpEdition()
+    }
+
+    private fun setUpEdition() {
+        mAdapter = ConfigurationAdapter{
+            goToCardCondition()
+        }
+        mRvMain.apply {
+            layoutManager = LinearLayoutManager(requireContext(),
+                LinearLayoutManager.HORIZONTAL,false)
+            adapter = mAdapter
+        }
+        mAdapter.submitList(getEdition())
+    }
+
+    private fun getEdition(): List<String> {
+        val list = arrayListOf<String>()
+        list.add(getString(R.string.foil))
+        list.add(getString(R.string.first_edition))
+        list.add(getString(R.string.rev_holo))
+        list.add(getString(R.string.asdasd))
+        list.add(getString(R.string.foil))
+        list.add(getString(R.string.first_edition))
+        list.add(getString(R.string.rev_holo))
+        list.add(getString(R.string.asdasd))
+        list.add(getString(R.string.foil))
+        list.add(getString(R.string.first_edition))
+        list.add(getString(R.string.rev_holo))
+        list.add(getString(R.string.asdasd))
+        return list
     }
 
     private fun initViews() {
         mViewBinding.run {
             mIvBack = ivBack
-            mTvFail = tvFail
-            mTvFirstEdition = tvFirstEdition
-            mTvRevHolo = tvRevHolo
-            mTvvAsdasd = tvAsdasd
+            mRvMain = rvMain
         }
     }
 
-    private fun setUpClickListeners(){
-        mViewBinding.run {
-
-            mTvFail.setOnClickListener {
-                goToCardCondition()
-            }
-            mTvFirstEdition.setOnClickListener {
-                goToCardCondition()
-            }
-            mTvRevHolo.setOnClickListener {
-                goToCardCondition()
-            }
-            mTvvAsdasd.setOnClickListener {
-                goToCardCondition()
-            }
-
-            mIvBack.setOnClickListener {
-                findNavController().navigateUp()
-            }
-        }
-    }
 
     private fun goToCardCondition() {
         findNavController().navigate(AfCardEditionFragmentDirections.actionAfEditionFragmentToAfConfigureCardFragment())

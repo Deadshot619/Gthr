@@ -43,83 +43,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/config" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/tv_condition_types"
-                android:layout_width="0dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_main"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginTop="@dimen/margin_small"
-                android:weightSum="4"
-                app:layout_constraintVertical_bias="0"
+                android:layout_marginTop="@dimen/margin_extra_small"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/padding_normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_language">
+                app:layout_constraintTop_toBottomOf="@id/tv_language"
+                app:layout_constraintVertical_bias="0.0" />
 
-                <TextView
-                    android:id="@+id/tv_english"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/text_color_dark_grey"
-                    android:background="@drawable/bg_light_gray_ask_flow"
-                    android:gravity="center"
-                    android:padding="@dimen/padding_size_semi_small"
-                    android:text="@string/english"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/text_size_extra_small" />
-
-                <TextView
-                    android:id="@+id/tv_chinese_s"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_extra_small"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/text_color_dark_grey"
-                    android:background="@drawable/config_card_tabs_background"
-                    android:gravity="center"
-                    android:padding="@dimen/padding_size_semi_small"
-                    android:text="@string/cheneses"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/text_size_extra_small" />
-
-                <TextView
-                    android:id="@+id/tv_chinese_t"
-                    android:textColor="@color/text_color_dark_grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_extra_small"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:background="@drawable/config_card_tabs_background"
-                    android:gravity="center"
-                    android:padding="@dimen/padding_size_semi_small"
-                    android:text="@string/chinese"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/text_size_extra_small" />
-
-                <TextView
-                    android:id="@+id/tv_french"
-                    android:textColor="@color/text_color_dark_grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_extra_small"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:background="@drawable/config_card_tabs_background"
-                    android:gravity="center"
-                    android:padding="@dimen/padding_size_semi_small"
-                    android:text="@string/french"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/text_size_extra_small" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>
