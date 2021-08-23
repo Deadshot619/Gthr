@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
+            app:cardCornerRadius="@dimen/radius"
             android:id="@+id/cv_legal"
             style="@style/CustomCardProductDetail"
             android:layout_width="match_parent"
@@ -158,6 +159,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            app:cardCornerRadius="@dimen/radius"
             android:id="@+id/cv_not_legal"
             style="@style/CustomCardProductDetail"
             android:layout_width="match_parent"
