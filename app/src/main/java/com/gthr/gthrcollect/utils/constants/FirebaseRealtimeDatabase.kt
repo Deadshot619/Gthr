@@ -34,7 +34,7 @@ object FirebaseRealtimeDatabase {
     const val FOLLOWERS_LIST = "followersList"
     const val SELL_LIST = "sellList"
 
-    /*MTGModel*/
+    /*MTGDomainModel*/
     const val ARTIST = "artist"
     const val ARTIST_IDS = "artist_ids"
     const val BOOSTER = "booster"
@@ -109,7 +109,7 @@ object FirebaseRealtimeDatabase {
     const val STAGE = "stage"
     const val WEAKNESS = "weakness"
 
-    /*FunkoModel*/
+    /*FunkoDomainModel*/
     const val CATEGORY = "category"
     const val EXCLUSIVITY = "exclusivity"
     const val FUNKO_TYPE = "funkoType"

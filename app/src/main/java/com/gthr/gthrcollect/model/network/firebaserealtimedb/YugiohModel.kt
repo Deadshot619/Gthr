@@ -34,7 +34,7 @@ data class YugiohModel(
     @SerialName(FirebaseRealtimeDatabase.GERMAN_OG)
     val germanOG: Int,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
-    val highestBidCost: Int,
+    val highestBidCost: Double,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
     val highestBidID: String,
     @SerialName(FirebaseRealtimeDatabase.IMAGE_ID)
@@ -52,7 +52,7 @@ data class YugiohModel(
     @SerialName(FirebaseRealtimeDatabase.KOREAN_OG)
     val koreanOG: Int,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    val lowestAskCost: Int,
+    val lowestAskCost: Double,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     val lowestAskID: String,
     @SerialName(FirebaseRealtimeDatabase.NAME)

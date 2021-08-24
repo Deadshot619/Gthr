@@ -38,7 +38,7 @@ data class MTGModel(
     @SerialName(FirebaseRealtimeDatabase.GAMES)
     val games: String,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
-    val highestBidCost: Int,
+    val highestBidCost: Double,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
     val highestBidID: String,
     @SerialName(FirebaseRealtimeDatabase.HIGHRES_IMAGE)
@@ -62,7 +62,7 @@ data class MTGModel(
     @SerialName(FirebaseRealtimeDatabase.LEGALITIES)
     val legalities: String,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    val lowestAskCost: Int,
+    val lowestAskCost: Double,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     val lowestAskID: String,
     @SerialName(FirebaseRealtimeDatabase.MANA_COST)

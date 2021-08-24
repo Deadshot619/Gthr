@@ -10,7 +10,7 @@ data class SealedModel(
     @SerialName(FirebaseRealtimeDatabase.CARD_TEXT)
     val cardText: String,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
-    val highestBidCost: Int,
+    val highestBidCost: Double,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
     val highestBidID: String,
     @SerialName(FirebaseRealtimeDatabase.IMAGE_ID)
@@ -18,7 +18,7 @@ data class SealedModel(
     @SerialName(FirebaseRealtimeDatabase.IMAGE_URL)
     val imageURL: String,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    val lowestAskCost: Int,
+    val lowestAskCost: Double,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     val lowestAskID: String,
     @SerialName(FirebaseRealtimeDatabase.MARKET_PRICE)

@@ -1,7 +1,6 @@
 package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
 
-import com.algolia.search.model.search.Language
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -15,7 +14,7 @@ data class PokemonModel(
     @SerialName(FirebaseRealtimeDatabase.CARD_TYPE)
     val cardType: String,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
-    val highestBidCost: Int,
+    val highestBidCost: Double,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
     val highestBidID: String,
     @SerialName(FirebaseRealtimeDatabase.HP)
@@ -29,7 +28,7 @@ data class PokemonModel(
     @SerialName(FirebaseRealtimeDatabase.JAPANESE_SET)
     val japaneseSet: String,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    val lowestAskCost: Int,
+    val lowestAskCost: Double,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     val lowestAskID: String,
     @SerialName(FirebaseRealtimeDatabase.NAME)

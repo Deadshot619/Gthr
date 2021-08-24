@@ -16,16 +16,16 @@ enum class ProductType(val title: String) {
     SEALED_MTG("sealed_magicthegathering")
 }
 
-val product = hashMapOf(
-    ProductCategory.CARDS.title to setOf(
+val product: HashMap<ProductCategory, Set<ProductType>> = hashMapOf(
+    ProductCategory.CARDS to setOf(
         ProductType.POKEMON,
         ProductType.YUGIOH,
         ProductType.MAGIC_THE_GATHERING
     ),
-    ProductCategory.SEALED.title to setOf(
+    ProductCategory.SEALED to setOf(
         ProductType.SEALED_MTG,
         ProductType.SEALED_POKEMON,
         ProductType.SEALED_YUGIOH
     ),
-    ProductCategory.TOYS.title to setOf(ProductType.FUNKO)
+    ProductCategory.TOYS to setOf(ProductType.FUNKO)
 )
