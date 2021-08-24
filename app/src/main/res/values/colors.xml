@@ -67,6 +67,7 @@
     <!--Green Gradient-->
     <color name="red_gradient_start_color">#D74343</color>
     <color name="red_gradient_end_color">#CC0E0E</color>
+    <color name="transparent_white">#E6FFFFFF</color>
 
 
 </resources>
