@@ -31,7 +31,6 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     private lateinit var mToolbar: Toolbar
     private lateinit var mAskFlowType: AskFlowType
 
-    private lateinit var mFlInfo: FrameLayout
     private lateinit var mProductItem: CustomProductCell
 
     override fun onBinding() {
@@ -40,13 +39,11 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         initViews()
         setSupportActionBar(mToolbar)
         setUpNavigationAndActionBar()
-        setInfoView(ProductCategory.CARDS)
     }
 
     private fun initViews(){
         mViewBinding.run {
             mToolbar = toolbar
-            mFlInfo = flInfo
             mProductItem = cpcProductItem
 
             mProductItem.mTvPrice.text = "$-"
@@ -92,20 +89,6 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     private fun upButtonVisibility(isVisible: Boolean) {
         supportActionBar?.setDisplayShowHomeEnabled(isVisible)
         supportActionBar?.setDisplayHomeAsUpEnabled(isVisible)
-    }
-
-    private fun setInfoView(type: ProductCategory){
-        when(type){
-            ProductCategory.TOYS -> {
-                mFlInfo.addView(LayoutProductDetailToyTopBinding.inflate(layoutInflater).root)
-            }
-            ProductCategory.SEALED -> {
-                mFlInfo.addView(LayoutProductDetailCardTopBinding.inflate(layoutInflater).root)
-            }
-            ProductCategory.CARDS -> {
-                mFlInfo.addView(LayoutProductDetailCardTopBinding.inflate(layoutInflater).root)
-            }
-        }
     }
 
     internal fun getAskFlowType(): AskFlowType = mAskFlowType

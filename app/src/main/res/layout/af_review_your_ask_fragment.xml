@@ -247,6 +247,19 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="back btn"
+                    android:paddingHorizontal="@dimen/padding_normal"
+                    android:paddingTop="@dimen/padding_light"
+                    android:paddingBottom="@dimen/padding_normal"
+                    android:src="@drawable/blue_back_btn"
+                    android:layout_marginStart="@dimen/margin_mini"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>

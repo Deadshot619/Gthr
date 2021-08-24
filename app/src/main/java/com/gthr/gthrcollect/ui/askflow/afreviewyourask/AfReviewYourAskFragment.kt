@@ -1,6 +1,7 @@
 package com.gthr.gthrcollect.ui.askflow.afreviewyourask
 
 
+import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.gthr.gthrcollect.databinding.AfReviewYourAskFragmentBinding
@@ -15,6 +16,7 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel,AfReviewYourAskFra
     override fun getViewBinding() = AfReviewYourAskFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mBtnNext: CustomSecondaryButton
+    private lateinit var mIvBack: ImageView
 
     override fun onBinding() {
         initViews()
@@ -24,6 +26,7 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel,AfReviewYourAskFra
     private fun initViews() {
         mViewBinding.run {
             mBtnNext = btnNext
+            mIvBack = ivBack
         }
     }
 
@@ -33,6 +36,9 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel,AfReviewYourAskFra
             mBtnNext.setOnClickListener {
                 findNavController().navigate(AfReviewYourAskFragmentDirections.actionAfReviewYourAskFragmentToAfPlaceYourAskFragment())
             }
+        }
+        mIvBack.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

@@ -279,7 +279,7 @@
                     android:text="@string/text_payout_ask_type"
                     android:fontFamily="@font/lato_bold"
                     android:textColor="@color/white"
-                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginStart="@dimen/margin_light"
                     app:layout_constraintStart_toEndOf="@+id/tv_address"
                     app:layout_constraintTop_toBottomOf="@+id/ll_total"
                     />
@@ -327,6 +327,21 @@
                     app:layout_constraintStart_toEndOf="@+id/tv_agree_to"
                     app:layout_constraintTop_toTopOf="@+id/iv_terms_and_conditions"
                     android:text="@string/terms_conditions" />
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="back btn"
+                    android:paddingHorizontal="@dimen/padding_normal"
+                    android:paddingTop="@dimen/padding_light"
+                    android:paddingBottom="@dimen/padding_normal"
+                    android:src="@drawable/blue_back_btn"
+                    android:layout_marginStart="@dimen/margin_mini"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_terms_and_conditions"
+                    app:layout_constraintVertical_bias="1.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
