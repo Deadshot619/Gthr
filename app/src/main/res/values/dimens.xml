@@ -258,6 +258,7 @@
     <dimen name="radius_cardview_product_recent_sale">8dp</dimen>
     <dimen name="padding_recent_sale">6dp</dimen>
     <dimen name="margin_product_detail">6dp</dimen>
+    <dimen name="height_toolbar_product_detail">30dp</dimen>
 
     <!-- Market -->
     <dimen name="height_banner_market">94dp</dimen>
@@ -271,6 +272,7 @@
     <dimen name="height_card_view_review_ask_flow">260dp</dimen>
     <dimen name="margin_pick_image_ask_flow">50dp</dimen>
     <dimen name="margin_ask_flow_tnc">2dp</dimen>
+
 
 
 </resources>
