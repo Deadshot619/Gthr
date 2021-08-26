@@ -163,7 +163,7 @@
     <dimen name="text_size_custom_fello_view_Count">20sp</dimen>
     <dimen name="margin_top_fellow_view_count">5dp</dimen>
     <dimen name="margin_start_fello_view_title">5dp</dimen>
-    <dimen name="radius_custom_collection_btn">5dp</dimen>
+    <dimen name="radius_custom_collection_btn">4dp</dimen>
 
     <!--Custom delivery view-->
     <dimen name="width_delivery_view">200dp</dimen>
@@ -232,7 +232,7 @@
     <dimen name="margin_collection_type">2dp</dimen>
 
     <!-- CustomDeliveryButton -->
-    <dimen name="padding_custom_delivery_button">6dp</dimen>
+    <dimen name="padding_custom_delivery_button">3dp</dimen>
 
     <!--receipt-->
     <dimen name="margin_card_receipt">8dp</dimen>
@@ -273,7 +273,9 @@
     <dimen name="height_card_view_review_ask_flow">300dp</dimen>
     <dimen name="margin_pick_image_ask_flow">50dp</dimen>
     <dimen name="margin_ask_flow_tnc">2dp</dimen>
-
+    <dimen name="margin_ask_flow_button">60dp</dimen>
+    <dimen name="margin_back_image">28dp</dimen>
+    <dimen name="padding_status_ask_flow">2dp</dimen>
 
 
 </resources>

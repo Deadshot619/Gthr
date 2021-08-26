@@ -49,9 +49,6 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-
-
-
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -77,11 +74,33 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginHorizontal="@dimen/margin_semi_small"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/guideline_middle"
                     app:layout_constraintTop_toTopOf="parent"
                     app:cpc_type="MYTHIC"
                     app:cpc_card_state="FOR_SALE" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_small"
+                    app:cardCornerRadius="@dimen/radius_cardview_default"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/guideline_middle"
+                    app:layout_constraintTop_toTopOf="@id/cpc_product_item">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/collection_image_bg"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/pikapika" />
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <fragment
                     android:id="@+id/nav_host_fragment"
@@ -90,7 +109,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_normal"
                     app:defaultNavHost="true"
-                    app:navGraph="@navigation/ask_flow_nav_graph"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

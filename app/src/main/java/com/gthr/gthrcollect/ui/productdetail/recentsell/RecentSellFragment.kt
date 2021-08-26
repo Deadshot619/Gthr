@@ -5,10 +5,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gthr.gthrcollect.databinding.*
+import com.gthr.gthrcollect.databinding.LayoutProductDetailCardTopBinding
+import com.gthr.gthrcollect.databinding.LayoutProductDetailToyTopBinding
+import com.gthr.gthrcollect.databinding.RecentSellFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
-import com.gthr.gthrcollect.utils.enums.ProductTypeOld
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
 
@@ -39,11 +41,11 @@ class RecentSellFragment : BaseFragment<RecentSellViewModel, RecentSellFragmentB
 
     private fun setUpProductType() {
         when (args.type) {
-            ProductTypeOld.POKEMON -> setUpCardTopView(true)
-            ProductTypeOld.MTG -> setUpCardTopView(true)
-            ProductTypeOld.YUGIOH -> setUpCardTopView(true)
-            ProductTypeOld.SEALED -> setUpCardTopView(false)
-            ProductTypeOld.FUNKO -> setUpFunko()
+            ProductType.POKEMON -> setUpCardTopView(true)
+            ProductType.MAGIC_THE_GATHERING -> setUpCardTopView(true)
+            ProductType.YUGIOH -> setUpCardTopView(true)
+            ProductType.SEALED_YUGIOH -> setUpCardTopView(false)
+            ProductType.FUNKO -> setUpFunko()
         }
     }
 

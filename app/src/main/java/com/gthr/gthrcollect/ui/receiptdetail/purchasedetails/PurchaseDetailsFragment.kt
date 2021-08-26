@@ -136,10 +136,14 @@ class PurchaseDetailsFragment :
         }
 
         mBtnConfirmReceived.setOnClickListener {
-            if (args.receiptType == ReceiptType.PURCHASED)
-                mConfirmReceivedDialog.show()
-            else
-                mConfirmShippedDialog.show()
+            when (args.receiptType) {
+                ReceiptType.PURCHASED -> mConfirmReceivedDialog.show()
+                ReceiptType.SOLD ->
+                    if (mButtonType == CustomDeliveryButton.Type.ASK_PLACED)
+                        activity?.finish()
+                    else
+                        mConfirmShippedDialog.show()
+            }
         }
         mProductImage.setOnClickListener{
             startActivity(FullProductImage.getInstance(requireContext(),"vgfgg"))

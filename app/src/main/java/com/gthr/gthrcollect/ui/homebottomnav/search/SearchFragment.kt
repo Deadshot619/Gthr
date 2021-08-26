@@ -23,7 +23,7 @@ import com.gthr.gthrcollect.utils.customviews.CustomFilterSubCategoryView
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.enums.ProductCategoryFilter
 import com.gthr.gthrcollect.utils.enums.ProductSortFilter
-import com.gthr.gthrcollect.utils.enums.ProductTypeOld
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.enums.SearchType
 import com.gthr.gthrcollect.utils.extensions.animateVisibility
 import com.gthr.gthrcollect.utils.extensions.gone
@@ -104,20 +104,70 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     private fun setUpRecyclerView() {
         mAdapterSC = SearchCollectionAdapter{
             when {
-                it%5==0 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.POKEMON))
-                it%5==1 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.MTG))
-                it%5==2 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.YUGIOH))
-                it%5==3 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.SEALED))
-                it%5==4 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.FUNKO))
+                it % 5 == 0 -> startActivity(
+                    ProductDetailActivity.getInstance(
+                        requireContext(),
+                        ProductType.POKEMON
+                    )
+                )
+                it % 5 == 1 -> startActivity(
+                    ProductDetailActivity.getInstance(
+                        requireContext(),
+                        ProductType.MAGIC_THE_GATHERING
+                    )
+                )
+                it % 5 == 2 -> startActivity(
+                    ProductDetailActivity.getInstance(
+                        requireContext(),
+                        ProductType.YUGIOH
+                    )
+                )
+                it % 5 == 3 -> startActivity(
+                    ProductDetailActivity.getInstance(
+                        requireContext(),
+                        ProductType.SEALED_YUGIOH
+                    )
+                )
+                it % 5 == 4 -> startActivity(
+                    ProductDetailActivity.getInstance(
+                        requireContext(),
+                        ProductType.FUNKO
+                    )
+                )
             }
         }
         mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL){
             when {
-                it%5==0 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.POKEMON))
-                it%5==1 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.MTG))
-                it%5==2 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.YUGIOH))
-                it%5==3 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.SEALED))
-                it%5==4 -> startActivity(ProductDetailActivity.getInstance(requireContext(),ProductTypeOld.FUNKO))
+                it % 5 == 0 -> startActivity(
+                    ProductDetailActivity.getInstance(
+                        requireContext(),
+                        ProductType.POKEMON
+                    )
+                )
+                it % 5 == 1 -> startActivity(
+                    ProductDetailActivity.getInstance(
+                        requireContext(),
+                        ProductType.MAGIC_THE_GATHERING
+                    )
+                )
+                it % 5 == 2 -> startActivity(
+                    ProductDetailActivity.getInstance(
+                        requireContext(),
+                        ProductType.YUGIOH
+                    )
+                )
+                it % 5 == 3 -> startActivity(
+                    ProductDetailActivity.getInstance(
+                        requireContext(),
+                        ProductType.SEALED_YUGIOH
+                    )
+                )
+                it % 5 == 4 -> startActivity(
+                    ProductDetailActivity.getInstance(
+                        requireContext(),
+                        ProductType.FUNKO
+                    )
+                )
             }
         }
         mRvMain.apply {

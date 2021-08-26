@@ -419,6 +419,7 @@
     <string name="text_place_an_ask">Place an Ask</string>
     <string name="text_add_to_buylist">Add to Buylist</string>
     <string name="text_add_to_collection">Add to Collection</string>
+    <string name="text_ask_details">Ask Details</string>
     <string name="label_config_card">Configure Your Card</string>
     <string name="label_add_pic">Add pictures</string>
     <string name="condition">Condition</string>
@@ -429,7 +430,7 @@
     <string name="cgc">CGC</string>
 
     <string name="bl_bgs">BL BGS 10</string>
-    <string name="bgs_9">BGS 9.5</string>
+    <string name="bgs_9">BGS 9.5</string>as
     <string name="chinese">Chinese (T)</string>
     <string name="french">French</string>
     <string name="english">English</string>
@@ -461,5 +462,12 @@
 
     <string name="back_label">Back</string>
     <string name="front_lalel">Front</string>
+    <string name="text_total_excludes_tax_shipping_buy_flow"><![CDATA[Total (Excludes Tax & Shipping]]></string>
+    <string name="text_add_to_buylist_ask_flow">Add To Buylist</string>
+    <string name="text_review_your_ask_flow">Review your Ask</string>
+    <string name="text_summary_buy_flow">Summary</string>
+    <string name="text_added_buy_flow">Added</string>
+    <string name="text_finish_buy_flow">finish</string>
+    <string name="text_type_buylist_price_here_buy_flow">Type Buylist Price Here</string>
 
 </resources>

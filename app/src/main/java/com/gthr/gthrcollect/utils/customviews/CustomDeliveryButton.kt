@@ -27,14 +27,17 @@ class CustomDeliveryButton  @JvmOverloads constructor(
         val state = Type.values()[attrs.getInt(R.styleable.CustomDeliveryButton_cdb_type, 0)]
 
         this.textAlignment = View.TEXT_ALIGNMENT_CENTER
-        val padding = resources.getDimensionPixelOffset(R.dimen.padding_small)
-        val paddingVertical = resources.getDimensionPixelOffset(R.dimen.padding_custom_delivery_button)
-        this.setPadding(padding, paddingVertical, padding, paddingVertical)
-        this.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.text_size_semi_small))
+        val paddingStart = resources.getDimensionPixelOffset(R.dimen.padding_small)
+        val paddingEnd = resources.getDimensionPixelOffset(R.dimen.padding_extra_small)
+        val paddingVertical =
+            resources.getDimensionPixelOffset(R.dimen.padding_custom_delivery_button)
+        this.setPadding(paddingStart, paddingVertical, paddingEnd, paddingVertical)
+        this.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            resources.getDimension(R.dimen.text_size_semi_small)
+        )
         this.maxLines = 1
         this.ellipsize = TextUtils.TruncateAt.END
-        this.typeface = ResourcesCompat.getFont(context, R.font.lato_bold)
-
 
         attrs.recycle()
         setType(state)
@@ -49,6 +52,7 @@ class CustomDeliveryButton  @JvmOverloads constructor(
                 this.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
                 this.background = getImageDrawable(R.drawable.bg_btn_price_blue)
                 this.setTextColor(getResolvedColor(R.color.white))
+                this.typeface = ResourcesCompat.getFont(context, R.font.lato_bold)
             }
             Type.PENDING -> {
                 this.text = context.getString(R.string.text_pending)

@@ -5,22 +5,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ItemUpForSellBinding
 import com.gthr.gthrcollect.model.domain.UpForSellDomainModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
-import com.gthr.gthrcollect.utils.enums.ProductTypeOld
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.getCellWidth
-import com.gthr.gthrcollect.utils.extensions.getScreenWidth
 
-class ProductAdapter(val productType: ProductTypeOld, val state: CustomProductCell.State) : ListAdapter<UpForSellDomainModel,ProductAdapter.UpForSellViewHolder>(DriftUtils)  {
+class ProductAdapter(val productType: ProductType, val state: CustomProductCell.State) :
+    ListAdapter<UpForSellDomainModel, ProductAdapter.UpForSellViewHolder>(DriftUtils) {
 
     companion object DriftUtils : DiffUtil.ItemCallback<UpForSellDomainModel>() {
-        override fun areItemsTheSame(oldItem: UpForSellDomainModel, newItem: UpForSellDomainModel): Boolean {
+        override fun areItemsTheSame(
+            oldItem: UpForSellDomainModel,
+            newItem: UpForSellDomainModel
+        ): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: UpForSellDomainModel, newItem: UpForSellDomainModel): Boolean {
+        override fun areContentsTheSame(
+            oldItem: UpForSellDomainModel,
+            newItem: UpForSellDomainModel
+        ): Boolean {
             return oldItem == newItem
         }
 
@@ -29,12 +34,14 @@ class ProductAdapter(val productType: ProductTypeOld, val state: CustomProductCe
     inner class UpForSellViewHolder(val binding : ItemUpForSellBinding) : RecyclerView.ViewHolder(binding.root) {
           fun bind(position: Int){
               binding.cpsMain.setState(state)
-              when(productType) {
-                  ProductTypeOld.FUNKO -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
-                  ProductTypeOld.POKEMON -> binding.cpsMain.setType(CustomProductCell.Type.HOLO_RARE)
-                  ProductTypeOld.MTG -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
-                  ProductTypeOld.YUGIOH -> binding.cpsMain.setType(CustomProductCell.Type.SECRET_RARE)
-                  ProductTypeOld.SEALED -> binding.cpsMain.setType(CustomProductCell.Type.SEALED)
+              when (productType) {
+                  ProductType.FUNKO -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
+                  ProductType.POKEMON -> binding.cpsMain.setType(CustomProductCell.Type.HOLO_RARE)
+                  ProductType.MAGIC_THE_GATHERING -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
+                  ProductType.YUGIOH -> binding.cpsMain.setType(CustomProductCell.Type.SECRET_RARE)
+                  ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> binding.cpsMain.setType(
+                      CustomProductCell.Type.SEALED
+                  )
               }
           }
     }

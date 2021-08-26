@@ -3,7 +3,6 @@ package com.gthr.gthrcollect.ui.askflow
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
@@ -13,13 +12,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityAskFlowBinding
-import com.gthr.gthrcollect.databinding.LayoutProductDetailCardTopBinding
-import com.gthr.gthrcollect.databinding.LayoutProductDetailToyTopBinding
+import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentArgs
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
-import com.gthr.gthrcollect.utils.enums.ProductTypeOld
 
 class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>() {
 
@@ -29,14 +26,18 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var mToolbar: Toolbar
+
     private lateinit var mAskFlowType: AskFlowType
+    private lateinit var mProductCategory: ProductCategory
 
     private lateinit var mProductItem: CustomProductCell
 
     override fun onBinding() {
         mAskFlowType = intent?.getSerializableExtra(KEY_ASK_FLOW_TYPE) as AskFlowType
+        mProductCategory = intent?.getSerializableExtra(KEY_PRODUCT_CATEGORY) as ProductCategory
 
         initViews()
+        setUpNavGraph()
         setSupportActionBar(mToolbar)
         setUpNavigationAndActionBar()
     }
@@ -50,7 +51,18 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             mProductItem.mTvGlob.text = "-"
             mProductItem.mTvPsaValue.text = "-"
             mProductItem.mTvFoil.text = "-"
+
+            if (mAskFlowType == AskFlowType.BUY)
+                mProductItem.setState(CustomProductCell.State.WANT)
         }
+    }
+
+    private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination
+        findNavController(R.id.nav_host_fragment)
+            .setGraph(
+                R.navigation.ask_flow_nav_graph,
+                AfCardLanguageFragmentArgs(productCategory = mProductCategory).toBundle()
+            )
     }
 
     private fun setUpNavigationAndActionBar() {
@@ -95,9 +107,15 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
     companion object {
         private const val KEY_ASK_FLOW_TYPE = "key_ask_flow_type"
+        private const val KEY_PRODUCT_CATEGORY = "key_product_category"
 
-        fun getInstance(context: Context, askFlowType: AskFlowType) = Intent(context, AskFlowActivity::class.java).apply {
+        fun getInstance(
+            context: Context,
+            askFlowType: AskFlowType,
+            productCategory: ProductCategory
+        ) = Intent(context, AskFlowActivity::class.java).apply {
             putExtra(KEY_ASK_FLOW_TYPE, askFlowType)
+            putExtra(KEY_PRODUCT_CATEGORY, productCategory)
         }
     }
 }

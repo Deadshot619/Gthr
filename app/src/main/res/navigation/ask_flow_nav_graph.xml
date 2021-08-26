@@ -8,10 +8,23 @@
     <fragment
         android:id="@+id/afCardLanguageFragment"
         android:name="com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragment"
-        android:label="AfCardLanguageFragment" >
+        android:label="AfCardLanguageFragment">
         <action
             android:id="@+id/action_afCardLanguageFragment_to_afEditionFragment"
             app:destination="@id/afEditionFragment" />
+        <action
+            android:id="@+id/action_afCardLanguageFragment_to_afWantToSellFragment"
+            app:destination="@id/afWantToSellFragment"
+            app:popUpTo="@id/afCardLanguageFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_afCardLanguageFragment_to_afAddPicFragment"
+            app:destination="@id/afAddPicFragment"
+            app:popUpTo="@id/afCardLanguageFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="productCategory"
+            app:argType="com.gthr.gthrcollect.utils.enums.ProductCategory" />
     </fragment>
     <fragment
         android:id="@+id/afEditionFragment"
@@ -24,13 +37,16 @@
     <fragment
         android:id="@+id/afConfigureCardFragment"
         android:name="com.gthr.gthrcollect.ui.askflow.afcardcondition.AfCardConditionFragment"
-        android:label="AfConfigureCardFragment" >
+        android:label="AfConfigureCardFragment">
         <action
             android:id="@+id/action_afConfigureCardFragment_to_afAddPicFragment"
             app:destination="@id/afAddPicFragment" />
         <action
             android:id="@+id/action_afConfigureCardFragment_to_afWantToSellFragment"
             app:destination="@id/afWantToSellFragment" />
+        <action
+            android:id="@+id/action_afConfigureCardFragment_to_afReviewYourAskFragment"
+            app:destination="@id/afReviewYourAskFragment" />
     </fragment>
     <fragment
         android:id="@+id/afWantToSellFragment"
@@ -62,5 +78,14 @@
         android:id="@+id/afPlaceYourAskFragment"
         android:name="com.gthr.gthrcollect.ui.askflow.afplaceyourask.AfPlaceYourAskFragment"
         android:label="af_place_your_ask_fragment"
-        tools:layout="@layout/af_place_your_ask_fragment" />
+        tools:layout="@layout/af_place_your_ask_fragment" >
+        <action
+            android:id="@+id/action_afPlaceYourAskFragment_to_afBuyListDetailsFragment"
+            app:destination="@id/afBuyListDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/afBuyListDetailsFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afbuylistdetails.AfBuyListDetailsFragment"
+        android:label="af_buylist_details_fragment"
+        tools:layout="@layout/af_buylist_details_fragment" />
 </navigation>

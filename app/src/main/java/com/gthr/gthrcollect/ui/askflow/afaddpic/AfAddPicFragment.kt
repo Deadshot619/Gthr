@@ -13,12 +13,12 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AfAddPicFragmentBinding
+import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
-import com.gthr.gthrcollect.ui.askflow.afcardcondition.AfCardConditionFragmentDirections
-import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentDirections
 import com.gthr.gthrcollect.ui.base.BaseFragment
-import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.ui.customcameraactivities.CustomCamera
+import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.CameraViews
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.invisible
@@ -69,10 +69,14 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
 //            mAskSellBtn = btnCompleteAccount
 
             mBtnNext = btnNext
-        }
 
-        mIvFrontImage.gone()
-        mIvBackImage.gone()
+
+            mIvFrontImage.gone()
+            mIvBackImage.gone()
+
+            if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.COLLECT)
+                mBtnNext.text = getString(R.string.finish)
+        }
     }
 
     private fun addListeners() {
@@ -174,7 +178,10 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
     private fun setUpClickListeners(){
         mViewBinding.run {
             mBtnNext.setOnClickListener {
-                findNavController().navigate(AfAddPicFragmentDirections.actionAfAddPicFragmentToAfReviewYourAskFragment())
+                if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.COLLECT)
+                    activity?.finish()
+                else
+                    findNavController().navigate(AfAddPicFragmentDirections.actionAfAddPicFragmentToAfReviewYourAskFragment())
             }
             mIvBack.setOnClickListener {
                 findNavController().navigateUp()

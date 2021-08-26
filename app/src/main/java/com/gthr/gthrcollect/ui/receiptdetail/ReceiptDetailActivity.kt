@@ -76,7 +76,10 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
                     if (mReceiptType == ReceiptType.PURCHASED)
                         setToolbarTitle(getString(R.string.text_purchase_detail))
                     else if (mReceiptType == ReceiptType.SOLD)
-                        setToolbarTitle(getString(R.string.text_sold_details))
+                        if (mButtonType == CustomDeliveryButton.Type.ASK_PLACED)
+                            setToolbarTitle(getString(R.string.text_ask_details))
+                        else
+                            setToolbarTitle(getString(R.string.text_sold_details))
                 }
             }
         }

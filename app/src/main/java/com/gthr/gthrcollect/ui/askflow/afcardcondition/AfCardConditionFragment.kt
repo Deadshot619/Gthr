@@ -1,7 +1,6 @@
 package com.gthr.gthrcollect.ui.askflow.afcardcondition
 
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -107,10 +106,11 @@ class AfCardConditionFragment : BaseFragment<AskFlowViewModel, AfCardConditionFr
     }
 
     private fun goToNextPage() {
-        if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.COLLECT)
-            findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfWantToSellFragment())
-        else
-            findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfAddPicFragment())
+        when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
+            AskFlowType.COLLECT -> findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfWantToSellFragment())
+            AskFlowType.SELL -> findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfAddPicFragment())
+            AskFlowType.BUY -> findNavController().navigate(AfCardConditionFragmentDirections.actionAfConfigureCardFragmentToAfReviewYourAskFragment())
+        }
     }
 
     override fun onDestroy() {

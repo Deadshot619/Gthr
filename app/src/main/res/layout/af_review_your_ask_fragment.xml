@@ -20,59 +20,56 @@
             android:elevation="@dimen/size_elevation"
             app:cardUseCompatPadding="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/height_card_view_review_ask_flow">
+            android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="@dimen/height_card_view_review_ask_flow"
-                >
+                android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cv_ask_type"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:layout_marginHorizontal="@dimen/margin_normal"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    >
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:text="$"
                         android:id="@+id/tv_Start"
-                        android:paddingHorizontal="@dimen/padding_extra_large"
-                        android:paddingVertical="@dimen/padding_medium"
-                        android:textColor="@color/white"
-                        android:background="@drawable/edit_text_image_bg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_image_bg"
+                        android:paddingHorizontal="@dimen/padding_extra_large"
+                        android:paddingVertical="@dimen/padding_medium"
+                        android:text="$"
+                        android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:gravity="end|center_vertical"
                         android:id="@+id/et_email"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:background="@drawable/edit_text_blue_outline_bg"
+                        android:ellipsize="end"
                         android:fontFamily="@font/lato"
+                        android:gravity="end|center_vertical"
                         android:hint="@string/text_type_ask_here_ask_flow"
                         android:inputType="number"
+                        android:maxLines="1"
                         android:paddingHorizontal="@dimen/padding_normal"
-                        android:textColorHint="@color/black"
                         android:textColor="@color/black"
+                        android:textColorHint="@color/black"
                         android:textSize="@dimen/text_size_normal"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_Start"
-                        app:layout_constraintTop_toTopOf="@+id/tv_Start"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tv_Start"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintTop_toTopOf="@+id/tv_Start"
+                        tools:ignore="TouchTargetSizeCheck" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -84,9 +81,9 @@
                     android:layout_marginStart="@dimen/margin_extra_large"
                     android:layout_marginTop="@dimen/margin_extra_small"
                     android:layout_marginEnd="@dimen/margin_normal"
-                    android:textSize="@dimen/text_size_semi_small"
                     android:text="@string/text_selling_fee_8_5_ask_flow"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintEnd_toStartOf="@+id/tv_selling_fee_value"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -100,8 +97,8 @@
                     android:layout_marginEnd="@dimen/margin_extra_large"
                     android:fontFamily="@font/lato"
                     android:text="$22.00"
-                    android:textSize="@dimen/text_size_semi_small"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_selling_fee"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -116,9 +113,9 @@
                     android:layout_marginStart="@dimen/margin_extra_large"
                     android:layout_marginTop="@dimen/margin_semi_small"
                     android:layout_marginEnd="@dimen/margin_normal"
-                    android:textSize="@dimen/text_size_semi_small"
                     android:text="@string/text_payment_processing_2_9_ask_flow"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintEnd_toStartOf="@+id/tv_payment_processing_value"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -132,8 +129,8 @@
                     android:layout_marginEnd="@dimen/margin_extra_large"
                     android:fontFamily="@font/lato"
                     android:text="$22.00"
-                    android:textSize="@dimen/text_size_semi_small"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_payment_processing"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -148,9 +145,9 @@
                     android:layout_marginStart="@dimen/margin_extra_large"
                     android:layout_marginTop="@dimen/margin_semi_small"
                     android:layout_marginEnd="@dimen/margin_normal"
-                    android:textSize="@dimen/text_size_semi_small"
                     android:text="@string/text_shipping_reimbursement_ask_flow"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintEnd_toStartOf="@+id/tv_shipping_reimbursement_value"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -164,8 +161,8 @@
                     android:layout_marginEnd="@dimen/margin_extra_large"
                     android:fontFamily="@font/lato"
                     android:text="$22.00"
-                    android:textSize="@dimen/text_size_semi_small"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_shipping_reimbursement"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -174,18 +171,18 @@
 
 
                 <TextView
-                    android:paddingHorizontal="@dimen/padding_extra_large"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:background="@drawable/edit_text_gray_outline_bg"
                     android:id="@+id/tv_add_promo_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_normal"
-                    android:fontFamily="@font/lato"
-                    android:text="@string/text_add_ask_flow"
                     android:layout_marginTop="@dimen/margin_semi_small"
-                    android:textSize="@dimen/text_size_semi_small"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:background="@drawable/edit_text_gray_outline_bg"
+                    android:fontFamily="@font/lato"
+                    android:paddingHorizontal="@dimen/padding_extra_large"
+                    android:paddingVertical="@dimen/padding_mini"
+                    android:text="@string/text_add_ask_flow"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_shipping_reimbursement" />
 
@@ -199,11 +196,11 @@
                     android:text="@string/text_promo_code_ask_flow"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_add_promo_code"
                     app:layout_constraintEnd_toStartOf="@+id/tv_add_promo_code"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_add_promo_code"
                     app:layout_constraintTop_toTopOf="@+id/tv_add_promo_code" />
 
 
@@ -247,18 +244,116 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cv_buy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_total">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_buy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_image_bg"
+                        android:paddingHorizontal="@dimen/padding_extra_large"
+                        android:paddingVertical="@dimen/padding_medium"
+                        android:text="$"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_buy_value"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/edit_text_blue_outline_bg"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/lato"
+                        android:gravity="end|center_vertical"
+                        android:maxLines="1"
+                        android:inputType="number"
+                        android:hint="@string/text_type_buylist_price_here_buy_flow"
+                        android:paddingHorizontal="@dimen/padding_normal"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/text_size_normal"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_buy"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_buy"
+                        app:layout_constraintTop_toTopOf="@+id/tv_buy"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_buy_total"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:layout_marginBottom="@dimen/margin_normal"
+                    android:background="@drawable/bg_recipt_bottom"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/padding_light"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cv_buy">
+
+                    <TextView
+                        android:id="@+id/tv_buy_total"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:layout_weight="1"
+                        android:text="@string/text_total_excludes_tax_shipping_buy_flow"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <TextView
+                        android:id="@+id/tv_buy_total_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_extra_small"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="$25.81"
+                        android:textColor="@color/light_blue"
+                        android:textSize="@dimen/text_size_normal" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <ImageView
                     android:id="@+id/iv_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_mini"
                     android:contentDescription="back btn"
                     android:paddingHorizontal="@dimen/padding_normal"
-                    android:paddingTop="@dimen/padding_light"
+                    android:paddingTop="@dimen/padding_normal"
                     android:paddingBottom="@dimen/padding_normal"
                     android:src="@drawable/blue_back_btn"
-                    android:layout_marginStart="@dimen/margin_mini"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_buy_total" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="cv_ask_type,tv_selling_fee,tv_shipping_reimbursement_value,tv_selling_fee_value,tv_payment_processing,ll_total,tv_promo_code,tv_payment_processing_value,tv_shipping_reimbursement,tv_add_promo_code" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group_buy"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="ll_buy_total,cv_buy" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -275,7 +370,7 @@
             android:layout_marginTop="@dimen/margin_bottom_back"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Review your Ask"
+            android:text="@string/text_review_your_ask_flow"
             android:textSize="@dimen/text_size_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mcv_main"

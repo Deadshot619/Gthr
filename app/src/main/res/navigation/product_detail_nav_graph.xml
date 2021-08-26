@@ -11,7 +11,7 @@
         android:label="ProductDetailFragment" >
         <argument
             android:name="type"
-            app:argType="com.gthr.gthrcollect.utils.enums.ProductTypeOld" />
+            app:argType="com.gthr.gthrcollect.utils.enums.ProductType" />
         <action
             android:id="@+id/action_productDetailFragment_to_recentSellFragment"
             app:destination="@id/recentSellFragment" />
@@ -26,7 +26,7 @@
         tools:layout="@layout/recent_sell_fragment" >
         <argument
             android:name="type"
-            app:argType="com.gthr.gthrcollect.utils.enums.ProductTypeOld" />
+            app:argType="com.gthr.gthrcollect.utils.enums.ProductType" />
     </fragment>
     <fragment
         android:id="@+id/upForSellFragment"
@@ -35,6 +35,6 @@
         tools:layout="@layout/up_for_sell_fragment" >
         <argument
             android:name="type"
-            app:argType="com.gthr.gthrcollect.utils.enums.ProductTypeOld" />
+            app:argType="com.gthr.gthrcollect.utils.enums.ProductType" />
     </fragment>
 </navigation>

@@ -1,7 +1,6 @@
 package com.gthr.gthrcollect.ui.askflow.afcardedition
 
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +22,7 @@ class AfCardEditionFragment : BaseFragment<AskFlowViewModel, AfCardEditionFragme
 
     override fun onBinding() {
         initViews()
+        setUpClickListeners()
         setUpEdition()
     }
 
@@ -62,6 +62,14 @@ class AfCardEditionFragment : BaseFragment<AskFlowViewModel, AfCardEditionFragme
         }
     }
 
+
+    private fun setUpClickListeners() {
+        mViewBinding.run {
+            mIvBack.setOnClickListener {
+                findNavController().navigateUp()
+            }
+        }
+    }
 
     private fun goToCardCondition() {
         findNavController().navigate(AfCardEditionFragmentDirections.actionAfEditionFragmentToAfConfigureCardFragment())

@@ -8,17 +8,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.ItemTestProductBinding
 import com.gthr.gthrcollect.model.domain.FavSoldDomainModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
-import com.gthr.gthrcollect.utils.enums.ProductTypeOld
+import com.gthr.gthrcollect.utils.enums.ProductType
 
-class UpForSellAdapter(val productType: ProductTypeOld, val callback: (FavSoldDomainModel) -> Unit) :
+class UpForSellAdapter(val productType: ProductType, val callback: (FavSoldDomainModel) -> Unit) :
     ListAdapter<FavSoldDomainModel, UpForSellAdapter.FavSoldViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<FavSoldDomainModel>() {
-        override fun areItemsTheSame(oldItem: FavSoldDomainModel, newItem: FavSoldDomainModel): Boolean {
+        override fun areItemsTheSame(
+            oldItem: FavSoldDomainModel,
+            newItem: FavSoldDomainModel
+        ): Boolean {
             return oldItem.image_URL == newItem.image_URL
         }
 
-        override fun areContentsTheSame(oldItem: FavSoldDomainModel, newItem: FavSoldDomainModel): Boolean {
+        override fun areContentsTheSame(
+            oldItem: FavSoldDomainModel,
+            newItem: FavSoldDomainModel
+        ): Boolean {
             return oldItem == newItem
         }
     }
@@ -33,12 +39,14 @@ class UpForSellAdapter(val productType: ProductTypeOld, val callback: (FavSoldDo
     override fun onBindViewHolder(holder: FavSoldViewHolder, position: Int) {
         holder.bind()
         holder.binding.item.setState(CustomProductCell.State.FOR_SALE)
-        when(productType) {
-            ProductTypeOld.FUNKO -> holder. binding.item.setType(CustomProductCell.Type.FUNKO)
-            ProductTypeOld.POKEMON -> holder. binding.item.setType(CustomProductCell.Type.HOLO_RARE)
-            ProductTypeOld.MTG -> holder. binding.item.setType(CustomProductCell.Type.FUNKO)
-            ProductTypeOld.YUGIOH -> holder. binding.item.setType(CustomProductCell.Type.HOLO_RARE)
-            ProductTypeOld.SEALED -> holder. binding.item.setType(CustomProductCell.Type.HOLO_RARE)
+        when (productType) {
+            ProductType.FUNKO -> holder.binding.item.setType(CustomProductCell.Type.FUNKO)
+            ProductType.POKEMON -> holder.binding.item.setType(CustomProductCell.Type.HOLO_RARE)
+            ProductType.MAGIC_THE_GATHERING -> holder.binding.item.setType(CustomProductCell.Type.FUNKO)
+            ProductType.YUGIOH -> holder.binding.item.setType(CustomProductCell.Type.HOLO_RARE)
+            ProductType.SEALED_YUGIOH, ProductType.SEALED_POKEMON, ProductType.SEALED_MTG -> holder.binding.item.setType(
+                CustomProductCell.Type.HOLO_RARE
+            )
         }
     }
 

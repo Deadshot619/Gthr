@@ -19,9 +19,11 @@ import com.gthr.gthrcollect.utils.customviews.CustomProductButton
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
 import com.gthr.gthrcollect.utils.enums.AskFlowType
-import com.gthr.gthrcollect.utils.enums.ProductTypeOld
+import com.gthr.gthrcollect.utils.enums.ProductCategory
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.getProductCategory
 
 
 class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetailFragmentBinding>() {
@@ -34,18 +36,23 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var rvRelated : RecyclerView
     private lateinit var mFlTop : FrameLayout
     private lateinit var mFlDetails : FrameLayout
-    private lateinit var mMcvDescription : MaterialCardView
+    private lateinit var mMcvDescription: MaterialCardView
 
-    private lateinit var mBtnBuy : CustomProductButton
-    private lateinit var mBtnCollect : CustomProductButton
-    private lateinit var mBtnSell : CustomProductButton
+    private lateinit var mBtnBuy: CustomProductButton
+    private lateinit var mBtnCollect: CustomProductButton
+    private lateinit var mBtnSell: CustomProductButton
 
-    private lateinit var mRecentSellSeeAll : CustomSeeAllView
-    private lateinit var mUpForSellSeeAll : CustomSeeAllView
+    private lateinit var mRecentSellSeeAll: CustomSeeAllView
+    private lateinit var mUpForSellSeeAll: CustomSeeAllView
 
     private val args by navArgs<ProductDetailFragmentArgs>()
+    private lateinit var mProductType: ProductType
+    private lateinit var mProductCategory: ProductCategory
 
     override fun onBinding() {
+        mProductType = args.type
+        mProductCategory = getProductCategory(mProductType)!!
+
         setHasOptionsMenu(true)
         initViews()
         setUpOnClickListeners()
@@ -63,13 +70,31 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             upForSellSeeAll()
         }
         mBtnBuy.setOnClickListener {
-//            startActivity(AskFlowActivity.getInstance(requireContext(), AskFlowType.COLLECT))
+            startActivity(
+                AskFlowActivity.getInstance(
+                    requireContext(),
+                    AskFlowType.BUY,
+                    mProductCategory
+                )
+            )
         }
         mBtnCollect.setOnClickListener {
-            startActivity(AskFlowActivity.getInstance(requireContext(), AskFlowType.COLLECT))
+            startActivity(
+                AskFlowActivity.getInstance(
+                    requireContext(),
+                    AskFlowType.COLLECT,
+                    mProductCategory
+                )
+            )
         }
         mBtnSell.setOnClickListener {
-            startActivity(AskFlowActivity.getInstance(requireContext(), AskFlowType.SELL))
+            startActivity(
+                AskFlowActivity.getInstance(
+                    requireContext(),
+                    AskFlowType.SELL,
+                    mProductCategory
+                )
+            )
         }
     }
 
@@ -85,11 +110,11 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
 
     private fun setUpProductType() {
         when (args.type) {
-            ProductTypeOld.POKEMON -> setUpPokemon()
-            ProductTypeOld.MTG -> setUpMGT()
-            ProductTypeOld.YUGIOH -> seUpYugioh()
-            ProductTypeOld.SEALED -> setUpSealed()
-            ProductTypeOld.FUNKO -> setUpFunko()
+            ProductType.POKEMON -> setUpPokemon()
+            ProductType.MAGIC_THE_GATHERING -> setUpMGT()
+            ProductType.YUGIOH -> seUpYugioh()
+            ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> setUpSealed()
+            ProductType.FUNKO -> setUpFunko()
         }
     }
 

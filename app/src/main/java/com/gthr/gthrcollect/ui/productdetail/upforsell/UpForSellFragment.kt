@@ -10,7 +10,7 @@ import com.gthr.gthrcollect.databinding.LayoutProductDetailToyTopBinding
 import com.gthr.gthrcollect.databinding.UpForSellFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.productdetail.recentsell.RecentSellFragmentArgs
-import com.gthr.gthrcollect.utils.enums.ProductTypeOld
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
 
@@ -47,11 +47,13 @@ class UpForSellFragment : BaseFragment<UpForSellViewModel,UpForSellFragmentBindi
 
     private fun setUpProductType() {
         when (args.type) {
-            ProductTypeOld.POKEMON -> setUpCardTopView(true)
-            ProductTypeOld.MTG -> setUpCardTopView(true)
-            ProductTypeOld.YUGIOH -> setUpCardTopView(true)
-            ProductTypeOld.SEALED -> setUpCardTopView(false)
-            ProductTypeOld.FUNKO -> setUpFunko()
+            ProductType.POKEMON -> setUpCardTopView(true)
+            ProductType.MAGIC_THE_GATHERING -> setUpCardTopView(true)
+            ProductType.YUGIOH -> setUpCardTopView(true)
+            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> setUpCardTopView(
+                false
+            )
+            ProductType.FUNKO -> setUpFunko()
         }
     }
 
