@@ -86,7 +86,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="@string/id_verification"
-                        android:scaleType="fitXY" />
+                        android:scaleType="fitCenter" />
 
                     <LinearLayout
                         android:id="@+id/front_repls"
@@ -138,7 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="@string/id_verification"
-                        android:scaleType="fitXY" />
+                        android:scaleType="fitCenter" />
 
                     <LinearLayout
                         android:id="@+id/back_repls"

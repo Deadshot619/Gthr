@@ -278,5 +278,10 @@
     <dimen name="margin_back_image">28dp</dimen>
     <dimen name="padding_status_ask_flow">2dp</dimen>
 
+    <!-- Custom camera Preview -->
+    <dimen name="id_width">331dp</dimen>
+    <dimen name="id_height">202dp</dimen>
+    <dimen name="card_width">227dp</dimen>
+    <dimen name="card_height">325dp</dimen>
 
 </resources>
