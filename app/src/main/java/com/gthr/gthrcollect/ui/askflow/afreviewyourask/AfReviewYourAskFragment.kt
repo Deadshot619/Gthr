@@ -3,14 +3,12 @@ package com.gthr.gthrcollect.ui.askflow.afreviewyourask
 
 import android.widget.ImageView
 import androidx.constraintlayout.widget.Group
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AfReviewYourAskFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
-import com.gthr.gthrcollect.ui.askflow.afaddpic.AfAddPicFragmentDirections
-import com.gthr.gthrcollect.ui.askflow.afcardcondition.AfCardConditionFragmentDirections
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.AskFlowType
@@ -19,7 +17,7 @@ import com.gthr.gthrcollect.utils.extensions.visible
 
 class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel,AfReviewYourAskFragmentBinding>() {
 
-    override val mViewModel: AskFlowViewModel by viewModels()
+    override val mViewModel: AskFlowViewModel by activityViewModels()
     override fun getViewBinding() = AfReviewYourAskFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mBtnNext: CustomSecondaryButton
@@ -47,12 +45,16 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel,AfReviewYourAskFra
                 mGroup.gone()
                 mGroupBuy.visible()
             }
-            else ->{
+            else -> {
                 mBtnNext.text = getString(R.string.text_review_your_ask_flow)
                 mGroup.visible()
                 mGroupBuy.gone()
             }
         }
+
+        //If this fragment is start destination, then hide back button
+        if (findNavController().previousBackStackEntry == null)
+            mIvBack.gone()
     }
 
 

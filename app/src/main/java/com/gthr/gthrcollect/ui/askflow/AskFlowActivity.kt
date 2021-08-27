@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityAskFlowBinding
 import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentArgs
@@ -17,6 +19,8 @@ import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
+import com.gthr.gthrcollect.utils.extensions.invisible
+import com.gthr.gthrcollect.utils.extensions.visible
 
 class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>() {
 
@@ -31,6 +35,8 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     private lateinit var mProductCategory: ProductCategory
 
     private lateinit var mProductItem: CustomProductCell
+    private lateinit var mCvBackImage: MaterialCardView
+    private lateinit var mIvBackImage: AppCompatImageView
 
     override fun onBinding() {
         mAskFlowType = intent?.getSerializableExtra(KEY_ASK_FLOW_TYPE) as AskFlowType
@@ -40,21 +46,43 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         setUpNavGraph()
         setSupportActionBar(mToolbar)
         setUpNavigationAndActionBar()
+        setUpObservers()
     }
 
     private fun initViews(){
         mViewBinding.run {
             mToolbar = toolbar
             mProductItem = cpcProductItem
+            mCvBackImage = cvBackImage
+            mIvBackImage = ivBackImage
 
             mProductItem.mTvPrice.text = "$-"
             mProductItem.mTvGlob.text = "-"
             mProductItem.mTvPsaValue.text = "-"
             mProductItem.mTvFoil.text = "-"
 
-            if (mAskFlowType == AskFlowType.BUY)
-                mProductItem.setState(CustomProductCell.State.WANT)
+            when (mAskFlowType) {
+                AskFlowType.BUY -> mProductItem.setState(CustomProductCell.State.WANT)
+                AskFlowType.SELL -> mViewModel.setSell(true)
+                AskFlowType.COLLECT -> {
+                }
+            }
         }
+    }
+
+    private fun setUpObservers() {
+        mViewModel.frontImageBitmap.observe(this, {
+            if (it != null)
+                mProductItem.mIvMain.setImageBitmap(it)
+        })
+
+        mViewModel.backImageBitmap.observe(this, {
+            if (it != null) {
+                mCvBackImage.visible()
+                mIvBackImage.setImageBitmap(it)
+            } else
+                mCvBackImage.invisible()
+        })
     }
 
     private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination
@@ -77,11 +105,6 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             upButtonVisibility(isVisible = true)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_up_button) //Set up button as <
             setToolbarTitle(mAskFlowType)
-
-            when (nd.id) {
-                /*R.id.placeAskFragment -> {
-                }*/
-            }
         }
     }
 

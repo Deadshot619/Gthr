@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
@@ -40,10 +40,8 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
     lateinit var mFront_repls: LinearLayout
     lateinit var mBack_repls: LinearLayout
     lateinit var mSkipBtn: CustomSecondaryButton
-    lateinit var mAskSellBtn: CustomSecondaryButton
 
-
-    override val mViewModel: AskFlowViewModel by viewModels()
+    override val mViewModel: AskFlowViewModel by activityViewModels()
     override fun getViewBinding() = AfAddPicFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mIvBack: ImageView
@@ -53,6 +51,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
 
         initViews()
         addListeners()
+        setUpObservers()
         setUpClickListeners()
     }
 
@@ -66,16 +65,17 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
             mFront_repls = frontRepls
             mBack_repls = backRepls
             mSkipBtn = btnSkipId
-//            mAskSellBtn = btnCompleteAccount
-
             mBtnNext = btnNext
-
 
             mIvFrontImage.gone()
             mIvBackImage.gone()
 
             if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.COLLECT)
                 mBtnNext.text = getString(R.string.finish)
+
+            //If this fragment is start destination, then hide back button
+            if (findNavController().previousBackStackEntry == null)
+                mIvBack.gone()
         }
     }
 
@@ -117,9 +117,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
             imageCheck += 1
             val bitmap = BitmapFactory.decodeFile(data.getStringExtra(CustomCamera.INTENT_KEY_URL))
             if (requestCode == REQUEST_CODE_FRONT_ID) {
-                mIvFrontImage.visible()
-                mIvFrontImage.setImageBitmap(bitmap)
-                mFront_repls.gone()
+                mViewModel.setFrontImage(bitmap)
 
                /* mfrontLable.text = getString(R.string.replae_front)
                 mFront_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)
@@ -131,10 +129,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
                 }*/
 
             } else if (requestCode == REQUEST_CODE_BACK_ID) {
-                mIvBackImage.visible()
-                mIvBackImage.setImageBitmap(bitmap)
-                mBack_repls.gone()
-                mSkipBtn.invisible()
+                mViewModel.setBackImage(bitmap)
                /* mBackLable.text = getString(R.string.replace_back)
 
                 mBackImageUrl = data.getStringExtra(CustomCamera.INTENT_KEY_URL)
@@ -178,7 +173,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
     private fun setUpClickListeners(){
         mViewBinding.run {
             mBtnNext.setOnClickListener {
-                if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.COLLECT)
+                if (mViewModel.isSell.value == false)
                     activity?.finish()
                 else
                     findNavController().navigate(AfAddPicFragmentDirections.actionAfAddPicFragmentToAfReviewYourAskFragment())
@@ -187,6 +182,32 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
                 findNavController().navigateUp()
             }
         }
+    }
+
+    private fun setUpObservers() {
+        mViewModel.isSell.observe(viewLifecycleOwner, {
+            if (it) {
+                mSkipBtn.gone()
+                mBtnNext.text = getString(R.string.ask_sell)
+            }
+        })
+
+        mViewModel.frontImageBitmap.observe(this, {
+            if (it != null) {
+                mIvFrontImage.visible()
+                mIvFrontImage.setImageBitmap(it)
+                mFront_repls.gone()
+            }
+        })
+
+        mViewModel.backImageBitmap.observe(this, {
+            if (it != null) {
+                mIvBackImage.setImageBitmap(it)
+                mIvBackImage.visible()
+                mBack_repls.gone()
+                mSkipBtn.invisible()
+            }
+        })
     }
 
     companion object {

@@ -1,7 +1,7 @@
 package com.gthr.gthrcollect.ui.askflow.afcardedition
 
 import android.widget.ImageView
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +12,7 @@ import com.gthr.gthrcollect.ui.askflow.ConfigurationAdapter
 import com.gthr.gthrcollect.ui.base.BaseFragment
 
 class AfCardEditionFragment : BaseFragment<AskFlowViewModel, AfCardEditionFragmentBinding>() {
-    override val mViewModel: AskFlowViewModel by viewModels()
+    override val mViewModel: AskFlowViewModel by activityViewModels()
 
     override fun getViewBinding() = AfCardEditionFragmentBinding.inflate(layoutInflater)
 

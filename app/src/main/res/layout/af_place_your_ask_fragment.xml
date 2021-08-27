@@ -411,6 +411,7 @@
                     android:id="@+id/iv_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_extra_small"
                     android:layout_marginStart="@dimen/margin_mini"
                     android:contentDescription="back btn"
                     android:paddingHorizontal="@dimen/padding_normal"

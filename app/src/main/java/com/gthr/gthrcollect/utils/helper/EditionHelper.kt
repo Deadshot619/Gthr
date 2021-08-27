@@ -1,10 +1,8 @@
 package com.gthr.gthrcollect.utils.helper
 
 import com.gthr.gthrcollect.model.domain.PokemonDomainModel
-import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.model.domain.YugiohDomainModel
 import com.gthr.gthrcollect.utils.enums.EditionType
-import com.gthr.gthrcollect.utils.enums.ProductType
 
 fun getYugiohEditionKey(langKey: Int, yugiohCard: YugiohDomainModel): Int {
     return when (langKey) {
@@ -45,10 +43,6 @@ fun getYugiohEditionList(rawKey: Int): List<EditionType> {
         else -> arrayListOf()
     }
 }
-
-//fun isPromo(productModel: ProductDisplayModel, pokemonModel: PokemonDomainModel) : Boolean {
-//    return productModel.productType== ProductType.POKEMON && pokemonModel.noLanguagenoEdition!=0
-//}
 
 fun getPokemonEditionKey(langKey: Int, pokemon: PokemonDomainModel) : Int {
     return when (langKey) {

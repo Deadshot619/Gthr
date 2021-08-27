@@ -444,7 +444,7 @@
     <string name="note_f_camera">Take a picture of the front</string>
     <string name="note_b_camera">Take a picture of the back</string>
 
-    <string name="finish_picture">Finish &amp; Skip Pictures</string>
+    <string name="skip_picture">Skip Pictures</string>
     <string name="ask_sell">Ask/Sell</string>
     <string name="do_you_want_to_sell">Do You Want To Sell?</string>
     <string name="add_pictures">Add Pictures</string>

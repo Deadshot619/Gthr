@@ -25,6 +25,11 @@
         <argument
             android:name="productCategory"
             app:argType="com.gthr.gthrcollect.utils.enums.ProductCategory" />
+        <action
+            android:id="@+id/action_afCardLanguageFragment_to_afReviewYourAskFragment"
+            app:destination="@id/afReviewYourAskFragment"
+            app:popUpTo="@id/afCardLanguageFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/afEditionFragment"

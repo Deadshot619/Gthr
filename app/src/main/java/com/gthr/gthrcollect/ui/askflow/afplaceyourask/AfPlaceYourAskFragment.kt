@@ -5,7 +5,7 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.Group
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AfPlaceYourAskFragmentBinding
@@ -25,7 +25,7 @@ import com.gthr.gthrcollect.utils.extensions.visible
 
 class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFragmentBinding>() {
 
-    override val mViewModel: AskFlowViewModel by viewModels()
+    override val mViewModel: AskFlowViewModel by activityViewModels()
     override fun getViewBinding() = AfPlaceYourAskFragmentBinding.inflate(layoutInflater)
 
 

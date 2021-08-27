@@ -22,7 +22,7 @@ class CustomProductCell @JvmOverloads constructor(
     private val mView: View =
         LayoutInflater.from(context).inflate(R.layout.layout_custom_product_cell, this, true)
 
-    private val mIvMain: AppCompatImageView = mView.findViewById(R.id.iv_main)
+    val mIvMain: AppCompatImageView = mView.findViewById(R.id.iv_main)
     private val mIvIcon: AppCompatImageView = mView.findViewById(R.id.iv_icon)
     private val mIvFav: AppCompatImageView = mView.findViewById(R.id.iv_fav)
 

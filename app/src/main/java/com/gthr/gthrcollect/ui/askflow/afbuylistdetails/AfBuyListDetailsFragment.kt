@@ -1,27 +1,34 @@
 package com.gthr.gthrcollect.ui.askflow.afbuylistdetails
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import com.gthr.gthrcollect.R
+import androidx.fragment.app.activityViewModels
 import com.gthr.gthrcollect.databinding.AfBuylistDetailsFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 
 class AfBuyListDetailsFragment : BaseFragment<AskFlowViewModel, AfBuylistDetailsFragmentBinding>() {
 
-    override val mViewModel: AskFlowViewModel by viewModels()
+    override val mViewModel: AskFlowViewModel by activityViewModels()
     override fun getViewBinding() = AfBuylistDetailsFragmentBinding.inflate(layoutInflater)
 
-    override fun onBinding() {
+    private lateinit var mBtnNext: CustomSecondaryButton
 
+    override fun onBinding() {
+        initViews()
+        setUpClickListeners()
     }
 
+    private fun initViews() {
+        mViewBinding.run {
+            mBtnNext = btnNext
+        }
+    }
 
-
-
+    private fun setUpClickListeners() {
+        mViewBinding.run {
+            mBtnNext.setOnClickListener {
+                activity?.finish()
+            }
+        }
+    }
 }

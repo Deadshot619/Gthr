@@ -1,6 +1,6 @@
 package com.gthr.gthrcollect.ui.askflow.afcardlanguage
 
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +16,7 @@ import com.gthr.gthrcollect.utils.enums.ProductCategory
 
 class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFragmentBinding>() {
 
-    override val mViewModel: AskFlowViewModel by viewModels()
+    override val mViewModel: AskFlowViewModel by activityViewModels()
     override fun getViewBinding() = AfCardLanguageFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mRvMain: RecyclerView
@@ -28,10 +28,11 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
     override fun onBinding() {
         mProductCategory = args.productCategory
         if (mProductCategory == ProductCategory.SEALED || mProductCategory == ProductCategory.TOYS) {
-            if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.COLLECT)
-                findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfWantToSellFragment())
-            else if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.SELL)
-                findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfAddPicFragment())
+            when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
+                AskFlowType.COLLECT -> findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfWantToSellFragment())
+                AskFlowType.SELL -> findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfAddPicFragment())
+                AskFlowType.BUY -> findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfReviewYourAskFragment())
+            }
         }
 
         initViews()
