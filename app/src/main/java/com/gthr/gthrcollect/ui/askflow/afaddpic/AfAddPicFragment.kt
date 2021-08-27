@@ -16,7 +16,7 @@ import com.gthr.gthrcollect.databinding.AfAddPicFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
-import com.gthr.gthrcollect.ui.customcameraactivities.CustomCamera
+import com.gthr.gthrcollect.ui.customcameraactivities.CustomCardCamera
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.CameraViews
@@ -83,7 +83,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
         mFrontIdCapture.setOnClickListener {
             checkMultiplePermissions {
                 startActivityForResult(
-                    CustomCamera.getInstance(
+                    CustomCardCamera.getInstance(
                         requireContext(),
                         CameraViews.CARDS,
                         isFront = true,
@@ -97,7 +97,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
         mBackIdCapture.setOnClickListener {
             checkMultiplePermissions {
                 startActivityForResult(
-                    CustomCamera.getInstance(
+                    CustomCardCamera.getInstance(
                         requireContext(),
                         CameraViews.CARDS,
                         isFront = false,
@@ -115,14 +115,14 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
 
         if (data != null) {
             imageCheck += 1
-            val bitmap = BitmapFactory.decodeFile(data.getStringExtra(CustomCamera.INTENT_KEY_URL))
+            val bitmap = BitmapFactory.decodeFile(data.getStringExtra(CustomCardCamera.INTENT_KEY_URL))
             if (requestCode == REQUEST_CODE_FRONT_ID) {
                 mViewModel.setFrontImage(bitmap)
 
                /* mfrontLable.text = getString(R.string.replae_front)
                 mFront_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)
 
-                mFrontImageUrl = data.getStringExtra(CustomCamera.INTENT_KEY_URL)
+
 
                 if (imageCheck >= 2) {
                     mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
@@ -131,8 +131,6 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
             } else if (requestCode == REQUEST_CODE_BACK_ID) {
                 mViewModel.setBackImage(bitmap)
                /* mBackLable.text = getString(R.string.replace_back)
-
-                mBackImageUrl = data.getStringExtra(CustomCamera.INTENT_KEY_URL)
 
                 if (imageCheck >= 2) {
                     mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)

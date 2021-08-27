@@ -21,7 +21,7 @@ import com.gthr.gthrcollect.data.repository.EditAccountInfoRepository
 import com.gthr.gthrcollect.databinding.EaIdVerificationFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.base.BaseFragment
-import com.gthr.gthrcollect.ui.customcameraactivities.CustomCamera
+import com.gthr.gthrcollect.ui.customcameraactivities.CustomIdCamera
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModel
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModelFactory
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
@@ -104,7 +104,7 @@ class EaIdVerificationFragment :
         mFrontIdCapture.setOnClickListener {
             checkMultiplePermissions {
                 startActivityForResult(
-                    CustomCamera.getInstance(
+                    CustomIdCamera.getInstance(
                         requireContext(),
                         CameraViews.ID_VERIFICATION,
                         isFront = true,
@@ -118,7 +118,7 @@ class EaIdVerificationFragment :
         mBackIdCapture.setOnClickListener {
             checkMultiplePermissions {
                 startActivityForResult(
-                    CustomCamera.getInstance(
+                    CustomIdCamera.getInstance(
                         requireContext(),
                         CameraViews.ID_VERIFICATION,
                         isFront = false,
@@ -198,14 +198,14 @@ class EaIdVerificationFragment :
 
         if (data != null) {
             imageCheck += 1
-            val bitmap = BitmapFactory.decodeFile(data.getStringExtra(CustomCamera.INTENT_KEY_URL))
+            val bitmap = BitmapFactory.decodeFile(data.getStringExtra(CustomIdCamera.INTENT_KEY_URL))
             if (requestCode == REQUEST_CODE_FRONT_ID) {
                 mIvFrontImage.visible()
                 mIvFrontImage.setImageBitmap(bitmap)
                 mfrontLable.text = getString(R.string.replae_front)
                 mFront_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)
 
-                mFrontImageUrl = data.getStringExtra(CustomCamera.INTENT_KEY_URL)
+                mFrontImageUrl = data.getStringExtra(CustomIdCamera.INTENT_KEY_URL)
 
                 if (imageCheck >= 2) {
                     mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
@@ -216,7 +216,7 @@ class EaIdVerificationFragment :
                 mIvBackImage.setImageBitmap(bitmap)
                 mBackLable.text = getString(R.string.replace_back)
 
-                mBackImageUrl = data.getStringExtra(CustomCamera.INTENT_KEY_URL)
+                mBackImageUrl = data.getStringExtra(CustomIdCamera.INTENT_KEY_URL)
 
                 if (imageCheck >= 2) {
                     mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,42 +11,60 @@
         android:id="@+id/tv_label_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/margin_extra_large"
+        android:layout_marginBottom="@dimen/margin_normal"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_size_normal"
-        android:layout_marginTop="@dimen/margin_extra_large"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/frame_layout"
+        />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_idImage"
-        android:layout_width="wrap_content"
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginHorizontal="@dimen/margin_large"
-        android:background="@drawable/border"
-        android:scaleType="centerInside"
-        android:fitsSystemWindows="true"
-        android:adjustViewBounds="true"
-        android:src="@drawable/ic_launcher_background" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_cardImage"
-        android:layout_width="377.48dp"
-        android:layout_height="442.86dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginHorizontal="@dimen/margin_large"
-        android:scaleType="centerInside"
-        android:fitsSystemWindows="true"
-        android:adjustViewBounds="true"
-        android:src="@drawable/ic_launcher_background" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_cardImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            tools:background="@drawable/border"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_idImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </FrameLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-
-        android:layout_marginBottom="25dp">
+        android:layout_marginBottom="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
             android:id="@+id/retake"
@@ -79,4 +97,4 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

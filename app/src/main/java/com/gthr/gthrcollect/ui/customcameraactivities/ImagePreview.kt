@@ -42,13 +42,13 @@ class ImagePreview : AppCompatActivity() {
         mSavePicture = findViewById(R.id.savePicture)
         tv_label_msg = findViewById(R.id.tv_label_msg)
 
-        imgFile = intent.getStringExtra(CustomCamera.INTENT_KEY_URL)
+        imgFile = intent.getStringExtra(CustomIdCamera.INTENT_KEY_URL)
         val bitmap = BitmapFactory.decodeFile(imgFile)
 
 
 
-        mCameraViews=intent.getStringExtra(CustomCamera.CAMERA_VIEW)
-        mLabelMsg=intent.getStringExtra(CustomCamera.LABEL_MSG)
+        mCameraViews=intent.getStringExtra(CustomIdCamera.CAMERA_VIEW)
+        mLabelMsg=intent.getStringExtra(CustomIdCamera.LABEL_MSG)
 
         print(mCameraViews)
         GthrLogger.e("mCameraViews",mCameraViews.toString())
@@ -78,7 +78,7 @@ class ImagePreview : AppCompatActivity() {
 
 
             val returnIntent = Intent()
-            returnIntent.putExtra(CustomCamera.INTENT_KEY_URL
+            returnIntent.putExtra(CustomIdCamera.INTENT_KEY_URL
                 , imgFile)
             setResult(RESULT_OK, returnIntent)
             finish()
@@ -88,9 +88,9 @@ class ImagePreview : AppCompatActivity() {
     companion object{
 
         fun getInstance(context: Context, fileURL: String, camera_view: String, label_msg: String?) = Intent(context, ImagePreview::class.java)
-            .apply{ putExtra(CustomCamera.INTENT_KEY_URL,fileURL).
-            putExtra(CustomCamera.CAMERA_VIEW,camera_view).
-            putExtra(CustomCamera.LABEL_MSG,label_msg) }
+            .apply{ putExtra(CustomIdCamera.INTENT_KEY_URL,fileURL).
+            putExtra(CustomIdCamera.CAMERA_VIEW,camera_view).
+            putExtra(CustomIdCamera.LABEL_MSG,label_msg) }
 
     }
 }
