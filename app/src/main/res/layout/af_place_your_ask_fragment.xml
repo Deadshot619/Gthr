@@ -339,7 +339,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_image_bg"
-                        android:paddingHorizontal="@dimen/padding_extra_large"
+                        android:paddingHorizontal="@dimen/padding_semi_large"
                         android:paddingVertical="@dimen/padding_medium"
                         android:text="$"
                         android:textColor="@color/white"
@@ -375,7 +375,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_normal"
-                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginBottom="@dimen/margin_normal"
                     android:background="@drawable/bg_recipt_bottom"
                     android:gravity="center_vertical"
@@ -424,13 +424,13 @@
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/group"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:constraint_referenced_ids="cv_ask_type,iv_terms_and_conditions,ll_total,tv_payout,tv_address,tv_terms_and_conditions,tv_agree_to,tv_payment_processing_value,tv_selling_fee,tv_promo_code,tv_selling_fee_value,tv_add_promo_code,tv_payment_processing,tv_shipping_reimbursement,tv_shipping_reimbursement_value" />
 
                 <androidx.constraintlayout.widget.Group
-
+                    android:visibility="gone"
                     android:id="@+id/group_buy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

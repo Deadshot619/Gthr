@@ -46,9 +46,9 @@ fun getYugiohEditionList(rawKey: Int): List<EditionType> {
     }
 }
 
-fun isPromo(productModel: ProductDisplayModel, pokemonModel: PokemonDomainModel) : Boolean {
-    return productModel.productType== ProductType.POKEMON && pokemonModel.noLanguagenoEdition!=0
-}
+//fun isPromo(productModel: ProductDisplayModel, pokemonModel: PokemonDomainModel) : Boolean {
+//    return productModel.productType== ProductType.POKEMON && pokemonModel.noLanguagenoEdition!=0
+//}
 
 fun getPokemonEditionKey(langKey: Int, pokemon: PokemonDomainModel) : Int {
     return when (langKey) {

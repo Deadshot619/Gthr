@@ -467,7 +467,7 @@
     <string name="text_review_your_ask_flow">Review your Ask</string>
     <string name="text_summary_buy_flow">Summary</string>
     <string name="text_added_buy_flow">Added</string>
-    <string name="text_finish_buy_flow">finish</string>
+    <string name="text_finish_buy_flow">Finish</string>
     <string name="text_type_buylist_price_here_buy_flow">Type Buylist Price Here</string>
 
 </resources>
