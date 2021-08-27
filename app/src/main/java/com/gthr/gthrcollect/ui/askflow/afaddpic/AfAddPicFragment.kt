@@ -173,7 +173,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
     private fun setUpClickListeners(){
         mViewBinding.run {
             mBtnNext.setOnClickListener {
-                if (mViewModel.isSell.value == false)
+                if (mViewModel.isSell.value != true)
                     activity?.finish()
                 else
                     findNavController().navigate(AfAddPicFragmentDirections.actionAfAddPicFragmentToAfReviewYourAskFragment())
