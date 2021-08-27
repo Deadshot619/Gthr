@@ -104,7 +104,13 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             mToolbar.title = ""     //Set Title as empty as we have used custom title
             upButtonVisibility(isVisible = true)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_up_button) //Set up button as <
-            setToolbarTitle(mAskFlowType)
+            setToolbarTitleByType(mAskFlowType)
+
+            when (nd.id) {
+                R.id.afBuyListDetailsFragment -> {
+                    setToolbarTitle(getString(R.string.text_buylist_details))
+                }
+            }
         }
     }
 
@@ -113,12 +119,23 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         return false
     }
 
-    fun setToolbarTitle(askFlowType: AskFlowType) {
-        mViewBinding.toolbarTitle.text = when (askFlowType) {
-            AskFlowType.BUY -> getString(R.string.text_add_to_buylist)
-            AskFlowType.COLLECT -> getString(R.string.text_add_to_collection)
-            AskFlowType.SELL -> getString(R.string.text_place_an_ask)
+    override fun onBackPressed() {
+        if (mNavController.currentDestination?.id == R.id.afBuyListDetailsFragment)
+            finish()
+        else
+            super.onBackPressed()
+    }
+
+    private fun setToolbarTitleByType(askFlowType: AskFlowType) {
+        when (askFlowType) {
+            AskFlowType.BUY -> setToolbarTitle(getString(R.string.text_add_to_buylist))
+            AskFlowType.COLLECT -> setToolbarTitle(getString(R.string.text_add_to_collection))
+            AskFlowType.SELL -> setToolbarTitle(getString(R.string.text_place_an_ask))
         }
+    }
+
+    fun setToolbarTitle(title: String) {
+        mViewBinding.toolbarTitle.text = title
     }
 
     private fun upButtonVisibility(isVisible: Boolean) {

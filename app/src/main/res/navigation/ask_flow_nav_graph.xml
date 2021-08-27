@@ -86,7 +86,8 @@
         tools:layout="@layout/af_place_your_ask_fragment" >
         <action
             android:id="@+id/action_afPlaceYourAskFragment_to_afBuyListDetailsFragment"
-            app:destination="@id/afBuyListDetailsFragment" />
+            app:destination="@id/afBuyListDetailsFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/afBuyListDetailsFragment"

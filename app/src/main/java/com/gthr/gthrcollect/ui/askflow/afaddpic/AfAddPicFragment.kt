@@ -21,8 +21,8 @@ import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.CameraViews
 import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.invisible
 import com.gthr.gthrcollect.utils.extensions.showPermissionSnackBar
+import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.extensions.visible
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -173,11 +173,18 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
             mBtnNext.setOnClickListener {
                 if (mViewModel.isSell.value != true)
                     activity?.finish()
-                else
-                    findNavController().navigate(AfAddPicFragmentDirections.actionAfAddPicFragmentToAfReviewYourAskFragment())
+                else {
+                    if (mViewModel.frontImageBitmap.value != null && mViewModel.backImageBitmap.value != null)
+                        findNavController().navigate(AfAddPicFragmentDirections.actionAfAddPicFragmentToAfReviewYourAskFragment())
+                    else
+                        showToast("Please add pictures!")
+                }
             }
             mIvBack.setOnClickListener {
                 findNavController().navigateUp()
+            }
+            mSkipBtn.setOnClickListener {
+                activity?.finish()
             }
         }
     }
@@ -203,7 +210,6 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
                 mIvBackImage.setImageBitmap(it)
                 mIvBackImage.visible()
                 mBack_repls.gone()
-                mSkipBtn.invisible()
             }
         })
     }
