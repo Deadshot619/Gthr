@@ -31,24 +31,35 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
 
     override fun onBinding() {
         mProductCategory = args.productCategory
-        if (mProductCategory == ProductCategory.SEALED || mProductCategory == ProductCategory.TOYS) {
-            when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
-                AskFlowType.COLLECT -> findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfWantToSellFragment())
-                AskFlowType.SELL -> findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfAddPicFragment())
-                AskFlowType.BUY -> findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfReviewYourAskFragment())
-            }
-        }
 
+        checkAskFlowData()
         initViews()
         setUpLanguage()
     }
 
+    private fun checkAskFlowData() {
+        when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
+            AskFlowType.COLLECT ->
+                if (isProductSealedOrToys())
+                    findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfWantToSellFragment())
+            AskFlowType.SELL ->
+                if (isProductSealedOrToys())
+                    findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfAddPicFragment())
+            AskFlowType.BUY ->
+                if (isProductSealedOrToys())
+                    findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfReviewYourAskFragment())
+            AskFlowType.BUY_DIRECTLY_FROM_SOMEONE ->
+                findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfBuyDirectlyReviewFragment())
+        }
+    }
+
     private fun setUpLanguage() {
-        mAdapter = ConfigurationAdapter{
+        mAdapter = ConfigurationAdapter {
             goToEdition()
         }
         mRvMain.apply {
-            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = mAdapter
         }
         mAdapter.submitList(getLanguage())
@@ -80,4 +91,7 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
     private fun goToEdition() {
         findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfEditionFragment())
     }
+
+    private fun isProductSealedOrToys(): Boolean =
+        mProductCategory == ProductCategory.SEALED || mProductCategory == ProductCategory.TOYS
 }

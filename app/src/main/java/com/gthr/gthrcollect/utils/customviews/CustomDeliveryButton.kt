@@ -61,11 +61,12 @@ class CustomDeliveryButton  @JvmOverloads constructor(
                 this.background = getImageDrawable(R.drawable.bg_btn_delivery_yellow)
                 this.setTextColor(getResolvedColor(R.color.white))
             }
-            Type.DELIVERED, Type.ASK_PLACED -> {
-                this.text = if (type == Type.DELIVERED)
-                    context.getString(R.string.text_delivered)
-                else
-                    context.getString(R.string.text_ask_placed)
+            Type.DELIVERED, Type.ASK_PLACED, Type.ORDERED -> {
+                this.text = when (type) {
+                    Type.DELIVERED -> context.getString(R.string.text_delivered)
+                    Type.ASK_PLACED -> context.getString(R.string.text_ask_placed)
+                    else -> context.getString(R.string.text_ordered)
+                }
                 val drawable = getImageDrawable(R.drawable.ic_delivered)
                 this.background = getImageDrawable(R.drawable.bg_btn_delivery_blue_border)
                 this.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable!!, null)
@@ -83,7 +84,7 @@ class CustomDeliveryButton  @JvmOverloads constructor(
 
 
     enum class Type {
-        PRICE, PENDING, TRANSIT, DELIVERED, ASK_PLACED
+        PRICE, PENDING, TRANSIT, DELIVERED, ASK_PLACED, ORDERED
     }
 
 }

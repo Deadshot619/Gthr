@@ -39,7 +39,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_Start"
+                        android:id="@+id/tv_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_image_bg"
@@ -51,10 +51,11 @@
                         android:textSize="@dimen/text_size_small"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/et_ask"
+                        android:id="@+id/tv_rate_value"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:background="@drawable/edit_text_blue_outline_bg"
@@ -65,14 +66,13 @@
                         android:maxLines="1"
                         android:paddingHorizontal="@dimen/padding_normal"
                         android:text="$55.00"
-
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_Start"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_rate"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tv_Start"
-                        app:layout_constraintTop_toTopOf="@+id/tv_Start" />
+                        app:layout_constraintStart_toEndOf="@+id/tv_rate"
+                        app:layout_constraintTop_toTopOf="@+id/tv_rate" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -157,6 +157,13 @@ class CustomProductCell @JvmOverloads constructor(
         }
     }
 
+    fun setLabelVisibility(isVisible: Boolean) {
+        if (isVisible)
+            mTvCardState.visible()
+        else
+            mTvCardState.gone()
+    }
+
     enum class Type {
         FUNKO, SEALED, MYTHIC, HOLO_RARE, SECRET_RARE
     }

@@ -30,6 +30,9 @@
             app:destination="@id/afReviewYourAskFragment"
             app:popUpTo="@id/afCardLanguageFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_afCardLanguageFragment_to_afBuyDirectlyReviewFragment"
+            app:destination="@id/afBuyDirectlyReviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/afEditionFragment"
@@ -94,4 +97,12 @@
         android:name="com.gthr.gthrcollect.ui.askflow.afbuylistdetails.AfBuyListDetailsFragment"
         android:label="af_buylist_details_fragment"
         tools:layout="@layout/af_buylist_details_fragment" />
+    <fragment
+        android:id="@+id/afBuyDirectlyReviewFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afbuydirectlyreview.AfBuyDirectlyReviewFragment"
+        android:label="AfBuyDirectlyReviewFragment">
+        <action
+            android:id="@+id/action_afBuyDirectlyReviewFragment_to_afPlaceYourAskFragment"
+            app:destination="@id/afPlaceYourAskFragment" />
+    </fragment>
 </navigation>

@@ -79,7 +79,41 @@
                     app:layout_constraintEnd_toEndOf="@id/guideline_middle"
                     app:layout_constraintTop_toTopOf="parent"
                     app:cpc_type="MYTHIC"
-                    app:cpc_card_state="FOR_SALE" />
+                    app:cpc_card_state="OFFER" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_user_profile"
+                    android:layout_width="@dimen/size_user_image_search_collection_cell"
+                    android:layout_height="@dimen/size_user_image_search_collection_cell"
+                    android:layout_marginStart="@dimen/margin_start_search_collection_image"
+                    android:elevation="@dimen/elevation_search_collection_cell"
+                    android:src="@drawable/user"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@id/cpc_product_item"
+                    app:layout_constraintTop_toTopOf="@id/cpc_product_item"
+                    tools:visibility="visible" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_start_search_collection_cell"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:background="@drawable/bg_search_collection_username"
+                    android:elevation="@dimen/elevation_user_name_search_collection_cell"
+                    android:ellipsize="end"
+                    android:paddingVertical="@dimen/padding_vertical_search_collection_cell"
+                    android:paddingStart="@dimen/padding_start_search_collection_cell"
+                    android:text="Mayank"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_user_profile"
+                    app:layout_constraintEnd_toEndOf="@+id/cpc_product_item"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@id/cpc_product_item"
+                    tools:ignore="RtlSymmetry"
+                    tools:visibility="visible" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_back_image"

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.SearchFragmentBinding
+import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.SearchCollectionAdapter
@@ -22,10 +23,7 @@ import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterCategoryView
 import com.gthr.gthrcollect.utils.customviews.CustomFilterSubCategoryView
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
-import com.gthr.gthrcollect.utils.enums.ProductCategoryFilter
-import com.gthr.gthrcollect.utils.enums.ProductSortFilter
-import com.gthr.gthrcollect.utils.enums.ProductType
-import com.gthr.gthrcollect.utils.enums.SearchType
+import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.animateVisibility
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
@@ -78,7 +76,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     private lateinit var mCardSubCategories: List<CustomFilterSubCategoryView>
     private lateinit var mSealedSubCategories: List<CustomFilterSubCategoryView>
 
-    private lateinit var mAdapterSC : SearchCollectionAdapter
+    private lateinit var mAdapterCollections: SearchCollectionAdapter
     private lateinit var mProductAdapter: ProductAdapter
 
     private val args by navArgs<SearchFragmentArgs>()
@@ -107,7 +105,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     }
 
     private fun setUpRecyclerView() {
-        mAdapterSC = SearchCollectionAdapter{
+        mAdapterCollections = SearchCollectionAdapter {
             when {
                 it % 5 == 0 -> startActivity(
                     ProductDetailActivity.getInstance(
@@ -143,6 +141,13 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
         mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL){
             when {
+                mCctForSale.mIsActive -> startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
+                        ProductCategory.CARDS
+                    )
+                )
                 it % 5 == 0 -> startActivity(
                     ProductDetailActivity.getInstance(
                         requireContext(),
@@ -300,7 +305,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     private fun setCollectionSelected() {
         setSelectedCct(mCctCollections)
         mDrawer.closeDrawer(GravityCompat.END)
-        mRvMain.adapter = mAdapterSC
+        mRvMain.adapter = mAdapterCollections
     }
 
 

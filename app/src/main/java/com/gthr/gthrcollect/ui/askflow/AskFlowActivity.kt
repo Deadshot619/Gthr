@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -17,11 +18,13 @@ import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.ActivityAskFlowBinding
 import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentArgs
 import com.gthr.gthrcollect.ui.base.BaseActivity
+import com.gthr.gthrcollect.ui.receiptdetail.purchasedetails.FullProductImage
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.extensions.invisible
 import com.gthr.gthrcollect.utils.extensions.visible
+import de.hdodenhof.circleimageview.CircleImageView
 
 class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>() {
 
@@ -37,6 +40,8 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     private lateinit var mAskFlowType: AskFlowType
     private lateinit var mProductCategory: ProductCategory
 
+    private lateinit var mIvUserProfile: CircleImageView
+    private lateinit var mTvUserName: AppCompatTextView
     private lateinit var mProductItem: CustomProductCell
     private lateinit var mCvBackImage: MaterialCardView
     private lateinit var mIvBackImage: AppCompatImageView
@@ -46,15 +51,18 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         mProductCategory = intent?.getSerializableExtra(KEY_PRODUCT_CATEGORY) as ProductCategory
 
         initViews()
-        setUpNavGraph()
         setSupportActionBar(mToolbar)
+        setUpNavGraph()
         setUpNavigationAndActionBar()
+        setUpClickListeners()
         setUpObservers()
     }
 
     private fun initViews(){
         mViewBinding.run {
             mToolbar = toolbar
+            mIvUserProfile = ivUserProfile
+            mTvUserName = tvUserName
             mProductItem = cpcProductItem
             mCvBackImage = cvBackImage
             mIvBackImage = ivBackImage
@@ -68,6 +76,12 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                 AskFlowType.BUY -> mProductItem.setState(CustomProductCell.State.WANT)
                 AskFlowType.SELL -> mViewModel.setSell(true)
                 AskFlowType.COLLECT -> {
+                }
+                AskFlowType.BUY_DIRECTLY_FROM_SOMEONE -> {
+                    mProductItem.setState(CustomProductCell.State.FOR_SALE)
+                    mProductItem.setLabelVisibility(isVisible = false)
+                    mIvUserProfile.visible()
+                    mTvUserName.visible()
                 }
             }
         }
@@ -86,6 +100,16 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             } else
                 mCvBackImage.invisible()
         })
+    }
+
+    private fun setUpClickListeners() {
+        mProductItem.setOnClickListener {
+            startActivity(FullProductImage.getInstance(this, null))
+        }
+
+        mCvBackImage.setOnClickListener {
+            startActivity(FullProductImage.getInstance(this, null))
+        }
     }
 
     private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination
@@ -126,7 +150,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         if (mNavController.currentDestination?.id == R.id.afBuyListDetailsFragment)
             finish()
         else
-            super.onBackPressed()
+            finish()
     }
 
     private fun setToolbarTitleByType(askFlowType: AskFlowType) {
@@ -134,6 +158,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             AskFlowType.BUY -> setToolbarTitle(getString(R.string.text_add_to_buylist))
             AskFlowType.COLLECT -> setToolbarTitle(getString(R.string.text_add_to_collection))
             AskFlowType.SELL -> setToolbarTitle(getString(R.string.text_place_an_ask))
+            AskFlowType.BUY_DIRECTLY_FROM_SOMEONE -> setToolbarTitle(getString(R.string.text_purchase_detail))
         }
     }
 

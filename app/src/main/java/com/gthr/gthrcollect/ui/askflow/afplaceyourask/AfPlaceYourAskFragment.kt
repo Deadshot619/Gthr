@@ -2,12 +2,12 @@ package com.gthr.gthrcollect.ui.askflow.afplaceyourask
 
 import android.os.Build
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfPlaceYourAskFragmentBinding
@@ -16,7 +16,6 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
-import com.gthr.gthrcollect.ui.settings.addnewaddress.AddNewAddressFragmentArgs
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
@@ -35,26 +34,35 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
     override fun getViewBinding() = AfPlaceYourAskFragmentBinding.inflate(layoutInflater)
 
 
-    private lateinit var mBtnNext : CustomSecondaryButton
+    private lateinit var mBtnNext: CustomSecondaryButton
     private var isTnCCheked = false
 
-    private lateinit var mEtAsk: AppCompatTextView
     private lateinit var mIvTermsAndConditions: AppCompatImageView
     private lateinit var mTvTermsAndConditions: AppCompatTextView
     private lateinit var mIvBack: ImageView
 
-    private lateinit var mGroup : Group
-    private lateinit var mGroupBuy : Group
+    private lateinit var mGroup: Group
+    private lateinit var mGroupBuy: Group
+
+    private lateinit var mTvRate: AppCompatTextView
+    private lateinit var mTvRateValue: AppCompatTextView
+    private lateinit var mTvRow1: TextView
+    private lateinit var mTvRow1Value: TextView
+    private lateinit var mTvRow2: TextView
+    private lateinit var mTvRow2Value: TextView
+    private lateinit var mTvRow3: TextView
+    private lateinit var mTvRow3Value: TextView
 
     override fun onBinding() {
-        initValue()
+        setHasOptionsMenu(false)
+        initViews()
         setUpOnClickListeners()
         setUpObserve()
     }
 
     private fun setUpObserve() {
-        mViewModel.askPrice.observe(this){
-            mEtAsk.text = "$ ${it}"
+        mViewModel.askPrice.observe(viewLifecycleOwner) {
+            mTvRateValue.text = "$ ${it}"
         }
     }
 
@@ -85,7 +93,18 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 AskFlowType.BUY -> {
                     findNavController().navigate(AfPlaceYourAskFragmentDirections.actionAfPlaceYourAskFragmentToAfBuyListDetailsFragment())
                 }
-                else ->{
+                AskFlowType.BUY_DIRECTLY_FROM_SOMEONE -> {
+                    startActivity(
+                        ReceiptDetailActivity.getInstance(
+                            requireContext(),
+                            ReceiptType.PURCHASED,
+                            ProductCategory.CARDS,
+                            CustomDeliveryButton.Type.ORDERED
+                        )
+                    )
+                    activity?.finish()
+                }
+                else -> {
                     startActivity(
                         ReceiptDetailActivity.getInstance(
                             requireContext(),
@@ -97,8 +116,6 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     activity?.finish()
                 }
             }
-
-
         }
 
         mTvTermsAndConditions.setOnClickListener {
@@ -119,15 +136,23 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         }
     }
 
-
-    private fun initValue() {
-        mIvBack = mViewBinding.ivBack
-        mBtnNext = mViewBinding.btnNext
-        mIvTermsAndConditions = mViewBinding.ivTermsAndConditions
-        mTvTermsAndConditions = mViewBinding.tvTermsAndConditions
-        mGroup = mViewBinding.group
-        mGroupBuy = mViewBinding.groupBuy
-        mEtAsk = mViewBinding.etAsk
+    private fun initViews() {
+        mViewBinding.run {
+            mIvBack = ivBack
+            mBtnNext = btnNext
+            mIvTermsAndConditions = ivTermsAndConditions
+            mTvTermsAndConditions = tvTermsAndConditions
+            mGroup = group
+            mGroupBuy = groupBuy
+            mTvRate = tvRate
+            mTvRateValue = tvRateValue
+            mTvRow1 = tvSellingFee
+            mTvRow1Value = tvSellingFeeValue
+            mTvRow2 = tvPaymentProcessing
+            mTvRow2Value = tvPaymentProcessingValue
+            mTvRow3 = tvShippingReimbursement
+            mTvRow3Value = tvShippingReimbursementValue
+        }
 
         when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
             AskFlowType.BUY -> {
@@ -138,12 +163,25 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 mGroup.gone()
                 mGroupBuy.visible()
             }
-            else ->{
+            AskFlowType.BUY_DIRECTLY_FROM_SOMEONE -> {
+                mGroup.visible()
+                mGroupBuy.gone()
+                mTvRate.text = getString(R.string.text_price)
+                mTvRateValue.text = "$55.00"
+                mTvRow1.text = getString(R.string.text_purchase_shipping)
+                mTvRow1Value.text = "+3.99"
+                mTvRow2.text = getString(R.string.text_sales_tax)
+                mTvRow2Value.text = "+0.55"
+                mTvRow3.gone()
+                mTvRow3Value.gone()
+                mBtnNext.text = getString(R.string.text_accept)
+                mViewBinding.executePendingBindings()
+            }
+            else -> {
                 mBtnNext.text = getString(R.string.text_place_your_ask)
                 mGroup.visible()
                 mGroupBuy.gone()
             }
         }
     }
-
 }

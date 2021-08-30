@@ -137,7 +137,11 @@ class PurchaseDetailsFragment :
 
         mBtnConfirmReceived.setOnClickListener {
             when (args.receiptType) {
-                ReceiptType.PURCHASED -> mConfirmReceivedDialog.show()
+                ReceiptType.PURCHASED ->
+                    if (mButtonType == CustomDeliveryButton.Type.ORDERED)
+                        activity?.finish()
+                    else
+                        mConfirmReceivedDialog.show()
                 ReceiptType.SOLD ->
                     if (mButtonType == CustomDeliveryButton.Type.ASK_PLACED)
                         activity?.finish()
@@ -147,7 +151,6 @@ class PurchaseDetailsFragment :
         }
         mProductImage.setOnClickListener{
             startActivity(FullProductImage.getInstance(requireContext(),"vgfgg"))
-
         }
     }
 
@@ -159,13 +162,27 @@ class PurchaseDetailsFragment :
                 mTvSummaryR1C2.text = "$22.00"
                 mTvSummaryR2C1.text = getString(R.string.text_purchase_shipping)
                 mTvSummaryR2C2.text = "+ \$2.95"
-                mTvSummaryR3C1.text = String.format(getString(R.string.text_purchase_sales_tax), "7.5")
+                mTvSummaryR3C1.text =
+                    String.format(getString(R.string.text_purchase_sales_tax), "7.5")
                 mTvSummaryR3C2.text = "+ \$0.86"
                 mTvSummaryR4C1.gone()
                 mTvSummaryR4C2.gone()
 
-                mCdbOrderStatus.setType(CustomDeliveryButton.Type.DELIVERED)
-                mBtnConfirmReceived.text = getString(R.string.text_btn_purchase_detail_confirm_received)
+                if (mButtonType == CustomDeliveryButton.Type.ORDERED) {
+                    mCdbOrderStatus.setType(CustomDeliveryButton.Type.ORDERED)
+                    mBtnReportIssue.gone()
+                    mBtnConfirmReceived.text = getString(R.string.finish)
+                    mBtnConfirmReceived.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.ic_next_arrow,
+                        0
+                    )
+                } else {
+                    mCdbOrderStatus.setType(CustomDeliveryButton.Type.DELIVERED)
+                    mBtnConfirmReceived.text =
+                        getString(R.string.text_btn_purchase_detail_confirm_received)
+                }
             }
             ReceiptType.SOLD -> {
                 mTvSummaryTitle.text = getString(R.string.text_sold_summary)

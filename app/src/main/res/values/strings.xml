@@ -261,6 +261,7 @@
     <string name="text_delivered">Delivered</string>
     <string name="text_transit">Transit</string>
     <string name="text_ask_placed">Ask Placed</string>
+    <string name="text_ordered">Ordered</string>
 
     <!--Search -->
     <string name="text_search">Search</string>
@@ -461,12 +462,16 @@
     <string name="text_payout_ask_type">Payout</string>
     <string name="text_place_your_ask">Place your Ask</string>
 
-
+    <string name="menu_info">Info</string>
     <string name="back_label">Back</string>
     <string name="front_lalel">Front</string>
     <string name="text_total_excludes_tax_shipping_buy_flow"><![CDATA[Total (Excludes Tax & Shipping]]></string>
     <string name="text_add_to_buylist_ask_flow">Add To Buylist</string>
     <string name="text_review_your_ask_flow">Review your Ask</string>
+    <string name="text_review">Review</string>
+    <string name="text_sales_tax">Sales Tax</string>
+    <string name="text_price">Price</string>
+    <string name="text_accept">Accept</string>
     <string name="text_summary_buy_flow">Summary</string>
     <string name="text_added_buy_flow">Added</string>
     <string name="text_finish_buy_flow">Finish</string>
