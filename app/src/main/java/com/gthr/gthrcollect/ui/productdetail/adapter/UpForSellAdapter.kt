@@ -1,4 +1,4 @@
-package com.gthr.gthrcollect.ui.productdetail.upforsell
+package com.gthr.gthrcollect.ui.productdetail.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

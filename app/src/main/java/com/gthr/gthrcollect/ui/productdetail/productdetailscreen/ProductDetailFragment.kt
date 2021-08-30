@@ -2,6 +2,7 @@ package com.gthr.gthrcollect.ui.productdetail.productdetailscreen
 
 
 import android.widget.FrameLayout
+import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -9,10 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.*
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
+import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModelFactory
 import com.gthr.gthrcollect.ui.productdetail.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
 import com.gthr.gthrcollect.utils.customviews.CustomProductButton
@@ -28,7 +31,11 @@ import com.gthr.gthrcollect.utils.getProductCategory
 
 class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetailFragmentBinding>() {
 
-    override val mViewModel: ProductDetailsViewModel by viewModels()
+    override val mViewModel: ProductDetailsViewModel by viewModels{
+        ProductDetailsViewModelFactory(
+            ProductDetailsRepository()
+        )
+    }
     override fun getViewBinding() = ProductDetailFragmentBinding.inflate(layoutInflater)
 
     private lateinit var rvRecentSell : RecyclerView

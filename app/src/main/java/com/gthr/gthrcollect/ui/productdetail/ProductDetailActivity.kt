@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.ActivityProductDetailBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
@@ -22,7 +23,11 @@ import com.gthr.gthrcollect.utils.extensions.showToast
 class ProductDetailActivity :
     BaseActivity<ProductDetailsViewModel, ActivityProductDetailBinding>() {
     override fun getViewBinding() = ActivityProductDetailBinding.inflate(layoutInflater)
-    override val mViewModel: ProductDetailsViewModel by viewModels()
+    override val mViewModel: ProductDetailsViewModel by viewModels{
+        ProductDetailsViewModelFactory(
+            ProductDetailsRepository()
+        )
+    }
 
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration

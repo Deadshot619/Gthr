@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.SearchFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.ProductAdapter
@@ -32,7 +33,11 @@ import com.gthr.gthrcollect.utils.extensions.visible
 class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
     override fun getViewBinding() = SearchFragmentBinding.inflate(layoutInflater)
-    override val mViewModel: SearchViewModel by viewModels()
+    override val mViewModel: SearchViewModel by viewModels{
+        SearchViewModelFactory(
+            SearchRepository()
+        )
+    }
 
     private lateinit var mDrawer: DrawerLayout
     private lateinit var mToggle: ActionBarDrawerToggle

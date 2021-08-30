@@ -5,19 +5,26 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.LayoutProductDetailCardTopBinding
 import com.gthr.gthrcollect.databinding.LayoutProductDetailToyTopBinding
 import com.gthr.gthrcollect.databinding.RecentSellFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
+import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModelFactory
 import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
 
-class RecentSellFragment : BaseFragment<RecentSellViewModel, RecentSellFragmentBinding>() {
+class RecentSellFragment : BaseFragment<ProductDetailsViewModel, RecentSellFragmentBinding>() {
 
 
-    override val mViewModel: RecentSellViewModel by viewModels()
+    override val mViewModel: ProductDetailsViewModel by viewModels{
+        ProductDetailsViewModelFactory(
+            ProductDetailsRepository()
+        )
+    }
     override fun getViewBinding() = RecentSellFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mFlTop : FrameLayout
