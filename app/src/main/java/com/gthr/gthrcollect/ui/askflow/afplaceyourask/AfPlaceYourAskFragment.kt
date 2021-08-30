@@ -7,12 +7,14 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AfPlaceYourAskFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
+import com.gthr.gthrcollect.ui.settings.addnewaddress.AddNewAddressFragmentArgs
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
@@ -32,6 +34,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
     private lateinit var mBtnNext : CustomSecondaryButton
     private var isTnCCheked = false
 
+    private lateinit var mEtAsk: AppCompatTextView
     private lateinit var mIvTermsAndConditions: AppCompatImageView
     private lateinit var mTvTermsAndConditions: AppCompatTextView
     private lateinit var mIvBack: ImageView
@@ -42,6 +45,13 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
     override fun onBinding() {
         initValue()
         setUpOnClickListeners()
+        setUpObserve()
+    }
+
+    private fun setUpObserve() {
+        mViewModel.askPrice.observe(this){
+            mEtAsk.text = "$ ${it}"
+        }
     }
 
     private fun setUpOnClickListeners() {
@@ -113,6 +123,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         mTvTermsAndConditions = mViewBinding.tvTermsAndConditions
         mGroup = mViewBinding.group
         mGroupBuy = mViewBinding.groupBuy
+        mEtAsk = mViewBinding.etAsk
 
         when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
             AskFlowType.BUY -> {

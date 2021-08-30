@@ -73,6 +73,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     private lateinit var mCards: CustomCollectionTypeView
     private lateinit var mToys: CustomCollectionTypeView
     private lateinit var mBuyList: CustomCollectionTypeView
+    private lateinit var mCcbCollection: CustomCollectionButton
 
     private var imageURl: String = ""
 
@@ -111,6 +112,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             mAbout = profileLayout.tvUserBio
             mProfilePic = profileLayout.ivProfilePic
             mDisplayName = profileLayout.tvUserName
+            mCcbCollection = ccbCollection
             initProgressBar(layoutProgress)
             setViewsForOtherUser()
             setUpRecyclerView()

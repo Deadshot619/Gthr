@@ -1,7 +1,9 @@
 package com.gthr.gthrcollect.ui.askflow.afreviewyourask
 
 
+import android.os.Build
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -12,23 +14,39 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.AskFlowType
+import com.gthr.gthrcollect.utils.extensions.afterTextChanged
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
 
-class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel,AfReviewYourAskFragmentBinding>() {
+class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFragmentBinding>() {
 
     override val mViewModel: AskFlowViewModel by activityViewModels()
     override fun getViewBinding() = AfReviewYourAskFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mBtnNext: CustomSecondaryButton
     private lateinit var mIvBack: ImageView
+    private lateinit var mEtAsk: AppCompatEditText
 
-    private lateinit var mGroup : Group
-    private lateinit var mGroupBuy : Group
+    private lateinit var mGroup: Group
+    private lateinit var mGroupBuy: Group
 
     override fun onBinding() {
         initViews()
         setUpClickListeners()
+        setUpTextChangeListeners()
+    }
+
+    private fun setUpTextChangeListeners() {
+        mEtAsk.afterTextChanged {
+            mBtnNext.setState(
+                if (mEtAsk.text.toString().toFloatOrNull() == null)
+                    CustomSecondaryButton.State.DISABLE
+                else
+                    CustomSecondaryButton.State.BLUE_GRADIENT
+
+            )
+        }
+
     }
 
     private fun initViews() {
@@ -37,6 +55,7 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel,AfReviewYourAskFra
             mIvBack = ivBack
             mGroup = group
             mGroupBuy = groupBuy
+            mEtAsk = etAsk
         }
 
         when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
@@ -58,9 +77,13 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel,AfReviewYourAskFra
     }
 
 
-    private fun setUpClickListeners(){
+    private fun setUpClickListeners() {
         mViewBinding.run {
+
             mBtnNext.setOnClickListener {
+                mEtAsk.text.toString().toFloatOrNull()?.let {
+                    mViewModel.setAskPrice(it)
+                }
                 findNavController().navigate(AfReviewYourAskFragmentDirections.actionAfReviewYourAskFragmentToAfPlaceYourAskFragment())
             }
         }

@@ -11,6 +11,10 @@ class AskFlowViewModel: BaseViewModel() {
     val isSell: LiveData<Boolean>
         get() = _isSell
 
+    private val _askPrice = MutableLiveData<Float>()
+    val askPrice: LiveData<Float>
+        get() = _askPrice
+
     private val _frontImageBitmap = MutableLiveData<Bitmap>()
     val frontImageBitmap: LiveData<Bitmap>
         get() = _frontImageBitmap
@@ -29,5 +33,9 @@ class AskFlowViewModel: BaseViewModel() {
 
     fun setBackImage(bitmap: Bitmap) {
         _backImageBitmap.value = bitmap
+    }
+
+    fun setAskPrice(price: Float) {
+        _askPrice.value = price
     }
 }

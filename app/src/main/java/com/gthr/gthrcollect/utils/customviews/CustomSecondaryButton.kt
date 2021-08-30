@@ -12,7 +12,7 @@ import com.gthr.gthrcollect.utils.extensions.getImageDrawable
 import com.gthr.gthrcollect.utils.extensions.getResolvedColor
 
 
-@RequiresApi(Build.VERSION_CODES.M)
+
 class CustomSecondaryButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -36,49 +36,56 @@ class CustomSecondaryButton @JvmOverloads constructor(
         attrs.recycle()
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
+
     fun setState(state: State) {
         this.background = when (state) {
             State.DISABLE -> {
                 this.isEnabled = false
                 this.setTextColor(getResolvedColor(R.color.white))
-                this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.white))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.white))
                 getImageDrawable(R.drawable.bg_btn_secondary_gray)
             }
             State.BLUE -> {
                 this.isEnabled = true
                 this.setTextColor(getResolvedColor(R.color.white))
-                this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.white))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.white))
                 getImageDrawable(R.drawable.bg_btn_secondary_blue)
             }
             State.YELLOW -> {
                 this.isEnabled = true
                 this.setTextColor(getResolvedColor(R.color.white))
-                this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.white))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.white))
                 getImageDrawable(R.drawable.bg_btn_secondary_yellow)
             }
             State.GREEN -> {
                 this.isEnabled = true
-                this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.white))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.white))
                 this.setTextColor(getResolvedColor(R.color.white))
                 getImageDrawable(R.drawable.bg_btn_secondary_green)
             }
             State.WHITE_WITH_BLUE_BORDER -> {
                 this.isEnabled = true
                 this.setTextColor(getResolvedColor(R.color.light_blue))
-                this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.light_blue))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.light_blue))
                 getImageDrawable(R.drawable.bg_btn_secondary_white_with_blue_border)
             }
             State.BLACK_WITH_BLUE_BORDER -> {
                 this.isEnabled = true
                 this.setTextColor(getResolvedColor(R.color.light_blue))
-                this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.light_blue))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.light_blue))
                 getImageDrawable(R.drawable.bg_btn_secondary_black_with_blue_border)
             }
             State.BLUE_GRADIENT -> {
                 this.isEnabled = true
                 this.setTextColor(getResolvedColor(R.color.white))
-                this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.white))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    this.compoundDrawableTintList = ColorStateList.valueOf(getResolvedColor(R.color.white))
                 getImageDrawable(R.drawable.bg_btn_secondary_blue_gradint)
             }
         }
