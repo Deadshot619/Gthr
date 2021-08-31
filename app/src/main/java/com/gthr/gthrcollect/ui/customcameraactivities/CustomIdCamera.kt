@@ -91,7 +91,6 @@ class CustomIdCamera : AppCompatActivity() {
 
         if (mCameraViews!!.equals(CameraViews.ID_VERIFICATION.toString())) {
             mPreviewTextView?.text = mLabelMsg
-            //    if (mIsFrontView) getString(R.string.preview_note_front) else getString(R.string.preview_note_back)
             mIdLayout.visible()
         }
 
@@ -531,7 +530,7 @@ class CustomIdCamera : AppCompatActivity() {
             os.close()
 
             startActivityForResult(
-                ImagePreview.getInstance(this, mFile.path.toString(), mCameraViews!!, mLabelMsg),
+                IdImagePreview.getInstance(this, mFile.path.toString(), mCameraViews!!,mIsFrontView, mLabelMsg),
                 REQUEST_CODE_PREVIEW
             )
         } catch (e: IOException) {

@@ -1,12 +1,12 @@
 package com.gthr.gthrcollect.ui.askflow.afaddpic
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.activityViewModels
@@ -22,7 +22,6 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.customcameraactivities.CustomCardCamera
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.AskFlowType
-import com.gthr.gthrcollect.utils.enums.CameraViews
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.showPermissionSnackBar
 import com.gthr.gthrcollect.utils.extensions.showToast
@@ -37,11 +36,11 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
 
     private lateinit var mFrontIdCapture: MaterialCardView
     private lateinit var mBackIdCapture: MaterialCardView
-    private var imageCheck: Int = 0
     private lateinit var mIvFrontImage: AppCompatImageView
     private lateinit var mIvBackImage: AppCompatImageView
     lateinit var mFront_repls: LinearLayout
     lateinit var mBack_repls: LinearLayout
+
     lateinit var mSkipBtn: CustomSecondaryButton
 
 
@@ -52,6 +51,9 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
 
     private lateinit var mIvBack: ImageView
     private lateinit var mBtnNext: CustomSecondaryButton
+
+    private var mFrontImageUrl: String = ""
+    private var mBackImageUrl: String = ""
 
     override fun onBinding() {
 
@@ -88,29 +90,67 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
     private fun addListeners() {
         mFrontIdCapture.setOnClickListener {
             checkMultiplePermissions {
-                startActivityForResult(
-                    CustomCardCamera.getInstance(
-                        requireContext(),
-                        CameraViews.CARDS,
-                        isFront = true,
-                        getString(R.string.front_lalel)
-                    ),
-                    REQUEST_CODE_FRONT_ID
-                )
+
+                // call when front btn is clicked and front image is empty
+                if (mFrontImageUrl.isNullOrEmpty()) {
+                    startActivityForResult(
+                        CustomCardCamera.getInstance(
+                            requireContext(),
+                            isFront = true,
+                            mFrontImageUrl,
+                            mBackImageUrl,
+                            getString(R.string.front_lalel)
+                        ),
+                        REQUEST_CODE_FRONT_ID
+                    )
+                    // call when front btn is clicked and front image is available
+                } else {
+                    startActivityForResult(
+                        CustomCardCamera.getInstance(
+                            requireContext(),
+                            isFront = true,
+                            mFrontImageUrl,
+                            mBackImageUrl,
+                            getString(R.string.front_lalel)
+                        ),
+                        REQUEST_CODE_PREVIEW
+                    )
+
+                }
+
             }
         }
 
         mBackIdCapture.setOnClickListener {
             checkMultiplePermissions {
-                startActivityForResult(
-                    CustomCardCamera.getInstance(
-                        requireContext(),
-                        CameraViews.CARDS,
-                        isFront = false,
-                    getString(R.string.back_label)
-                    ),
-                    REQUEST_CODE_BACK_ID
-                )
+
+                // call when back btn is clicked and back image is empty
+                if (mBackImageUrl.isNullOrEmpty()) {
+                    startActivityForResult(
+                        CustomCardCamera.getInstance(
+                            requireContext(),
+                            isFront = false,
+                            mFrontImageUrl,
+                            mBackImageUrl,
+                            getString(R.string.back_label)
+                        ),
+                        REQUEST_CODE_BACK_ID
+                    )
+                }
+                // call when back btn is clicked and back image is available
+                else {
+                    startActivityForResult(
+                        CustomCardCamera.getInstance(
+                            requireContext(),
+                            isFront = false,
+                            mFrontImageUrl,
+                            mBackImageUrl,
+                            getString(R.string.back_label)
+                        ),
+                        REQUEST_CODE_PREVIEW
+                    )
+                }
+
             }
         }
     }
@@ -120,32 +160,115 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
         super.onActivityResult(requestCode, resultCode, data)
 
         if (data != null) {
-            imageCheck += 1
-            val bitmap = BitmapFactory.decodeFile(data.getStringExtra(CustomCardCamera.INTENT_KEY_URL))
-            if (requestCode == REQUEST_CODE_FRONT_ID) {
-                mViewModel.setFrontImage(bitmap)
 
-               /* mfrontLable.text = getString(R.string.replae_front)
-                mFront_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)
+            val bitmap =
+                BitmapFactory.decodeFile(data.getStringExtra(CustomCardCamera.INTENT_KEY_URL))
+            when (requestCode) {
 
+                // result when captured FRONT image FIRST
+                REQUEST_CODE_FRONT_ID -> {
 
+                    if (resultCode == Activity.RESULT_OK) {
+                        mViewModel.setFrontImage(bitmap)
+                        mFrontImageUrl = data.getStringExtra(CustomCardCamera.INTENT_KEY_URL) ?: ""
 
-                if (imageCheck >= 2) {
-                    mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
-                }*/
+                        // when front image is captured and capturing back image
+                        if (mBackImageUrl.isNullOrEmpty()) {
+                            startActivityForResult(
+                                CustomCardCamera.getInstance(
+                                    requireContext(),
+                                    isFront = false,
+                                    mFrontImageUrl,
+                                    mBackImageUrl,
+                                    getString(R.string.back_label)
+                                ),
+                                REQUEST_CODE_BACK_ID
+                            )
+                        }
+                    }
 
-            } else if (requestCode == REQUEST_CODE_BACK_ID) {
-                mViewModel.setBackImage(bitmap)
-               /* mBackLable.text = getString(R.string.replace_back)
-
-                if (imageCheck >= 2) {
-                    mCompleteAccBtn.setState(CustomSecondaryButton.State.YELLOW)
                 }
-                mBack_repls.background = getBackgroundDrawable(R.drawable.rectangle_5)*/
+                //  result when captured BACK image FIRST
+                REQUEST_CODE_BACK_ID -> {
+                    if (resultCode == Activity.RESULT_OK) {
+                        mViewModel.setBackImage(bitmap)
+                        mBackImageUrl = data.getStringExtra(CustomCardCamera.INTENT_KEY_URL) ?: ""
+
+                        // when back image is captured and capturing first image
+                        if (mFrontImageUrl.isNullOrEmpty()) {
+
+                            startActivityForResult(
+                                CustomCardCamera.getInstance(
+                                    requireContext(),
+                                    isFront = true,
+                                    mFrontImageUrl,
+                                    mBackImageUrl,
+                                    getString(R.string.front_lalel)
+                                ),
+                                REQUEST_CODE_FRONT_ID
+                            )
+
+                        }
+                    }
+                }
+
+                // On either front or back image available and press either front or back btn
+                REQUEST_CODE_PREVIEW -> {
+                    if (resultCode == Activity.RESULT_OK) {
+
+                        // Call for previewing the images
+                        if (mFrontImageUrl.isNullOrEmpty() || mBackImageUrl.isNullOrEmpty()) {
+
+                            // If back image available then call for front
+                            if (mFrontImageUrl.isNullOrEmpty()) {
+                                startActivityForResult(
+                                    CustomCardCamera.getInstance(
+                                        requireContext(),
+                                        isFront = true,
+                                        mFrontImageUrl,
+                                        mBackImageUrl,
+                                        getString(R.string.front_lalel)
+                                    ),
+                                    REQUEST_CODE_FRONT_ID
+                                )
+
+                                // If front image available then call for back
+                            } else {
+                                startActivityForResult(
+                                    CustomCardCamera.getInstance(
+                                        requireContext(),
+                                        isFront = false,
+                                        mFrontImageUrl,
+                                        mBackImageUrl,
+                                        getString(R.string.back_label)
+                                    ),
+                                    REQUEST_CODE_BACK_ID
+                                )
+
+                            }
+                        }
+
+                        // result when FRONT or BACK image is re-capturing
+                        val mIsFrontView = data.getBooleanExtra(IS_FRONT, true)  // check which image is capturing
+
+                        // if FRONT image is re-captured
+                        if (mIsFrontView) {
+                            mViewModel.setFrontImage(bitmap)
+                            mFrontImageUrl =
+                                data.getStringExtra(CustomCardCamera.INTENT_KEY_URL) ?: ""
+                        } else {
+                            // if BACK image is re-captured
+
+                            mViewModel.setBackImage(bitmap)
+                            mBackImageUrl =
+                                data.getStringExtra(CustomCardCamera.INTENT_KEY_URL) ?: ""
+
+                        }
+                    }
+                }
             }
         }
     }
-
 
     private fun checkMultiplePermissions(onPermissionGranted: () -> Unit) {
         Dexter.withContext(requireContext())
@@ -172,9 +295,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
             .check()
     }
 
-
-
-    private fun setUpClickListeners(){
+    private fun setUpClickListeners() {
         mViewBinding.run {
             mBtnNext.setOnClickListener {
                 if (mViewModel.isSell.value != true)
@@ -223,6 +344,8 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
     companion object {
         private const val REQUEST_CODE_FRONT_ID = 1
         private const val REQUEST_CODE_BACK_ID = 2
+        private const val REQUEST_CODE_PREVIEW = 3
+        private const val IS_FRONT = "is_front"
 
         private val permissions = listOf(
             Manifest.permission.CAMERA,
