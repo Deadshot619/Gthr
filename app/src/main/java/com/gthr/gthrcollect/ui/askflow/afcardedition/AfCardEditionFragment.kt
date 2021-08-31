@@ -6,13 +6,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfCardEditionFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
+import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.askflow.ConfigurationAdapter
 import com.gthr.gthrcollect.ui.base.BaseFragment
 
 class AfCardEditionFragment : BaseFragment<AskFlowViewModel, AfCardEditionFragmentBinding>() {
-    override val mViewModel: AskFlowViewModel by activityViewModels()
+    override val mViewModel: AskFlowViewModel by activityViewModels{
+        AskFlowViewModelFactory(AskFlowRepository())
+    }
 
     override fun getViewBinding() = AfCardEditionFragmentBinding.inflate(layoutInflater)
 

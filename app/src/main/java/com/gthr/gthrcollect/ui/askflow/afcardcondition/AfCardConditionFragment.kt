@@ -6,9 +6,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfCardConditionFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
+import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.askflow.ConfigurationAdapter
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
@@ -19,7 +21,9 @@ import kotlinx.coroutines.launch
 
 class AfCardConditionFragment : BaseFragment<AskFlowViewModel, AfCardConditionFragmentBinding>() {
 
-    override val mViewModel: AskFlowViewModel by activityViewModels()
+    override val mViewModel: AskFlowViewModel by activityViewModels{
+        AskFlowViewModelFactory(AskFlowRepository())
+    }
     override fun getViewBinding() = AfCardConditionFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mIvBack: ImageView

@@ -6,15 +6,18 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfAddPicFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
+import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.customcameraactivities.CustomCardCamera
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
@@ -41,8 +44,11 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
     lateinit var mBack_repls: LinearLayout
     lateinit var mSkipBtn: CustomSecondaryButton
 
-    override val mViewModel: AskFlowViewModel by activityViewModels()
+
     override fun getViewBinding() = AfAddPicFragmentBinding.inflate(layoutInflater)
+    override val mViewModel: AskFlowViewModel by activityViewModels{
+        AskFlowViewModelFactory(AskFlowRepository())
+    }
 
     private lateinit var mIvBack: ImageView
     private lateinit var mBtnNext: CustomSecondaryButton

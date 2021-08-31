@@ -3,6 +3,7 @@ package com.gthr.gthrcollect.ui.productdetail.productdetailscreen
 
 import android.widget.FrameLayout
 import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -31,7 +32,7 @@ import com.gthr.gthrcollect.utils.getProductCategory
 
 class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetailFragmentBinding>() {
 
-    override val mViewModel: ProductDetailsViewModel by viewModels{
+    override val mViewModel: ProductDetailsViewModel by activityViewModels{
         ProductDetailsViewModelFactory(
             ProductDetailsRepository()
         )

@@ -3,9 +3,10 @@ package com.gthr.gthrcollect.ui.askflow
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.ui.base.BaseViewModel
 
-class AskFlowViewModel: BaseViewModel() {
+class AskFlowViewModel(private val repository : AskFlowRepository): BaseViewModel() {
 
     private val _isSell = MutableLiveData<Boolean>()
     val isSell: LiveData<Boolean>

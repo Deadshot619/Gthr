@@ -4,15 +4,19 @@ import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfWantToSellFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
+import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.extensions.gone
 
 class AfWantToSellFragment : BaseFragment<AskFlowViewModel, AfWantToSellFragmentBinding>() {
 
-    override val mViewModel: AskFlowViewModel by activityViewModels()
+    override val mViewModel: AskFlowViewModel by activityViewModels{
+        AskFlowViewModelFactory(AskFlowRepository())
+    }
     override fun getViewBinding() =  AfWantToSellFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mIvBack: ImageView

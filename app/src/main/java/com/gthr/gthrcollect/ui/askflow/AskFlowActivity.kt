@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.ActivityAskFlowBinding
 import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentArgs
 import com.gthr.gthrcollect.ui.base.BaseActivity
@@ -24,7 +25,9 @@ import com.gthr.gthrcollect.utils.extensions.visible
 
 class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>() {
 
-    override val mViewModel: AskFlowViewModel by viewModels()
+    override val mViewModel: AskFlowViewModel by viewModels{
+        AskFlowViewModelFactory(AskFlowRepository())
+    }
     override fun getViewBinding() = ActivityAskFlowBinding.inflate(layoutInflater)
 
     private lateinit var mNavController: NavController

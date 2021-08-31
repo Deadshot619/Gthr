@@ -8,9 +8,11 @@ import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfReviewYourAskFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
+import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.AskFlowType
@@ -20,7 +22,9 @@ import com.gthr.gthrcollect.utils.extensions.visible
 
 class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFragmentBinding>() {
 
-    override val mViewModel: AskFlowViewModel by activityViewModels()
+    override val mViewModel: AskFlowViewModel by activityViewModels{
+        AskFlowViewModelFactory(AskFlowRepository())
+    }
     override fun getViewBinding() = AfReviewYourAskFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mBtnNext: CustomSecondaryButton

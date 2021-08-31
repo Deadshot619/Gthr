@@ -1,6 +1,7 @@
 package com.gthr.gthrcollect.ui.productdetail.upforsell
 
 import android.widget.FrameLayout
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,7 +21,7 @@ import com.gthr.gthrcollect.utils.extensions.visible
 
 class UpForSellFragment : BaseFragment<ProductDetailsViewModel,UpForSellFragmentBinding>() {
 
-    override val mViewModel: ProductDetailsViewModel by viewModels{
+    override val mViewModel: ProductDetailsViewModel by activityViewModels{
         ProductDetailsViewModelFactory(
             ProductDetailsRepository()
         )

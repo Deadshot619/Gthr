@@ -9,9 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfPlaceYourAskFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
+import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
 import com.gthr.gthrcollect.ui.settings.addnewaddress.AddNewAddressFragmentArgs
@@ -27,7 +29,9 @@ import com.gthr.gthrcollect.utils.extensions.visible
 
 class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFragmentBinding>() {
 
-    override val mViewModel: AskFlowViewModel by activityViewModels()
+    override val mViewModel: AskFlowViewModel by activityViewModels{
+        AskFlowViewModelFactory(AskFlowRepository())
+    }
     override fun getViewBinding() = AfPlaceYourAskFragmentBinding.inflate(layoutInflater)
 
 

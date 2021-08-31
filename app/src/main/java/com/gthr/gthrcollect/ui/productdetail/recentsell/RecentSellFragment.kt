@@ -1,6 +1,7 @@
 package com.gthr.gthrcollect.ui.productdetail.recentsell
 
 import android.widget.FrameLayout
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +21,7 @@ import com.gthr.gthrcollect.utils.extensions.visible
 class RecentSellFragment : BaseFragment<ProductDetailsViewModel, RecentSellFragmentBinding>() {
 
 
-    override val mViewModel: ProductDetailsViewModel by viewModels{
+    override val mViewModel: ProductDetailsViewModel by activityViewModels{
         ProductDetailsViewModelFactory(
             ProductDetailsRepository()
         )
