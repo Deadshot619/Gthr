@@ -1,9 +1,5 @@
 package com.gthr.gthrcollect.model.domain
 
-
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class MTGDomainModel(
     val artist: String,
     val artistIds: String,
@@ -73,5 +69,6 @@ data class MTGDomainModel(
     val typeLine: String,
     val uri: String,
     val variation: String,
-    val watermark: String
+    val watermark: String,
+    val refKey: String
 )

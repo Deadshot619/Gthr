@@ -1,9 +1,5 @@
 package com.gthr.gthrcollect.model.domain
 
-
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class YugiohDomainModel(
     val asianEnglish: Int,
     val asianEnglishOG: Int,
@@ -41,5 +37,6 @@ data class YugiohDomainModel(
     val `set`: String,
     val spanish: Int,
     val spanishOG: Int,
-    val stats: String
+    val stats: String,
+    val refKey: String
 )

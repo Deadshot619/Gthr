@@ -15,10 +15,13 @@ import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.ActivityProductDetailBinding
+import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.showToast
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class ProductDetailActivity :
     BaseActivity<ProductDetailsViewModel, ActivityProductDetailBinding>() {
@@ -38,6 +41,63 @@ class ProductDetailActivity :
         setUpNavGraph()
         setSupportActionBar(mToolbar)
         setUpNavigationAndActionBar()
+        setUpObserver()
+
+        mViewModel.getMtgProductDetails<MTGDomainModel>("0",ProductType.MAGIC_THE_GATHERING)
+        mViewModel.getSealedProductDetails<SealedDomainModel>("0",ProductType.SEALED_MTG)
+        mViewModel.getPokemonProductDetails<PokemonDomainModel>("0",ProductType.POKEMON)
+        mViewModel.getYugiohProductDetails<YugiohDomainModel>("0",ProductType.YUGIOH)
+        mViewModel.getFunkoProductDetails<FunkoDomainModel>("0",ProductType.FUNKO)
+
+    }
+
+    private fun setUpObserver() {
+        mViewModel.mtgProductDetails.observe(this) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> GthrLogger.i("dschjds", "Loading: ")
+                    is State.Success -> GthrLogger.i("dschjds", "Product : ${it.data}")
+                    is State.Failed ->GthrLogger.i("dschjds", "Failed: ${it.message}")
+                }
+            }
+        }
+        mViewModel.funkoProductDetails.observe(this) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> GthrLogger.i("dschjds", "Loading: ")
+                    is State.Success -> GthrLogger.i("dschjds", "Product: ${it.data}")
+                    is State.Failed ->GthrLogger.i("dschjds", "Failed: ${it.message}")
+                }
+            }
+        }
+        mViewModel.pokemonProductDetails.observe(this) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> GthrLogger.i("dschjds", "Loading: ")
+                    is State.Success -> GthrLogger.i("dschjds", "Product: ${it.data}")
+                    is State.Failed ->GthrLogger.i("dschjds", "Failed: ${it.message}")
+                }
+            }
+        }
+        mViewModel.sealedProductDetails.observe(this) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> GthrLogger.i("dschjds", "Loading: ")
+                    is State.Success -> GthrLogger.i("dschjds", "Product: ${it.data}")
+                    is State.Failed ->GthrLogger.i("dschjds", "Failed: ${it.message}")
+                }
+            }
+        }
+        mViewModel.yugiohProductDetails.observe(this) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> GthrLogger.i("dschjds", "Loading: ")
+                    is State.Success -> GthrLogger.i("dschjds", "Product: ${it.data}")
+                    is State.Failed ->GthrLogger.i("dschjds", "Failed: ${it.message}")
+                }
+            }
+        }
+
     }
 
     private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination

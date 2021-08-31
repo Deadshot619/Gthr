@@ -8,55 +8,55 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PokemonModel(
     @SerialName(FirebaseRealtimeDatabase.JAPANESE)
-    val japanese: Int,
+    val japanese: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.ENGLISH)
-    val english: Int,
+    val english: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.CARD_TYPE)
-    val cardType: String,
+    val cardType: String? = "",
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
-    val highestBidCost: Double,
+    val highestBidCost: Double? = 0.0,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
-    val highestBidID: String,
+    val highestBidID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.HP)
-    val hp: Int,
+    val hp: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.IMAGE_ID)
-    val imageID: String,
+    val imageID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.IMAGE_URL)
-    val imageURL: String,
+    val imageURL: String? = "",
     @SerialName(FirebaseRealtimeDatabase.JAPANESE_NUMBER)
-    val japaneseNumber: String,
+    val japaneseNumber: String? = "",
     @SerialName(FirebaseRealtimeDatabase.JAPANESE_SET)
-    val japaneseSet: String,
+    val japaneseSet: String? = "",
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    val lowestAskCost: Double,
+    val lowestAskCost: Double? = 0.0,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
-    val lowestAskID: String,
+    val lowestAskID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.NAME)
-    val name: String,
+    val name: String? = "",
     @SerialName(FirebaseRealtimeDatabase.NO_LANGUAGE_NO_EDITION)
-    val noLanguagenoEdition: Int,
+    val noLanguagenoEdition: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.NUMBER)
-    val number: Int,
+    val number: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
-    val numberOfFavorites: Int,
+    val numberOfFavorites: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.OBJECT_ID)
-    val objectID: String,
+    val objectID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.PRICE_FOIL)
-    val priceFoil: String,
+    val priceFoil: String? = "",
     @SerialName(FirebaseRealtimeDatabase.PRICE_NON_FOIL)
-    val priceNonFoil: String,
+    val priceNonFoil: String? = "",
     @SerialName(FirebaseRealtimeDatabase.PRODUCT_TYPE)
-    val productType: String,
+    val productType: String? = "",
     @SerialName(FirebaseRealtimeDatabase.RARITY)
-    val rarity: String,
+    val rarity: String? = "",
     @SerialName(FirebaseRealtimeDatabase.RESISTANCE)
-    val resistance: String,
+    val resistance: String? = "",
     @SerialName(FirebaseRealtimeDatabase.RETREAT_COST)
-    val retreatCost: String,
+    val retreatCost: String? = "",
     @SerialName(FirebaseRealtimeDatabase.SET)
-    val `set`: String,
+    val `set`: String? = "",
     @SerialName(FirebaseRealtimeDatabase.STAGE)
-    val stage: String,
+    val stage: String? = "",
     @SerialName(FirebaseRealtimeDatabase.WEAKNESS)
-    val weakness: String
+    val weakness: String? = ""
 )

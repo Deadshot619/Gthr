@@ -4,7 +4,7 @@ import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 
 data class ProductDisplayModel(
-    var objectID: String,
+    var objectID: String?,
     var productType: ProductType?,
     var productCategory: ProductCategory?,
     var refKey: String?,

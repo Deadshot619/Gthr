@@ -1,9 +1,5 @@
 package com.gthr.gthrcollect.model.domain
 
-
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class PokemonDomainModel(
     val japanese: Int,
     val english: Int,
@@ -30,5 +26,6 @@ data class PokemonDomainModel(
     val retreatCost: String,
     val `set`: String,
     val stage: String,
-    val weakness: String
+    val weakness: String,
+    val refKey: String
 )

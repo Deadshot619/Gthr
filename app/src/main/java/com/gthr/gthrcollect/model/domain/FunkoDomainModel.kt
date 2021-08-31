@@ -1,9 +1,5 @@
 package com.gthr.gthrcollect.model.domain
 
-
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class FunkoDomainModel(
     val category: String,
     val exclusivity: String,
@@ -22,5 +18,6 @@ data class FunkoDomainModel(
     val productType: String,
     val releaseDate: Int,
     val status: String,
-    val tier: Int
+    val tier: Int,
+    val refKey: String
 )

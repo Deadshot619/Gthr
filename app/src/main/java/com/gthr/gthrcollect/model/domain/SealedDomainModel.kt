@@ -1,9 +1,5 @@
 package com.gthr.gthrcollect.model.domain
 
-
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class SealedDomainModel(
     val cardText: String,
     val highestBidCost: Double,
@@ -19,5 +15,6 @@ data class SealedDomainModel(
     val productType: String,
     val rarity: String,
     val `set`: String,
-    val tier: Int
+    val tier: Int,
+    val refKey: String
 )

@@ -5,6 +5,13 @@ object FirebaseRealtimeDatabase {
     /*Collection Info Model*/
     const val COLLECTION_INFO_MODEL = "collectionInfoModel"
 
+    /*Product Details*/
+    const val YUGIOH_MODEL = "yugiohModel"
+    const val SEALED_MODEL = "sealedModel"
+    const val POKEMON_MODEL = "pokemonModel"
+    const val MTG_MODEL = "mtgModel"
+    const val FUNKO_MODEL = "funkoModel"
+
     /*Common*/
     const val USER_REF_KEY = "userRefKey"
     const val PROFILE_URL_KEY = "profileImageURL"
