@@ -88,6 +88,7 @@
     <string name="dialog_skip_verification_subtitle">ID verification is required to Buy/Sell. You can do this at a later time. Do you want to skip this step for now?</string>
     <string name="dialog_skip_verification_yes">Yes, skip</string>
     <string name="dialog_skip_verification_no">No</string>
+    <string name="complete">Complete</string>
 
 
     <!--public profile-->

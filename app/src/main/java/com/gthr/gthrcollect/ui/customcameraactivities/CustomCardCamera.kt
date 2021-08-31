@@ -1,6 +1,7 @@
 package com.gthr.gthrcollect.ui.customcameraactivities
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -26,7 +27,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.gthr.gthrcollect.R
-import com.gthr.gthrcollect.utils.enums.CameraViews
 import com.gthr.gthrcollect.utils.extensions.cropImage
 import com.gthr.gthrcollect.utils.extensions.getPreviewOutputSize
 import com.gthr.gthrcollect.utils.extensions.visible
@@ -52,51 +52,74 @@ class CustomCardCamera : AppCompatActivity() {
     private var mBackgroundThread: HandlerThread? = null
     private var mBackgroundHandler: Handler? = null
     var mStateCallback: CameraDevice.StateCallback? = null
-    var mFile: File? = null
+
+    //   var mFile: File? = null
     private var mPreviewTextView: TextView? = null
 
-    var mCameraViews: String? = null;
     var mIsFrontView: Boolean = false
-    var mLabelMsg: String? = null;
+    var mLabelMsg: String? = null
+    var mUriFront: String? = null
+    var mUriBack: String? = null
+    var mUri: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.custom_card_camera)
 
-        mStateCallback = object : CameraDevice.StateCallback() {
-            override fun onOpened(camera: CameraDevice) {
-                mCameraDevice = camera
-                createCameraPreview()
-            }
+        mIsFrontView = intent.getBooleanExtra(IS_FRONT, false)
+        mLabelMsg = intent.getStringExtra(LABEL_MSG)
+        mUriFront = intent.getStringExtra(URI_FRONT)
+        mUriBack = intent.getStringExtra(URI_BACK)
 
-            override fun onDisconnected(mCameraDevice: CameraDevice) {
-                this@CustomCardCamera.mCameraDevice!!.close()
-            }
-
-            override fun onError(mCameraDevice: CameraDevice, i: Int) {
-                this@CustomCardCamera.mCameraDevice!!.close()
-                this@CustomCardCamera.mCameraDevice = null // Change to global
-            }
+        if (mIsFrontView) {
+            mUri = mUriFront
+        } else {
+            mUri = mUriBack
         }
+
         mTextureView = findViewById(R.id.textureView)
         mTextureView?.setSurfaceTextureListener(textureListener)
-
         mCardLayout = findViewById(R.id.card_layout)
         mPreviewTextView = findViewById(R.id.tv_preview_text)
         mOuterOverlay = findViewById(R.id.outer_overlay)
-
         mBtn_camera = findViewById(R.id.btn_camera)
         mChangeCamera = findViewById(R.id.changeCamera)
 
-        mCameraViews = intent.getStringExtra(CAMERA_VIEW)
-        mIsFrontView = intent.getBooleanExtra(IS_FRONT, false)
-        mLabelMsg = intent.getStringExtra(LABEL_MSG)
+        mPreviewTextView?.text = mLabelMsg
+        mCardLayout.visible()
 
-        if (mCameraViews!!.equals(CameraViews.CARDS.toString())) {
-            mPreviewTextView?.text = mLabelMsg
-            mCardLayout.visible()
+        // checking if image URI is available, if avaailable send for preview else open camera
+        if (mUri.isNullOrEmpty()) {
+            mStateCallback = object : CameraDevice.StateCallback() {
+                override fun onOpened(camera: CameraDevice) {
+                    mCameraDevice = camera
+                    createCameraPreview()
+                }
+
+                override fun onDisconnected(mCameraDevice: CameraDevice) {
+                    this@CustomCardCamera.mCameraDevice!!.close()
+                }
+
+                override fun onError(mCameraDevice: CameraDevice, i: Int) {
+                    this@CustomCardCamera.mCameraDevice!!.close()
+                    this@CustomCardCamera.mCameraDevice = null // Change to global
+                }
+            }
+
+        } else {
+
+            // send user to preview screen
+            startActivityForResult(
+                CardImagePreview.getInstance(
+                    this,
+                    mUriFront!!,
+                    mUriBack!!,
+                    mUri!!,
+                    mIsFrontView,
+                    mLabelMsg
+                ), REQUEST_CODE_PREVIEW
+            )
         }
-
         mBtn_camera.setOnClickListener { takePicture() }
 
         mChangeCamera.setOnClickListener {
@@ -182,7 +205,7 @@ class CustomCardCamera : AppCompatActivity() {
             mImageReader = ImageReader.newInstance(size.width, size.height, ImageFormat.JPEG, 1)
 //            mImageReader = ImageReader.newInstance(mTextureView!!.width, mTextureView!!.height, ImageFormat.JPEG, 1)
 
-            Log.e("Resolution", "mImageReader  ${size.width}  ${size.height}")
+            GthrLogger.e("Resolution", "mImageReader  ${size.width}  ${size.height}")
 
             val outputSurface: MutableList<Surface> = ArrayList(2)
             outputSurface.add(mImageReader!!.surface)
@@ -319,9 +342,7 @@ class CustomCardCamera : AppCompatActivity() {
     private fun createCameraPreview() {
         val texture = mTextureView!!.surfaceTexture!!
         texture.setDefaultBufferSize(mImageDimensions!!.width, mImageDimensions!!.height)
-//        texture.setDefaultBufferSize(mTextureView!!.width, mTextureView!!.height)
 
-        //      texture.setDefaultBufferSize(mTextureView!!.display.height, mTextureView!!.display.width)
         val surface = Surface(texture)
         try {
             mCaptureRequestBuilder =
@@ -402,7 +423,7 @@ class CustomCardCamera : AppCompatActivity() {
                 return
             }
             cameraManager.openCamera(cameraId!!, mStateCallback!!, null)
-        } catch (e: CameraAccessException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -432,12 +453,9 @@ class CustomCardCamera : AppCompatActivity() {
     }
 
     override fun onResume() {
-
         super.onResume()
 
         startBackgroundThread()
-
-
         if (ContextCompat.checkSelfPermission(
                 this@CustomCardCamera,
                 Manifest.permission.CAMERA
@@ -494,12 +512,7 @@ class CustomCardCamera : AppCompatActivity() {
     }
 
     fun cropBitmapImage(rotatedBitmap: Bitmap) {
-        /* try {
-             createImageFile(rotatedBitmap)
 
-         } catch (exp: Exception) {
-             GthrLogger.e("Exception", "${exp.message}")
-         }*/
         try {
             val viewFinderRect: Rect = Rect(
                 mOuterOverlay.left,
@@ -529,9 +542,17 @@ class CustomCardCamera : AppCompatActivity() {
             os.flush()
             os.close()
 
+            // capture image and Sending image to preview screen
             startActivityForResult(
-                ImagePreview.getInstance(this, mFile.path.toString(), mCameraViews!!, mLabelMsg),
-                REQUEST_CODE_PREVIEW
+                CardImagePreview.getInstance(
+                    this,
+                    mUriFront!!,
+                    mUriBack!!,
+                    mFile.path.toString(),
+                    mIsFrontView,
+                    mLabelMsg
+                ), REQUEST_CODE_PREVIEW
+
             )
         } catch (e: IOException) {
             e.printStackTrace()
@@ -544,11 +565,31 @@ class CustomCardCamera : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (data != null) {
+        // Result when image is clicked and sending it to fragment to view
+        if (data != null && requestCode == REQUEST_CODE_PREVIEW && resultCode == Activity.RESULT_OK) {
             val returnIntent = Intent()
             returnIntent.putExtra(INTENT_KEY_URL, data.getStringExtra(INTENT_KEY_URL))
+            returnIntent.putExtra(IS_FRONT, mIsFrontView)
             setResult(RESULT_OK, returnIntent)
             finish()
+        } else {
+            // Open camera when user press Retake btn
+            mStateCallback = object : CameraDevice.StateCallback() {
+                override fun onOpened(camera: CameraDevice) {
+                    mCameraDevice = camera
+                    createCameraPreview()
+                }
+
+                override fun onDisconnected(mCameraDevice: CameraDevice) {
+                    this@CustomCardCamera.mCameraDevice!!.close()
+                }
+
+                override fun onError(mCameraDevice: CameraDevice, i: Int) {
+                    this@CustomCardCamera.mCameraDevice!!.close()
+                    this@CustomCardCamera.mCameraDevice = null // Change to global
+                }
+            }
+
         }
     }
 
@@ -558,12 +599,15 @@ class CustomCardCamera : AppCompatActivity() {
         const val MY_PERMISSIONS_REQUEST_CAMERA = 102
         const val HANDLER_NAME = "Camera Background"
 
-        const val CAMERA_VIEW = "camera_view"
+        const val URI_FRONT = "uri_front"
+        const val URI_BACK = "uri_back"
         const val IS_FRONT = "is_front"
+
         const val LABEL_MSG = "label_msg"
 
         const val CAMERA_FRONT = "1"
         const val CAMERA_BACK = "0"
+        const val REQUEST_CODE_PREVIEW = 1
 
         init {
             ORIENTATIONS.append(Surface.ROTATION_0, 90)
@@ -574,17 +618,20 @@ class CustomCardCamera : AppCompatActivity() {
 
         fun getInstance(
             context: Context,
-            cameraViewType: CameraViews,
             isFront: Boolean,
+            uriFront: String,
+            uriBack: String,
             label_msg: String
         ) =
             Intent(context, CustomCardCamera::class.java).apply {
-                putExtra(CAMERA_VIEW, cameraViewType.toString())
                 putExtra(IS_FRONT, isFront)
+                putExtra(URI_FRONT, uriFront)
+                putExtra(URI_BACK, uriBack)
                 putExtra(LABEL_MSG, label_msg)
             }
+    }
 
-        const val REQUEST_CODE_PREVIEW = 1
-
+    override fun onBackPressed() {
+        finish()
     }
 }
