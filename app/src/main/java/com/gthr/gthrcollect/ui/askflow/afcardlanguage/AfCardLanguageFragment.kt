@@ -5,13 +5,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfCardLanguageFragmentBinding
+import com.gthr.gthrcollect.model.domain.LanguageDomainModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
-import com.gthr.gthrcollect.ui.askflow.ConfigurationAdapter
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
@@ -24,7 +23,7 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
     override fun getViewBinding() = AfCardLanguageFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mRvMain: RecyclerView
-    private lateinit var mAdapter: ConfigurationAdapter
+    private lateinit var mAdapter: ConfigurationLanguageAdapter
 
     private val args by navArgs<AfCardLanguageFragmentArgs>()
     private lateinit var mProductCategory: ProductCategory
@@ -35,6 +34,7 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
         checkAskFlowData()
         initViews()
         setUpLanguage()
+        setUpObservers()
     }
 
     private fun checkAskFlowData() {
@@ -54,32 +54,26 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
     }
 
     private fun setUpLanguage() {
-        mAdapter = ConfigurationAdapter {
-            goToEdition()
-        }
+        mAdapter = ConfigurationLanguageAdapter(object :
+            ConfigurationLanguageAdapter.IConfigurationLanguageListener {
+            override fun onClick(languageDomainModel: LanguageDomainModel) {
+                mViewModel.setSelectedLanguage(languageDomainModel)
+                goToEdition()
+            }
+        })
         mRvMain.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = mAdapter
         }
-        mAdapter.submitList(getLanguage())
     }
 
-    private fun getLanguage() : List<String> {
-        val list = arrayListOf<String>()
-        list.add(getString(R.string.english))
-        list.add(getString(R.string.cheneses))
-        list.add(getString(R.string.chinese))
-        list.add(getString(R.string.french))
-        list.add(getString(R.string.english))
-        list.add(getString(R.string.cheneses))
-        list.add(getString(R.string.chinese))
-        list.add(getString(R.string.french))
-        list.add(getString(R.string.english))
-        list.add(getString(R.string.cheneses))
-        list.add(getString(R.string.chinese))
-        list.add(getString(R.string.french))
-        return list
+    private fun setUpObservers() {
+        mViewModel.languageList.observe(viewLifecycleOwner, {
+            it.peekContent().let {
+                mAdapter.submitList(it)
+            }
+        })
     }
 
     private fun initViews() {

@@ -145,7 +145,8 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                     AskFlowActivity.getInstance(
                         requireContext(),
                         AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
-                        ProductCategory.CARDS
+                        ProductCategory.CARDS,
+                        ProductType.POKEMON
                     )
                 )
                 it % 5 == 0 -> startActivity(

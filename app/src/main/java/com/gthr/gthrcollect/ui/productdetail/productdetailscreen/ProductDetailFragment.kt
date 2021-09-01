@@ -28,7 +28,6 @@ import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
 import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
-import com.gthr.gthrcollect.utils.enums.SettingFlowType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.setProfileImage
 import com.gthr.gthrcollect.utils.extensions.visible
@@ -198,7 +197,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 AskFlowActivity.getInstance(
                     requireContext(),
                     AskFlowType.BUY,
-                    mProductCategory
+                    mProductCategory,
+                    mProductType
                 )
             )
         }
@@ -207,7 +207,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 AskFlowActivity.getInstance(
                     requireContext(),
                     AskFlowType.COLLECT,
-                    mProductCategory
+                    mProductCategory,
+                    mProductType
                 )
             )
         }
@@ -216,7 +217,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 AskFlowActivity.getInstance(
                     requireContext(),
                     AskFlowType.SELL,
-                    mProductCategory
+                    mProductCategory,
+                    mProductType
                 )
             )
         }

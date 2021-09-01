@@ -16,21 +16,26 @@ import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.ActivityAskFlowBinding
+import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentArgs
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.receiptdetail.purchasedetails.FullProductImage
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.enums.AskFlowType
+import com.gthr.gthrcollect.utils.enums.ConditionType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.invisible
 import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.getProductCategory
 import de.hdodenhof.circleimageview.CircleImageView
 
 class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>() {
 
-    override val mViewModel: AskFlowViewModel by viewModels{
+    override val mViewModel: AskFlowViewModel by viewModels {
         AskFlowViewModelFactory(AskFlowRepository())
     }
+
     override fun getViewBinding() = ActivityAskFlowBinding.inflate(layoutInflater)
 
     private lateinit var mNavController: NavController
@@ -39,6 +44,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
     private lateinit var mAskFlowType: AskFlowType
     private lateinit var mProductCategory: ProductCategory
+    private lateinit var mProductType: ProductType
 
     private lateinit var mIvUserProfile: CircleImageView
     private lateinit var mTvUserName: AppCompatTextView
@@ -48,7 +54,10 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
     override fun onBinding() {
         mAskFlowType = intent?.getSerializableExtra(KEY_ASK_FLOW_TYPE) as AskFlowType
-        mProductCategory = intent?.getSerializableExtra(KEY_PRODUCT_CATEGORY) as ProductCategory
+        mProductType = intent?.getSerializableExtra(KEY_PRODUCT_TYPE) as ProductType
+        mProductCategory = /*intent?.getSerializableExtra(KEY_PRODUCT_CATEGORY) as ProductCategory*/
+            getProductCategory(mProductType)!!
+        mViewModel.setProductType(mProductType)
 
         initViews()
         setSupportActionBar(mToolbar)
@@ -56,9 +65,24 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         setUpNavigationAndActionBar()
         setUpClickListeners()
         setUpObservers()
+
+        when (mProductType) {
+            ProductType.MAGIC_THE_GATHERING -> {
+                mViewModel.getProductDetails(
+                    "-MiTNOMShh5j-097pdyz",
+                    ProductType.MAGIC_THE_GATHERING
+                )
+            }
+            ProductType.YUGIOH -> {
+                mViewModel.getProductDetails("-MiTSTt3dbVfOQYDmswu", ProductType.YUGIOH)
+            }
+            ProductType.POKEMON -> {
+                mViewModel.getProductDetails("-MiTOfdj0XCDttwhYf-Q", ProductType.POKEMON)
+            }
+        }
     }
 
-    private fun initViews(){
+    private fun initViews() {
         mViewBinding.run {
             mToolbar = toolbar
             mIvUserProfile = ivUserProfile
@@ -67,15 +91,23 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             mCvBackImage = cvBackImage
             mIvBackImage = ivBackImage
 
-            mProductItem.mTvPrice.text = "$-"
-            mProductItem.mTvGlob.text = "-"
-            mProductItem.mTvPsaValue.text = "-"
-            mProductItem.mTvFoil.text = "-"
+            mProductItem.run {
+                setPrice("-")
+                setLanguage("-")
+                setConditionTitle(getString(R.string.raw))
+                setConditionValue("-")
+                setEdition("-")
+            }
 
             when (mAskFlowType) {
                 AskFlowType.BUY -> mProductItem.setState(CustomProductCell.State.WANT)
-                AskFlowType.SELL -> mViewModel.setSell(true)
+                AskFlowType.SELL -> {
+                    mProductItem.setState(CustomProductCell.State.FOR_SALE)
+                    mViewModel.setSell(true)
+                }
                 AskFlowType.COLLECT -> {
+                    mProductItem.setState(CustomProductCell.State.FOR_SALE)
+                    mProductItem.setLabelVisibility(isVisible = false)
                 }
                 AskFlowType.BUY_DIRECTLY_FROM_SOMEONE -> {
                     mProductItem.setState(CustomProductCell.State.FOR_SALE)
@@ -84,10 +116,13 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                     mTvUserName.visible()
                 }
             }
+
+            initProgressBar(layoutProgress)
         }
     }
 
     private fun setUpObservers() {
+        /* Front & Back Image */
         mViewModel.frontImageBitmap.observe(this, {
             if (it != null)
                 mProductItem.mIvMain.setImageBitmap(it)
@@ -99,6 +134,91 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                 mIvBackImage.setImageBitmap(it)
             } else
                 mCvBackImage.invisible()
+        })
+
+        /* Product Details */
+        mViewModel.yugiohProductDetails.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mViewModel.retrieveLanguageList(ProductType.YUGIOH)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                    }
+                }
+            }
+        })
+        mViewModel.pokemonProductDetails.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mViewModel.retrieveLanguageList(ProductType.POKEMON)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                    }
+                }
+            }
+        })
+        mViewModel.mtgProductDetails.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mViewModel.retrieveLanguageList(ProductType.MAGIC_THE_GATHERING)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                    }
+                }
+            }
+        })
+
+        /*Selected Language, Edition & Condition*/
+        mViewModel.askPrice.observe(this, {
+            it?.let {
+                mProductItem.setPrice(it.toString())
+            }
+        })
+        mViewModel.selectedLanguage.observe(this, {
+            it.contentIfNotHandled?.let {
+                mProductItem.setLanguage(it.abbreviatedName)
+            }
+        })
+        mViewModel.selectedEdition.observe(this, {
+            it.contentIfNotHandled?.let {
+                mProductItem.setEdition(it.title)
+            }
+        })
+        mViewModel.selectedConditionTitle.observe(this, {
+            it.contentIfNotHandled?.let {
+                mProductItem.setConditionTitle(
+                    when (it) {
+                        ConditionType.UG -> getString(R.string.raw)
+                        ConditionType.PSA -> getString(R.string.psa)
+                        ConditionType.BGS -> getString(R.string.bgs)
+                        ConditionType.CGC -> getString(R.string.cgc)
+                        else -> getString(R.string.raw)
+                    }
+                )
+            }
+        })
+        mViewModel.selectedConditionValue.observe(this, {
+            it.contentIfNotHandled?.let {
+                mProductItem.setConditionValue(it.displayName)
+            }
         })
     }
 
@@ -176,14 +296,17 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     companion object {
         private const val KEY_ASK_FLOW_TYPE = "key_ask_flow_type"
         private const val KEY_PRODUCT_CATEGORY = "key_product_category"
+        private const val KEY_PRODUCT_TYPE = "key_product_type"
 
         fun getInstance(
             context: Context,
             askFlowType: AskFlowType,
-            productCategory: ProductCategory
+            productCategory: ProductCategory,
+            productType: ProductType
         ) = Intent(context, AskFlowActivity::class.java).apply {
             putExtra(KEY_ASK_FLOW_TYPE, askFlowType)
             putExtra(KEY_PRODUCT_CATEGORY, productCategory)
+            putExtra(KEY_PRODUCT_TYPE, productType)
         }
     }
 }

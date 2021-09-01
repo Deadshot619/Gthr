@@ -36,12 +36,13 @@ class CustomProductCell @JvmOverloads constructor(
     private val mTvRow2Collum1: AppCompatTextView = mView.findViewById(R.id.tv_row2_collum1)
     private val mTvRow2Collum2: AppCompatTextView = mView.findViewById(R.id.tv_row2_collum2)
 
-    val mTvGlob: AppCompatTextView = mView.findViewById(R.id.tv_glob)
-    val mTvPsaValue: AppCompatTextView = mView.findViewById(R.id.tv_psa_value)
-    val mTvFoil: AppCompatTextView = mView.findViewById(R.id.tv_foil)
+    val mTvLanguage: AppCompatTextView = mView.findViewById(R.id.tv_language)
+    val mTvConditionTitle: AppCompatTextView = mView.findViewById(R.id.tv_condition)
+    val mTvConditionValue: AppCompatTextView = mView.findViewById(R.id.tv_condition_value)
+    val mTvEdition: AppCompatTextView = mView.findViewById(R.id.tv_edition)
 
-    private val mGroupGlob: Group = mView.findViewById(R.id.group_glob)
-    private val mGroupPsa: Group = mView.findViewById(R.id.group_psa)
+    private val mGroupGlob: Group = mView.findViewById(R.id.group_language)
+    private val mGroupPsa: Group = mView.findViewById(R.id.group_condition)
     private val mClBottom: ConstraintLayout = mView.findViewById(R.id.cl_Bottom)
 
     var mCurrentType = Type.FUNKO
@@ -162,6 +163,26 @@ class CustomProductCell @JvmOverloads constructor(
             mTvCardState.visible()
         else
             mTvCardState.gone()
+    }
+
+    fun setPrice(value: String) {
+        mTvPrice.text = String.format(context.getString(R.string.text_price_value), value)
+    }
+
+    fun setLanguage(language: String) {
+        mTvLanguage.text = language
+    }
+
+    fun setConditionTitle(value: String) {
+        mTvConditionTitle.text = value
+    }
+
+    fun setConditionValue(value: String) {
+        mTvConditionValue.text = value
+    }
+
+    fun setEdition(value: String) {
+        mTvEdition.text = value
     }
 
     enum class Type {

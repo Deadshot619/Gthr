@@ -17,7 +17,7 @@ abstract class BaseFragment<VM : ViewModel, VB : ViewBinding> : Fragment() {
 
     protected lateinit var mViewBinding: VB
 
-    protected var mProgressBar: LayoutProgressBarBinding? = null
+    private var mProgressBar: LayoutProgressBarBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,

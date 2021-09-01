@@ -5,75 +5,72 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfCardConditionFragmentBinding
+import com.gthr.gthrcollect.model.domain.ConditionDomainModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
-import com.gthr.gthrcollect.ui.askflow.ConfigurationAdapter
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.enums.AskFlowType
+import com.gthr.gthrcollect.utils.enums.ConditionType
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class AfCardConditionFragment : BaseFragment<AskFlowViewModel, AfCardConditionFragmentBinding>() {
 
-    override val mViewModel: AskFlowViewModel by activityViewModels{
+    override val mViewModel: AskFlowViewModel by activityViewModels {
         AskFlowViewModelFactory(AskFlowRepository())
     }
+
     override fun getViewBinding() = AfCardConditionFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mIvBack: ImageView
 
-    private lateinit var mCctRaw : CustomCollectionTypeView
-    private lateinit var mCctPsa : CustomCollectionTypeView
-    private lateinit var mCctBgs : CustomCollectionTypeView
-    private lateinit var mCctCgc : CustomCollectionTypeView
+    private lateinit var mCctRaw: CustomCollectionTypeView
+    private lateinit var mCctPsa: CustomCollectionTypeView
+    private lateinit var mCctBgs: CustomCollectionTypeView
+    private lateinit var mCctCgc: CustomCollectionTypeView
 
     private lateinit var mCctvList: List<CustomCollectionTypeView>
     private var mainJob: Job? = null
 
-    private lateinit var mRvMain : RecyclerView
-    private lateinit var mAdapter: ConfigurationAdapter
+    private lateinit var mRvMain: RecyclerView
+    private lateinit var mAdapter: ConfigurationConditionAdapter
 
     override fun onBinding() {
         initViews()
         setUpClickListeners()
         setUpCondition()
+        setUpObservers()
     }
 
     private fun setUpCondition() {
-        mAdapter = ConfigurationAdapter{
-            goToNextPage()
-        }
+        mAdapter = ConfigurationConditionAdapter(object :
+            ConfigurationConditionAdapter.IConfigurationConditionListener {
+            override fun onClick(conditionDomainModel: ConditionDomainModel) {
+                mViewModel.setSelectedConditionValue(conditionDomainModel)
+                goToNextPage()
+            }
+        })
         mRvMain.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = mAdapter
         }
-        mAdapter.submitList(getCondition())
     }
 
-    private fun getCondition(): List<String> {
-        val list = arrayListOf<String>()
-        list.add(getString(R.string.bl_bgs))
-        list.add(getString(R.string.bgs_9))
-        list.add(getString(R.string.chinese))
-        list.add(getString(R.string.french))
-        list.add(getString(R.string.bl_bgs))
-        list.add(getString(R.string.bgs_9))
-        list.add(getString(R.string.chinese))
-        list.add(getString(R.string.french))
-        list.add(getString(R.string.bl_bgs))
-        list.add(getString(R.string.bgs_9))
-        list.add(getString(R.string.chinese))
-        list.add(getString(R.string.french))
-        return list
+    private fun setUpObservers() {
+        mViewModel.conditionList.observe(viewLifecycleOwner, {
+            it.peekContent().let {
+                mAdapter.submitList(it)
+            }
+        })
     }
 
-        private fun initViews() {
+    private fun initViews() {
         mViewBinding.run {
             mIvBack = ivBack
             mCctRaw = cctRaw
@@ -85,7 +82,7 @@ class AfCardConditionFragment : BaseFragment<AskFlowViewModel, AfCardConditionFr
         }
     }
 
-    private fun setUpClickListeners(){
+    private fun setUpClickListeners() {
         mViewBinding.run {
             mIvBack.setOnClickListener {
                 findNavController().navigateUp()
@@ -104,7 +101,16 @@ class AfCardConditionFragment : BaseFragment<AskFlowViewModel, AfCardConditionFr
         mainJob?.cancel()
         mainJob = MainScope().launch {
             mCctvList.forEach {
-                it.setActive(it == this@selectView)
+                if (it == this@selectView) {
+                    it.setActive(true)
+                    when (it) {
+                        mCctRaw -> mViewModel.setSelectedConditionTitle(ConditionType.UG)
+                        mCctPsa -> mViewModel.setSelectedConditionTitle(ConditionType.PSA)
+                        mCctBgs -> mViewModel.setSelectedConditionTitle(ConditionType.BGS)
+                        mCctCgc -> mViewModel.setSelectedConditionTitle(ConditionType.CGC)
+                    }
+                } else
+                    it.setActive(false)
             }
         }
     }

@@ -61,18 +61,26 @@ fun getPokemonEditionList(rawKey: Int) : List<EditionType> {
         4 ->  arrayListOf(EditionType.REVERSE_HOLO_UNLIMITED, EditionType.UNLIMITED)
         5 ->  arrayListOf(EditionType.REVERSE_HOLO_UNLIMITED)
         6 ->  arrayListOf(EditionType.UNLIMITED, EditionType.HOLO_UNLIMITED)
-        7 ->  arrayListOf(EditionType.PROMO)
-        8 ->  arrayListOf(EditionType.JUMBO_PROMO)
-        9 ->  arrayListOf(EditionType.FIRST_EDITION)
-        10 ->  arrayListOf(EditionType.REVERSE_HOLO_FIRST_EDITION)
-        11 ->  arrayListOf(EditionType.FOURTH_PRINT_UK)
-        12 ->  arrayListOf(EditionType.REVERSE_HOLO_FIRST_EDITION, EditionType.REVERSE_HOLO_UNLIMITED, EditionType.UNLIMITED, EditionType.FIRST_EDITION)
+        7 -> arrayListOf(EditionType.PROMO)
+        8 -> arrayListOf(EditionType.JUMBO_PROMO)
+        9 -> arrayListOf(EditionType.FIRST_EDITION)
+        10 -> arrayListOf(EditionType.REVERSE_HOLO_FIRST_EDITION)
+        11 -> arrayListOf(EditionType.FOURTH_PRINT_UK)
+        12 -> arrayListOf(
+            EditionType.REVERSE_HOLO_FIRST_EDITION,
+            EditionType.REVERSE_HOLO_UNLIMITED,
+            EditionType.UNLIMITED,
+            EditionType.FIRST_EDITION
+        )
         else -> arrayListOf()
     }
 }
 
-fun getSelectedMTGEdition(key: Int) : EditionType {
-    return when(key) {
+fun getMTGEditionList(): List<EditionType> =
+    listOf<EditionType>(EditionType.FOIL, EditionType.NON_FOIL)
+
+fun getSelectedMTGEdition(key: Int): EditionType {
+    return when (key) {
         0 -> EditionType.FOIL
         1 -> EditionType.NON_FOIL
         else -> EditionType.FOIL

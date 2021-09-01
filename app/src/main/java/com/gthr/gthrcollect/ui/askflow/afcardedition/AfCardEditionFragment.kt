@@ -10,8 +10,8 @@ import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfCardEditionFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
-import com.gthr.gthrcollect.ui.askflow.ConfigurationAdapter
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.utils.enums.EditionType
 
 class AfCardEditionFragment : BaseFragment<AskFlowViewModel, AfCardEditionFragmentBinding>() {
     override val mViewModel: AskFlowViewModel by activityViewModels{
@@ -21,26 +21,41 @@ class AfCardEditionFragment : BaseFragment<AskFlowViewModel, AfCardEditionFragme
     override fun getViewBinding() = AfCardEditionFragmentBinding.inflate(layoutInflater)
 
     private lateinit var mIvBack: ImageView
-    private lateinit var mRvMain : RecyclerView
-    private lateinit var mAdapter: ConfigurationAdapter
+    private lateinit var mRvMain: RecyclerView
+    private lateinit var mAdapter: ConfigurationEditionAdapter
 
     override fun onBinding() {
         initViews()
         setUpClickListeners()
         setUpEdition()
+        setUpObservers()
     }
 
     private fun setUpEdition() {
-        mAdapter = ConfigurationAdapter{
-            goToCardCondition()
-        }
+        mAdapter = ConfigurationEditionAdapter(object :
+            ConfigurationEditionAdapter.IConfigurationEditionListener {
+            override fun onClick(editionType: EditionType) {
+                mViewModel.setSelectedEdition(editionType)
+                goToCardCondition()
+            }
+        })
         mRvMain.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                LinearLayoutManager.HORIZONTAL,false)
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL, false
+            )
             adapter = mAdapter
         }
-        mAdapter.submitList(getEdition())
     }
+
+    private fun setUpObservers() {
+        mViewModel.editionList.observe(viewLifecycleOwner, {
+            it.peekContent().let {
+                mAdapter.submitList(it)
+            }
+        })
+    }
+
 
     private fun getEdition(): List<String> {
         val list = arrayListOf<String>()

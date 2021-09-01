@@ -153,5 +153,10 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
+        <!--Progress Bar-->
+        <include
+            android:id="@+id/layout_progress"
+            layout="@layout/layout_progress_bar" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

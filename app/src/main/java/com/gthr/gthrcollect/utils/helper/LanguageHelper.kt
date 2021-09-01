@@ -73,46 +73,18 @@ fun getYugiohLangList(item: YugiohDomainModel): List<LanguageDomainModel> {
 
 private fun getYugiohLanguageDomainModel(key: Int): LanguageDomainModel {
     return when (key) {
-        0 -> LanguageDomainModel(
-            key = key,
-            displayName = "English (-EN)",
-            abbreviatedName = "Eng"
-        )
-        1 -> LanguageDomainModel(
-            key = key,
-            displayName = "French (-FR)",
-            abbreviatedName = "Fr"
-        )
-        2 -> LanguageDomainModel(
-            key = key,
-            displayName = "German (-DE)",
-            abbreviatedName = "De"
-        )
-        3 -> LanguageDomainModel(
-            key = key,
-            displayName = "Italian (-IT)",
-            abbreviatedName = "It"
-        )
-        4 -> LanguageDomainModel(
-            key = key,
-            displayName = "Spanish (-SP)",
-            abbreviatedName = "Sp"
-        )
+        0 -> LanguageDomainModel(key = key, displayName = "English (-EN)", abbreviatedName = "Eng")
+        1 -> LanguageDomainModel(key = key, displayName = "French (-FR)", abbreviatedName = "Fr")
+        2 -> LanguageDomainModel(key = key, displayName = "German (-DE)", abbreviatedName = "De")
+        3 -> LanguageDomainModel(key = key, displayName = "Italian (-IT)", abbreviatedName = "It")
+        4 -> LanguageDomainModel(key = key, displayName = "Spanish (-SP)", abbreviatedName = "Sp")
         5 -> LanguageDomainModel(
             key = key,
             displayName = "Portuguese (-PT)",
             abbreviatedName = "Pt"
         )
-        6 -> LanguageDomainModel(
-            key = key,
-            displayName = "Korean (-KR)",
-            abbreviatedName = "Kr"
-        )
-        7 -> LanguageDomainModel(
-            key = key,
-            displayName = "Japanese (-JP)",
-            abbreviatedName = "Jp"
-        )
+        6 -> LanguageDomainModel(key = key, displayName = "Korean (-KR)", abbreviatedName = "Kr")
+        7 -> LanguageDomainModel(key = key, displayName = "Japanese (-JP)", abbreviatedName = "Jp")
         8 -> LanguageDomainModel(
             key = key,
             displayName = "Asian-English (-AE)",
@@ -123,31 +95,11 @@ private fun getYugiohLanguageDomainModel(key: Int): LanguageDomainModel {
             displayName = "European English (-E/-EN)",
             abbreviatedName = "EU"
         )
-        10 -> LanguageDomainModel(
-            key = key,
-            displayName = "French (-F)",
-            abbreviatedName = "Fr"
-        )
-        11 -> LanguageDomainModel(
-            key = key,
-            displayName = "German (-G)",
-            abbreviatedName = "De"
-        )
-        12 -> LanguageDomainModel(
-            key = key,
-            displayName = "Italian (-I)",
-            abbreviatedName = "It"
-        )
-        13 -> LanguageDomainModel(
-            key = key,
-            displayName = "Korean (-K)",
-            abbreviatedName = "Kr"
-        )
-        14 -> LanguageDomainModel(
-            key = key,
-            displayName = "Spanish (-S)",
-            abbreviatedName = "Sp"
-        )
+        10 -> LanguageDomainModel(key = key, displayName = "French (-F)", abbreviatedName = "Fr")
+        11 -> LanguageDomainModel(key = key, displayName = "German (-G)", abbreviatedName = "De")
+        12 -> LanguageDomainModel(key = key, displayName = "Italian (-I)", abbreviatedName = "It")
+        13 -> LanguageDomainModel(key = key, displayName = "Korean (-K)", abbreviatedName = "Kr")
+        14 -> LanguageDomainModel(key = key, displayName = "Spanish (-S)", abbreviatedName = "Sp")
         15 -> LanguageDomainModel(
             key = key,
             displayName = "Portuguese (-P)",
@@ -173,25 +125,25 @@ private fun getYugiohLanguageDomainModel(key: Int): LanguageDomainModel {
     }
 }
 
-fun getPokemonLangList(item: PokemonDomainModel): List<LanguageDomainModel>{
+fun getPokemonLangList(item: PokemonDomainModel): List<LanguageDomainModel> {
     val langList = arrayListOf<LanguageDomainModel>()
-    if (item.japanese == 0 && item.english == 0){
+    if (item.japanese == 0 && item.english == 0) {
         langList.add(getPokemonLanguageDomainModel(2))
     }
-    if(item.english > 0){
+    if (item.english > 0) {
         langList.add(getPokemonLanguageDomainModel(0))
     }
-    if(item.japanese > 0){
+    if (item.japanese > 0) {
         langList.add(getPokemonLanguageDomainModel(1))
     }
-    if(item.noLanguagenoEdition > 0){
+    if (item.noLanguagenoEdition > 0) {
         langList.add(getPokemonLanguageDomainModel(2))
     }
     return langList
 }
 
 private fun getPokemonLanguageDomainModel(key: Int): LanguageDomainModel {
-    return when(key) {
+    return when (key) {
         0 -> LanguageDomainModel(key = key, displayName = "English", abbreviatedName = "Eng")
         1 -> LanguageDomainModel(key = key, displayName = "Japanese", abbreviatedName = "Jp")
         2 -> LanguageDomainModel(key = key, displayName = "None", abbreviatedName = "NA")
@@ -199,25 +151,25 @@ private fun getPokemonLanguageDomainModel(key: Int): LanguageDomainModel {
     }
 }
 
-fun isPromo(productModel: ProductDisplayModel, pokemonModel: PokemonDomainModel) : Boolean {
-    if (productModel.productType == ProductType.POKEMON){
-        if(pokemonModel.noLanguagenoEdition != 0 ){
+fun isPromo(productModel: ProductDisplayModel, pokemonModel: PokemonDomainModel): Boolean {
+    if (productModel.productType == ProductType.POKEMON) {
+        if (pokemonModel.noLanguagenoEdition != 0) {
             return true
         }
     }
     return false
 }
 
-fun getMTGLangList() : List<LanguageDomainModel> {
+fun getMTGLangList(): List<LanguageDomainModel> {
     val languageList = arrayListOf<LanguageDomainModel>()
-    for (i in 1..10){
+    for (i in 1..10) {
         languageList.add(getMTGLanguage(i))
     }
     return languageList
 }
 
-private fun getMTGLanguage(key: Int) : LanguageDomainModel {
-    return when(key){
+private fun getMTGLanguage(key: Int): LanguageDomainModel {
+    return when (key) {
         0 -> LanguageDomainModel(key = key, displayName = "English", abbreviatedName = "Eng")
         1 -> LanguageDomainModel(key = key, displayName = "French", abbreviatedName = "Fr")
         2 -> LanguageDomainModel(key = key, displayName = "German", abbreviatedName = "De")
