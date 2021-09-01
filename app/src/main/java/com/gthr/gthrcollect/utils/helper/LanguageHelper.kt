@@ -8,64 +8,64 @@ import com.gthr.gthrcollect.utils.enums.ProductType
 
 fun getYugiohLangList(item: YugiohDomainModel): List<LanguageDomainModel> {
     val langList = arrayListOf<LanguageDomainModel>()
-    if (item.english!! > 0) {
+    if (item.english > 0) {
         langList.add(getYugiohLanguageDomainModel(0))
     }
-    if (item.french!! > 0) {
+    if (item.french > 0) {
         langList.add(getYugiohLanguageDomainModel(1))
     }
-    if (item.german!! > 0) {
+    if (item.german > 0) {
         langList.add(getYugiohLanguageDomainModel(2))
     }
-    if (item.italian!! > 0) {
+    if (item.italian > 0) {
         langList.add(getYugiohLanguageDomainModel(3))
     }
-    if (item.spanish!! > 0) {
+    if (item.spanish > 0) {
         langList.add(getYugiohLanguageDomainModel(4))
     }
-    if (item.portuguese!! > 0) {
+    if (item.portuguese > 0) {
         langList.add(getYugiohLanguageDomainModel(5))
     }
-    if (item.korean!! > 0) {
+    if (item.korean > 0) {
         langList.add(getYugiohLanguageDomainModel(6))
     }
-    if (item.japanese!! > 0) {
+    if (item.japanese > 0) {
         langList.add(getYugiohLanguageDomainModel(7))
     }
-    if (item.asianEnglish!! > 0) {
+    if (item.asianEnglish > 0) {
         langList.add(getYugiohLanguageDomainModel(8))
     }
-    if (item.euroEnglish!! > 0) {
+    if (item.euroEnglish > 0) {
         langList.add(getYugiohLanguageDomainModel(9))
     }
-    if (item.frenchOG!! > 0) {
+    if (item.frenchOG > 0) {
         langList.add(getYugiohLanguageDomainModel(10))
     }
-    if (item.germanOG!! > 0) {
+    if (item.germanOG > 0) {
         langList.add(getYugiohLanguageDomainModel(11))
     }
-    if (item.italianOG!! > 0) {
+    if (item.italianOG > 0) {
         langList.add(getYugiohLanguageDomainModel(12))
     }
-    if (item.koreanOG!! > 0) {
+    if (item.koreanOG > 0) {
         langList.add(getYugiohLanguageDomainModel(13))
     }
-    if (item.spanishOG!! > 0) {
+    if (item.spanishOG > 0) {
         langList.add(getYugiohLanguageDomainModel(14))
     }
-    if (item.portugueseOG!! > 0) {
+    if (item.portugueseOG > 0) {
         langList.add(getYugiohLanguageDomainModel(15))
     }
-    if (item.oceanicEnglish!! > 0) {
+    if (item.oceanicEnglish > 0) {
         langList.add(getYugiohLanguageDomainModel(16))
     }
-    if (item.frenchCanadian!! > 0) {
+    if (item.frenchCanadian > 0) {
         langList.add(getYugiohLanguageDomainModel(17))
     }
-    if (item.englishOG!! > 0) {
+    if (item.englishOG > 0) {
         langList.add(getYugiohLanguageDomainModel(18))
     }
-    if (item.asianEnglishOG!! > 0) {
+    if (item.asianEnglishOG > 0) {
         langList.add(getYugiohLanguageDomainModel(19))
     }
     return langList
@@ -178,13 +178,13 @@ fun getPokemonLangList(item: PokemonDomainModel): List<LanguageDomainModel>{
     if (item.japanese == 0 && item.english == 0){
         langList.add(getPokemonLanguageDomainModel(2))
     }
-    if(item.english!! > 0){
+    if(item.english > 0){
         langList.add(getPokemonLanguageDomainModel(0))
     }
-    if(item.japanese!! > 0){
+    if(item.japanese > 0){
         langList.add(getPokemonLanguageDomainModel(1))
     }
-    if(item.noLanguagenoEdition!! > 0){
+    if(item.noLanguagenoEdition > 0){
         langList.add(getPokemonLanguageDomainModel(2))
     }
     return langList

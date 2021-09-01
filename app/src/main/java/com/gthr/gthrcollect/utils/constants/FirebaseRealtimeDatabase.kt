@@ -12,7 +12,9 @@ object FirebaseRealtimeDatabase {
     const val MTG_MODEL = "mtgModel"
     const val FUNKO_MODEL = "funkoModel"
 
+
     /*Common*/
+    const val FIR_IMAGE_URL = "firImageURL"
     const val USER_REF_KEY = "userRefKey"
     const val PROFILE_URL_KEY = "profileImageURL"
     const val DISPLAY_NAME="collectionDisplayName"
@@ -115,6 +117,7 @@ object FirebaseRealtimeDatabase {
     const val RETREAT_COST = "retreatCost"
     const val STAGE = "stage"
     const val WEAKNESS = "weakness"
+    const val HIGHEST_BID = "highestBid"
 
     /*FunkoDomainModel*/
     const val CATEGORY = "category"
@@ -125,6 +128,8 @@ object FirebaseRealtimeDatabase {
     const val MARKET_VALUE = "marketValue"
     const val RELEASE_DATE = "releaseDate"
     const val STATUS = "status"
+    const val EXCLUSIVE = "exclusive"
+    const val FUNKO_ID = "FunkoID"
 
     /*SealedModel*/
     const val CARD_TEXT = "cardText"

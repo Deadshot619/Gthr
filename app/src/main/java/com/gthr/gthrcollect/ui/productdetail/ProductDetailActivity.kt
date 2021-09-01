@@ -43,11 +43,11 @@ class ProductDetailActivity :
         setUpNavigationAndActionBar()
         setUpObserver()
 
-        mViewModel.getMtgProductDetails<MTGDomainModel>("0",ProductType.MAGIC_THE_GATHERING)
-        mViewModel.getSealedProductDetails<SealedDomainModel>("0",ProductType.SEALED_MTG)
-        mViewModel.getPokemonProductDetails<PokemonDomainModel>("0",ProductType.POKEMON)
-        mViewModel.getYugiohProductDetails<YugiohDomainModel>("0",ProductType.YUGIOH)
-        mViewModel.getFunkoProductDetails<FunkoDomainModel>("0",ProductType.FUNKO)
+        mViewModel.getProductDetails("-MiTNOMShh5j-097pdyz",ProductType.MAGIC_THE_GATHERING)
+        mViewModel.getProductDetails("0",ProductType.SEALED_POKEMON)
+        mViewModel.getProductDetails("-MiTOfdj0XCDttwhYf-Q",ProductType.POKEMON)
+        mViewModel.getProductDetails("-MiTSTt3dbVfOQYDmswu",ProductType.YUGIOH)
+        mViewModel.getProductDetails("-MiTpkeK3aeS5L4lvUO0",ProductType.FUNKO)
 
     }
 

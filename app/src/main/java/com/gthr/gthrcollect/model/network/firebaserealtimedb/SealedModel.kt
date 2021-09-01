@@ -7,10 +7,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SealedModel(
+    @SerialName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
+    val firImageURL: String? = "",
+
     @SerialName(FirebaseRealtimeDatabase.CARD_TEXT)
     val cardText: String? = "",
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
-    val highestBidCost: Double? = 0.0,
+    val highestBidCost: Int? = -1,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
     val highestBidID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.IMAGE_ID)
@@ -18,15 +21,15 @@ data class SealedModel(
     @SerialName(FirebaseRealtimeDatabase.IMAGE_URL)
     val imageURL: String? = "",
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    val lowestAskCost: Double? = 0.0,
+    val lowestAskCost: Int? = -1,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     val lowestAskID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.MARKET_PRICE)
-    val marketPrice: String? = "",
+    val marketPrice: Double? = -1.0,
     @SerialName(FirebaseRealtimeDatabase.NAME)
     val name: String? = "",
     @SerialName(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
-    val numberOfFavorites: Int? = 0,
+    val numberOfFavorites: Int? = -1,
     @SerialName(FirebaseRealtimeDatabase.OBJECT_ID)
     val objectID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.PRODUCT_TYPE)
@@ -36,5 +39,5 @@ data class SealedModel(
     @SerialName(FirebaseRealtimeDatabase.SET)
     val `set`: String? = "",
     @SerialName(FirebaseRealtimeDatabase.TIER)
-    val tier: Int? = 0
+    val tier: Int? = -1
 )

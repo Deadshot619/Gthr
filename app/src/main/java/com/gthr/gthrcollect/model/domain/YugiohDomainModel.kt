@@ -1,10 +1,13 @@
 package com.gthr.gthrcollect.model.domain
 
+import com.gthr.gthrcollect.utils.enums.ProductType
+
 data class YugiohDomainModel(
+    val firImageURL: String,
     val asianEnglish: Int,
     val asianEnglishOG: Int,
     val cardType: String,
-    val detailPrice: Double,
+    val detailPrice: String,
     val english: Int,
     val englishOG: Int,
     val euroEnglish: Int,
@@ -14,7 +17,7 @@ data class YugiohDomainModel(
     val frenchOG: Int,
     val german: Int,
     val germanOG: Int,
-    val highestBidCost: Double,
+    val highestBidCost: Int,
     val highestBidID: String,
     val imageID: String,
     val imageURL: String,
@@ -23,7 +26,7 @@ data class YugiohDomainModel(
     val japanese: Int,
     val korean: Int,
     val koreanOG: Int,
-    val lowestAskCost: Double,
+    val lowestAskCost: Int,
     val lowestAskID: String,
     val name: String,
     val number: String,
@@ -32,7 +35,7 @@ data class YugiohDomainModel(
     val oceanicEnglish: Int,
     val portuguese: Int,
     val portugueseOG: Int,
-    val productType: String,
+    val productType: ProductType,
     val rarity: String,
     val `set`: String,
     val spanish: Int,

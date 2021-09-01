@@ -7,6 +7,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class YugiohModel(
+    @SerialName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
+    val firImageURL: String? = "",
+
     @SerialName(FirebaseRealtimeDatabase.ASIAN_ENGLISH)
     val asianEnglish: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.ASIAN_ENGLISH_OG)
@@ -14,7 +17,7 @@ data class YugiohModel(
     @SerialName(FirebaseRealtimeDatabase.CARD_TYPE)
     val cardType: String? = "",
     @SerialName(FirebaseRealtimeDatabase.DETAIL_PRICE)
-    val detailPrice: Double? = 0.0,
+    val detailPrice: String? = "",
     @SerialName(FirebaseRealtimeDatabase.ENGLISH)
     val english: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.ENGLISH_OG)
@@ -34,7 +37,7 @@ data class YugiohModel(
     @SerialName(FirebaseRealtimeDatabase.GERMAN_OG)
     val germanOG: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
-    val highestBidCost: Double? = 0.0,
+    val highestBidCost: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
     val highestBidID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.IMAGE_ID)
@@ -52,7 +55,7 @@ data class YugiohModel(
     @SerialName(FirebaseRealtimeDatabase.KOREAN_OG)
     val koreanOG: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    val lowestAskCost: Double? = 0.0,
+    val lowestAskCost: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     val lowestAskID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.NAME)

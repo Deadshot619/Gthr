@@ -11,22 +11,22 @@ data class ProductDisplayModel(
     var firImageURL: String?,
     var name: String?,
     var description: String?,
-    var lowestAskCost: Double?,
-    var highestBidCost: Double?,
+    var lowestAskCost: Int?,
+    var highestBidCost: Int?,
     var lowestAskID: String?,
     var highestBidID: String?,
     var productNumber: String?,
     var numberOfFavorites: Int?,
     var tier: String?,
 ) {
-    //TODO 24/07/21 : Modify productCategory & productType
+    //TODO 01/08/21 : Modify firImageUrl added
 
     constructor(model: FunkoDomainModel) : this(
         objectID = model.objectID,
-        productType = ProductType.FUNKO,
+        productType = model.productType,
         productCategory = ProductCategory.TOYS,
-        refKey = "",
-        firImageURL = model.imageURL,
+        refKey = model.refKey,
+        firImageURL = "",
         name = model.name,
         description = model.license,
         lowestAskCost = model.lowestAskCost,
@@ -40,9 +40,9 @@ data class ProductDisplayModel(
 
     constructor(model: MTGDomainModel) : this(
         objectID = model.objectID,
-        productType = ProductType.MAGIC_THE_GATHERING,
+        productType = model.productType,
         productCategory = ProductCategory.CARDS,
-        refKey = "",
+        refKey = model.refKey,
         firImageURL = model.imageUris,
         name = model.name,
         description = model.setName,
@@ -57,14 +57,14 @@ data class ProductDisplayModel(
 
     constructor(model: PokemonDomainModel) : this(
         objectID = model.objectID,
-        productType = ProductType.MAGIC_THE_GATHERING,
+        productType = model.productType,
         productCategory = ProductCategory.CARDS,
-        refKey = "",
-        firImageURL = model.imageURL,
+        refKey = model.refKey,
+        firImageURL = model.firImageURL,
         name = model.name,
         description = model.set,
         lowestAskCost = model.lowestAskCost,
-        highestBidCost = model.highestBidCost,
+        highestBidCost = -1,
         lowestAskID = model.lowestAskID,
         highestBidID = model.highestBidID,
         productNumber = model.number.toString(),
@@ -74,10 +74,10 @@ data class ProductDisplayModel(
 
     constructor(model: YugiohDomainModel) : this(
         objectID = model.objectID,
-        productType = ProductType.MAGIC_THE_GATHERING,
+        productType = model.productType,
         productCategory = ProductCategory.CARDS,
-        refKey = "",
-        firImageURL = model.imageURL,
+        refKey = model.refKey,
+        firImageURL = model.firImageURL,
         name = model.name,
         description = model.set,
         lowestAskCost = model.lowestAskCost,
@@ -91,10 +91,10 @@ data class ProductDisplayModel(
 
     constructor(model: SealedDomainModel) : this(
         objectID = model.objectID,
-        productType = ProductType.MAGIC_THE_GATHERING,
+        productType = model.productType,
         productCategory = ProductCategory.SEALED,
-        refKey = "",
-        firImageURL = model.imageURL,
+        refKey = model.refKey,
+        firImageURL = model.firImageURL,
         name = model.name,
         description = model.set,
         lowestAskCost = model.lowestAskCost,

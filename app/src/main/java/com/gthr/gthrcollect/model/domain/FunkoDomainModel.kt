@@ -1,23 +1,26 @@
 package com.gthr.gthrcollect.model.domain
 
+import com.gthr.gthrcollect.utils.enums.ProductType
+
 data class FunkoDomainModel(
+    val exclusive: String,
+    val funkoID: String,
     val category: String,
-    val exclusivity: String,
     val funkoType: String,
-    val highestBidCost: Double,
+    val highestBidCost: Int,
     val highestBidID: String,
     val imageURL: String,
-    val itemNumber: Int,
+    val itemNumber: String,
     val license: String,
-    val lowestAskCost: Double,
+    val lowestAskCost: Int,
     val lowestAskID: String,
     val marketValue: String,
     val name: String,
     val numberOfFavorites: Int,
     val objectID: String,
-    val productType: String,
-    val releaseDate: Int,
+    val productType: ProductType,
+    val releaseDate: String,
     val status: String,
-    val tier: Int,
+    val tier: String,
     val refKey: String
 )

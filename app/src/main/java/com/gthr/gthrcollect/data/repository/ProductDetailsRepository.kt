@@ -22,23 +22,23 @@ class ProductDetailsRepository {
         var ref = mFirebaseRD
         val networkModelType = when(type){
             ProductType.MAGIC_THE_GATHERING -> {
-                ref = mFirebaseRD.child(FirebaseRealtimeDatabase.MTG_MODEL)
+                ref = ref.child(FirebaseRealtimeDatabase.MTG_MODEL)
                 MTGModel::class.java
             }
             ProductType.YUGIOH -> {
-                ref = mFirebaseRD.child(FirebaseRealtimeDatabase.YUGIOH_MODEL)
+                ref = ref.child(FirebaseRealtimeDatabase.YUGIOH_MODEL)
                 YugiohModel::class.java
             }
             ProductType.POKEMON -> {
-                ref = mFirebaseRD.child(FirebaseRealtimeDatabase.POKEMON_MODEL)
+                ref = ref.child(FirebaseRealtimeDatabase.POKEMON_MODEL)
                 PokemonModel::class.java
             }
             ProductType.FUNKO -> {
-                ref = mFirebaseRD.child(FirebaseRealtimeDatabase.FUNKO_MODEL)
+                ref = ref.child(FirebaseRealtimeDatabase.FUNKO_MODEL)
                 FunkoModel::class.java
             }
             ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
-                ref = mFirebaseRD.child(FirebaseRealtimeDatabase.SEALED_MODEL)
+                ref = ref.child(FirebaseRealtimeDatabase.SEALED_MODEL)
                 SealedModel::class.java
             }
         }

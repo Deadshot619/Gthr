@@ -35,33 +35,31 @@ class ProductDetailsViewModel(private val repository : ProductDetailsRepository)
     val yugiohProductDetails: LiveData<Event<State<YugiohDomainModel>>>
         get() = _yugiohProductDetails
 
-    fun <T> getMtgProductDetails(id : String,type : ProductType) = viewModelScope.launch {
-        repository.getProductDetails<T>(id,type).collect {
-            _mtgProductDetails.value = Event(it as State<MTGDomainModel>)
-        }
-    }
-
-    fun <T> getPokemonProductDetails(id : String,type : ProductType) = viewModelScope.launch {
-        repository.getProductDetails<T>(id,type).collect {
-            _pokemonProductDetails.value = Event(it as State<PokemonDomainModel>)
-        }
-    }
-
-    fun <T> getSealedProductDetails(id : String,type : ProductType) = viewModelScope.launch {
-        repository.getProductDetails<T>(id,type).collect {
-            _sealedProductDetails.value = Event(it as State<SealedDomainModel>)
-        }
-    }
-
-    fun <T> getFunkoProductDetails(id : String,type : ProductType) = viewModelScope.launch {
-        repository.getProductDetails<T>(id,type).collect {
-            _funkoProductDetails.value = Event(it as State<FunkoDomainModel>)
-        }
-    }
-
-    fun <T> getYugiohProductDetails(id : String,type : ProductType) = viewModelScope.launch {
-        repository.getProductDetails<T>(id,type).collect {
-            _yugiohProductDetails.value = Event(it as State<YugiohDomainModel>)
+    fun getProductDetails(id : String,type : ProductType) {
+        viewModelScope.launch {
+            when(type){
+                ProductType.MAGIC_THE_GATHERING -> repository.getProductDetails<MTGDomainModel>(id,ProductType.MAGIC_THE_GATHERING).collect {
+                    _mtgProductDetails.value = Event(it)
+                }
+                ProductType.YUGIOH -> repository.getProductDetails<YugiohDomainModel>(id,ProductType.YUGIOH).collect {
+                    _yugiohProductDetails.value = Event(it)
+                }
+                ProductType.POKEMON -> repository.getProductDetails<PokemonDomainModel>(id,ProductType.POKEMON).collect {
+                    _pokemonProductDetails.value = Event(it)
+                }
+                ProductType.FUNKO -> repository.getProductDetails<FunkoDomainModel>(id,ProductType.FUNKO).collect {
+                    _funkoProductDetails.value = Event(it)
+                }
+                ProductType.SEALED_POKEMON -> repository.getProductDetails<SealedDomainModel>(id,ProductType.SEALED_POKEMON).collect {
+                    _sealedProductDetails.value = Event(it)
+                }
+                ProductType.SEALED_YUGIOH -> repository.getProductDetails<SealedDomainModel>(id,ProductType.SEALED_YUGIOH).collect {
+                    _sealedProductDetails.value = Event(it)
+                }
+                ProductType.SEALED_MTG -> repository.getProductDetails<SealedDomainModel>(id,ProductType.SEALED_MTG).collect {
+                    _sealedProductDetails.value = Event(it)
+                }
+            }
         }
     }
 }

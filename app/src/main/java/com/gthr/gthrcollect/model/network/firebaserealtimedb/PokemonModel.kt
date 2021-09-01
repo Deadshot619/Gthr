@@ -7,28 +7,31 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PokemonModel(
-    @SerialName(FirebaseRealtimeDatabase.JAPANESE)
-    val japanese: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.ENGLISH)
-    val english: Int? = 0,
+    @SerialName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
+    val firImageURL: String? = "",
+    @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID)
+    val highestBid: Int? = 0,
+
     @SerialName(FirebaseRealtimeDatabase.CARD_TYPE)
     val cardType: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
-    val highestBidCost: Double? = 0.0,
+    @SerialName(FirebaseRealtimeDatabase.ENGLISH)
+    val english: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
     val highestBidID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.HP)
-    val hp: Int? = 0,
+    val hp: String? = "",
     @SerialName(FirebaseRealtimeDatabase.IMAGE_ID)
     val imageID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.IMAGE_URL)
     val imageURL: String? = "",
+    @SerialName(FirebaseRealtimeDatabase.JAPANESE)
+    val japanese: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.JAPANESE_NUMBER)
-    val japaneseNumber: String? = "",
+    val japaneseNumber: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.JAPANESE_SET)
     val japaneseSet: String? = "",
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    val lowestAskCost: Double? = 0.0,
+    val lowestAskCost: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     val lowestAskID: String? = "",
     @SerialName(FirebaseRealtimeDatabase.NAME)
@@ -36,7 +39,7 @@ data class PokemonModel(
     @SerialName(FirebaseRealtimeDatabase.NO_LANGUAGE_NO_EDITION)
     val noLanguagenoEdition: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.NUMBER)
-    val number: Int? = 0,
+    val number: String? = "",
     @SerialName(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
     val numberOfFavorites: Int? = 0,
     @SerialName(FirebaseRealtimeDatabase.OBJECT_ID)

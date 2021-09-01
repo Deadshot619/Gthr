@@ -6,26 +6,26 @@ import com.gthr.gthrcollect.utils.enums.EditionType
 
 fun getYugiohEditionKey(langKey: Int, yugiohCard: YugiohDomainModel): Int {
     return when (langKey) {
-        0 -> yugiohCard.english!!
-        1 -> yugiohCard.french!!
-        2 -> yugiohCard.german!!
-        3 -> yugiohCard.italian!!
-        4 -> yugiohCard.spanish!!
-        5 -> yugiohCard.portuguese!!
-        6 -> yugiohCard.korean!!
-        7 -> yugiohCard.japanese!!
-        8 -> yugiohCard.asianEnglish!!
-        9 -> yugiohCard.euroEnglish!!
-        10 -> yugiohCard.frenchOG!!
-        11 -> yugiohCard.germanOG!!
-        12 -> yugiohCard.italianOG!!
-        13 -> yugiohCard.koreanOG!!
-        14 -> yugiohCard.spanishOG!!
-        15 -> yugiohCard.portugueseOG!!
-        16 -> yugiohCard.oceanicEnglish!!
-        17 -> yugiohCard.frenchCanadian!!
-        18 -> yugiohCard.englishOG!!
-        19 -> yugiohCard.asianEnglishOG!!
+        0 -> yugiohCard.english
+        1 -> yugiohCard.french
+        2 -> yugiohCard.german
+        3 -> yugiohCard.italian
+        4 -> yugiohCard.spanish
+        5 -> yugiohCard.portuguese
+        6 -> yugiohCard.korean
+        7 -> yugiohCard.japanese
+        8 -> yugiohCard.asianEnglish
+        9 -> yugiohCard.euroEnglish
+        10 -> yugiohCard.frenchOG
+        11 -> yugiohCard.germanOG
+        12 -> yugiohCard.italianOG
+        13 -> yugiohCard.koreanOG
+        14 -> yugiohCard.spanishOG
+        15 -> yugiohCard.portugueseOG
+        16 -> yugiohCard.oceanicEnglish
+        17 -> yugiohCard.frenchCanadian
+        18 -> yugiohCard.englishOG
+        19 -> yugiohCard.asianEnglishOG
         else -> -1
     }
 }
@@ -46,9 +46,9 @@ fun getYugiohEditionList(rawKey: Int): List<EditionType> {
 
 fun getPokemonEditionKey(langKey: Int, pokemon: PokemonDomainModel) : Int {
     return when (langKey) {
-        0 -> return pokemon.english!!
-        1 -> return pokemon.japanese!!
-        2 -> return pokemon.noLanguagenoEdition!!
+        0 -> return pokemon.english
+        1 -> return pokemon.japanese
+        2 -> return pokemon.noLanguagenoEdition
         else -> 1
     }
 }
