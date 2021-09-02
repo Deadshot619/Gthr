@@ -3,14 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/drawable/edit_text_image_bg.xml" value="0.17708333333333334" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/activity_ask_flow.xml" value="0.35604395604395606" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_buy_directly_review_fragment.xml" value="0.4" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_place_your_ask_fragment.xml" value="0.4" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_review_your_ask_fragment.xml" value="0.264" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/item_collection.xml" value="0.18958333333333333" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/search_fragment.xml" value="0.15" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/menu/ask_flow_menu.xml" value="0.4" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/activity_profile.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_card_condition_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_card_edition_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_card_language_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_place_your_ask_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_review_your_ask_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_product_detail_card_top.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_product_detail_mtg_detail.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_product_detail_toy_top.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_progress_bar.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/my_profile.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/product_detail_fragment.xml" value="0.23125" />
       </map>
     </option>
   </component>

@@ -1,87 +1,125 @@
 package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
 
+import com.google.firebase.database.PropertyName
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class YugiohModel(
-    @SerialName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
-    val firImageURL: String? = "",
-
-    @SerialName(FirebaseRealtimeDatabase.ASIAN_ENGLISH)
-    val asianEnglish: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.ASIAN_ENGLISH_OG)
-    val asianEnglishOG: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.CARD_TYPE)
-    val cardType: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.DETAIL_PRICE)
-    val detailPrice: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.ENGLISH)
-    val english: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.ENGLISH_OG)
-    val englishOG: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.EURO_ENGLISH)
-    val euroEnglish: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.FIRST_DESCRIPTION)
-    val firstDescription: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.FRENCH)
-    val french: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.FRENCH_CANADIAN)
-    val frenchCanadian: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.FRENCH_OG)
-    val frenchOG: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.GERMAN)
-    val german: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.GERMAN_OG)
-    val germanOG: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
-    val highestBidCost: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
-    val highestBidID: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.IMAGE_ID)
-    val imageID: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.IMAGE_URL)
-    val imageURL: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.ITALIAN)
-    val italian: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.ITALIAN_OG)
-    val italianOG: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.JAPANESE)
-    val japanese: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.KOREAN)
-    val korean: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.KOREAN_OG)
-    val koreanOG: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    val lowestAskCost: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
-    val lowestAskID: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.NAME)
-    val name: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.NUMBER)
-    val number: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
-    val numberOfFavorites: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.OBJECT_ID)
-    val objectID: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.OCEANIC_ENGLISH)
-    val oceanicEnglish: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.PORTUGUESE)
-    val portuguese: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.PORTUGUESE_OG)
-    val portugueseOG: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.PRODUCT_TYPE)
-    val productType: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.RARITY)
-    val rarity: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.SET)
-    val `set`: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.SPANISH)
-    val spanish: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.SPANISH_OG)
-    val spanishOG: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.STATS)
-    val stats: String? = ""
+    @get:PropertyName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
+    @set:PropertyName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
+    var firImageURL: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.ASIAN_ENGLISH)
+    @set:PropertyName(FirebaseRealtimeDatabase.ASIAN_ENGLISH)
+    var asianEnglish: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.ASIAN_ENGLISH_OG)
+    @set:PropertyName(FirebaseRealtimeDatabase.ASIAN_ENGLISH_OG)
+    var asianEnglishOG: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.CARD_TYPE)
+    @set:PropertyName(FirebaseRealtimeDatabase.CARD_TYPE)
+    var cardType: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.DETAIL_PRICE)
+    @set:PropertyName(FirebaseRealtimeDatabase.DETAIL_PRICE)
+    var detailPrice: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.ENGLISH)
+    @set:PropertyName(FirebaseRealtimeDatabase.ENGLISH)
+    var english: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.ENGLISH_OG)
+    @set:PropertyName(FirebaseRealtimeDatabase.ENGLISH_OG)
+    var englishOG: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.EURO_ENGLISH)
+    @set:PropertyName(FirebaseRealtimeDatabase.EURO_ENGLISH)
+    var euroEnglish: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.FIRST_DESCRIPTION)
+    @set:PropertyName(FirebaseRealtimeDatabase.FIRST_DESCRIPTION)
+    var firstDescription: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.FRENCH)
+    @set:PropertyName(FirebaseRealtimeDatabase.FRENCH)
+    var french: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.FRENCH_CANADIAN)
+    @set:PropertyName(FirebaseRealtimeDatabase.FRENCH_CANADIAN)
+    var frenchCanadian: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.FRENCH_OG)
+    @set:PropertyName(FirebaseRealtimeDatabase.FRENCH_OG)
+    var frenchOG: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.GERMAN)
+    @set:PropertyName(FirebaseRealtimeDatabase.GERMAN)
+    var german: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.GERMAN_OG)
+    @set:PropertyName(FirebaseRealtimeDatabase.GERMAN_OG)
+    var germanOG: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
+    @set:PropertyName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
+    var highestBidCost: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
+    var highestBidID: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.IMAGE_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.IMAGE_ID)
+    var imageID: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.IMAGE_URL)
+    @set:PropertyName(FirebaseRealtimeDatabase.IMAGE_URL)
+    var imageURL: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.ITALIAN)
+    @set:PropertyName(FirebaseRealtimeDatabase.ITALIAN)
+    var italian: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.ITALIAN_OG)
+    @set:PropertyName(FirebaseRealtimeDatabase.ITALIAN_OG)
+    var italianOG: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.JAPANESE)
+    @set:PropertyName(FirebaseRealtimeDatabase.JAPANESE)
+    var japanese: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.KOREAN)
+    @set:PropertyName(FirebaseRealtimeDatabase.KOREAN)
+    var korean: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.KOREAN_OG)
+    @set:PropertyName(FirebaseRealtimeDatabase.KOREAN_OG)
+    var koreanOG: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
+    @set:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
+    var lowestAskCost: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
+    var lowestAskID: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.NAME)
+    @set:PropertyName(FirebaseRealtimeDatabase.NAME)
+    var name: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.NUMBER)
+    @set:PropertyName(FirebaseRealtimeDatabase.NUMBER)
+    var number: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
+    @set:PropertyName(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
+    var numberOfFavorites: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.OBJECT_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.OBJECT_ID)
+    var objectID: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.OCEANIC_ENGLISH)
+    @set:PropertyName(FirebaseRealtimeDatabase.OCEANIC_ENGLISH)
+    var oceanicEnglish: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.PORTUGUESE)
+    @set:PropertyName(FirebaseRealtimeDatabase.PORTUGUESE)
+    var portuguese: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.PORTUGUESE_OG)
+    @set:PropertyName(FirebaseRealtimeDatabase.PORTUGUESE_OG)
+    var portugueseOG: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.PRODUCT_TYPE)
+    @set:PropertyName(FirebaseRealtimeDatabase.PRODUCT_TYPE)
+    var productType: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.RARITY)
+    @set:PropertyName(FirebaseRealtimeDatabase.RARITY)
+    var rarity: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.SET)
+    @set:PropertyName(FirebaseRealtimeDatabase.SET)
+    var `set`: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.SPANISH)
+    @set:PropertyName(FirebaseRealtimeDatabase.SPANISH)
+    var spanish: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.SPANISH_OG)
+    @set:PropertyName(FirebaseRealtimeDatabase.SPANISH_OG)
+    var spanishOG: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.STATS)
+    @set:PropertyName(FirebaseRealtimeDatabase.STATS)
+    var stats: String? = ""
 )

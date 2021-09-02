@@ -478,5 +478,6 @@
     <string name="text_added_buy_flow">Added</string>
     <string name="text_finish_buy_flow">Finish</string>
     <string name="text_type_buylist_price_here_buy_flow">Type Buylist Price Here</string>
+    <string name="text_desh_product_detail">-</string>
 
 </resources>

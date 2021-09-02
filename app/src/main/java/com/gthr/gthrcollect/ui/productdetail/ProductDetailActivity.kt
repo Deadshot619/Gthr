@@ -41,63 +41,6 @@ class ProductDetailActivity :
         setUpNavGraph()
         setSupportActionBar(mToolbar)
         setUpNavigationAndActionBar()
-        setUpObserver()
-
-        mViewModel.getProductDetails("-MiTNOMShh5j-097pdyz",ProductType.MAGIC_THE_GATHERING)
-        mViewModel.getProductDetails("0",ProductType.SEALED_POKEMON)
-        mViewModel.getProductDetails("-MiTOfdj0XCDttwhYf-Q",ProductType.POKEMON)
-        mViewModel.getProductDetails("-MiTSTt3dbVfOQYDmswu",ProductType.YUGIOH)
-        mViewModel.getProductDetails("-MiTpkeK3aeS5L4lvUO0",ProductType.FUNKO)
-
-    }
-
-    private fun setUpObserver() {
-        mViewModel.mtgProductDetails.observe(this) { it ->
-            it.contentIfNotHandled?.let {
-                when (it) {
-                    is State.Loading -> GthrLogger.i("dschjds", "Loading: ")
-                    is State.Success -> GthrLogger.i("dschjds", "Product : ${it.data}")
-                    is State.Failed ->GthrLogger.i("dschjds", "Failed: ${it.message}")
-                }
-            }
-        }
-        mViewModel.funkoProductDetails.observe(this) { it ->
-            it.contentIfNotHandled?.let {
-                when (it) {
-                    is State.Loading -> GthrLogger.i("dschjds", "Loading: ")
-                    is State.Success -> GthrLogger.i("dschjds", "Product: ${it.data}")
-                    is State.Failed ->GthrLogger.i("dschjds", "Failed: ${it.message}")
-                }
-            }
-        }
-        mViewModel.pokemonProductDetails.observe(this) { it ->
-            it.contentIfNotHandled?.let {
-                when (it) {
-                    is State.Loading -> GthrLogger.i("dschjds", "Loading: ")
-                    is State.Success -> GthrLogger.i("dschjds", "Product: ${it.data}")
-                    is State.Failed ->GthrLogger.i("dschjds", "Failed: ${it.message}")
-                }
-            }
-        }
-        mViewModel.sealedProductDetails.observe(this) { it ->
-            it.contentIfNotHandled?.let {
-                when (it) {
-                    is State.Loading -> GthrLogger.i("dschjds", "Loading: ")
-                    is State.Success -> GthrLogger.i("dschjds", "Product: ${it.data}")
-                    is State.Failed ->GthrLogger.i("dschjds", "Failed: ${it.message}")
-                }
-            }
-        }
-        mViewModel.yugiohProductDetails.observe(this) { it ->
-            it.contentIfNotHandled?.let {
-                when (it) {
-                    is State.Loading -> GthrLogger.i("dschjds", "Loading: ")
-                    is State.Success -> GthrLogger.i("dschjds", "Product: ${it.data}")
-                    is State.Failed ->GthrLogger.i("dschjds", "Failed: ${it.message}")
-                }
-            }
-        }
-
     }
 
     private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination

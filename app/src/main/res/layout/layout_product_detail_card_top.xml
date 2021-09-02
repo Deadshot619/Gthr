@@ -47,7 +47,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_row1_column2"
+                    android:id="@+id/tv_row1_column1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
@@ -56,7 +56,7 @@
                     style="@style/ProductBlueTextTitle"/>
 
                 <TextView
-                    android:id="@+id/tv_row1_colum2"
+                    android:id="@+id/tv_row1_column2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_normal"
@@ -95,6 +95,7 @@
 
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_row2_collum1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_normal"
@@ -105,6 +106,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/tv_row2_collum2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_normal"
@@ -131,7 +133,7 @@
 
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_psa"
+                        android:id="@+id/tv_row2_collum3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_normal"
@@ -142,6 +144,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/tv_row2_collum4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_normal"

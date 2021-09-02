@@ -1,63 +1,90 @@
 package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
 
+import com.google.firebase.database.PropertyName
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class MTGModel(
-    @SerialName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
-    val firImageURL: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
+    @set:PropertyName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
+    var firImageURL: String? = "",
 
-    @SerialName(FirebaseRealtimeDatabase.CARD_BACK_ID)
-    val cardBackId: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.COLORS)
-    val colors: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.FLAVOR_TEXT)
-    val flavorText: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.FOIL)
-    val foil: Boolean? = false,
-    @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
-    val highestBidCost: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
-    val highestBidID: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.ID)
-    val id: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.IMAGE_ID)
-    val imageID: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.IMAGE_URIS)
-    val imageUris: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.LANG)
-    val lang: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    val lowestAskCost: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
-    val lowestAskID: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.MTGO_FOIL_ID)
-    val mtgoFoilId: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.MTGO_ID)
-    val mtgoId: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.NAME)
-    val name: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
-    val numberOfFavorites: Int? = 0,
-    @SerialName(FirebaseRealtimeDatabase.OBJECT_ID)
-    val objectID: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.ORACLE_ID)
-    val oracleId: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.OVER_SIZED)
-    val overSized: Boolean? = false,
-    @SerialName(FirebaseRealtimeDatabase.PRODUCT_TYPE)
-    val productType: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.RARITY)
-    val rarity: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.RELEASED_AT)
-    val releasedAt: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.SET_NAME)
-    val setName: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.SET_TYPE)
-    val setType: String? = "",
-    @SerialName(FirebaseRealtimeDatabase.TYPE_LINE)
-    val typeLine: String? = ""
+    @get:PropertyName(FirebaseRealtimeDatabase.CARD_BACK_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.CARD_BACK_ID)
+    var cardBackId: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.COLORS)
+    @set:PropertyName(FirebaseRealtimeDatabase.COLORS)
+    var colors: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.FLAVOR_TEXT)
+    @set:PropertyName(FirebaseRealtimeDatabase.FLAVOR_TEXT)
+    var flavorText: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.FOIL)
+    @set:PropertyName(FirebaseRealtimeDatabase.FOIL)
+    var foil: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
+    @set:PropertyName(FirebaseRealtimeDatabase.HIGHEST_BID_COST)
+    var highestBidCost: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.HIGHEST_BID_ID)
+    var highestBidID: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.ID)
+    var id: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.IMAGE_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.IMAGE_ID)
+    var imageID: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.IMAGE_URIS)
+    @set:PropertyName(FirebaseRealtimeDatabase.IMAGE_URIS)
+    var imageUris: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.LANG)
+    @set:PropertyName(FirebaseRealtimeDatabase.LANG)
+    var lang: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
+    @set:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
+    var lowestAskCost: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
+    var lowestAskID: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.MTGO_FOIL_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.MTGO_FOIL_ID)
+    var mtgoFoilId: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.MTGO_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.MTGO_ID)
+    var mtgoId: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.NAME)
+    @set:PropertyName(FirebaseRealtimeDatabase.NAME)
+    var name: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
+    @set:PropertyName(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
+    var numberOfFavorites: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.OBJECT_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.OBJECT_ID)
+    var objectID: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.ORACLE_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.ORACLE_ID)
+    var oracleId: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.OVER_SIZED)
+    @set:PropertyName(FirebaseRealtimeDatabase.OVER_SIZED)
+    var overSized: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.PRODUCT_TYPE)
+    @set:PropertyName(FirebaseRealtimeDatabase.PRODUCT_TYPE)
+    var productType: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.RARITY)
+    @set:PropertyName(FirebaseRealtimeDatabase.RARITY)
+    var rarity: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.RELEASED_AT)
+    @set:PropertyName(FirebaseRealtimeDatabase.RELEASED_AT)
+    var releasedAt: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.SET_TYPE)
+    @set:PropertyName(FirebaseRealtimeDatabase.SET_TYPE)
+    var setType: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.TYPE_LINE)
+    @set:PropertyName(FirebaseRealtimeDatabase.TYPE_LINE)
+    var typeLine: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.SET_NAME)
+    @set:PropertyName(FirebaseRealtimeDatabase.SET_NAME)
+    var setName: String? = "",
 )

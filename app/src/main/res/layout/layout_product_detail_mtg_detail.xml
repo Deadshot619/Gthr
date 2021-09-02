@@ -359,19 +359,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/line" />
 
 
-                <TextView
-                    android:id="@+id/tv_text_line2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:fontFamily="@font/lato"
-                    android:text="Troops, kitten formation! This mouse won’t catch itself!\n—Whiskers"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_text_line1" />
 
 
                 <TextView
@@ -387,7 +374,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_text_line2" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_text_line1" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
