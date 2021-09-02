@@ -19,12 +19,14 @@ import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModelFactory
 import com.gthr.gthrcollect.ui.productdetail.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
+import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.utils.customviews.CustomProductButton
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
 import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.enums.SettingFlowType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.getProductCategory

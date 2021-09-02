@@ -119,9 +119,11 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_banner_market"
-                    android:scaleType="centerCrop"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="W,251:1000"
+                    android:scaleType="fitXY"
+                    tools:srcCompat="@drawable/banner"
                     android:layout_marginTop="@dimen/margin_normal"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

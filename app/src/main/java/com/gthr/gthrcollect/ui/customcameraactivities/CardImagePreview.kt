@@ -51,7 +51,7 @@ class CardImagePreview : AppCompatActivity() {
 
             // if back image is empty
             if (mUriBack.isNullOrEmpty()) {
-                mSavePicture.text = getString(R.string.back_label)
+                mSavePicture.text = getString(R.string.back_image)
             } else {
                 mSavePicture.text = getString(R.string.complete)
             }
@@ -63,7 +63,7 @@ class CardImagePreview : AppCompatActivity() {
 
             // if FRONT imsge is empty
             if (mUriFront.isNullOrEmpty()) {
-                mSavePicture.text = getString(R.string.front_lalel)
+                mSavePicture.text = getString(R.string.front_image)
             } else {
                 mSavePicture.text = getString(R.string.complete)
             }

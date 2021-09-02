@@ -3,6 +3,7 @@ package com.gthr.gthrcollect.ui.settings.settingsscreen
 import android.content.Intent
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
@@ -13,10 +14,11 @@ import com.gthr.gthrcollect.databinding.SettingsFragmentBinding
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.profile.AllUsersList
+import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.ui.settings.SettingsViewModel
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
-import com.gthr.gthrcollect.ui.test.TestActivity
 import com.gthr.gthrcollect.utils.customviews.CustomImageTextButton
+import com.gthr.gthrcollect.utils.enums.SettingFlowType
 import com.gthr.gthrcollect.utils.enums.WebViewType
 
 class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding>() {
@@ -61,6 +63,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
     }
 
     private fun setUpClickListeners() {
+
         mBtnEditAccountInfo.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToEditAccountInfoFragment())
         }

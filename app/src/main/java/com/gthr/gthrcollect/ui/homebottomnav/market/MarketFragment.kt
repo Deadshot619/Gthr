@@ -64,7 +64,6 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
         setUpLowestAsk()
         setUpHighestAsk()
         setUpObservers()
-        mViewModel.fetchBannerImage()
     }
 
     private fun initViews() {
@@ -96,7 +95,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         showProgressBar(false)
-                        Glide.with(this).load(it.data).placeholder(R.drawable.banner)
+                        Glide.with(this).load(it.data).placeholder(R.drawable.banner).error(R.drawable.banner)
                             .into(mBannerImage)
                     }
                     is State.Failed -> {

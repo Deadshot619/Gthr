@@ -16,8 +16,13 @@ import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivitySettingsBinding
+import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
+import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentArgs
 import com.gthr.gthrcollect.ui.base.BaseActivity
+import com.gthr.gthrcollect.ui.settings.settingsscreen.SettingsFragmentDirections
 import com.gthr.gthrcollect.utils.constants.AlgoliaConstants
+import com.gthr.gthrcollect.utils.enums.AskFlowType
+import com.gthr.gthrcollect.utils.enums.SettingFlowType
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
@@ -28,11 +33,19 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
 
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration
+    private lateinit var mSettingsType: SettingFlowType
 
 
     override fun onBinding() {
+        mSettingsType = intent?.getSerializableExtra(GOTO) as SettingFlowType
+        setUpNavGraph()
         setSupportActionBar(mViewBinding.toolbar)
         setUpNavigationAndActionBar()
+
+        if (mSettingsType == SettingFlowType.SHIPPING_ADDRESS){
+            mNavController.navigate(SettingsFragmentDirections.actionSettingsFragmentToEditShippingAddressFragment())
+        }
+
     }
 
     private fun setUpNavigationAndActionBar() {
@@ -67,12 +80,19 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return when {
-            NavigationUI.navigateUp(mNavController, mAppBarConfiguration) -> true
-            else -> {
+            // If we moving directly to Settings Shipping Fragment
+        if (mNavController.currentDestination?.id==R.id.editShippingAddressFragment && getSettingFlowType()== SettingFlowType.SHIPPING_ADDRESS){
+            finish()
+            return false
+        }else{
+            // Finishing when root fragment is Setting fragment
+            if (mNavController.currentDestination?.id==R.id.settingsFragment){
                 finish()
-                false
+
+            }else{// Popup fragments from Activity
+                NavigationUI.navigateUp(mNavController, mAppBarConfiguration)
             }
+          return  true
         }
     }
 
@@ -80,10 +100,31 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
         mViewBinding.toolbarTitle.text = title
     }
 
-
-    companion object {
-        fun getInstance(context: Context) = Intent(context, SettingsActivity::class.java)
+    private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination
+        findNavController(R.id.nav_host_fragment)
+            .setGraph(
+                R.navigation.settings_nav_graph
+            )
     }
 
+
+    internal fun getSettingFlowType(): SettingFlowType = mSettingsType
+
+    companion object {
+
+        const val GOTO :String ="goto"
+
+        fun getInstance(context: Context, goTo: SettingFlowType =SettingFlowType.SETTING ) = Intent(context, SettingsActivity::class.java).apply{
+            putExtra(GOTO,goTo)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (mNavController.currentDestination?.id==R.id.editShippingAddressFragment && getSettingFlowType()== SettingFlowType.SHIPPING_ADDRESS){
+            finish()
+        }else{
+            super.onBackPressed()
+        }
+    }
 
 }

@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings_nav_graph"
     app:startDestination="@id/settingsFragment">
 
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.gthr.gthrcollect.ui.settings.settingsscreen.SettingsFragment"
+        tools:layout="@layout/settings_fragment"
         android:label="SettingsFragment">
         <action
             android:id="@+id/action_settingsFragment_to_editAccountInfoFragment"
-            app:destination="@id/editAccountInfoFragment" />
+            app:destination="@id/editAccountInfoFragment"
+            />
         <action
             android:id="@+id/action_settingsFragment_to_activeOffersFragment"
             app:destination="@id/activeOffersFragment" />
         <action
             android:id="@+id/action_settingsFragment_to_editShippingAddressFragment"
             app:destination="@id/editShippingAddressFragment" />
+
+
     </fragment>
     <fragment
         android:id="@+id/editAccountInfoFragment"
         android:name="com.gthr.gthrcollect.ui.settings.editaccountinfo.EditAccountInfoFragment"
-        android:label="EditAccountInfoFragment" />
+        android:label="EditAccountInfoFragment"
+        tools:layout="@layout/account_fragment"/>
     <fragment
         android:id="@+id/activeOffersFragment"
         android:name="com.gthr.gthrcollect.ui.settings.activeoffers.ActiveOffersFragment"
+        tools:layout="@layout/active_offers_fragment"
         android:label="ActiveOffersFragment" />
     <fragment
         android:id="@+id/editShippingAddressFragment"
         android:name="com.gthr.gthrcollect.ui.settings.editshippingaddress.EditShippingAddressFragment"
-        android:label="EditShippingAddressFragment">
+        android:label="EditShippingAddressFragment"
+        tools:layout="@layout/layout_shipping_address">
         <action
             android:id="@+id/action_editShippingAddressFragment_to_addNewAddressFragment"
             app:destination="@id/addNewAddressFragment" />
@@ -37,7 +45,8 @@
     <fragment
         android:id="@+id/addNewAddressFragment"
         android:name="com.gthr.gthrcollect.ui.settings.addnewaddress.AddNewAddressFragment"
-        android:label="AddNewAddressFragment" >
+        android:label="AddNewAddressFragment"
+        tools:layout="@layout/add_new_address_fragment">
         <argument
             android:name="item"
             app:argType="com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel"

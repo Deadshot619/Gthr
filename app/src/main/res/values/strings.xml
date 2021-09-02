@@ -446,6 +446,8 @@
 
     <string name="note_f_camera">Take a picture of the front</string>
     <string name="note_b_camera">Take a picture of the back</string>
+    <string name="front_image">Front Image</string>
+    <string name="back_image">Back Image</string>
 
     <string name="skip_picture">Skip Pictures</string>
     <string name="ask_sell">Ask/Sell</string>

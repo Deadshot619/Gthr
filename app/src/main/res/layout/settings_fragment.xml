@@ -42,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_extra_large"
                 app:citb_btn_title="@string/btn_active_offers"
+                android:visibility="gone"
                 app:citb_src="@drawable/ic_active_info" />
 
             <!--Edit Account Info-->

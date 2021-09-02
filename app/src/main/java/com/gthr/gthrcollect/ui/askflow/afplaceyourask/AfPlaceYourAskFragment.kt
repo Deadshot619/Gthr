@@ -16,13 +16,11 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
+import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-import com.gthr.gthrcollect.utils.enums.AskFlowType
-import com.gthr.gthrcollect.utils.enums.ProductCategory
-import com.gthr.gthrcollect.utils.enums.ReceiptType
-import com.gthr.gthrcollect.utils.enums.WebViewType
+import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
 
@@ -52,6 +50,9 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
     private lateinit var mTvRow2Value: TextView
     private lateinit var mTvRow3: TextView
     private lateinit var mTvRow3Value: TextView
+    private lateinit var mAddressBtn: TextView
+
+
 
     override fun onBinding() {
         setHasOptionsMenu(false)
@@ -126,6 +127,10 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 )
             )
         }
+
+        mAddressBtn.setOnClickListener {
+            startActivity(SettingsActivity.getInstance(requireContext(), SettingFlowType.SHIPPING_ADDRESS))
+        }
     }
 
     private fun toggleTnC(toggleOn: Boolean) {
@@ -152,6 +157,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             mTvRow2Value = tvPaymentProcessingValue
             mTvRow3 = tvShippingReimbursement
             mTvRow3Value = tvShippingReimbursementValue
+            mAddressBtn = tvAddress
         }
 
         when ((requireActivity() as AskFlowActivity).getAskFlowType()) {

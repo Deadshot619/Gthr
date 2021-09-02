@@ -16,6 +16,10 @@ class MarketViewModel(private val repository: FeedRepository) : ViewModel() {
     val bannerImage: LiveData<Event<State<String>>>
         get() = _bannerImage
 
+    init {
+        fetchBannerImage()
+    }
+
     fun fetchBannerImage() {
         viewModelScope.launch {
             repository.fetchBannerImage().collect {
