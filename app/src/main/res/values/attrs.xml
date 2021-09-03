@@ -154,6 +154,13 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="CustomLegalityView">
+        <attr name="clv_type" format="enum">
+            <enum name="NOT_LEGAL" value="0"/>
+            <enum name="LEGAL" value="1"/>
+        </attr>
+    </declare-styleable>
+
 
     <declare-styleable name="CustomCollectionTypeView">
         <attr name="ccv_isActive" format="boolean"/>

@@ -19,5 +19,6 @@ data class SealedDomainModel(
     val rarity: String,
     val `set`: String,
     val tier: Int,
+    val description: String,
     val refKey: String
 )

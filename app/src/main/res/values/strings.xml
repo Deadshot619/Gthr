@@ -7,6 +7,7 @@
     <string name="birth_day_dialog_title">Select date</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="text_na">N/A</string>
 
     <!-- Send Email-->
     <string name="intent_email_chooser_title">Send Email…</string>
@@ -368,6 +369,8 @@
     <string name="text_shipping_reimbursement">Shipping Reimbursement</string>
 
     <!--Product Detail-->
+    <string name="text_legal_product_detail_mtg">Legal</string>
+    <string name="text_not_legal_product_detail_mtg">Not Legal</string>
     <string name="menu_share">Share</string>
     <string name="menu_favorite">Add to favorite</string>
     <string name="text_product_details_recent_sales">Recent Sales</string>
@@ -399,6 +402,17 @@
     <string name="text_product_type_product_detail">PRODUCT TYPE</string>
     <string name="text_exclusivity_product_detail">EXCLUSIVITY</string>
     <string name="text_btn_collect_product_detail">Collect</string>
+    <string name="text_standard_mtg_detail">Standard</string>
+    <string name="text_brawl_mtg_detail">Brawl</string>
+    <string name="text_pioneer_mtg_detail">Pioneer</string>
+    <string name="text_historic_mtg_detail">Historic</string>
+    <string name="text_modern_mtg_detail">Modern</string>
+    <string name="text_pauper_mtg_detail">Pauper</string>
+    <string name="text_legacy_mtg_detail">Legacy</string>
+    <string name="text_penny_mtg_detail">Penny</string>
+    <string name="text_commander_mtg_detail">Commander</string>
+    <string name="text_vintage_mtg_detail">Vintage</string>
+
 
     <!--  Generic Error Mesage-->
     <string name="required_field">required</string>
@@ -479,5 +493,7 @@
     <string name="text_finish_buy_flow">Finish</string>
     <string name="text_type_buylist_price_here_buy_flow">Type Buylist Price Here</string>
     <string name="text_desh_product_detail">-</string>
+
+
 
 </resources>

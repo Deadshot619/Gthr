@@ -1,6 +1,5 @@
 package com.gthr.gthrcollect.ui.productdetail.productdetailscreen
 
-
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -22,6 +21,7 @@ import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModelFactory
 import com.gthr.gthrcollect.ui.productdetail.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
 import com.gthr.gthrcollect.ui.settings.SettingsActivity
+import com.gthr.gthrcollect.utils.customviews.CustomLegalityView
 import com.gthr.gthrcollect.utils.customviews.CustomProductButton
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
@@ -30,14 +30,12 @@ import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.enums.SettingFlowType
 import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.setProfileImage
 import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 
-
-class ProductDetailFragment :
-    BaseFragment<ProductDetailsViewModel, ProductDetailFragmentBinding>() {
-
+class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetailFragmentBinding>() {
 
     override val mViewModel: ProductDetailsViewModel by activityViewModels {
         ProductDetailsViewModelFactory(
@@ -80,6 +78,8 @@ class ProductDetailFragment :
 
 
 
+
+
     override fun onBinding() {
         mViewBinding.lifecycleOwner = viewLifecycleOwner
         mProductType = args.type
@@ -96,65 +96,88 @@ class ProductDetailFragment :
     }
 
     private fun setUpObserver() {
-        mViewModel.mtgProductDetails.observe(this) { it ->
+        mViewModel.productImage.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Failed -> showProgressBar(false)
+                    is State.Success -> {
+                        GthrLogger.i("dschjds", "Product: ${it.data}")
+                        showProgressBar(false)
+                        mIvProduct.setProfileImage(it.data)
+                    }
+                }
+            }
+        }
+        mViewModel.mtgProductDetails.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
+                        if(it.data.imageID.isNotEmpty())
+                        mViewModel.getProductImage(it.data.imageID)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
                 }
             }
         }
-        mViewModel.funkoProductDetails.observe(this) { it ->
+        mViewModel.funkoProductDetails.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
+                        if(it.data.imageID.isNotEmpty())
+                        mViewModel.getProductImage(it.data.imageID)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
                 }
             }
         }
-        mViewModel.pokemonProductDetails.observe(this) { it ->
+        mViewModel.pokemonProductDetails.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
+                        if(it.data.imageID.isNotEmpty())
+                        mViewModel.getProductImage(it.data.imageID)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
                 }
             }
         }
-        mViewModel.sealedProductDetails.observe(this) { it ->
+        mViewModel.sealedProductDetails.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
+                        if(it.data.imageID.isNotEmpty())
+                        mViewModel.getProductImage(it.data.imageID)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
                 }
             }
         }
-        mViewModel.yugiohProductDetails.observe(this) { it ->
+        mViewModel.yugiohProductDetails.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
+                        if(it.data.imageID.isNotEmpty())
+                        mViewModel.getProductImage(it.data.imageID)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -220,7 +243,7 @@ class ProductDetailFragment :
         }
         when (args.type) {
             ProductType.POKEMON -> mViewModel.getProductDetails("-MiTOfdj0XCDttwhYf-Q", ProductType.POKEMON)
-            ProductType.MAGIC_THE_GATHERING -> mViewModel.getProductDetails("-MiTNOMShh5j-097pdyz", ProductType.MAGIC_THE_GATHERING)
+            ProductType.MAGIC_THE_GATHERING -> mViewModel.getProductDetails("-MieV4LMu5ePEr-KxVtd", ProductType.MAGIC_THE_GATHERING)
             ProductType.YUGIOH -> mViewModel.getProductDetails("-MiTSTt3dbVfOQYDmswu", ProductType.YUGIOH)
             ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> mViewModel.getProductDetails("0", ProductType.SEALED_POKEMON)
             ProductType.FUNKO -> mViewModel.getProductDetails("-MiTpkeK3aeS5L4lvUO0", ProductType.FUNKO)
@@ -345,6 +368,7 @@ class ProductDetailFragment :
             mBtnBuy = it.btnBuy
             mBtnCollect = it.btnCollect
             mBtnSell = it.btnSell
+            mIvProduct = it.ivProduct
             initProgressBar(it.layoutProgress)
         }
     }
@@ -354,8 +378,7 @@ class ProductDetailFragment :
             tvTitle.text = data.name
             tvRow1Column2.text = data.set
         }
-//        mTvDescription.text = data.description
-
+        mTvDescription.text = data.description
     }
 
     private fun setViewData(data: MTGDomainModel) {
@@ -364,27 +387,23 @@ class ProductDetailFragment :
             tvRow1Column2.text = data.setName
             tvRow2Collum2.text = getString(R.string.text_desh_product_detail)
             tvRow2Collum4.text = getString(R.string.text_desh_product_detail)
+        }
 
-//            mLayoutProductDetailMtgDetailBinding.tvLegalRow1Collum1.text = data.pioneer
-//            mLayoutProductDetailMtgDetailBinding.tvLegalRow1Collum2.text = data.modern
-//            mLayoutProductDetailMtgDetailBinding.tvLegalRow1Collum3.text = data.legacy
-//
-//            mLayoutProductDetailMtgDetailBinding.tvLegalRow2Collum1.text = data.historic
-//            mLayoutProductDetailMtgDetailBinding.tvLegalRow2Collum2.text = data.legacy
-//            mLayoutProductDetailMtgDetailBinding.tvLegalRow2Collum3.text = data.commander
+        mLayoutProductDetailMtgDetailBinding.run {
+            clvStandard.setType(if(data.standard) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvBrawl.setType(if(data.brawl) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvPioneer.setType(if(data.pioneer) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvModern.setType(if(data.modern) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvPauper.setType(if(data.pauper) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvLegacy.setType(if(data.legacy) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvPenny.setType(if(data.penny) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvCommander.setType(if(data.commander) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvVintage.setType(if(data.vintage) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvHistoric.setType(if(false) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
 
-//            mLayoutProductDetailMtgDetailBinding.tvNotLegalRow1Collum1.text = data.standard
-//            mLayoutProductDetailMtgDetailBinding.tvNotLegalRow1Collum2.text = data.brawl
-//            mLayoutProductDetailMtgDetailBinding.tvNotLegalRow1Collum3.text = data.pauper
-//
-//            mLayoutProductDetailMtgDetailBinding.tvNotLegalRow2Collum1.text = data.penny
-//            mLayoutProductDetailMtgDetailBinding.tvNotLegalRow2Collum2.text = data.pioneer
-//            mLayoutProductDetailMtgDetailBinding.tvNotLegalRow2Collum3.text = data.pioneer
-
-            mLayoutProductDetailMtgDetailBinding.tvTitle.text = data.typeLine
-            mLayoutProductDetailMtgDetailBinding.tvTextLine1.text = data.flavorText
-//            mLayoutProductDetailMtgDetailBinding.tvOutOf.text = (data.power/data.toughness)
-
+            tvTitle.text = data.typeLine
+            tvTextLine1.text = data.flavorText
+            tvOutOf.text = (data.power/data.toughness).toString()
         }
     }
 
@@ -422,22 +441,26 @@ class ProductDetailFragment :
             tvRow6Column1.text = data.rarity
             tvRow6Column2.text = data.stage
             tvRow8Column1.text = data.japaneseNumber.toString()
-//            tvRow8Column2.text = data.japeneseSet
+            tvRow8Column2.text = data.japaneseSet
         }
     }
 
     private fun setViewData(data: FunkoDomainModel) {
-        mLayoutProductDetailToyTopBinding.tvTitle.text = data.name
-        mLayoutProductDetailToyTopBinding.tvRow1Column2.text = data.license
-        mLayoutProductDetailToyTopBinding.tvRow2Column2.text = data.itemNumber
+        mLayoutProductDetailToyTopBinding.run {
+            tvTitle.text = data.name
+            tvRow1Column2.text = data.license
+            tvRow2Column2.text = data.itemNumber
+        }
 
-        mLayoutProductDetailMainDetailsBinding.tvRow2Column1.text = if(data.releaseDate.isEmpty())data.releaseDate else "N/A"
-        mLayoutProductDetailMainDetailsBinding.tvRow2Column2.text = if(data.category.isEmpty())data.category else "N/A"
+        mLayoutProductDetailMainDetailsBinding.run {
+            tvRow2Column1.text = if(data.releaseDate.isEmpty())data.releaseDate else getString(R.string.text_na)
+            tvRow2Column2.text = if(data.category.isEmpty())data.category else getString(R.string.text_na)
 
-        mLayoutProductDetailMainDetailsBinding.tvRow4Column2.text = data.productType.toString()
-        mLayoutProductDetailMainDetailsBinding.tvRow4Column1.text = if(data.itemNumber.isEmpty())data.itemNumber else "N/A"
+            tvRow4Column2.text = data.productType.toString()
+            tvRow4Column1.text = if(data.itemNumber.isEmpty())data.itemNumber else getString(R.string.text_na)
 
-        mLayoutProductDetailMainDetailsBinding.tvRow6Column2.text = if(data.license.isEmpty())data.license else "N/A"
-//        mLayoutProductDetailMainDetailsBinding.tvRow6Column1.text = if(data.exclusivity.isEmpty())data.exclusivity else "N/A"
+            tvRow6Column2.text = if(data.license.isEmpty())data.license else getString(R.string.text_na)
+            tvRow6Column1.text = if(data.exclusivity.isEmpty())data.exclusivity else getString(R.string.text_na)
+        }
     }
 }

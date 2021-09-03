@@ -67,5 +67,8 @@ data class FunkoModel(
     var status: String? = "",
     @get:PropertyName(FirebaseRealtimeDatabase.TIER)
     @set:PropertyName(FirebaseRealtimeDatabase.TIER)
-    var tier: String? = ""
+    var tier: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.EXCLUSIVITY)
+    @set:PropertyName(FirebaseRealtimeDatabase.EXCLUSIVITY)
+    var exclusivity: String? = "",
 )

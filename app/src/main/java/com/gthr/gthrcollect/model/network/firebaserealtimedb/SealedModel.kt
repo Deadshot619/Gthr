@@ -12,6 +12,10 @@ data class SealedModel(
     @set:PropertyName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
     var firImageURL: String? = "",
 
+    @get:PropertyName(FirebaseRealtimeDatabase.DESCRIPTION)
+    @set:PropertyName(FirebaseRealtimeDatabase.DESCRIPTION)
+    var description: String? = "",
+
     @get:PropertyName(FirebaseRealtimeDatabase.CARD_TEXT)
     @set:PropertyName(FirebaseRealtimeDatabase.CARD_TEXT)
     var cardText: String? = "",

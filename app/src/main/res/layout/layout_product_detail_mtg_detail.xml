@@ -12,309 +12,13 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
-            app:cardCornerRadius="@dimen/radius"
-            android:id="@+id/cv_legal"
-            style="@style/CustomCardProductDetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_legal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_recent_sale"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="@string/text_legal_product_detail"
-                    android:textAllCaps="true"
-                    android:textColor="@color/light_blue"
-                    android:textSize="@dimen/text_size_extra_small"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_legal_row1_collum1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_legal_row1_collum2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_legal" />
-
-                <TextView
-                    android:id="@+id/tv_legal_row1_collum2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/extra_light_blue"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_legal_row1_collum1"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_legal_row1_collum3"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_legal_row1_collum1"
-                    app:layout_constraintTop_toTopOf="@+id/tv_legal_row1_collum1" />
-
-                <TextView
-                    android:id="@+id/tv_legal_row1_collum3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_legal_row1_collum2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_legal_row1_collum2"
-                    app:layout_constraintTop_toTopOf="@+id/tv_legal_row1_collum2" />
-
-
-                <TextView
-                    android:id="@+id/tv_legal_row2_collum1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/extra_light_blue"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_legal_row2_collum2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_legal_row1_collum1" />
-
-                <TextView
-                    android:id="@+id/tv_legal_row2_collum2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_legal_row2_collum1"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_legal_row2_collum3"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_legal_row2_collum1"
-                    app:layout_constraintTop_toTopOf="@+id/tv_legal_row2_collum1" />
-
-                <TextView
-                    android:id="@+id/tv_legal_row2_collum3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/extra_light_blue"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_legal_row2_collum2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_legal_row2_collum2"
-                    app:layout_constraintTop_toTopOf="@+id/tv_legal_row2_collum2" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            app:cardCornerRadius="@dimen/radius"
-            android:id="@+id/cv_not_legal"
-            style="@style/CustomCardProductDetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_legal">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_not_legal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_recent_sale"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="@string/text_not_legal_product_detail"
-                    android:textAllCaps="true"
-                    android:textColor="@color/light_blue"
-                    android:textSize="@dimen/text_size_extra_small"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_not_legal_row1_collum1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_not_legal_row1_collum2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_not_legal" />
-
-                <TextView
-                    android:id="@+id/tv_not_legal_row1_collum2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/extra_light_blue"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_not_legal_row1_collum1"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_not_legal_row1_collum3"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_not_legal_row1_collum1"
-                    app:layout_constraintTop_toTopOf="@+id/tv_not_legal_row1_collum1" />
-
-                <TextView
-                    android:id="@+id/tv_not_legal_row1_collum3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_not_legal_row1_collum2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_not_legal_row1_collum2"
-                    app:layout_constraintTop_toTopOf="@+id/tv_not_legal_row1_collum2" />
-
-
-                <TextView
-                    android:id="@+id/tv_not_legal_row2_collum1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/extra_light_blue"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_not_legal_row2_collum2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_not_legal_row1_collum1" />
-
-                <TextView
-                    android:id="@+id/tv_not_legal_row2_collum2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_not_legal_row2_collum1"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_not_legal_row2_collum3"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_not_legal_row2_collum1"
-                    app:layout_constraintTop_toTopOf="@+id/tv_not_legal_row2_collum1" />
-
-                <TextView
-                    android:id="@+id/tv_not_legal_row2_collum3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/extra_light_blue"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/padding_mini"
-                    android:paddingStart="@dimen/padding_extra_large"
-                    android:paddingEnd="@dimen/padding_normal"
-                    android:text="Pioneer"
-
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_small"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_not_legal_row2_collum2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tv_not_legal_row2_collum2"
-                    app:layout_constraintTop_toTopOf="@+id/tv_not_legal_row2_collum2" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_detail"
             android:layout_marginBottom="@dimen/margin_extra_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
             app:cardCornerRadius="@dimen/radius"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_not_legal">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -379,6 +83,326 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            app:cardCornerRadius="@dimen/radius"
+            android:id="@+id/cv_legal"
+            android:layout_marginTop="@dimen/margin_extra_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_extra_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mcv_detail">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.25"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.75"/>
+
+                <com.gthr.gthrcollect.utils.customviews.CustomLegalityView
+                    android:id="@+id/clv_standard"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:clv_type="LEGAL"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginEnd="@dimen/margin_mini"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_left"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_standard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_standard_mtg_detail"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
+                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/clv_standard"
+                    app:layout_constraintTop_toTopOf="@+id/clv_standard"
+                    app:layout_constraintEnd_toStartOf="@+id/v_line"
+                    app:layout_constraintStart_toEndOf="@+id/clv_standard" />
+
+                <com.gthr.gthrcollect.utils.customviews.CustomLegalityView
+                    android:id="@+id/clv_brawl"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_mini"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:clv_type="LEGAL"
+                    app:layout_constraintStart_toStartOf="@+id/v_line"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_brawl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_brawl_mtg_detail"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
+                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/clv_brawl"
+                    app:layout_constraintTop_toTopOf="@+id/clv_brawl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/clv_brawl" />
+
+                <com.gthr.gthrcollect.utils.customviews.CustomLegalityView
+                    android:id="@+id/clv_pioneer"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_mini"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_left"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:clv_type="LEGAL"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/clv_standard" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_pioneer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_pioneer_mtg_detail"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
+                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/clv_pioneer"
+                    app:layout_constraintTop_toTopOf="@+id/clv_pioneer"
+                    app:layout_constraintEnd_toStartOf="@+id/v_line"
+                    app:layout_constraintStart_toEndOf="@+id/clv_pioneer" />
+
+                <com.gthr.gthrcollect.utils.customviews.CustomLegalityView
+                    android:id="@+id/clv_historic"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_mini"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:clv_type="LEGAL"
+                    app:layout_constraintStart_toStartOf="@+id/v_line"
+                    app:layout_constraintTop_toBottomOf="@+id/clv_standard" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_historic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_historic_mtg_detail"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
+                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/clv_historic"
+                    app:layout_constraintTop_toTopOf="@+id/clv_historic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/clv_historic" />
+
+                <com.gthr.gthrcollect.utils.customviews.CustomLegalityView
+                    android:id="@+id/clv_modern"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_mini"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_left"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:clv_type="LEGAL"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/clv_pioneer" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_modern"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_modern_mtg_detail"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
+                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/clv_modern"
+                    app:layout_constraintTop_toTopOf="@+id/clv_modern"
+                    app:layout_constraintEnd_toStartOf="@+id/v_line"
+                    app:layout_constraintStart_toEndOf="@+id/clv_modern" />
+
+                <com.gthr.gthrcollect.utils.customviews.CustomLegalityView
+                    android:id="@+id/clv_Pauper"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_mini"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:clv_type="LEGAL"
+                    app:layout_constraintStart_toStartOf="@+id/v_line"
+                    app:layout_constraintTop_toBottomOf="@+id/clv_pioneer" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_Pauper"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_pauper_mtg_detail"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
+                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/clv_Pauper"
+                    app:layout_constraintTop_toTopOf="@+id/clv_Pauper"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/clv_Pauper" />
+
+                <com.gthr.gthrcollect.utils.customviews.CustomLegalityView
+                    android:id="@+id/clv_legacy"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_mini"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_left"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:clv_type="LEGAL"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/clv_modern" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_legacy"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_legacy_mtg_detail"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
+                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/clv_legacy"
+                    app:layout_constraintTop_toTopOf="@+id/clv_legacy"
+                    app:layout_constraintEnd_toStartOf="@+id/v_line"
+                    app:layout_constraintStart_toEndOf="@+id/clv_legacy" />
+
+                <com.gthr.gthrcollect.utils.customviews.CustomLegalityView
+                    android:id="@+id/clv_penny"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_mini"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:clv_type="LEGAL"
+                    app:layout_constraintStart_toStartOf="@+id/v_line"
+                    app:layout_constraintTop_toBottomOf="@+id/clv_modern" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_penny"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_penny_mtg_detail"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
+                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/clv_penny"
+                    app:layout_constraintTop_toTopOf="@+id/clv_penny"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/clv_penny" />
+
+                <com.gthr.gthrcollect.utils.customviews.CustomLegalityView
+                    android:id="@+id/clv_commander"
+                    android:layout_marginVertical="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_mini"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_left"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:clv_type="LEGAL"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/clv_legacy" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_commander"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_commander_mtg_detail"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
+                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/clv_commander"
+                    app:layout_constraintTop_toTopOf="@+id/clv_commander"
+                    app:layout_constraintEnd_toStartOf="@+id/v_line"
+                    app:layout_constraintStart_toEndOf="@+id/clv_commander" />
+
+                <com.gthr.gthrcollect.utils.customviews.CustomLegalityView
+                    android:id="@+id/clv_vintage"
+                    android:layout_marginVertical="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_mini"
+                    android:layout_marginStart="@dimen/margin_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:clv_type="LEGAL"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/v_line"
+                    app:layout_constraintTop_toBottomOf="@+id/clv_legacy" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_vintage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_vintage_mtg_detail"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_semi_small"
+                    android:layout_marginHorizontal="@dimen/margin_extra_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/clv_vintage"
+                    app:layout_constraintTop_toTopOf="@+id/clv_vintage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/clv_vintage" />
+
+
+                <View
+                    android:id="@+id/v_line"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:background="@color/disable"
+                    app:layout_constraintBottom_toBottomOf="@+id/clv_commander"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/clv_standard" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

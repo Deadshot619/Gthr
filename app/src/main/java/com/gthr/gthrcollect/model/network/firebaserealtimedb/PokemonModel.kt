@@ -14,6 +14,9 @@ data class PokemonModel(
     @get:PropertyName(FirebaseRealtimeDatabase.HIGHEST_BID)
     @set:PropertyName(FirebaseRealtimeDatabase.HIGHEST_BID)
     var highestBid: Int? = 0,
+    @get:PropertyName(FirebaseRealtimeDatabase.JAPANESE_SET)
+    @set:PropertyName(FirebaseRealtimeDatabase.JAPANESE_SET)
+    var japaneseSet: String? = "",
 
     @get:PropertyName(FirebaseRealtimeDatabase.CARD_TYPE)
     @set:PropertyName(FirebaseRealtimeDatabase.CARD_TYPE)
@@ -39,9 +42,6 @@ data class PokemonModel(
     @get:PropertyName(FirebaseRealtimeDatabase.JAPANESE_NUMBER)
     @set:PropertyName(FirebaseRealtimeDatabase.JAPANESE_NUMBER)
     var japaneseNumber: Int? = 0,
-    @get:PropertyName(FirebaseRealtimeDatabase.JAPANESE_SET)
-    @set:PropertyName(FirebaseRealtimeDatabase.JAPANESE_SET)
-    var japaneseSet: String? = "",
     @get:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
     @set:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
     var lowestAskCost: Int? = 0,

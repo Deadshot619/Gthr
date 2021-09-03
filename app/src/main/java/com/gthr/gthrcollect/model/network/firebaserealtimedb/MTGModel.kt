@@ -87,4 +87,51 @@ data class MTGModel(
     @get:PropertyName(FirebaseRealtimeDatabase.SET_NAME)
     @set:PropertyName(FirebaseRealtimeDatabase.SET_NAME)
     var setName: String? = "",
+
+    @get:PropertyName(FirebaseRealtimeDatabase.BRAWL)
+    @set:PropertyName(FirebaseRealtimeDatabase.BRAWL)
+    var brawl: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.COMMANDER)
+    @set:PropertyName(FirebaseRealtimeDatabase.COMMANDER)
+    var commander: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.DUEL)
+    @set:PropertyName(FirebaseRealtimeDatabase.DUEL)
+    var duel: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.FUTURE)
+    @set:PropertyName(FirebaseRealtimeDatabase.FUTURE)
+    var future: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.LEGACY)
+    @set:PropertyName(FirebaseRealtimeDatabase.LEGACY)
+    var legacy: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.MODERN)
+    @set:PropertyName(FirebaseRealtimeDatabase.MODERN)
+    var modern: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.OLDSCHOOL)
+    @set:PropertyName(FirebaseRealtimeDatabase.OLDSCHOOL)
+    var oldschool: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.PAUPER)
+    @set:PropertyName(FirebaseRealtimeDatabase.PAUPER)
+    var pauper: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.PENNY)
+    @set:PropertyName(FirebaseRealtimeDatabase.PENNY)
+    var penny: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.PIONEER)
+    @set:PropertyName(FirebaseRealtimeDatabase.PIONEER)
+    var pioneer: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.VINTAGE)
+    @set:PropertyName(FirebaseRealtimeDatabase.VINTAGE)
+    var vintage: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.STANDARD)
+    @set:PropertyName(FirebaseRealtimeDatabase.STANDARD)
+    var standard: Boolean? = false,
+    @get:PropertyName(FirebaseRealtimeDatabase.HISTORIC)
+    @set:PropertyName(FirebaseRealtimeDatabase.HISTORIC)
+    var historic: Boolean? = false,
+
+    @get:PropertyName(FirebaseRealtimeDatabase.POWER)
+    @set:PropertyName(FirebaseRealtimeDatabase.POWER)
+    var power: Int? = -1,
+    @get:PropertyName(FirebaseRealtimeDatabase.TOUGHNESS)
+    @set:PropertyName(FirebaseRealtimeDatabase.TOUGHNESS)
+    var toughness: Int? = -1,
 )

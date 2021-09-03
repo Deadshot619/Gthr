@@ -22,5 +22,7 @@ data class FunkoDomainModel(
     val releaseDate: String,
     val status: String,
     val tier: String,
-    val refKey: String
+    val refKey: String,
+    var exclusivity: String,
+    var imageID: String
 )

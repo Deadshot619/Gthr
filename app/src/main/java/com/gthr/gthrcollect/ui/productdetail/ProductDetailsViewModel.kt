@@ -19,6 +19,10 @@ class ProductDetailsViewModel(private val repository : ProductDetailsRepository)
     val mtgProductDetails: LiveData<Event<State<MTGDomainModel>>>
         get() = _mtgProductDetails
 
+    private val _productImage = MutableLiveData<Event<State<String>>>()
+    val productImage: LiveData<Event<State<String>>>
+        get() = _productImage
+
     private val _pokemonProductDetails = MutableLiveData<Event<State<PokemonDomainModel>>>()
     val pokemonProductDetails: LiveData<Event<State<PokemonDomainModel>>>
         get() = _pokemonProductDetails
@@ -59,6 +63,14 @@ class ProductDetailsViewModel(private val repository : ProductDetailsRepository)
                 ProductType.SEALED_MTG -> repository.getProductDetails<SealedDomainModel>(id,ProductType.SEALED_MTG).collect {
                     _sealedProductDetails.value = Event(it)
                 }
+            }
+        }
+    }
+
+    fun getProductImage(image : String) {
+        viewModelScope.launch {
+            repository.getProductImage(image).collect{
+                _productImage.value = Event(it)
             }
         }
     }
