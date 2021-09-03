@@ -39,6 +39,6 @@ class SearchCollectionAdapter(val callback : (position : Int) -> Unit) : ListAda
     override fun onBindViewHolder(holder: SearchCollectionViewHolder, position: Int) =
         holder.bind()
 
-    override fun getItemCount(): Int = 10
+    override fun getItemCount(): Int = 1
 
 }

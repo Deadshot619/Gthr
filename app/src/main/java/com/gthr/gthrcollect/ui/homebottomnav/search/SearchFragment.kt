@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.SearchFragmentBinding
+import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.ProductAdapter
@@ -26,7 +27,9 @@ import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.animateVisibility
 import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.setProfileImage
 import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
@@ -86,6 +89,10 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         setUpOnClickListeners()
         setUpRecyclerView()
 
+        setUpObservers()
+
+        mViewModel.searchProducts()
+
         if(args.type==SearchType.COLLECTIONS){
             setCollectionSelected()
         }
@@ -102,6 +109,23 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 ProductCategoryFilter.NONE -> {}
             }
         }
+    }
+
+    private fun setUpObservers() {
+        mViewModel.productList.observe(viewLifecycleOwner) {  it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Failed -> showProgressBar(false)
+                    is State.Success -> {
+                        mProductAdapter.submitList(it.data)
+                        showProgressBar(false)
+                        GthrLogger.e("observedata","data: ${it.data}")
+                    }
+                }
+            }
+        }
+
     }
 
     private fun setUpRecyclerView() {
@@ -145,38 +169,14 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                     AskFlowActivity.getInstance(
                         requireContext(),
                         AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
-                        ProductCategory.CARDS,
-                        ProductType.POKEMON
+                        it.productCategory!!,
+                        it.productType!!
                     )
                 )
-                it % 5 == 0 -> startActivity(
+               else -> startActivity(
                     ProductDetailActivity.getInstance(
                         requireContext(),
-                        ProductType.POKEMON
-                    )
-                )
-                it % 5 == 1 -> startActivity(
-                    ProductDetailActivity.getInstance(
-                        requireContext(),
-                        ProductType.MAGIC_THE_GATHERING
-                    )
-                )
-                it % 5 == 2 -> startActivity(
-                    ProductDetailActivity.getInstance(
-                        requireContext(),
-                        ProductType.YUGIOH
-                    )
-                )
-                it % 5 == 3 -> startActivity(
-                    ProductDetailActivity.getInstance(
-                        requireContext(),
-                        ProductType.SEALED_YUGIOH
-                    )
-                )
-                it % 5 == 4 -> startActivity(
-                    ProductDetailActivity.getInstance(
-                        requireContext(),
-                        ProductType.FUNKO
+                      it.productType!!
                     )
                 )
             }
@@ -394,6 +394,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mCardSubCategories = listOf(mCfscvCardsPokemon, mCfscvCardsYuGiOh, mCfscvCardsMagic)
         mSealedSubCategories = listOf(mCfscvSealedPokemon, mCfscvSealedYuGiOh, mCfscvSealedMagic)
 
+        initProgressBar(mViewBinding.layoutProgress)
     }
 
     //This fun used to select Sorting category as selected

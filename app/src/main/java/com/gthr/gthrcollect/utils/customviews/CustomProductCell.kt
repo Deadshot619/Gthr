@@ -9,8 +9,11 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.model.domain.ProductDisplayModel
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.getImageDrawable
 import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.setImageByUrl
 import com.gthr.gthrcollect.utils.extensions.visible
 
 class CustomProductCell @JvmOverloads constructor(
@@ -106,6 +109,25 @@ class CustomProductCell @JvmOverloads constructor(
         }
     }
 
+   fun setValue(productDisplayModel: ProductDisplayModel){
+       when(productDisplayModel.productType) {
+
+           ProductType.FUNKO -> setType(Type.FUNKO)
+           ProductType.POKEMON -> setType(Type.HOLO_RARE)
+           ProductType.YUGIOH -> setType(Type.HOLO_RARE)
+           ProductType.SEALED_YUGIOH,
+           ProductType.SEALED_POKEMON,
+           ProductType.SEALED_MTG-> setType(Type.SEALED)
+
+       }
+       setPrice(productDisplayModel.lowestAskCost.toString())
+       mIvMain.setImageByUrl(productDisplayModel.firImageURL!!)
+       setProductNumber(productDisplayModel.productNumber.toString())
+       setProductName(productDisplayModel.name!!)
+
+
+   }
+
     fun setState(state:State){
         mCurrentState = state
         when(state){
@@ -171,6 +193,15 @@ class CustomProductCell @JvmOverloads constructor(
 
     fun setPrice(value: String) {
         mTvPrice.text = String.format(context.getString(R.string.text_price_value), value)
+    }
+
+    fun setProductNumber(value: String) {
+        mTvRow2Collum2.text = value
+    }
+
+
+    fun setProductName(value: String) {
+        mTvRow1Collum2.text = value
     }
 
     fun setLanguage(language: String) {

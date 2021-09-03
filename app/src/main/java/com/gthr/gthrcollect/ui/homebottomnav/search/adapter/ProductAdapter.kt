@@ -6,18 +6,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.ItemTestProductBinding
-import com.gthr.gthrcollect.model.domain.CollectionProductDomainModel
+import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
+import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.enums.ProductTypeOld
+import com.gthr.gthrcollect.utils.extensions.setImageByUrl
 
-class ProductAdapter(val state: CustomProductCell.State, val callback : (position : Int) -> Unit) :
-    ListAdapter<CollectionProductDomainModel, ProductAdapter.FavSoldViewHolder>(DiffCallback) {
+class ProductAdapter(val state: CustomProductCell.State, val callback : (data: ProductDisplayModel) -> Unit) :
+    ListAdapter<ProductDisplayModel, ProductAdapter.FavSoldViewHolder>(DiffCallback) {
 
-    companion object DiffCallback : DiffUtil.ItemCallback<CollectionProductDomainModel>() {
-        override fun areItemsTheSame(oldItem: CollectionProductDomainModel, newItem: CollectionProductDomainModel): Boolean {
-            return oldItem.image_URL == newItem.image_URL
+    companion object DiffCallback : DiffUtil.ItemCallback<ProductDisplayModel>() {
+        override fun areItemsTheSame(oldItem: ProductDisplayModel, newItem: ProductDisplayModel): Boolean {
+            return oldItem.objectID == newItem.objectID
         }
 
-        override fun areContentsTheSame(oldItem: CollectionProductDomainModel, newItem: CollectionProductDomainModel): Boolean {
+        override fun areContentsTheSame(oldItem: ProductDisplayModel, newItem: ProductDisplayModel): Boolean {
             return oldItem == newItem
         }
     }
@@ -30,19 +33,23 @@ class ProductAdapter(val state: CustomProductCell.State, val callback : (positio
         )
 
     override fun onBindViewHolder(holder: FavSoldViewHolder, position: Int) {
-        holder.bind()
-        holder.binding.item.setState(state)
-    }
+        holder.bind(getItem(position))
 
-    override fun getItemCount(): Int = 17
+    }
 
     inner class FavSoldViewHolder(var binding: ItemTestProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
+        fun bind(data:ProductDisplayModel) {
             binding.root.setOnClickListener {
-                callback(layoutPosition)
+                callback(data)
             }
+            binding.item.setState(state)
+            binding.item.setValue(data)
+
+
         }
+
+
     }
 
 }
