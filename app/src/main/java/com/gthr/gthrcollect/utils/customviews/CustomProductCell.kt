@@ -41,8 +41,8 @@ class CustomProductCell @JvmOverloads constructor(
     val mTvConditionValue: AppCompatTextView = mView.findViewById(R.id.tv_condition_value)
     val mTvEdition: AppCompatTextView = mView.findViewById(R.id.tv_edition)
 
-    private val mGroupGlob: Group = mView.findViewById(R.id.group_language)
-    private val mGroupPsa: Group = mView.findViewById(R.id.group_condition)
+    private val mGroupLanguage: Group = mView.findViewById(R.id.group_language)
+    private val mGroupCondition: Group = mView.findViewById(R.id.group_condition)
     private val mClBottom: ConstraintLayout = mView.findViewById(R.id.cl_Bottom)
 
     var mCurrentType = Type.FUNKO
@@ -68,36 +68,40 @@ class CustomProductCell @JvmOverloads constructor(
                 mTvProductType.text = context.getString(R.string.text_funko)
                 mTvRow1Collum1.text = context.getString(R.string.text_product_name)
                 mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
-                mGroupGlob.gone()
-                mGroupPsa.gone()
+                mGroupLanguage.gone()
+                mGroupCondition.gone()
+                //Note : Condition has been set in Edition field because it is currently easier
+                // to manage.
+                setEdition(context.getString(R.string.text_new))
             }
             Type.SEALED -> {
                 mTvProductType.text = context.getString(R.string.text_sealed)
                 mTvRow1Collum1.text = context.getString(R.string.text_product_name)
                 mTvRow2Collum1.text = context.getString(R.string.text_product_set)
-                mGroupGlob.gone()
-                mGroupPsa.gone()
+                mGroupLanguage.gone()
+                mGroupCondition.gone()
+                setEdition(context.getString(R.string.text_new))
             }
             Type.MYTHIC -> {
                 mTvProductType.text = context.getString(R.string.text_mythic)
                 mTvRow1Collum1.text = context.getString(R.string.text_product_set)
                 mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
-                mGroupGlob.visible()
-                mGroupPsa.visible()
+                mGroupLanguage.visible()
+                mGroupCondition.visible()
             }
             Type.HOLO_RARE -> {
                 mTvProductType.text = context.getString(R.string.text_holo_rare)
                 mTvRow1Collum1.text = context.getString(R.string.text_product_set)
                 mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
-                mGroupGlob.visible()
-                mGroupPsa.visible()
+                mGroupLanguage.visible()
+                mGroupCondition.visible()
             }
             Type.SECRET_RARE -> {
                 mTvProductType.text = context.getString(R.string.text_secret_rare)
                 mTvRow1Collum1.text = context.getString(R.string.text_product_set)
                 mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
-                mGroupGlob.visible()
-                mGroupPsa.visible()
+                mGroupLanguage.visible()
+                mGroupCondition.visible()
             }
         }
     }
