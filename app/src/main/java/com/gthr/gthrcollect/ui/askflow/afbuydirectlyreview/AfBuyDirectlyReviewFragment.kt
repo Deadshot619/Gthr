@@ -11,7 +11,6 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-import com.gthr.gthrcollect.utils.enums.ProductType
 
 class AfBuyDirectlyReviewFragment :
     BaseFragment<AskFlowViewModel, AfBuyDirectlyReviewFragmentBinding>() {
@@ -39,12 +38,7 @@ class AfBuyDirectlyReviewFragment :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_info)
-            startActivity(
-                ProductDetailActivity.getInstance(
-                    this.requireContext(),
-                    ProductType.FUNKO
-                )
-            )
+            startActivity(ProductDetailActivity.getInstance(this.requireContext(), null))
         return super.onOptionsItemSelected(item)
     }
 

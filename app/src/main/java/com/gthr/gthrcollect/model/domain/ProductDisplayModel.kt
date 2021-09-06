@@ -1,8 +1,11 @@
 package com.gthr.gthrcollect.model.domain
 
+import android.os.Parcelable
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class ProductDisplayModel(
     var objectID: String?,
     var productType: ProductType?,
@@ -18,7 +21,8 @@ data class ProductDisplayModel(
     var productNumber: String?,
     var numberOfFavorites: Int?,
     var tier: String?,
-) {
+    var rarity: String?
+) : Parcelable {
     //TODO 01/08/21 : Modify firImageUrl added
 
     constructor(model: FunkoDomainModel) : this(
@@ -36,6 +40,7 @@ data class ProductDisplayModel(
         productNumber = model.itemNumber.toString(),
         numberOfFavorites = model.numberOfFavorites,
         tier = model.tier.toString(),
+        rarity = ProductCategory.TOYS.title.toUpperCase()
     )
 
     constructor(model: MTGDomainModel) : this(
@@ -53,6 +58,7 @@ data class ProductDisplayModel(
         productNumber = model.id,
         numberOfFavorites = model.numberOfFavorites,
         tier = "0",
+        rarity = model.rarity
     )
 
     constructor(model: PokemonDomainModel) : this(
@@ -70,6 +76,7 @@ data class ProductDisplayModel(
         productNumber = model.number.toString(),
         numberOfFavorites = model.numberOfFavorites,
         tier = "0",
+        rarity = model.rarity
     )
 
     constructor(model: YugiohDomainModel) : this(
@@ -87,6 +94,7 @@ data class ProductDisplayModel(
         productNumber = model.number,
         numberOfFavorites = model.numberOfFavorites,
         tier = "0",
+        rarity = model.rarity
     )
 
     constructor(model: SealedDomainModel) : this(
@@ -104,5 +112,6 @@ data class ProductDisplayModel(
         productNumber = null,
         numberOfFavorites = model.numberOfFavorites,
         tier = "0",
+        rarity = ProductCategory.SEALED.title.toUpperCase()
     )
 }

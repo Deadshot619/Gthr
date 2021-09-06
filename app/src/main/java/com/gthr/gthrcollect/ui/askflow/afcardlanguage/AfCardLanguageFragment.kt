@@ -1,19 +1,24 @@
 package com.gthr.gthrcollect.ui.askflow.afcardlanguage
 
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfCardLanguageFragmentBinding
+import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.LanguageDomainModel
+import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
+import com.gthr.gthrcollect.utils.helper.isPromo
 
 class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFragmentBinding>() {
 
@@ -26,10 +31,12 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
     private lateinit var mAdapter: ConfigurationLanguageAdapter
 
     private val args by navArgs<AfCardLanguageFragmentArgs>()
+    private lateinit var mProductDisplayModel: ProductDisplayModel
     private lateinit var mProductCategory: ProductCategory
 
     override fun onBinding() {
-        mProductCategory = args.productCategory
+        mProductDisplayModel = args.productDisplayModel
+        mProductCategory = mProductDisplayModel.productCategory!!
 
         checkAskFlowData()
         initViews()
@@ -72,6 +79,28 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
         mViewModel.languageList.observe(viewLifecycleOwner, {
             it.peekContent().let {
                 mAdapter.submitList(it)
+            }
+        })
+
+        mViewModel.pokemonProductDetails.observe(viewLifecycleOwner, {
+            it.peekContent().let {
+                when (it) {
+                    is State.Failed -> {
+                    }
+                    is State.Loading -> {
+                    }
+                    is State.Success -> {
+                        if (isPromo(mProductDisplayModel, it.data)) {
+                            val navigationOptions =
+                                NavOptions.Builder().setPopUpTo(R.id.afCardLanguageFragment, true)
+                                    .build()
+                            findNavController().navigate(
+                                AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfEditionFragment(),
+                                navigationOptions
+                            )
+                        }
+                    }
+                }
             }
         })
     }

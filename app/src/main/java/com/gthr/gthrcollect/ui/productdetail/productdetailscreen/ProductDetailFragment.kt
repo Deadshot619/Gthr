@@ -60,6 +60,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var mUpForSellSeeAll: CustomSeeAllView
 
     private val args by navArgs<ProductDetailFragmentArgs>()
+    private lateinit var mProductDisplayModel: ProductDisplayModel
     private lateinit var mProductType: ProductType
     private lateinit var mProductCategory: ProductCategory
 
@@ -82,7 +83,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
 
     override fun onBinding() {
         mViewBinding.lifecycleOwner = viewLifecycleOwner
-        mProductType = args.type
+        mProductDisplayModel = args.productDisplayModel
+        mProductType = mProductDisplayModel.productType!!
         mProductCategory = getProductCategory(mProductType)!!
 
         setHasOptionsMenu(true)
@@ -226,8 +228,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 AskFlowActivity.getInstance(
                     requireContext(),
                     AskFlowType.BUY,
-                    mProductCategory,
-                    mProductType
+                    mProductDisplayModel
                 )
             )
         }
@@ -236,8 +237,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 AskFlowActivity.getInstance(
                     requireContext(),
                     AskFlowType.COLLECT,
-                    mProductCategory,
-                    mProductType
+                    mProductDisplayModel
                 )
             )
         }
@@ -246,37 +246,57 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 AskFlowActivity.getInstance(
                     requireContext(),
                     AskFlowType.SELL,
-                    mProductCategory,
-                    mProductType
+                    mProductDisplayModel
                 )
             )
         }
     }
 
     private fun upForSellSeeAll() {
-        val action = ProductDetailFragmentDirections.actionProductDetailFragmentToUpForSellFragment(args.type)
+        val action =
+            ProductDetailFragmentDirections.actionProductDetailFragmentToUpForSellFragment(
+                mProductType
+            )
         findNavController().navigate(action)
     }
 
     private fun recentSellSeeAll() {
-        val action = ProductDetailFragmentDirections.actionProductDetailFragmentToRecentSellFragment(args.type)
+        val action =
+            ProductDetailFragmentDirections.actionProductDetailFragmentToRecentSellFragment(
+                mProductType
+            )
         findNavController().navigate(action)
     }
 
     private fun setUpProductType() {
-        when (args.type) {
+        when (mProductType) {
             ProductType.POKEMON -> setUpPokemon()
             ProductType.MAGIC_THE_GATHERING -> setUpMGT()
             ProductType.YUGIOH -> seUpYugioh()
             ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> setUpSealed()
             ProductType.FUNKO -> setUpFunko()
         }
-        when (args.type) {
-            ProductType.POKEMON -> mViewModel.getProductDetails("-MiTOfdj0XCDttwhYf-Q", ProductType.POKEMON)
-            ProductType.MAGIC_THE_GATHERING -> mViewModel.getProductDetails("-MieV4LMu5ePEr-KxVtd", ProductType.MAGIC_THE_GATHERING)
-            ProductType.YUGIOH -> mViewModel.getProductDetails("-MiTSTt3dbVfOQYDmswu", ProductType.YUGIOH)
-            ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> mViewModel.getProductDetails("0", ProductType.SEALED_POKEMON)
-            ProductType.FUNKO -> mViewModel.getProductDetails("-MiTpkeK3aeS5L4lvUO0", ProductType.FUNKO)
+        when (mProductType) {
+            ProductType.POKEMON -> mViewModel.getProductDetails(
+                mProductDisplayModel.refKey!!,
+                ProductType.POKEMON
+            )
+            ProductType.MAGIC_THE_GATHERING -> mViewModel.getProductDetails(
+                mProductDisplayModel.refKey!!,
+                ProductType.MAGIC_THE_GATHERING
+            )
+            ProductType.YUGIOH -> mViewModel.getProductDetails(
+                mProductDisplayModel.refKey!!,
+                ProductType.YUGIOH
+            )
+            ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> mViewModel.getProductDetails(
+                mProductDisplayModel.refKey!!,
+                ProductType.SEALED_POKEMON
+            )
+            ProductType.FUNKO -> mViewModel.getProductDetails(
+                mProductDisplayModel.refKey!!,
+                ProductType.FUNKO
+            )
         }
     }
 
@@ -365,7 +385,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 requireContext(),
                 LinearLayoutManager.HORIZONTAL, false
             )
-            adapter = ProductAdapter(args.type, CustomProductCell.State.NORMAL)
+            adapter = ProductAdapter(mProductType, CustomProductCell.State.NORMAL)
         }
     }
 
@@ -373,12 +393,12 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         rvUpForSell.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = ProductAdapter(args.type, CustomProductCell.State.FOR_SALE)
+            adapter = ProductAdapter(mProductType, CustomProductCell.State.FOR_SALE)
         }
     }
 
     private fun setUpRecentSell() {
-        recentSaleAdapter = RecentSellAdapter(args.type)
+        recentSaleAdapter = RecentSellAdapter(mProductType)
         rvRecentSell.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = recentSaleAdapter

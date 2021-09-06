@@ -111,9 +111,9 @@ class CustomProductCell @JvmOverloads constructor(
 
    fun setValue(productDisplayModel: ProductDisplayModel){
        when(productDisplayModel.productType) {
-
+           ProductType.MAGIC_THE_GATHERING -> setType(Type.MYTHIC)
            ProductType.FUNKO -> setType(Type.FUNKO)
-           ProductType.POKEMON -> setType(Type.HOLO_RARE)
+           ProductType.POKEMON -> setType(Type.SECRET_RARE)
            ProductType.YUGIOH -> setType(Type.HOLO_RARE)
            ProductType.SEALED_YUGIOH,
            ProductType.SEALED_POKEMON,

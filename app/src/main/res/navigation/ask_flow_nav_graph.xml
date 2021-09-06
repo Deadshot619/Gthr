@@ -23,8 +23,8 @@
             app:popUpTo="@id/afCardLanguageFragment"
             app:popUpToInclusive="true" />
         <argument
-            android:name="productCategory"
-            app:argType="com.gthr.gthrcollect.utils.enums.ProductCategory" />
+            android:name="productDisplayModel"
+            app:argType="com.gthr.gthrcollect.model.domain.ProductDisplayModel" />
         <action
             android:id="@+id/action_afCardLanguageFragment_to_afReviewYourAskFragment"
             app:destination="@id/afReviewYourAskFragment"

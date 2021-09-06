@@ -10,8 +10,8 @@
         android:name="com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragment"
         android:label="ProductDetailFragment" >
         <argument
-            android:name="type"
-            app:argType="com.gthr.gthrcollect.utils.enums.ProductType" />
+            android:name="productDisplayModel"
+            app:argType="com.gthr.gthrcollect.model.domain.ProductDisplayModel" />
         <action
             android:id="@+id/action_productDetailFragment_to_recentSellFragment"
             app:destination="@id/recentSellFragment" />

@@ -17,6 +17,7 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.ActivityAskFlowBinding
 import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentArgs
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.receiptdetail.purchasedetails.FullProductImage
@@ -27,7 +28,6 @@ import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.invisible
 import com.gthr.gthrcollect.utils.extensions.visible
-import com.gthr.gthrcollect.utils.getProductCategory
 import de.hdodenhof.circleimageview.CircleImageView
 
 class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>() {
@@ -43,6 +43,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     private lateinit var mToolbar: Toolbar
 
     private lateinit var mAskFlowType: AskFlowType
+    private lateinit var mProductDisplayModel: ProductDisplayModel
     private lateinit var mProductCategory: ProductCategory
     private lateinit var mProductType: ProductType
 
@@ -54,9 +55,11 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
     override fun onBinding() {
         mAskFlowType = intent?.getSerializableExtra(KEY_ASK_FLOW_TYPE) as AskFlowType
-        mProductType = intent?.getSerializableExtra(KEY_PRODUCT_TYPE) as ProductType
-        mProductCategory = /*intent?.getSerializableExtra(KEY_PRODUCT_CATEGORY) as ProductCategory*/
-            getProductCategory(mProductType)!!
+        mProductDisplayModel =
+            intent.getParcelableExtra<ProductDisplayModel>(KEY_PRODUCT_DISPLAY_MODEL)!!
+        mProductType = mProductDisplayModel.productType!!
+        mProductCategory = mProductDisplayModel.productCategory!!
+
         mViewModel.setProductType(mProductType)
 
         initViews()
@@ -66,20 +69,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         setUpClickListeners()
         setUpObservers()
 
-        when (mProductType) {
-            ProductType.MAGIC_THE_GATHERING -> {
-                mViewModel.getProductDetails(
-                    "-MiTNOMShh5j-097pdyz",
-                    ProductType.MAGIC_THE_GATHERING
-                )
-            }
-            ProductType.YUGIOH -> {
-                mViewModel.getProductDetails("-MiTSTt3dbVfOQYDmswu", ProductType.YUGIOH)
-            }
-            ProductType.POKEMON -> {
-                mViewModel.getProductDetails("-MiTOfdj0XCDttwhYf-Q", ProductType.POKEMON)
-            }
-        }
+        mViewModel.getProductDetails(mProductDisplayModel.refKey!!, mProductType)
     }
 
     private fun initViews() {
@@ -146,6 +136,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                     is State.Success -> {
                         showProgressBar(false)
                         mViewModel.retrieveLanguageList(ProductType.YUGIOH)
+                        setNameAndNumber(it.data.name, it.data.number)
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -162,6 +153,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                     is State.Success -> {
                         showProgressBar(false)
                         mViewModel.retrieveLanguageList(ProductType.POKEMON)
+                        setNameAndNumber(it.data.name, it.data.number)
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -178,6 +170,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                     is State.Success -> {
                         showProgressBar(false)
                         mViewModel.retrieveLanguageList(ProductType.MAGIC_THE_GATHERING)
+                        setNameAndNumber(it.data.name, it.data.id)
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -185,6 +178,41 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                 }
             }
         })
+        mViewModel.funkoProductDetails.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mProductItem.setType(CustomProductCell.Type.FUNKO)
+                        setNameAndNumber(it.data.name, it.data.itemNumber)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                    }
+                }
+            }
+        })
+        mViewModel.sealedProductDetails.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mProductItem.setType(CustomProductCell.Type.SEALED)
+                        setNameAndNumber(it.data.name, it.data.set)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                    }
+                }
+            }
+        })
+
 
         /*Selected Language, Edition & Condition*/
         mViewModel.askPrice.observe(this, {
@@ -217,7 +245,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         })
         mViewModel.selectedConditionValue.observe(this, {
             it.contentIfNotHandled?.let {
-                mProductItem.setConditionValue(it.displayName)
+                mProductItem.setConditionValue(it.abbreviatedName)
             }
         })
     }
@@ -236,7 +264,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         findNavController(R.id.nav_host_fragment)
             .setGraph(
                 R.navigation.ask_flow_nav_graph,
-                AfCardLanguageFragmentArgs(productCategory = mProductCategory).toBundle()
+                AfCardLanguageFragmentArgs(productDisplayModel = mProductDisplayModel).toBundle()
             )
     }
 
@@ -291,22 +319,24 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         supportActionBar?.setDisplayHomeAsUpEnabled(isVisible)
     }
 
+    private fun setNameAndNumber(name: String, number: String) {
+        mProductItem.setProductName(name)
+        mProductItem.setProductNumber(number)
+    }
+
     internal fun getAskFlowType(): AskFlowType = mAskFlowType
 
     companion object {
         private const val KEY_ASK_FLOW_TYPE = "key_ask_flow_type"
-        private const val KEY_PRODUCT_CATEGORY = "key_product_category"
-        private const val KEY_PRODUCT_TYPE = "key_product_type"
+        private const val KEY_PRODUCT_DISPLAY_MODEL = "key_product_display_model"
 
         fun getInstance(
             context: Context,
             askFlowType: AskFlowType,
-            productCategory: ProductCategory,
-            productType: ProductType
+            productDisplayModel: ProductDisplayModel?
         ) = Intent(context, AskFlowActivity::class.java).apply {
             putExtra(KEY_ASK_FLOW_TYPE, askFlowType)
-            putExtra(KEY_PRODUCT_CATEGORY, productCategory)
-            putExtra(KEY_PRODUCT_TYPE, productType)
+            putExtra(KEY_PRODUCT_DISPLAY_MODEL, productDisplayModel)
         }
     }
 }

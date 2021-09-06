@@ -137,31 +137,31 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 it % 5 == 0 -> startActivity(
                     ProductDetailActivity.getInstance(
                         requireContext(),
-                        ProductType.POKEMON
+                        null
                     )
                 )
                 it % 5 == 1 -> startActivity(
                     ProductDetailActivity.getInstance(
                         requireContext(),
-                        ProductType.MAGIC_THE_GATHERING
+                        null
                     )
                 )
                 it % 5 == 2 -> startActivity(
                     ProductDetailActivity.getInstance(
                         requireContext(),
-                        ProductType.YUGIOH
+                        null
                     )
                 )
                 it % 5 == 3 -> startActivity(
                     ProductDetailActivity.getInstance(
                         requireContext(),
-                        ProductType.SEALED_YUGIOH
+                        null
                     )
                 )
                 it % 5 == 4 -> startActivity(
                     ProductDetailActivity.getInstance(
                         requireContext(),
-                        ProductType.FUNKO
+                        null
                     )
                 )
             }
@@ -172,16 +172,10 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                     AskFlowActivity.getInstance(
                         requireContext(),
                         AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
-                        it.productCategory!!,
-                        it.productType!!
+                        it
                     )
                 )
-               else -> startActivity(
-                    ProductDetailActivity.getInstance(
-                        requireContext(),
-                      it.productType!!
-                    )
-                )
+                else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it))
             }
         }
         mRvMain.apply {

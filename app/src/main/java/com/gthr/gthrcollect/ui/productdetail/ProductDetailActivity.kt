@@ -15,18 +15,15 @@ import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.ActivityProductDetailBinding
-import com.gthr.gthrcollect.model.State
-import com.gthr.gthrcollect.model.domain.*
+import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
-import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.showToast
-import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class ProductDetailActivity :
     BaseActivity<ProductDetailsViewModel, ActivityProductDetailBinding>() {
     override fun getViewBinding() = ActivityProductDetailBinding.inflate(layoutInflater)
-    override val mViewModel: ProductDetailsViewModel by viewModels{
+    override val mViewModel: ProductDetailsViewModel by viewModels {
         ProductDetailsViewModelFactory(
             ProductDetailsRepository()
         )
@@ -36,7 +33,12 @@ class ProductDetailActivity :
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var mToolbar: Toolbar
 
+    private lateinit var mProductDisplayModel: ProductDisplayModel
+
     override fun onBinding() {
+        mProductDisplayModel =
+            intent.getParcelableExtra<ProductDisplayModel>(KEY_PRODUCT_DISPLAY_MODEL)!!
+
         initViews()
         setUpNavGraph()
         setSupportActionBar(mToolbar)
@@ -44,12 +46,10 @@ class ProductDetailActivity :
     }
 
     private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination
-        val type = intent.getSerializableExtra(PRODUCT_TYPE) as ProductType
-
         findNavController(R.id.nav_host_fragment)
             .setGraph(
                 R.navigation.product_detail_nav_graph,
-                ProductDetailFragmentArgs(type = type).toBundle()
+                ProductDetailFragmentArgs(productDisplayModel = mProductDisplayModel).toBundle()
             )
     }
 
@@ -113,11 +113,11 @@ class ProductDetailActivity :
     }
 
     companion object {
-        private const val PRODUCT_TYPE = "product_type"
+        private const val KEY_PRODUCT_DISPLAY_MODEL = "key_product_display_model"
 
-        fun getInstance(context: Context, productType: ProductType) =
+        fun getInstance(context: Context, productDisplayModel: ProductDisplayModel?) =
             Intent(context, ProductDetailActivity::class.java).apply {
-                putExtra(PRODUCT_TYPE, productType)
+                putExtra(KEY_PRODUCT_DISPLAY_MODEL, productDisplayModel)
             }
     }
 }

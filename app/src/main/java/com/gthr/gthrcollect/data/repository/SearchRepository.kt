@@ -12,13 +12,12 @@ import com.gthr.gthrcollect.utils.constants.CloudFunctions
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.getProductType
-import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
-import java.util.HashMap
+import java.util.*
 
 class SearchRepository {
 
@@ -38,20 +37,26 @@ class SearchRepository {
         )
 
         val productData =
-            fetchData<List<HashMap<String,String>>>(CloudFunctions.SEARCH_PRODUCT,data).await()
-        GthrLogger.d("productData", "${productData}")
-
+            fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_PRODUCT, data).await()
         val productList = mutableListOf<ProductDisplayModel>()
 
-        productData.forEachIndexed {index, it ->
+        productData.forEachIndexed { index, it ->
+            val objectID = productData[index][FirebaseRealtimeDatabase.OBJECT_ID]
+            val productType = productData[index][FirebaseRealtimeDatabase.PRODUCT_TYPE]
 
-            val objectID =productData.get(index)[FirebaseRealtimeDatabase.OBJECT_ID]
-            val productType =productData.get(index)[FirebaseRealtimeDatabase.PRODUCT_TYPE]
-
-            when ( getProductType(productType!!)) {
-
-                ProductType.MAGIC_THE_GATHERING ->{
-                    val data=   getProductDetailsByObjectId2<MTGDomainModel>(
+            when (getProductType(productType!!)) {
+                ProductType.MAGIC_THE_GATHERING -> {
+                    val data = getProductDetailsByObjectId2<MTGDomainModel>(
+                        objectID!!,
+                        getProductType(productType)!!
+                    )
+                    data?.let {
+                        val prodDisplay = ProductDisplayModel(data)
+                        productList.add(prodDisplay)
+                    }
+                }
+                ProductType.YUGIOH -> {
+                    val data = getProductDetailsByObjectId2<YugiohDomainModel>(
                         objectID!!,
                         getProductType(productType)!!
                     )
@@ -60,49 +65,36 @@ class SearchRepository {
                         productList.add(prodDisplay)
                     }
                 }
-                ProductType.YUGIOH ->{
-                    val data=   getProductDetailsByObjectId2<YugiohDomainModel>(
-                        objectID!!,
-                        getProductType (productType)!!)
-                    data?.let {
-                        val prodDisplay= ProductDisplayModel(data)
-                        productList.add(prodDisplay)
-                    }
-                }
-
                 ProductType.POKEMON ->{
-                    val data=   getProductDetailsByObjectId2<PokemonDomainModel>(
+                    val data = getProductDetailsByObjectId2<PokemonDomainModel>(
                         objectID!!,
-                        getProductType(productType)!!)
+                        getProductType(productType)!!
+                    )
                     data?.let {
                         val prodDisplay= ProductDisplayModel(data)
                         productList.add(prodDisplay)
                     }
                 }
-
                 ProductType.FUNKO -> {
-                    val data=   getProductDetailsByObjectId2<FunkoDomainModel>(
+                    val data = getProductDetailsByObjectId2<FunkoDomainModel>(
                         objectID!!,
-                        getProductType(productType)!!)
+                        getProductType(productType)!!
+                    )
                     data?.let {
-                        val prodDisplay= ProductDisplayModel(data)
+                        val prodDisplay = ProductDisplayModel(data)
                         productList.add(prodDisplay)
                     }
                 }
-
-                ProductType.SEALED_POKEMON,
-                ProductType.SEALED_YUGIOH,
-                ProductType.SEALED_MTG -> {
-
-                    val data=   getProductDetailsByObjectId2<SealedDomainModel>(
+                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
+                    val data = getProductDetailsByObjectId2<SealedDomainModel>(
                         objectID!!,
-                        getProductType(productType)!!)
+                        getProductType(productType)!!
+                    )
                     data?.let {
-                        val prodDisplay= ProductDisplayModel(data)
+                        val prodDisplay = ProductDisplayModel(data)
                         productList.add(prodDisplay)
                     }
                 }
-
             }
         }
 
@@ -114,8 +106,7 @@ class SearchRepository {
     }.flowOn(Dispatchers.IO)
 
 
-  suspend  fun <T> getProductDetailsByObjectId2(id: String, type: ProductType) : T? {
-
+    suspend fun <T> getProductDetailsByObjectId2(id: String, type: ProductType): T? {
         var ref = mFirebaseRD
         val networkModelType = when (type) {
             ProductType.MAGIC_THE_GATHERING -> {
@@ -142,20 +133,26 @@ class SearchRepository {
         val await = ref.orderByChild(FirebaseRealtimeDatabase.OBJECT_ID).equalTo(id).get().await()
 
         if (await.childrenCount == 1L) {
-            val productDetailsNetworkModel =
-                await.children.iterator().next().getValue(networkModelType)
+            val snapShot = await.children.iterator().next()
+            val productDetailsNetworkModel = snapShot.getValue(networkModelType)
             val productDetailsDomainModel = when (type) {
-                ProductType.MAGIC_THE_GATHERING -> (productDetailsNetworkModel as MTGModel).toMTGDomainModel(await.key ?: "")
-
-                ProductType.YUGIOH -> (productDetailsNetworkModel as YugiohModel).toYugiohDomainModel(await.key ?: "")
-
-                ProductType.POKEMON -> (productDetailsNetworkModel as PokemonModel).toPokemonDomainModel(await.key ?: "")
-
-                ProductType.FUNKO -> (productDetailsNetworkModel as FunkoModel).toFunkoDomainModel(await.key ?: "")
-
-                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> (productDetailsNetworkModel as SealedModel).toSealedDomainModel(await.key ?: "")
+                ProductType.MAGIC_THE_GATHERING -> (productDetailsNetworkModel as MTGModel).toMTGDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.YUGIOH -> (productDetailsNetworkModel as YugiohModel).toYugiohDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.POKEMON -> (productDetailsNetworkModel as PokemonModel).toPokemonDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.FUNKO -> (productDetailsNetworkModel as FunkoModel).toFunkoDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> (productDetailsNetworkModel as SealedModel).toSealedDomainModel(
+                    snapShot.key ?: ""
+                )
             }
-            return  productDetailsDomainModel as T
+            return productDetailsDomainModel as T
         }
       return null
     }
