@@ -20,7 +20,6 @@ import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModelFactory
 import com.gthr.gthrcollect.ui.productdetail.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
-import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.utils.customviews.CustomLegalityView
 import com.gthr.gthrcollect.utils.customviews.CustomProductButton
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
@@ -76,6 +75,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var mLayoutProductDetailMainDetailsBinding: LayoutProductDetailMainDetailsBinding
 
 
+    private lateinit var recentSaleAdapter : RecentSellAdapter
+
 
 
 
@@ -95,7 +96,25 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpObserver() {
-        mViewModel.productImage.observe(viewLifecycleOwner) { it ->
+        mViewModel.mRecentSaleDomainModel.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Failed -> showProgressBar(false)
+                    is State.Success -> {
+                        if(it.data.size<6)
+                            recentSaleAdapter.submitList(it.data)
+                        else{
+                            val list = it.data.take(5)
+                            recentSaleAdapter.submitList(list)
+                        }
+                        GthrLogger.i("dschjds", "Recent Sale : ${it.data}")
+                        showProgressBar(false)
+                    }
+                }
+            }
+        }
+        mViewModel.mProductImage.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
@@ -108,7 +127,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 }
             }
         }
-        mViewModel.mtgProductDetails.observe(viewLifecycleOwner) { it ->
+        mViewModel.mMtgProductDetails.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
@@ -117,13 +136,15 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         showProgressBar(false)
                         if(it.data.imageID.isNotEmpty())
                         mViewModel.getProductImage(it.data.imageID)
+                        if(it.data.objectID.isNotEmpty())
+                        mViewModel.getRecentSale(it.data.objectID)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
                 }
             }
         }
-        mViewModel.funkoProductDetails.observe(viewLifecycleOwner) { it ->
+        mViewModel.mFunkoProductDetails.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
@@ -132,13 +153,15 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         showProgressBar(false)
                         if(it.data.imageID.isNotEmpty())
                         mViewModel.getProductImage(it.data.imageID)
+                        if(it.data.objectID.isNotEmpty())
+                            mViewModel.getRecentSale(it.data.objectID)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
                 }
             }
         }
-        mViewModel.pokemonProductDetails.observe(viewLifecycleOwner) { it ->
+        mViewModel.mPokemonProductDetails.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
@@ -147,13 +170,15 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         showProgressBar(false)
                         if(it.data.imageID.isNotEmpty())
                         mViewModel.getProductImage(it.data.imageID)
+                        if(it.data.objectID.isNotEmpty())
+                            mViewModel.getRecentSale(it.data.objectID)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
                 }
             }
         }
-        mViewModel.sealedProductDetails.observe(viewLifecycleOwner) { it ->
+        mViewModel.mSealedProductDetails.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
@@ -162,13 +187,15 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         showProgressBar(false)
                         if(it.data.imageID.isNotEmpty())
                         mViewModel.getProductImage(it.data.imageID)
+                        if(it.data.objectID.isNotEmpty())
+                            mViewModel.getRecentSale(it.data.objectID)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
                 }
             }
         }
-        mViewModel.yugiohProductDetails.observe(viewLifecycleOwner) { it ->
+        mViewModel.mYugiohProductDetails.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
@@ -177,6 +204,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         showProgressBar(false)
                         if(it.data.imageID.isNotEmpty())
                         mViewModel.getProductImage(it.data.imageID)
+                        if(it.data.objectID.isNotEmpty())
+                            mViewModel.getRecentSale(it.data.objectID)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -225,8 +254,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun upForSellSeeAll() {
-        val action =
-            ProductDetailFragmentDirections.actionProductDetailFragmentToUpForSellFragment(args.type)
+        val action = ProductDetailFragmentDirections.actionProductDetailFragmentToUpForSellFragment(args.type)
         findNavController().navigate(action)
     }
 
@@ -350,9 +378,10 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpRecentSell() {
+        recentSaleAdapter = RecentSellAdapter(args.type)
         rvRecentSell.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = RecentSellAdapter(5)
+            adapter = recentSaleAdapter
         }
     }
 

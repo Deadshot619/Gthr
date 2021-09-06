@@ -3,6 +3,7 @@ package com.gthr.gthrcollect.model.mapper
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.extensions.toRecentSaleDate
 import com.gthr.gthrcollect.utils.getProductType
 
 fun CollectionInfoModel.toCollectionInfoDomainModel(collectionId: String = "") =
@@ -183,3 +184,15 @@ fun YugiohModel.toYugiohDomainModel(key: String) = YugiohDomainModel(
     stats = this.stats ?: "",
     refKey = key
 )
+
+fun RecentSaleModel.toDomainModel(key : String) = RecentSaleDomainModel(
+    condition = this.condition?:"",
+    date = this.date?.toRecentSaleDate()?:"",
+    edition = this.edition?:"",
+    language = this.language?:-1,
+    objectId = this.objectId?:"",
+    price = if(this.price!=null) "${this.price}" else "",
+    customization = if(condition==null) "New" else "",
+    key = key
+)
+

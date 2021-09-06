@@ -10,6 +10,7 @@ import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.LayoutProductDetailCardTopBinding
 import com.gthr.gthrcollect.databinding.LayoutProductDetailToyTopBinding
 import com.gthr.gthrcollect.databinding.RecentSellFragmentBinding
+import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModelFactory
@@ -17,6 +18,7 @@ import com.gthr.gthrcollect.ui.productdetail.adapter.RecentSellAdapter
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class RecentSellFragment : BaseFragment<ProductDetailsViewModel, RecentSellFragmentBinding>() {
 
@@ -32,12 +34,30 @@ class RecentSellFragment : BaseFragment<ProductDetailsViewModel, RecentSellFragm
     private lateinit var rvRecentSell : RecyclerView
 
     private val args by navArgs<RecentSellFragmentArgs>()
+    private lateinit var recentSaleAdapter : RecentSellAdapter
 
     override fun onBinding() {
         setHasOptionsMenu(true)
         initViews()
         setUpRecentSell()
         setUpProductType()
+        setUpObserver()
+    }
+
+    private fun setUpObserver() {
+        mViewModel.mRecentSaleDomainModel.observe(viewLifecycleOwner) { it ->
+            it.peekContent()?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Failed -> showProgressBar(false)
+                    is State.Success -> {
+                        recentSaleAdapter.submitList(it.data)
+                        GthrLogger.i("dschjds", "Recent Sale : ${it.data}")
+                        showProgressBar(false)
+                    }
+                }
+            }
+        }
     }
 
     private fun initViews() {
@@ -72,9 +92,10 @@ class RecentSellFragment : BaseFragment<ProductDetailsViewModel, RecentSellFragm
     }
 
     private fun setUpRecentSell() {
+        recentSaleAdapter = RecentSellAdapter(args.type)
         rvRecentSell.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = RecentSellAdapter(15)
+            adapter = recentSaleAdapter
         }
     }
 

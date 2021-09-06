@@ -11,6 +11,7 @@ object FirebaseRealtimeDatabase {
     const val POKEMON_MODEL = "pokemonModel"
     const val MTG_MODEL = "mtgModel"
     const val FUNKO_MODEL = "funkoModel"
+    const val SALE_HISTORY_MODEL = "saleHistoryModel"
 
 
     /*Common*/
@@ -29,6 +30,7 @@ object FirebaseRealtimeDatabase {
     const val NUMBER_OF_FAVORITES = "numberOfFavorites"
     const val PRODUCT_TYPE = "productType"
     const val OBJECT_ID = "objectID"
+    const val OBJECT_I_D = "objectId"
     const val IMAGE_URL = "imageURL"
     const val TIER = "tier"
     const val CARD_TYPE = "cardType"
@@ -132,5 +134,11 @@ object FirebaseRealtimeDatabase {
     const val SPANISH_OG = "spanishOG"
     const val STATS = "stats"
 
+    /*Recent Sale*/
+    const val CONDITION = "Condition"
+    const val DATE = "Date"
+    const val EDITION = "Edition"
+    const val LANGUAGE = "Language"
+    const val PRICE = "price"
 
 }

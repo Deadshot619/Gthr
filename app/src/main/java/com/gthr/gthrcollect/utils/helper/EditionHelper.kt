@@ -86,3 +86,7 @@ fun getSelectedMTGEdition(key: Int): EditionType {
         else -> EditionType.FOIL
     }
 }
+
+fun getEditionTypeFromRowType(row : String) : EditionType{
+    return EditionType.values().find { row == it.title }?:EditionType.NOTHING
+}

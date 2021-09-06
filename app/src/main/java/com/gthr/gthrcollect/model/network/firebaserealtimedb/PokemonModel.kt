@@ -6,7 +6,6 @@ import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
 data class PokemonModel(
     @get:PropertyName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
     @set:PropertyName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)

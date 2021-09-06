@@ -1,9 +1,11 @@
 package com.gthr.gthrcollect.utils.helper
 
+import android.content.Context
+import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.model.domain.ConditionDomainModel
 import com.gthr.gthrcollect.utils.enums.ConditionType
 
-private fun getCondition(key: Int): ConditionDomainModel {
+fun getCondition(key: Int): ConditionDomainModel {
     return when (key) {
         -1 -> ConditionDomainModel(key = key, displayName = "New", type = ConditionType.NEW)
         0 -> ConditionDomainModel(key = key, displayName = "PSA 10", type = ConditionType.PSA)
@@ -104,4 +106,24 @@ fun getConditionList(conditionType: ConditionType): List<ConditionDomainModel> {
         }
         else -> conditionList
     }
+}
+
+fun Context.getConditionTitle(conditionType: ConditionType) : String{
+    return when (conditionType) {
+        ConditionType.UG -> getString(R.string.raw)
+        ConditionType.PSA -> getString(R.string.psa)
+        ConditionType.BGS -> getString(R.string.bgs)
+        ConditionType.CGC -> getString(R.string.cgc)
+        else -> getString(R.string.text_new_condition)
+    }
+}
+
+fun getConditionFromDisplayName(displayName: String): ConditionDomainModel {
+    if (displayName.isEmpty() || displayName == getCondition(-1).displayName)
+        return getCondition(-1)
+
+    for (i in 0..64)
+        if (getCondition(i).displayName == displayName)
+            return getCondition(i)
+    return getCondition(-1)
 }

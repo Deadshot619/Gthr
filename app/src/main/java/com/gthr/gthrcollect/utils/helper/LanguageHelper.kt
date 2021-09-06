@@ -71,7 +71,7 @@ fun getYugiohLangList(item: YugiohDomainModel): List<LanguageDomainModel> {
     return langList
 }
 
-private fun getYugiohLanguageDomainModel(key: Int): LanguageDomainModel {
+fun getYugiohLanguageDomainModel(key: Int): LanguageDomainModel {
     return when (key) {
         0 -> LanguageDomainModel(key = key, displayName = "English (-EN)", abbreviatedName = "Eng")
         1 -> LanguageDomainModel(key = key, displayName = "French (-FR)", abbreviatedName = "Fr")
@@ -142,7 +142,7 @@ fun getPokemonLangList(item: PokemonDomainModel): List<LanguageDomainModel> {
     return langList
 }
 
-private fun getPokemonLanguageDomainModel(key: Int): LanguageDomainModel {
+fun getPokemonLanguageDomainModel(key: Int): LanguageDomainModel {
     return when (key) {
         0 -> LanguageDomainModel(key = key, displayName = "English", abbreviatedName = "Eng")
         1 -> LanguageDomainModel(key = key, displayName = "Japanese", abbreviatedName = "Jp")
@@ -168,7 +168,7 @@ fun getMTGLangList(): List<LanguageDomainModel> {
     return languageList
 }
 
-private fun getMTGLanguage(key: Int): LanguageDomainModel {
+fun getMTGLanguage(key: Int): LanguageDomainModel {
     return when (key) {
         0 -> LanguageDomainModel(key = key, displayName = "English", abbreviatedName = "Eng")
         1 -> LanguageDomainModel(key = key, displayName = "French", abbreviatedName = "Fr")

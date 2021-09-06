@@ -14,54 +14,57 @@ import kotlinx.coroutines.launch
 
 class ProductDetailsViewModel(private val repository : ProductDetailsRepository) : ViewModel() {
 
+    private val _mProductImage = MutableLiveData<Event<State<String>>>()
+    val mProductImage: LiveData<Event<State<String>>>
+        get() = _mProductImage
 
-    private val _mtgProductDetails = MutableLiveData<Event<State<MTGDomainModel>>>()
-    val mtgProductDetails: LiveData<Event<State<MTGDomainModel>>>
-        get() = _mtgProductDetails
+    private val _mRecentSaleDomainModel = MutableLiveData<Event<State<List<RecentSaleDomainModel>>>>()
+    val mRecentSaleDomainModel: LiveData<Event<State<List<RecentSaleDomainModel>>>>
+        get() = _mRecentSaleDomainModel
 
-    private val _productImage = MutableLiveData<Event<State<String>>>()
-    val productImage: LiveData<Event<State<String>>>
-        get() = _productImage
+    private val _mMtgProductDetails = MutableLiveData<Event<State<MTGDomainModel>>>()
+    val mMtgProductDetails: LiveData<Event<State<MTGDomainModel>>>
+        get() = _mMtgProductDetails
 
-    private val _pokemonProductDetails = MutableLiveData<Event<State<PokemonDomainModel>>>()
-    val pokemonProductDetails: LiveData<Event<State<PokemonDomainModel>>>
-        get() = _pokemonProductDetails
+    private val _mPokemonProductDetails = MutableLiveData<Event<State<PokemonDomainModel>>>()
+    val mPokemonProductDetails: LiveData<Event<State<PokemonDomainModel>>>
+        get() = _mPokemonProductDetails
 
-    private val _sealedProductDetails = MutableLiveData<Event<State<SealedDomainModel>>>()
-    val sealedProductDetails: LiveData<Event<State<SealedDomainModel>>>
-        get() = _sealedProductDetails
+    private val _mSealedProductDetails = MutableLiveData<Event<State<SealedDomainModel>>>()
+    val mSealedProductDetails: LiveData<Event<State<SealedDomainModel>>>
+        get() = _mSealedProductDetails
 
-    private val _funkoProductDetails = MutableLiveData<Event<State<FunkoDomainModel>>>()
-    val funkoProductDetails: LiveData<Event<State<FunkoDomainModel>>>
-        get() = _funkoProductDetails
+    private val _mFunkoProductDetails = MutableLiveData<Event<State<FunkoDomainModel>>>()
+    val mFunkoProductDetails: LiveData<Event<State<FunkoDomainModel>>>
+        get() = _mFunkoProductDetails
 
-    private val _yugiohProductDetails = MutableLiveData<Event<State<YugiohDomainModel>>>()
-    val yugiohProductDetails: LiveData<Event<State<YugiohDomainModel>>>
-        get() = _yugiohProductDetails
+    private val _mYugiohProductDetails = MutableLiveData<Event<State<YugiohDomainModel>>>()
+    val mYugiohProductDetails: LiveData<Event<State<YugiohDomainModel>>>
+        get() = _mYugiohProductDetails
 
     fun getProductDetails(id : String,type : ProductType) {
         viewModelScope.launch {
             when(type){
                 ProductType.MAGIC_THE_GATHERING -> repository.getProductDetails<MTGDomainModel>(id,ProductType.MAGIC_THE_GATHERING).collect {
-                    _mtgProductDetails.value = Event(it)
+                    _mMtgProductDetails.value = Event(it)
                 }
                 ProductType.YUGIOH -> repository.getProductDetails<YugiohDomainModel>(id,ProductType.YUGIOH).collect {
-                    _yugiohProductDetails.value = Event(it)
+                    _mYugiohProductDetails.value = Event(it)
                 }
                 ProductType.POKEMON -> repository.getProductDetails<PokemonDomainModel>(id,ProductType.POKEMON).collect {
-                    _pokemonProductDetails.value = Event(it)
+                    _mPokemonProductDetails.value = Event(it)
                 }
                 ProductType.FUNKO -> repository.getProductDetails<FunkoDomainModel>(id,ProductType.FUNKO).collect {
-                    _funkoProductDetails.value = Event(it)
+                    _mFunkoProductDetails.value = Event(it)
                 }
                 ProductType.SEALED_POKEMON -> repository.getProductDetails<SealedDomainModel>(id,ProductType.SEALED_POKEMON).collect {
-                    _sealedProductDetails.value = Event(it)
+                    _mSealedProductDetails.value = Event(it)
                 }
                 ProductType.SEALED_YUGIOH -> repository.getProductDetails<SealedDomainModel>(id,ProductType.SEALED_YUGIOH).collect {
-                    _sealedProductDetails.value = Event(it)
+                    _mSealedProductDetails.value = Event(it)
                 }
                 ProductType.SEALED_MTG -> repository.getProductDetails<SealedDomainModel>(id,ProductType.SEALED_MTG).collect {
-                    _sealedProductDetails.value = Event(it)
+                    _mSealedProductDetails.value = Event(it)
                 }
             }
         }
@@ -70,7 +73,15 @@ class ProductDetailsViewModel(private val repository : ProductDetailsRepository)
     fun getProductImage(image : String) {
         viewModelScope.launch {
             repository.getProductImage(image).collect{
-                _productImage.value = Event(it)
+                _mProductImage.value = Event(it)
+            }
+        }
+    }
+
+    fun getRecentSale(objectId : String) {
+        viewModelScope.launch {
+            repository.getRecentSell(objectId).collect{
+                _mRecentSaleDomainModel.value = Event(it)
             }
         }
     }
