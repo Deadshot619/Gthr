@@ -6,7 +6,7 @@ import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 
-fun <T> fetchData(funName: String, parameter : HashMap<Any,Any> = hashMapOf()) : Task<T> {
+fun <T> fetchData(funName: String, parameter: HashMap<String, String?>) : Task<T> {
     // Create the arguments to the callable function.
 
      val functions: FirebaseFunctions = Firebase.functions

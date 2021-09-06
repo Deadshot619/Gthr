@@ -20,10 +20,10 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
         get() = _productList
 
 
-    fun searchProducts(searchKey: String?=null) {
+    fun searchProducts(searchKey: String?=null, productCategory:String?=null, productType :String?=null, limit:Int?=null) {
 
       viewModelScope.launch {
-            repository.fetchProducts().collect {
+            repository.fetchProducts(searchKey,productCategory,productType,limit).collect {
                 _productList.value = Event(it)
             }
         }

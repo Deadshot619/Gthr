@@ -7,7 +7,6 @@ import com.gthr.gthrcollect.data.remote.fetchData
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.mapper.*
-import com.gthr.gthrcollect.model.network.cloudfunction.SearchProductModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.constants.CloudFunctions
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
@@ -27,12 +26,19 @@ class SearchRepository {
 
     private lateinit var functions: FirebaseFunctions
 
-    fun fetchProducts() = flow<State<List<ProductDisplayModel>>> {
+    fun fetchProducts(searchKey: String?=null, productCategory:String?=null, productType :String?=null, limit:Int?=null) = flow<State<List<ProductDisplayModel>>> {
         // Emit loading state
         emit(State.loading())
 
+        val data = hashMapOf(
+            CloudFunctions.SWEEP_TAKES to searchKey,
+            CloudFunctions.PRODUCT_CATEGORY to productCategory,
+            CloudFunctions.PRODUCT_TYPE to productType,
+            CloudFunctions.LIMIT to limit.toString()
+        )
+
         val productData =
-            fetchData<List<HashMap<String,String>>>(CloudFunctions.SEARCH_PRODUCT).await()
+            fetchData<List<HashMap<String,String>>>(CloudFunctions.SEARCH_PRODUCT,data).await()
         GthrLogger.d("productData", "${productData}")
 
         val productList = mutableListOf<ProductDisplayModel>()

@@ -27,11 +27,14 @@ import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.animateVisibility
 import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.setProfileImage
 import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
+
+    var selectedSort:String=""
+    var selectedCategory:String=""
+    var selectedProductType:String=""
 
     override fun getViewBinding() = SearchFragmentBinding.inflate(layoutInflater)
     override val mViewModel: SearchViewModel by viewModels{
@@ -210,57 +213,93 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
 
         mCfcvAskLowest.setOnClickListener {
-            selectSortingCategory(mCfcvAskLowest)
+            selectedSort=  selectSortingCategory(mCfcvAskLowest).toString()
+          //  showToast(mCfcvAskLowest.text.toString())
         }
 
         mCfcvAskHighest.setOnClickListener {
-            selectSortingCategory(mCfcvAskHighest)
+            selectedSort=selectSortingCategory(mCfcvAskHighest).toString()
+         //   showToast(mCfcvAskHighest.text.toString())
         }
 
         mCfcvMostFavourite.setOnClickListener {
-            selectSortingCategory(mCfcvMostFavourite)
+            selectedSort=selectSortingCategory(mCfcvMostFavourite).toString()
+          //  showToast(mCfcvMostFavourite.text.toString())
         }
 
         mCfscvCardsPokemon.setOnClickListener {
             setSealedSubCategoryUnSelected()
             mCardSubCategories.selectSubCategory(mCfscvCardsPokemon)
+
+            selectedProductType=mCfscvCardsPokemon.text.toString()
+         //   showToast(selectedProductType)
+
+            mViewModel.searchProducts(null,selectedCategory,ProductType.POKEMON.title,null)
+
         }
 
         mCfscvCardsYuGiOh.setOnClickListener {
             setSealedSubCategoryUnSelected()
-            mCardSubCategories.selectSubCategory(mCfscvCardsYuGiOh)
+             mCardSubCategories.selectSubCategory(mCfscvCardsYuGiOh)
+            selectedProductType=mCfscvCardsYuGiOh.text.toString()
+          //  showToast(selectedProductType)
+
+            mViewModel.searchProducts(null,selectedCategory,ProductType.YUGIOH.title,null)
         }
 
         mCfscvCardsMagic.setOnClickListener {
             setSealedSubCategoryUnSelected()
             mCardSubCategories.selectSubCategory(mCfscvCardsMagic)
+            selectedProductType=mCfscvCardsMagic.text.toString()
+          //  showToast(selectedProductType)
+
+            mViewModel.searchProducts(null,selectedCategory,ProductType.MAGIC_THE_GATHERING.title,null)
         }
 
         mCfcvToys.setOnClickListener {
             selectToys()
+            selectedCategory=mCfcvToys.text.toString()
+          //  showToast(selectedCategory)
         }
 
         mCfscvSealedPokemon.setOnClickListener {
             setCardSubCategoryUnSelected()
             mSealedSubCategories.selectSubCategory(mCfscvSealedPokemon)
+
+            selectedProductType=mCfscvSealedPokemon.text.toString()
+         //   showToast(selectedProductType)
+
+            mViewModel.searchProducts(null,selectedCategory,ProductType.POKEMON.title,null)
         }
 
         mCfscvSealedYuGiOh.setOnClickListener {
             setCardSubCategoryUnSelected()
             mSealedSubCategories.selectSubCategory(mCfscvSealedYuGiOh)
+            selectedProductType=mCfscvSealedYuGiOh.text.toString()
+         //   showToast(selectedProductType)
+
+            mViewModel.searchProducts(null,selectedCategory,ProductType.YUGIOH.title,null)
         }
 
         mCfscvSealedMagic.setOnClickListener {
             setCardSubCategoryUnSelected()
             mSealedSubCategories.selectSubCategory(mCfscvSealedMagic)
+            selectedProductType=mCfscvSealedMagic.text.toString()
+         //   showToast(selectedProductType)
+
+            mViewModel.searchProducts(null,selectedCategory,ProductType.MAGIC_THE_GATHERING.title,null)
         }
 
         mCfcvCards.setOnClickListener {
             selectCard()
+            selectedCategory=mCfcvCards.text.toString()
+        //    showToast(selectedCategory)
         }
 
         mCfcvSealed.setOnClickListener {
             selectSealed()
+            selectedCategory=mCfcvSealed.text.toString()
+          //  showToast(selectedCategory)
         }
 
     }
