@@ -108,6 +108,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/text_search"
+                    android:lines="1"
+                    android:singleLine="true"
                     app:layout_constraintEnd_toStartOf="@+id/iv_filter"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toTopOf="@id/guideline_top" />

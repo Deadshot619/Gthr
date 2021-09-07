@@ -1,5 +1,7 @@
 package com.gthr.gthrcollect.ui.homebottomnav.search
 
+import android.view.KeyEvent
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -20,10 +22,7 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.SearchCollectionAdapter
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
-import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-import com.gthr.gthrcollect.utils.customviews.CustomFilterCategoryView
-import com.gthr.gthrcollect.utils.customviews.CustomFilterSubCategoryView
-import com.gthr.gthrcollect.utils.customviews.CustomProductCell
+import com.gthr.gthrcollect.utils.customviews.*
 import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.animateVisibility
 import com.gthr.gthrcollect.utils.extensions.gone
@@ -32,9 +31,11 @@ import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
-    var selectedSort:String=""
-    var selectedCategory:String=""
-    var selectedProductType:String=""
+    var mSelectedSort:String?=null
+    var mSelectedCategory:ProductCategory?=null
+    var mSelectedProductType:ProductType?=null
+    var mSearchKey:String?=null
+    var mLimit:Int?=null
 
     override fun getViewBinding() = SearchFragmentBinding.inflate(layoutInflater)
     override val mViewModel: SearchViewModel by viewModels{
@@ -85,16 +86,15 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     private lateinit var mAdapterCollections: SearchCollectionAdapter
     private lateinit var mProductAdapter: ProductAdapter
 
+    private lateinit var mSearchBar : CustomSearchView
+
     private val args by navArgs<SearchFragmentArgs>()
 
     override fun onBinding() {
         initViews()
         setUpOnClickListeners()
         setUpRecyclerView()
-
         setUpObservers()
-
-        mViewModel.searchProducts()
 
         if(args.type==SearchType.COLLECTIONS){
             setCollectionSelected()
@@ -109,9 +109,11 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 ProductCategoryFilter.CARD -> selectCard()
                 ProductCategoryFilter.TOY -> selectToys()
                 ProductCategoryFilter.SEALED -> selectSealed()
-                ProductCategoryFilter.NONE -> {}
+                ProductCategoryFilter.NONE -> searchProduct()
+
             }
         }
+
     }
 
     private fun setUpObservers() {
@@ -123,6 +125,9 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                     is State.Success -> {
                         mProductAdapter.submitList(it.data)
                         showProgressBar(false)
+                        if (mDrawer.isDrawerVisible(GravityCompat.END)) {
+                            mDrawer.closeDrawer(GravityCompat.END)
+                        }
                         GthrLogger.e("observedata","data: ${it.data}")
                     }
                 }
@@ -207,17 +212,17 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
 
         mCfcvAskLowest.setOnClickListener {
-            selectedSort=  selectSortingCategory(mCfcvAskLowest).toString()
+            mSelectedSort=  selectSortingCategory(mCfcvAskLowest).toString()
           //  showToast(mCfcvAskLowest.text.toString())
         }
 
         mCfcvAskHighest.setOnClickListener {
-            selectedSort=selectSortingCategory(mCfcvAskHighest).toString()
+            mSelectedSort=selectSortingCategory(mCfcvAskHighest).toString()
          //   showToast(mCfcvAskHighest.text.toString())
         }
 
         mCfcvMostFavourite.setOnClickListener {
-            selectedSort=selectSortingCategory(mCfcvMostFavourite).toString()
+            mSelectedSort=selectSortingCategory(mCfcvMostFavourite).toString()
           //  showToast(mCfcvMostFavourite.text.toString())
         }
 
@@ -225,77 +230,97 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             setSealedSubCategoryUnSelected()
             mCardSubCategories.selectSubCategory(mCfscvCardsPokemon)
 
-            selectedProductType=mCfscvCardsPokemon.text.toString()
-         //   showToast(selectedProductType)
+            if (mCfscvCardsPokemon.mIsActive){
+                searchProduct(ProductCategory.CARDS,ProductType.POKEMON,mLimit)
 
-            mViewModel.searchProducts(null,selectedCategory,ProductType.POKEMON.title,null)
-
+            }else{
+                searchProduct(ProductCategory.CARDS,null,mLimit)
+            }
         }
 
         mCfscvCardsYuGiOh.setOnClickListener {
             setSealedSubCategoryUnSelected()
              mCardSubCategories.selectSubCategory(mCfscvCardsYuGiOh)
-            selectedProductType=mCfscvCardsYuGiOh.text.toString()
-          //  showToast(selectedProductType)
+          //  showToast(mSelectedProductType)
+            if (mCfscvCardsYuGiOh.mIsActive){
+                searchProduct(ProductCategory.CARDS,ProductType.YUGIOH,mLimit)
 
-            mViewModel.searchProducts(null,selectedCategory,ProductType.YUGIOH.title,null)
+            }else{
+                searchProduct(ProductCategory.CARDS,null,mLimit)
+
+            }
         }
 
         mCfscvCardsMagic.setOnClickListener {
             setSealedSubCategoryUnSelected()
             mCardSubCategories.selectSubCategory(mCfscvCardsMagic)
-            selectedProductType=mCfscvCardsMagic.text.toString()
-          //  showToast(selectedProductType)
+          //  showToast(mSelectedProductType)
 
-            mViewModel.searchProducts(null,selectedCategory,ProductType.MAGIC_THE_GATHERING.title,null)
+            if (mCfscvCardsMagic.mIsActive){
+                searchProduct(ProductCategory.CARDS,ProductType.MAGIC_THE_GATHERING,mLimit)
+
+            }else{
+                searchProduct(ProductCategory.CARDS,null,mLimit)
+            }
         }
 
         mCfcvToys.setOnClickListener {
             selectToys()
-            selectedCategory=mCfcvToys.text.toString()
-          //  showToast(selectedCategory)
         }
 
         mCfscvSealedPokemon.setOnClickListener {
             setCardSubCategoryUnSelected()
             mSealedSubCategories.selectSubCategory(mCfscvSealedPokemon)
+            if (mCfscvSealedPokemon.mIsActive){
+                searchProduct(ProductCategory.SEALED,ProductType.SEALED_POKEMON,mLimit)
+            }else{
+                searchProduct(ProductCategory.SEALED,null,mLimit)
 
-            selectedProductType=mCfscvSealedPokemon.text.toString()
-         //   showToast(selectedProductType)
-
-            mViewModel.searchProducts(null,selectedCategory,ProductType.POKEMON.title,null)
+            }
         }
 
         mCfscvSealedYuGiOh.setOnClickListener {
             setCardSubCategoryUnSelected()
             mSealedSubCategories.selectSubCategory(mCfscvSealedYuGiOh)
-            selectedProductType=mCfscvSealedYuGiOh.text.toString()
-         //   showToast(selectedProductType)
 
-            mViewModel.searchProducts(null,selectedCategory,ProductType.YUGIOH.title,null)
+            if (mCfscvSealedYuGiOh.mIsActive){
+                searchProduct(ProductCategory.SEALED,ProductType.SEALED_YUGIOH,mLimit)
+            }else{
+
+                searchProduct(ProductCategory.SEALED,null,mLimit)
+            }
         }
 
         mCfscvSealedMagic.setOnClickListener {
             setCardSubCategoryUnSelected()
             mSealedSubCategories.selectSubCategory(mCfscvSealedMagic)
-            selectedProductType=mCfscvSealedMagic.text.toString()
-         //   showToast(selectedProductType)
 
-            mViewModel.searchProducts(null,selectedCategory,ProductType.MAGIC_THE_GATHERING.title,null)
+            if (mCfscvSealedMagic.mIsActive){
+                searchProduct(ProductCategory.SEALED,ProductType.SEALED_MTG,mLimit)
+            }else{
+                searchProduct(ProductCategory.SEALED,null,mLimit)
+            }
         }
 
         mCfcvCards.setOnClickListener {
             selectCard()
-            selectedCategory=mCfcvCards.text.toString()
-        //    showToast(selectedCategory)
+           
         }
 
         mCfcvSealed.setOnClickListener {
             selectSealed()
-            selectedCategory=mCfcvSealed.text.toString()
-          //  showToast(selectedCategory)
         }
 
+        mSearchBar.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    if (!mSearchBar.text.toString().trim().isNullOrEmpty())
+                        searchProduct(mSelectedCategory,mSelectedProductType,mLimit)
+                    return true
+                }
+                return false
+            }
+        })
     }
 
     private fun selectToys() {
@@ -304,6 +329,12 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mLayoutSealed.animateVisibility(false)
         setCardSubCategoryUnSelected()
         setSealedSubCategoryUnSelected()
+
+        if (mCfcvToys.mIsActive){
+            searchProduct(ProductCategory.TOYS,null,mLimit)
+        }else{
+            searchProduct(null,null,mLimit)
+        }
     }
 
     private fun selectSealed() {
@@ -319,6 +350,12 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             mLayoutSealed.animateVisibility(mToggleSealed)
             !mToggleSealed
         }
+
+        if (mCfcvSealed.mIsActive){
+            searchProduct(ProductCategory.SEALED,null,mLimit)
+        }else{
+            searchProduct(null,null,mLimit)
+        }
     }
 
     private fun selectCard() {
@@ -333,6 +370,11 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             setCardSubCategoryUnSelected()
             mLayoutCards.animateVisibility(mToggleCards)
             !mToggleCards
+        }
+        if (mCfcvCards.mIsActive){
+            searchProduct(ProductCategory.CARDS,null,mLimit)
+        }else{
+            searchProduct(null,null,mLimit)
         }
     }
 
@@ -427,6 +469,8 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mCardSubCategories = listOf(mCfscvCardsPokemon, mCfscvCardsYuGiOh, mCfscvCardsMagic)
         mSealedSubCategories = listOf(mCfscvSealedPokemon, mCfscvSealedYuGiOh, mCfscvSealedMagic)
 
+        mSearchBar=mViewBinding.csvSearch
+
         initProgressBar(mViewBinding.layoutProgress)
     }
 
@@ -449,6 +493,14 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         for (category in this) {
             category.setActive(category == subCategory && !category.mIsActive)
         }
+    }
+    
+    private fun searchProduct(productCategory:ProductCategory?=null,productType: ProductType?=null,limit:Int?=null){
+        mSelectedCategory=productCategory
+        mSelectedProductType=productType
+        mLimit=limit
+        mSearchKey=mSearchBar.text.toString().trim()
+        mViewModel.searchProducts(mSearchKey,mSelectedCategory?.title,mSelectedProductType?.title,mLimit)
     }
 
     companion object {

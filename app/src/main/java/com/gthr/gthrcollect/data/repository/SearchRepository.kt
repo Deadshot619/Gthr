@@ -12,6 +12,7 @@ import com.gthr.gthrcollect.utils.constants.CloudFunctions
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.getProductType
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -25,16 +26,17 @@ class SearchRepository {
 
     private lateinit var functions: FirebaseFunctions
 
-    fun fetchProducts(searchKey: String?=null, productCategory:String?=null, productType :String?=null, limit:Int?=null) = flow<State<List<ProductDisplayModel>>> {
+    fun fetchProducts(searchTerm : String?=null, productCategory:String?=null, productType :String?=null, limit:Int?=null, page:Int?=null) = flow<State<List<ProductDisplayModel>>> {
         // Emit loading state
         emit(State.loading())
 
         val data = hashMapOf(
-            CloudFunctions.SWEEP_TAKES to searchKey,
+            CloudFunctions.SEARCK_KEY to searchTerm,
             CloudFunctions.PRODUCT_CATEGORY to productCategory,
             CloudFunctions.PRODUCT_TYPE to productType,
-            CloudFunctions.LIMIT to limit.toString()
+            CloudFunctions.LIMIT to limit.toString(),
         )
+        GthrLogger.d("searchTerm",data.toString())
 
         val productData =
             fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_PRODUCT, data).await()
@@ -156,4 +158,5 @@ class SearchRepository {
         }
       return null
     }
+
 }
