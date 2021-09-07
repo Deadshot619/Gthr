@@ -9,6 +9,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.functions.ktx.functions
+import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.*
@@ -16,6 +18,7 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModelFactory
 import com.gthr.gthrcollect.ui.productdetail.adapter.ProductAdapter
@@ -62,17 +65,14 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var mProductDisplayModel: ProductDisplayModel
     private lateinit var mProductType: ProductType
     private lateinit var mProductCategory: ProductCategory
+    private lateinit var mRelatedAdapter : ProductAdapter
 
     //Mtg Details view
     private lateinit var mLayoutProductDetailMtgDetailBinding: LayoutProductDetailMtgDetailBinding
     //Funko,Pokemon Details view
     private lateinit var mLayoutProductDetailMainDetailsBinding: LayoutProductDetailMainDetailsBinding
 
-
     private lateinit var recentSaleAdapter : RecentSellAdapter
-
-
-
 
     override fun onBinding() {
         mViewBinding.lifecycleOwner = viewLifecycleOwner
@@ -84,13 +84,26 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         initViews()
         setUpOnClickListeners()
         setUpRecentSell()
-        setUpUpForSell()
         setUpRelated()
+        setUpUpForSell()
         setUpProductType()
         setUpObserver()
     }
 
     private fun setUpObserver() {
+        mViewModel.mProductDisplayModel.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Failed -> showProgressBar(false)
+                    is State.Success -> {
+                        GthrLogger.i("dskjvjnkdf", "ProductDisplayModel : ${it.data}")
+                        mRelatedAdapter.submitList(it.data)
+                        showProgressBar(false)
+                    }
+                }
+            }
+        }
         mViewModel.mRecentSaleDomainModel.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
@@ -112,9 +125,9 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         mViewModel.mProductImage.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
-                    is State.Success -> mIvProduct.setProfileImage(it.data)
-                    is State.Failed -> {}
                     is State.Loading -> {}
+                    is State.Failed -> {}
+                    is State.Success -> mIvProduct.setProfileImage(it.data)
                 }
             }
         }
@@ -126,9 +139,11 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
                         if(it.data.imageID.isNotEmpty())
-                        mViewModel.getProductImage(it.data.imageID)
+                            mViewModel.getProductImage(it.data.imageID)
                         if(it.data.objectID.isNotEmpty())
-                        mViewModel.getRecentSale(it.data.objectID)
+                            mViewModel.getRecentSale(it.data.objectID)
+                        if(it.data.setName.isNotEmpty())
+                            mViewModel.getRelatedProduct(it.data.setName,ProductType.MAGIC_THE_GATHERING)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -143,9 +158,11 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
                         if(it.data.imageID.isNotEmpty())
-                        mViewModel.getProductImage(it.data.imageID)
+                            mViewModel.getProductImage(it.data.imageID)
                         if(it.data.objectID.isNotEmpty())
                             mViewModel.getRecentSale(it.data.objectID)
+                        if(it.data.license.isNotEmpty())
+                            mViewModel.getRelatedProduct(it.data.license,ProductType.FUNKO)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -160,9 +177,11 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
                         if(it.data.imageID.isNotEmpty())
-                        mViewModel.getProductImage(it.data.imageID)
+                            mViewModel.getProductImage(it.data.imageID)
                         if(it.data.objectID.isNotEmpty())
                             mViewModel.getRecentSale(it.data.objectID)
+                        if(it.data.set.isNotEmpty())
+                            mViewModel.getRelatedProduct(it.data.set,ProductType.POKEMON)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -177,9 +196,11 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
                         if(it.data.imageID.isNotEmpty())
-                        mViewModel.getProductImage(it.data.imageID)
+                            mViewModel.getProductImage(it.data.imageID)
                         if(it.data.objectID.isNotEmpty())
                             mViewModel.getRecentSale(it.data.objectID)
+                        if(it.data.set.isNotEmpty())
+                            mViewModel.getRelatedProduct(it.data.set,ProductType.SEALED_POKEMON)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -194,9 +215,11 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
                         if(it.data.imageID.isNotEmpty())
-                        mViewModel.getProductImage(it.data.imageID)
+                            mViewModel.getProductImage(it.data.imageID)
                         if(it.data.objectID.isNotEmpty())
                             mViewModel.getRecentSale(it.data.objectID)
+                        if(it.data.set.isNotEmpty())
+                            mViewModel.getRelatedProduct(it.data.set,ProductType.YUGIOH)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -351,19 +374,23 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpRelated() {
+        mRelatedAdapter = ProductAdapter(mProductType, CustomProductCell.State.NORMAL){
+            startActivity(ProductDetailActivity.getInstance(requireContext(), it))
+        }
+
         rvRelated.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
                 LinearLayoutManager.HORIZONTAL, false
             )
-            adapter = ProductAdapter(mProductType, CustomProductCell.State.NORMAL)
+            adapter = mRelatedAdapter
         }
     }
 
     private fun setUpUpForSell() {
         rvUpForSell.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = ProductAdapter(mProductType, CustomProductCell.State.FOR_SALE)
+            adapter = mRelatedAdapter
         }
     }
 

@@ -42,6 +42,10 @@ class ProductDetailsViewModel(private val repository : ProductDetailsRepository)
     val mYugiohProductDetails: LiveData<Event<State<YugiohDomainModel>>>
         get() = _mYugiohProductDetails
 
+    private val _mProductDisplayModel = MutableLiveData<Event<State<List<ProductDisplayModel>>>>()
+    val mProductDisplayModel: LiveData<Event<State<List<ProductDisplayModel>>>>
+        get() = _mProductDisplayModel
+
     fun getProductDetails(id : String,type : ProductType) {
         viewModelScope.launch {
             when(type){
@@ -85,4 +89,13 @@ class ProductDetailsViewModel(private val repository : ProductDetailsRepository)
             }
         }
     }
+
+    fun getRelatedProduct(value : String,type: ProductType){
+        viewModelScope.launch {
+            repository.getRelatedProduct(value,type).collect {
+                _mProductDisplayModel.value = Event(it)
+            }
+        }
+    }
+
 }

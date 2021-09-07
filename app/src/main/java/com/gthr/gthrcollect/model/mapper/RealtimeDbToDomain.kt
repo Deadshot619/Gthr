@@ -139,7 +139,7 @@ fun SealedModel.toSealedDomainModel(refKey: String) = SealedDomainModel(
     rarity = this.rarity ?: "",
     `set` = this.`set` ?: "",
     tier = this.tier ?: -1,
-    description = this.description ?: "",
+    description =  if(this.description.isNullOrEmpty()) "-" else this.description!!,
     refKey = refKey
 )
 

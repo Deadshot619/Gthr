@@ -43,6 +43,8 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_row1_column1" />
 
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/tv_row2_column1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -60,6 +62,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_row1_column1" />
 
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/tv_row2_column2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -109,6 +113,8 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_row3_column1" />
 
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/tv_row4_column1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -126,6 +132,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_row3_column1" />
 
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/tv_row4_column2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -175,6 +183,8 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_row5_column1" />
 
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/tv_row6_column1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -192,6 +202,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_row5_column1" />
 
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/tv_row6_column2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -241,6 +253,8 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_row7_column1" />
 
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/tv_row8_column1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -258,6 +272,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_row7_column1" />
 
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/tv_row8_column2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

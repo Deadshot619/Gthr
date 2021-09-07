@@ -6,6 +6,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.model.domain.RecentSaleDomainModel
 import com.gthr.gthrcollect.model.mapper.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
@@ -125,5 +126,60 @@ class ProductDetailsRepository {
         Log.i("dschjds", "getRecentSell: ${it.message.toString()}")
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
+
+    fun getRelatedProduct(value : String,type: ProductType) = flow<State<List<ProductDisplayModel>>>{
+        emit(State.loading())
+        var ref = mFirebaseRD
+        val networkModelType = when (type) {
+            ProductType.MAGIC_THE_GATHERING -> {
+                ref = ref.child(FirebaseRealtimeDatabase.MTG_MODEL)
+                MTGModel::class.java
+            }
+            ProductType.YUGIOH -> {
+                ref = ref.child(FirebaseRealtimeDatabase.YUGIOH_MODEL)
+                YugiohModel::class.java
+            }
+            ProductType.POKEMON -> {
+                ref = ref.child(FirebaseRealtimeDatabase.POKEMON_MODEL)
+                PokemonModel::class.java
+            }
+            ProductType.FUNKO -> {
+                ref = ref.child(FirebaseRealtimeDatabase.FUNKO_MODEL)
+                FunkoModel::class.java
+            }
+            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
+                ref = ref.child(FirebaseRealtimeDatabase.SEALED_MODEL)
+                SealedModel::class.java
+            }
+        }
+
+        val query = when(type){
+            ProductType.MAGIC_THE_GATHERING -> ref.orderByChild(FirebaseRealtimeDatabase.SET_NAME)
+            ProductType.YUGIOH -> ref.orderByChild(FirebaseRealtimeDatabase.SET)
+            ProductType.POKEMON -> ref.orderByChild(FirebaseRealtimeDatabase.SET)
+            ProductType.FUNKO -> ref.orderByChild(FirebaseRealtimeDatabase.LICENSE)
+            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> ref.orderByChild(FirebaseRealtimeDatabase.SET)
+        }
+        val await = query.equalTo(value).limitToFirst(10).get().await()
+
+        if(await.childrenCount>0){
+            val list = mutableListOf<ProductDisplayModel>()
+            await.children.forEach {
+                val productDetailsNetworkModel = it.getValue(networkModelType)
+                val productDisplayModel = when (type) {
+                    ProductType.MAGIC_THE_GATHERING -> ProductDisplayModel((productDetailsNetworkModel as MTGModel).toMTGDomainModel(it.key ?: ""))
+                    ProductType.YUGIOH -> ProductDisplayModel((productDetailsNetworkModel as YugiohModel).toYugiohDomainModel(it.key ?: ""))
+                    ProductType.POKEMON -> ProductDisplayModel((productDetailsNetworkModel as PokemonModel).toPokemonDomainModel(it.key ?: ""))
+                    ProductType.FUNKO -> ProductDisplayModel((productDetailsNetworkModel as FunkoModel).toFunkoDomainModel(it.key ?: ""))
+                    ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> ProductDisplayModel((productDetailsNetworkModel as SealedModel).toSealedDomainModel(it.key ?: ""))
+                }
+                list.add(productDisplayModel)
+            }
+            emit(State.success(data = list))
+        }
+        else{
+            emit(State.success(data = listOf()))
+        }
+    }
 
 }

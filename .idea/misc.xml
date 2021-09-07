@@ -3,8 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/item_feed.xml" value="0.20833333333333334" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/layout_custom_product_cell.xml" value="0.24635416666666668" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_btn_price_blue.xml" value="0.24739583333333334" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_btn_secondary_blue.xml" value="0.24739583333333334" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_custum_legality_blue.xml" value="0.24739583333333334" />
@@ -18,11 +16,14 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_review_your_ask_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/item_recent_sele.xml" value="0.5034602076124568" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_product_detail_card_top.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_product_detail_main_details.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_product_detail_mtg_detail.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_product_detail_toy_top.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_progress_bar.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/my_profile.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/password_reset.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/product_detail_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/receipts_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/recent_sell_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/up_for_sell_fragment.xml" value="0.23125" />
       </map>

@@ -154,6 +154,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_card_description"
+                    android:minHeight="@dimen/min_height_description"
                     android:layout_marginBottom="@dimen/margin_extra_small"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

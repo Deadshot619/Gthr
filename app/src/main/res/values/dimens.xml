@@ -261,6 +261,7 @@
     <dimen name="padding_recent_sale">6dp</dimen>
     <dimen name="margin_product_detail">6dp</dimen>
     <dimen name="height_toolbar_product_detail">30dp</dimen>
+    <dimen name="min_height_description">162dp</dimen>
 
     <!-- Market -->
     <dimen name="height_banner_market">94dp</dimen>
