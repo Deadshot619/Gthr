@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.gthr.gthrcollect.databinding.ItemCollectionBinding
 import com.gthr.gthrcollect.databinding.ItemTestProductBinding
 import com.gthr.gthrcollect.model.domain.SearchCollection
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
@@ -25,14 +24,14 @@ class TestProductAdapter(val state : CustomProductCell.State) : ListAdapter<Sear
     inner class TestProductViewHolder(var binding: ItemTestProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            when(layoutPosition){
+            when (layoutPosition) {
                 0 -> binding.item.setType(CustomProductCell.Type.FUNKO)
                 1 -> binding.item.setType(CustomProductCell.Type.SEALED)
-                2 -> binding.item.setType(CustomProductCell.Type.MYTHIC)
-                3 -> binding.item.setType(CustomProductCell.Type.HOLO_RARE)
-                4 -> binding.item.setType(CustomProductCell.Type.SECRET_RARE)
+                2 -> binding.item.setType(CustomProductCell.Type.CARDS)
+                3 -> binding.item.setType(CustomProductCell.Type.CARDS)
+                4 -> binding.item.setType(CustomProductCell.Type.CARDS)
             }
-            when(state){
+            when (state) {
                 CustomProductCell.State.FOR_SALE -> binding.item.setState(CustomProductCell.State.FOR_SALE)
                 CustomProductCell.State.WANT -> binding.item.setState(CustomProductCell.State.WANT)
                 CustomProductCell.State.NORMAL -> binding.item.setState(CustomProductCell.State.NORMAL)

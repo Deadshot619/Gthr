@@ -36,9 +36,9 @@ class ProductAdapter(val productType: ProductType, val state: CustomProductCell.
               binding.cpsMain.setState(state)
               when (productType) {
                   ProductType.FUNKO -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
-                  ProductType.POKEMON -> binding.cpsMain.setType(CustomProductCell.Type.HOLO_RARE)
+                  ProductType.POKEMON -> binding.cpsMain.setType(CustomProductCell.Type.CARDS)
                   ProductType.MAGIC_THE_GATHERING -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
-                  ProductType.YUGIOH -> binding.cpsMain.setType(CustomProductCell.Type.SECRET_RARE)
+                  ProductType.YUGIOH -> binding.cpsMain.setType(CustomProductCell.Type.CARDS)
                   ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> binding.cpsMain.setType(
                       CustomProductCell.Type.SEALED
                   )

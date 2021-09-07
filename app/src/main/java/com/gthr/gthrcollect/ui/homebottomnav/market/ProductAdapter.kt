@@ -5,13 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ItemUpForSellBinding
 import com.gthr.gthrcollect.model.domain.UpForSellDomainModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.enums.ProductTypeOld
 import com.gthr.gthrcollect.utils.extensions.getCellWidth
-import com.gthr.gthrcollect.utils.extensions.getScreenWidth
 
 class ProductAdapter(val productType: ProductTypeOld, val state: CustomProductCell.State) : ListAdapter<UpForSellDomainModel,ProductAdapter.UpForSellViewHolder>(DriftUtils)  {
 
@@ -31,9 +29,9 @@ class ProductAdapter(val productType: ProductTypeOld, val state: CustomProductCe
               binding.cpsMain.setState(state)
               when(productType) {
                   ProductTypeOld.FUNKO -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
-                  ProductTypeOld.POKEMON -> binding.cpsMain.setType(CustomProductCell.Type.HOLO_RARE)
+                  ProductTypeOld.POKEMON -> binding.cpsMain.setType(CustomProductCell.Type.CARDS)
                   ProductTypeOld.MTG -> binding.cpsMain.setType(CustomProductCell.Type.FUNKO)
-                  ProductTypeOld.YUGIOH -> binding.cpsMain.setType(CustomProductCell.Type.SECRET_RARE)
+                  ProductTypeOld.YUGIOH -> binding.cpsMain.setType(CustomProductCell.Type.CARDS)
                   ProductTypeOld.SEALED -> binding.cpsMain.setType(CustomProductCell.Type.SEALED)
               }
           }

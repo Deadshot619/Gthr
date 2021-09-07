@@ -30,7 +30,7 @@ class CustomProductCell @JvmOverloads constructor(
     private val mIvFav: AppCompatImageView = mView.findViewById(R.id.iv_fav)
 
     private val mTvCardState: AppCompatTextView = mView.findViewById(R.id.tv_card_state)
-    private val mTvProductType: AppCompatTextView = mView.findViewById(R.id.tv_product_type)
+    private val mTvProductRarity: AppCompatTextView = mView.findViewById(R.id.tv_product_rarity)
     private val mTvTitle: AppCompatTextView = mView.findViewById(R.id.tv_title)
     val mTvPrice: AppCompatTextView = mView.findViewById(R.id.tv_price)
 
@@ -68,7 +68,6 @@ class CustomProductCell @JvmOverloads constructor(
         mCurrentType = type
         when(type){
             Type.FUNKO -> {
-                mTvProductType.text = context.getString(R.string.text_funko)
                 mTvRow1Collum1.text = context.getString(R.string.text_product_name)
                 mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
                 mGroupLanguage.gone()
@@ -78,29 +77,13 @@ class CustomProductCell @JvmOverloads constructor(
                 setEdition(context.getString(R.string.text_new))
             }
             Type.SEALED -> {
-                mTvProductType.text = context.getString(R.string.text_sealed)
                 mTvRow1Collum1.text = context.getString(R.string.text_product_name)
                 mTvRow2Collum1.text = context.getString(R.string.text_product_set)
                 mGroupLanguage.gone()
                 mGroupCondition.gone()
                 setEdition(context.getString(R.string.text_new))
             }
-            Type.MYTHIC -> {
-                mTvProductType.text = context.getString(R.string.text_mythic)
-                mTvRow1Collum1.text = context.getString(R.string.text_product_set)
-                mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
-                mGroupLanguage.visible()
-                mGroupCondition.visible()
-            }
-            Type.HOLO_RARE -> {
-                mTvProductType.text = context.getString(R.string.text_holo_rare)
-                mTvRow1Collum1.text = context.getString(R.string.text_product_set)
-                mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
-                mGroupLanguage.visible()
-                mGroupCondition.visible()
-            }
-            Type.SECRET_RARE -> {
-                mTvProductType.text = context.getString(R.string.text_secret_rare)
+            Type.CARDS -> {
                 mTvRow1Collum1.text = context.getString(R.string.text_product_set)
                 mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
                 mGroupLanguage.visible()
@@ -110,22 +93,20 @@ class CustomProductCell @JvmOverloads constructor(
     }
 
    fun setValue(productDisplayModel: ProductDisplayModel){
-       when(productDisplayModel.productType) {
-           ProductType.MAGIC_THE_GATHERING -> setType(Type.MYTHIC)
+       when (productDisplayModel.productType) {
+           ProductType.MAGIC_THE_GATHERING,
+           ProductType.POKEMON,
+           ProductType.YUGIOH -> setType(Type.CARDS)
            ProductType.FUNKO -> setType(Type.FUNKO)
-           ProductType.POKEMON -> setType(Type.SECRET_RARE)
-           ProductType.YUGIOH -> setType(Type.HOLO_RARE)
            ProductType.SEALED_YUGIOH,
            ProductType.SEALED_POKEMON,
-           ProductType.SEALED_MTG-> setType(Type.SEALED)
-
+           ProductType.SEALED_MTG -> setType(Type.SEALED)
        }
+       setProductRarity(productDisplayModel.rarity.toString())
        setPrice(productDisplayModel.lowestAskCost.toString())
-       mIvMain.setImageByUrl(productDisplayModel.firImageURL!!)
+       mIvMain.setImageByUrl(productDisplayModel.firImageURL.toString())
        setProductNumber(productDisplayModel.productNumber.toString())
-       setProductName(productDisplayModel.name!!)
-
-
+       setProductName(productDisplayModel.name.toString())
    }
 
     fun setState(state:State){
@@ -192,7 +173,10 @@ class CustomProductCell @JvmOverloads constructor(
     }
 
     fun setPrice(value: String) {
-        mTvPrice.text = String.format(context.getString(R.string.text_price_value), value)
+        mTvPrice.text = String.format(
+            context.getString(R.string.text_price_value),
+            value.toFloatOrNull() ?: "-"
+        )
     }
 
     fun setProductNumber(value: String) {
@@ -220,8 +204,12 @@ class CustomProductCell @JvmOverloads constructor(
         mTvEdition.text = value
     }
 
+    fun setProductRarity(value: String) {
+        mTvProductRarity.text = value
+    }
+
     enum class Type {
-        FUNKO, SEALED, MYTHIC, HOLO_RARE, SECRET_RARE
+        FUNKO, SEALED, CARDS
     }
 
     enum class State {

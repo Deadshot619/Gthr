@@ -41,11 +41,11 @@ class UpForSellAdapter(val productType: ProductType, val callback: (FavSoldDomai
         holder.binding.item.setState(CustomProductCell.State.FOR_SALE)
         when (productType) {
             ProductType.FUNKO -> holder.binding.item.setType(CustomProductCell.Type.FUNKO)
-            ProductType.POKEMON -> holder.binding.item.setType(CustomProductCell.Type.HOLO_RARE)
+            ProductType.POKEMON -> holder.binding.item.setType(CustomProductCell.Type.CARDS)
             ProductType.MAGIC_THE_GATHERING -> holder.binding.item.setType(CustomProductCell.Type.FUNKO)
-            ProductType.YUGIOH -> holder.binding.item.setType(CustomProductCell.Type.HOLO_RARE)
+            ProductType.YUGIOH -> holder.binding.item.setType(CustomProductCell.Type.CARDS)
             ProductType.SEALED_YUGIOH, ProductType.SEALED_POKEMON, ProductType.SEALED_MTG -> holder.binding.item.setType(
-                CustomProductCell.Type.HOLO_RARE
+                CustomProductCell.Type.CARDS
             )
         }
     }

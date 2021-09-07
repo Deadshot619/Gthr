@@ -43,7 +43,7 @@ class FavSoldAdapter(val cardType:ProfileNavigationType, val callback: (FavSoldD
             }
             ProfileNavigationType.FAVOURITES -> {
                 holder.binding.item.setState(CustomProductCell.State.FAVORITE)
-                holder. binding.item.setType(CustomProductCell.Type.HOLO_RARE)
+                holder.binding.item.setType(CustomProductCell.Type.CARDS)
             }
         }
     }
