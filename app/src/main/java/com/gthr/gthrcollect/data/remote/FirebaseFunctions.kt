@@ -13,10 +13,10 @@ fun <T> fetchData(funName: String, parameter: HashMap<String, String?>) : Task<T
 
     return functions
         .getHttpsCallable(funName)
-        .call(parameter)
+        .call()
         .continueWith { task ->
             val result = task.result?.data as T
-            GthrLogger.d("data", "result: ${result}")
+            GthrLogger.d("mayank", "result: ${task.result}")
             result
         }
 }

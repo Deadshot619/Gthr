@@ -1,7 +1,7 @@
 package com.gthr.gthrcollect.utils.enums
 
 enum class ProductCategory(val title: String) {
-    TOYS("toys"),
+    TOYS("Funko"),
     CARDS("cards"),
     SEALED("sealed")
 }

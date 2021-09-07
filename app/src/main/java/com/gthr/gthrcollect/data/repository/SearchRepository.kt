@@ -34,12 +34,16 @@ class SearchRepository {
             CloudFunctions.SEARCK_KEY to searchTerm,
             CloudFunctions.PRODUCT_CATEGORY to productCategory,
             CloudFunctions.PRODUCT_TYPE to productType,
-            CloudFunctions.LIMIT to limit.toString(),
+            CloudFunctions.LIMIT to limit.toString()
         )
-        GthrLogger.d("searchTerm",data.toString())
+        GthrLogger.d("searchTerm", data.toString())
 
+        val endPoint =
+            "${CloudFunctions.SEARCH_PRODUCT}?${CloudFunctions.LIMIT}=${limit ?: ""}&${CloudFunctions.SEARCK_KEY}=${searchTerm ?: ""}" +
+                    "&${CloudFunctions.PRODUCT_CATEGORY}=${productCategory ?: ""}&${CloudFunctions.PRODUCT_TYPE}=${productType ?: ""}&"
+        GthrLogger.d("mayank", "endPoint: $endPoint")
         val productData =
-            fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_PRODUCT, data).await()
+            fetchData<List<HashMap<String, String>>>(endPoint, data).await()
         val productList = mutableListOf<ProductDisplayModel>()
 
         productData.forEachIndexed { index, it ->

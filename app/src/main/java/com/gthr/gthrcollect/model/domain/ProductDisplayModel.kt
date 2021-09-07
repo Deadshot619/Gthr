@@ -40,7 +40,7 @@ data class ProductDisplayModel(
         productNumber = model.itemNumber.toString(),
         numberOfFavorites = model.numberOfFavorites,
         tier = model.tier.toString(),
-        rarity = ProductCategory.TOYS.title.toUpperCase()
+        rarity = ProductCategory.TOYS.title
     )
 
     constructor(model: MTGDomainModel) : this(
