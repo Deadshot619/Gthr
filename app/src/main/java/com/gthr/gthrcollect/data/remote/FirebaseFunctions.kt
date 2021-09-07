@@ -11,14 +11,12 @@ fun <T> fetchData(funName: String, parameter: HashMap<String, String?>) : Task<T
 
      val functions: FirebaseFunctions = Firebase.functions
 
-    return  functions
+    return functions
         .getHttpsCallable(funName)
         .call(parameter)
         .continueWith { task ->
             val result = task.result?.data as T
-            GthrLogger.d("data","result: ${ result}")
+            GthrLogger.d("data", "result: ${result}")
             result
         }
-
-
 }

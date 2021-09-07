@@ -11,7 +11,7 @@ data class SealedDomainModel(
     val imageURL: String,
     val lowestAskCost: Int,
     val lowestAskID: String,
-    val marketPrice: Double,
+//    val marketPrice: String,
     val name: String,
     val numberOfFavorites: Int,
     val objectID: String,

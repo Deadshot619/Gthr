@@ -111,7 +111,7 @@ data class ProductDisplayModel(
         highestBidID = model.highestBidID,
         productNumber = null,
         numberOfFavorites = model.numberOfFavorites,
-        tier = "0",
+        tier = model.tier.toString(),
         rarity = ProductCategory.SEALED.title.toUpperCase()
     )
 }

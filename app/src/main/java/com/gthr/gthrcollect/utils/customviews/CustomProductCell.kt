@@ -96,16 +96,24 @@ class CustomProductCell @JvmOverloads constructor(
        when (productDisplayModel.productType) {
            ProductType.MAGIC_THE_GATHERING,
            ProductType.POKEMON,
-           ProductType.YUGIOH -> setType(Type.CARDS)
-           ProductType.FUNKO -> setType(Type.FUNKO)
+           ProductType.YUGIOH -> {
+               setType(Type.CARDS)
+               setProductNumber(productDisplayModel.productNumber.toString())
+           }
+           ProductType.FUNKO -> {
+               setType(Type.FUNKO)
+               setProductNumber(productDisplayModel.productNumber.toString())
+           }
            ProductType.SEALED_YUGIOH,
            ProductType.SEALED_POKEMON,
-           ProductType.SEALED_MTG -> setType(Type.SEALED)
+           ProductType.SEALED_MTG -> {
+               setType(Type.SEALED)
+               setProductNumber(productDisplayModel.description.toString())
+           }
        }
        setProductRarity(productDisplayModel.rarity.toString())
        setPrice(productDisplayModel.lowestAskCost.toString())
        setImage(productDisplayModel.firImageURL.toString())
-       setProductNumber(productDisplayModel.productNumber.toString())
        setProductName(productDisplayModel.name.toString())
    }
 

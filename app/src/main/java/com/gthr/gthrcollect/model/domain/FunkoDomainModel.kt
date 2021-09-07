@@ -14,7 +14,7 @@ data class FunkoDomainModel(
     val license: String,
     val lowestAskCost: Int,
     val lowestAskID: String,
-    val marketValue: String,
+//    val marketValue: String,
     val name: String,
     val numberOfFavorites: Int,
     val objectID: String,

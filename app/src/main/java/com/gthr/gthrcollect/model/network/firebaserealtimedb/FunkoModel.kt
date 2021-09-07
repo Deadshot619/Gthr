@@ -3,7 +3,6 @@ package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
 import com.google.firebase.database.PropertyName
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -44,9 +43,9 @@ data class FunkoModel(
     @get:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     @set:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     var lowestAskID: String? = "",
-    @get:PropertyName(FirebaseRealtimeDatabase.MARKET_VALUE)
+/*    @get:PropertyName(FirebaseRealtimeDatabase.MARKET_VALUE)
     @set:PropertyName(FirebaseRealtimeDatabase.MARKET_VALUE)
-    var marketValue: String? = "",
+    var marketValue: String? = "",*/
     @get:PropertyName(FirebaseRealtimeDatabase.NAME)
     @set:PropertyName(FirebaseRealtimeDatabase.NAME)
     var name: String? = "",
