@@ -28,15 +28,12 @@ class UpForSellFragment : BaseFragment<ProductDetailsViewModel,UpForSellFragment
     }
     override fun getViewBinding() =  UpForSellFragmentBinding.inflate(layoutInflater)
 
-    private lateinit var mFlTop : FrameLayout
     private lateinit var rvUpForSell : RecyclerView
-
     private val args by navArgs<RecentSellFragmentArgs>()
 
     override fun onBinding() {
         setHasOptionsMenu(true)
         initViews()
-        setUpProductType()
         setUpUpForSell()
     }
 
@@ -49,35 +46,9 @@ class UpForSellFragment : BaseFragment<ProductDetailsViewModel,UpForSellFragment
 
     private fun initViews() {
         mViewBinding.let {
-            mFlTop = it.flTop
             rvUpForSell = it.rvUpForSell
         }
     }
 
-    private fun setUpProductType() {
-        when (args.type) {
-            ProductType.POKEMON -> setUpCardTopView(true)
-            ProductType.MAGIC_THE_GATHERING -> setUpCardTopView(true)
-            ProductType.YUGIOH -> setUpCardTopView(true)
-            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> setUpCardTopView(
-                false
-            )
-            ProductType.FUNKO -> setUpFunko()
-        }
-    }
-
-    private fun setUpFunko() {
-        val topView = LayoutProductDetailToyTopBinding.inflate(layoutInflater)
-        mFlTop.addView(topView.root)
-    }
-
-    private fun setUpCardTopView(row2Visibility : Boolean) {
-        val topView = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
-        mFlTop.addView(topView.root)
-        if(row2Visibility)
-            topView.llRow2.visible()
-        else
-            topView.llRow2.gone()
-    }
 
 }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
@@ -14,11 +15,17 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
-import com.gthr.gthrcollect.databinding.ActivityProductDetailBinding
-import com.gthr.gthrcollect.model.domain.ProductDisplayModel
+import com.gthr.gthrcollect.databinding.*
+import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
+import com.gthr.gthrcollect.utils.customviews.CustomLegalityView
+import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.setProfileImage
 import com.gthr.gthrcollect.utils.extensions.showToast
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class ProductDetailActivity :
     BaseActivity<ProductDetailsViewModel, ActivityProductDetailBinding>() {
@@ -35,14 +42,147 @@ class ProductDetailActivity :
 
     private lateinit var mProductDisplayModel: ProductDisplayModel
 
+    private lateinit var mFlTop: FrameLayout
+    //Top View for pokemon, mtg, Sealed, Yugioh
+    private lateinit var mLayoutProductDetailCardTopBinding: LayoutProductDetailCardTopBinding
+    //Top View for funko
+    private lateinit var mLayoutProductDetailToyTopBinding: LayoutProductDetailToyTopBinding
+
     override fun onBinding() {
-        mProductDisplayModel =
-            intent.getParcelableExtra<ProductDisplayModel>(KEY_PRODUCT_DISPLAY_MODEL)!!
+        mProductDisplayModel = intent.getParcelableExtra<ProductDisplayModel>(KEY_PRODUCT_DISPLAY_MODEL)!!
 
         initViews()
         setUpNavGraph()
         setSupportActionBar(mToolbar)
         setUpNavigationAndActionBar()
+        setUpProductType()
+        setUpObserver()
+    }
+
+    private fun setUpObserver() {
+        mViewModel.mMtgProductDetails.observe(this) { it ->
+            it.peekContent()?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        GthrLogger.i("dschjds", "Product: ${it.data}")
+                        showProgressBar(false)
+                        if(it.data.imageID.isNotEmpty())
+                            mViewModel.getProductImage(it.data.imageID)
+                        if(it.data.objectID.isNotEmpty())
+                            mViewModel.getRecentSale(it.data.objectID)
+                        setViewData(it.data)
+                    }
+                    is State.Failed -> showProgressBar(false)
+                }
+            }
+        }
+        mViewModel.mFunkoProductDetails.observe(this) { it ->
+            it.peekContent()?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        GthrLogger.i("dschjds", "Product: ${it.data}")
+                        showProgressBar(false)
+                        if(it.data.imageID.isNotEmpty())
+                            mViewModel.getProductImage(it.data.imageID)
+                        if(it.data.objectID.isNotEmpty())
+                            mViewModel.getRecentSale(it.data.objectID)
+                        setViewData(it.data)
+                    }
+                    is State.Failed -> showProgressBar(false)
+                }
+            }
+        }
+        mViewModel.mPokemonProductDetails.observe(this) { it ->
+            it.peekContent()?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        GthrLogger.i("dschjds", "Product: ${it.data}")
+                        showProgressBar(false)
+                        if(it.data.imageID.isNotEmpty())
+                            mViewModel.getProductImage(it.data.imageID)
+                        if(it.data.objectID.isNotEmpty())
+                            mViewModel.getRecentSale(it.data.objectID)
+                        setViewData(it.data)
+                    }
+                    is State.Failed -> showProgressBar(false)
+                }
+            }
+        }
+        mViewModel.mSealedProductDetails.observe(this) { it ->
+            it.peekContent()?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        GthrLogger.i("dschjds", "Product: ${it.data}")
+                        showProgressBar(false)
+                        if(it.data.imageID.isNotEmpty())
+                            mViewModel.getProductImage(it.data.imageID)
+                        if(it.data.objectID.isNotEmpty())
+                            mViewModel.getRecentSale(it.data.objectID)
+                        setViewData(it.data)
+                    }
+                    is State.Failed -> showProgressBar(false)
+                }
+            }
+        }
+        mViewModel.mYugiohProductDetails.observe(this) { it ->
+            it.peekContent()?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        GthrLogger.i("dschjds", "Product: ${it.data}")
+                        showProgressBar(false)
+                        if(it.data.imageID.isNotEmpty())
+                            mViewModel.getProductImage(it.data.imageID)
+                        if(it.data.objectID.isNotEmpty())
+                            mViewModel.getRecentSale(it.data.objectID)
+                        setViewData(it.data)
+                    }
+                    is State.Failed -> showProgressBar(false)
+                }
+            }
+        }
+    }
+
+    private fun setUpProductType() {
+        when (mProductDisplayModel.productType) {
+            ProductType.POKEMON -> setUpPokemon()
+            ProductType.MAGIC_THE_GATHERING -> setUpMGT()
+            ProductType.YUGIOH -> seUpYugioh()
+            ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> setUpSealed()
+            ProductType.FUNKO -> setUpFunko()
+        }
+    }
+
+    private fun setUpPokemon() {
+        mLayoutProductDetailCardTopBinding = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
+        mFlTop.addView(mLayoutProductDetailCardTopBinding.root)
+    }
+
+    private fun setUpMGT() {
+        mLayoutProductDetailCardTopBinding = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
+        mFlTop.addView(mLayoutProductDetailCardTopBinding.root)
+    }
+
+    private fun seUpYugioh() {
+        mLayoutProductDetailCardTopBinding = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
+        mFlTop.addView(mLayoutProductDetailCardTopBinding.root)
+    }
+
+    private fun setUpSealed() {
+        mLayoutProductDetailCardTopBinding = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
+        mLayoutProductDetailCardTopBinding.run {
+            mFlTop.addView(root)
+            llRow2.gone()
+        }
+    }
+
+    private fun setUpFunko() {
+        mLayoutProductDetailToyTopBinding = LayoutProductDetailToyTopBinding.inflate(layoutInflater)
+        mFlTop.addView(mLayoutProductDetailToyTopBinding.root)
     }
 
     private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination
@@ -56,6 +196,7 @@ class ProductDetailActivity :
     private fun initViews() {
         mViewBinding.run {
             mToolbar = toolbar
+            mFlTop = flTop
         }
     }
 
@@ -119,5 +260,47 @@ class ProductDetailActivity :
             Intent(context, ProductDetailActivity::class.java).apply {
                 putExtra(KEY_PRODUCT_DISPLAY_MODEL, productDisplayModel)
             }
+    }
+
+    private fun setViewData(data: SealedDomainModel) {
+        mLayoutProductDetailCardTopBinding.run {
+            tvTitle.text = data.name
+            tvRow1Column2.text = data.set
+        }
+    }
+
+    private fun setViewData(data: MTGDomainModel) {
+        mLayoutProductDetailCardTopBinding.run {
+            tvTitle.text = data.name
+            tvRow1Column2.text = data.setName
+            tvRow2Collum2.text = getString(R.string.text_desh_product_detail)
+            tvRow2Collum4.text = getString(R.string.text_desh_product_detail)
+        }
+    }
+
+    private fun setViewData(data: YugiohDomainModel) {
+        mLayoutProductDetailCardTopBinding.run {
+            tvTitle.text = data.name
+            tvRow1Column2.text = data.set
+            tvRow2Collum2.text = data.number
+            tvRow2Collum4.text = data.rarity
+        }
+    }
+
+    private fun setViewData(data: PokemonDomainModel) {
+        mLayoutProductDetailCardTopBinding.run {
+            tvTitle.text = data.name
+            tvRow1Column2.text = data.set
+            tvRow2Collum2.text = data.number
+            tvRow2Collum4.text = data.rarity
+        }
+    }
+
+    private fun setViewData(data: FunkoDomainModel) {
+        mLayoutProductDetailToyTopBinding.run {
+            tvTitle.text = data.name
+            tvRow1Column2.text = data.license
+            tvRow2Column2.text = data.itemNumber
+        }
     }
 }

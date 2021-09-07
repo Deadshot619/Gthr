@@ -9,6 +9,7 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_btn_secondary_blue.xml" value="0.24739583333333334" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_custum_legality_blue.xml" value="0.24739583333333334" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_custum_legality_white.xml" value="0.24739583333333334" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/activity_product_detail.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/activity_profile.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_card_condition_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_card_edition_fragment.xml" value="0.23125" />
@@ -22,6 +23,8 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_progress_bar.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/my_profile.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/product_detail_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/recent_sell_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/up_for_sell_fragment.xml" value="0.23125" />
       </map>
     </option>
   </component>

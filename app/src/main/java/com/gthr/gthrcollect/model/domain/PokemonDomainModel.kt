@@ -12,7 +12,7 @@ data class PokemonDomainModel(
     val hp: String,
     val imageID: String,
     val imageURL: String,
-    val japaneseNumber: Int,
+    val japaneseNumber: String,
     val japaneseSet: String,
     val lowestAskCost: Int,
     val lowestAskID: String,
