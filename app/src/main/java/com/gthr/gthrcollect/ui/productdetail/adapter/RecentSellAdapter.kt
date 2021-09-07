@@ -70,34 +70,29 @@ class RecentSellAdapter(val productType : ProductType) : ListAdapter<RecentSaleD
 
     inner class RecentSellViewHolder(private val binding: ItemRecentSeleBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        val mTvLanguage = binding.tvLanguage
-        val mTvConditionTitle = binding.tvConditionTitle
-        val mTvConditionValue = binding.tvConditionValue
-        val mTvEdition = binding.tvEdition
+        private val mTvLanguage = binding.tvLanguage
+        private val mTvConditionTitle = binding.tvConditionTitle
+        private val mTvConditionValue = binding.tvConditionValue
+        private val mTvEdition = binding.tvEdition
 
         fun bind(position: Int) {
             val item = getItem(layoutPosition)
-            binding.tvDate.setBackgroundColor(if(position%2==0)
-                binding.root.context.getResolvedColor(R.color.extra_light_blue)
-            else
-                binding.root.context.getResolvedColor(android.R.color.transparent)
-            )
 
-            binding.tvSalePrice.setBackgroundColor(
-                if(position%2==0)
-                    binding.root.context.getResolvedColor(R.color.extra_light_blue)
-                else
-                    binding.root.context.getResolvedColor(android.R.color.transparent)
-            )
+            if(position%2==0){
+                binding.tvDate.setBackgroundColor(binding.root.context.getResolvedColor(R.color.extra_light_blue))
+                binding.tvSalePrice.setBackgroundColor(binding.root.context.getResolvedColor(R.color.extra_light_blue))
+                binding.llCustomization.setBackgroundColor(binding.root.context.getResolvedColor(R.color.extra_light_blue))
+                binding.tvCustomization.setBackgroundColor(binding.root.context.getResolvedColor(R.color.extra_light_blue))
+            }
+            else{
+                binding.tvDate.setBackgroundColor(binding.root.context.getResolvedColor(android.R.color.transparent))
+                binding.tvSalePrice.setBackgroundColor(binding.root.context.getResolvedColor(android.R.color.transparent))
+                binding.llCustomization.setBackgroundColor(binding.root.context.getResolvedColor(android.R.color.transparent))
+                binding.tvCustomization.setBackgroundColor(binding.root.context.getResolvedColor(android.R.color.transparent))
+            }
 
             when(productType){
                 ProductType.MAGIC_THE_GATHERING,ProductType.POKEMON,ProductType.YUGIOH -> {
-                    binding.llCustomization.setBackgroundColor(
-                        if(position%2==0)
-                            binding.root.context.getResolvedColor(R.color.extra_light_blue)
-                        else
-                            binding.root.context.getResolvedColor(android.R.color.transparent)
-                    )
                     if(item.date=="--.--.----"){
                         binding.llCustomization.gone()
                         binding.tvCustomization.visible()
@@ -107,50 +102,31 @@ class RecentSellAdapter(val productType : ProductType) : ListAdapter<RecentSaleD
                         binding.llCustomization.visible()
                         binding.tvCustomization.gone()
                     }
-                }
-                ProductType.FUNKO,ProductType.SEALED_POKEMON,ProductType.SEALED_YUGIOH,ProductType.SEALED_MTG -> {
-                    binding.tvCustomization.setBackgroundColor(
-                        if(position%2==0)
-                            binding.root.context.getResolvedColor(R.color.extra_light_blue)
-                        else
-                            binding.root.context.getResolvedColor(android.R.color.transparent)
-                    )
-                    binding.llCustomization.gone()
-                    binding.tvCustomization.visible()
-                    binding.tvCustomization.text = if(item.date=="--.--.----") "-" else  "New"
-                }
-            }
 
-
-
-            when(productType){
-                ProductType.MAGIC_THE_GATHERING,ProductType.POKEMON,ProductType.YUGIOH -> {
-                    if(productType==ProductType.MAGIC_THE_GATHERING){
-                        mTvLanguage.text =  getMTGLanguage(item.language).abbreviatedName
-                    }
-                    else if(productType==ProductType.POKEMON){
-                        mTvLanguage.text =  getPokemonLanguageDomainModel(item.language).abbreviatedName
-                    }
-                    else if(productType==ProductType.YUGIOH){
-                        mTvLanguage.text =  getYugiohLanguageDomainModel(item.language).abbreviatedName
+                    mTvLanguage.text =  when (productType) {
+                        ProductType.MAGIC_THE_GATHERING -> getMTGLanguage(item.language).abbreviatedName
+                        ProductType.POKEMON -> getPokemonLanguageDomainModel(item.language).abbreviatedName
+                        ProductType.YUGIOH -> getYugiohLanguageDomainModel(item.language).abbreviatedName
+                        else -> ""
                     }
 
                     binding.tvDate.text = item.date
                     binding.tvSalePrice.text = item.price
 
                     val condition = getConditionFromDisplayName(item.condition)
-                    mTvConditionValue.text = condition.displayName
+                    mTvConditionValue.text = condition.abbreviatedName
                     mTvConditionTitle.text = binding.root.context?.getConditionTitle(condition.type)
                     mTvEdition.text =  getEditionTypeFromRowType(item.edition).title
-
                 }
                 ProductType.FUNKO,ProductType.SEALED_POKEMON,ProductType.SEALED_YUGIOH,ProductType.SEALED_MTG -> {
+                    binding.llCustomization.gone()
+                    binding.tvCustomization.visible()
+                    binding.tvCustomization.text = if(item.date=="--.--.----") "-" else  "New"
+
                     binding.tvDate.text = item.date
                     binding.tvSalePrice.text = item.price
                 }
             }
-
-
         }
     }
 

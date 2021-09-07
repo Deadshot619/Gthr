@@ -46,7 +46,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var rvRecentSell: RecyclerView
     private lateinit var rvUpForSell: RecyclerView
     private lateinit var rvRelated: RecyclerView
-    private lateinit var mFlTop: FrameLayout
     private lateinit var mFlDetails: FrameLayout
     private lateinit var mMcvDescription: MaterialCardView
     private lateinit var mTvDescription: AppCompatTextView
@@ -63,12 +62,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var mProductDisplayModel: ProductDisplayModel
     private lateinit var mProductType: ProductType
     private lateinit var mProductCategory: ProductCategory
-
-    //Top View for pokemon, mtg, Sealed, Yugioh
-    private lateinit var mLayoutProductDetailCardTopBinding: LayoutProductDetailCardTopBinding
-    //Top View for funko
-    private lateinit var mLayoutProductDetailToyTopBinding: LayoutProductDetailToyTopBinding
-
 
     //Mtg Details view
     private lateinit var mLayoutProductDetailMtgDetailBinding: LayoutProductDetailMtgDetailBinding
@@ -119,13 +112,9 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         mViewModel.mProductImage.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
-                    is State.Loading -> showProgressBar()
-                    is State.Failed -> showProgressBar(false)
-                    is State.Success -> {
-                        GthrLogger.i("dschjds", "Product: ${it.data}")
-                        showProgressBar(false)
-                        mIvProduct.setProfileImage(it.data)
-                    }
+                    is State.Success -> mIvProduct.setProfileImage(it.data)
+                    is State.Failed -> {}
+                    is State.Loading -> {}
                 }
             }
         }
@@ -301,11 +290,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpFunko() {
-        mLayoutProductDetailToyTopBinding = LayoutProductDetailToyTopBinding.inflate(layoutInflater)
-        mFlTop.addView(mLayoutProductDetailToyTopBinding.root)
-
-        mLayoutProductDetailMainDetailsBinding =
-            LayoutProductDetailMainDetailsBinding.inflate(layoutInflater)
+        mLayoutProductDetailMainDetailsBinding = LayoutProductDetailMainDetailsBinding.inflate(layoutInflater)
         mFlDetails.addView(mLayoutProductDetailMainDetailsBinding.root)
 
         mLayoutProductDetailMainDetailsBinding.tvRow1Column1.text = getString(R.string.text_release_date_product_detail)
@@ -321,18 +306,10 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpSealed() {
-        mLayoutProductDetailCardTopBinding = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
-        mLayoutProductDetailCardTopBinding.run {
-            mFlTop.addView(root)
-            llRow2.gone()
-        }
         mMcvDescription.visible()
     }
 
     private fun seUpYugioh() {
-        mLayoutProductDetailCardTopBinding = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
-        mFlTop.addView(mLayoutProductDetailCardTopBinding.root)
-
         mLayoutProductDetailMainDetailsBinding = LayoutProductDetailMainDetailsBinding.inflate(layoutInflater)
         mFlDetails.addView(mLayoutProductDetailMainDetailsBinding.root)
 
@@ -350,9 +327,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpMGT() {
-        mLayoutProductDetailCardTopBinding = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
-        mFlTop.addView(mLayoutProductDetailCardTopBinding.root)
-
         mLayoutProductDetailMtgDetailBinding = LayoutProductDetailMtgDetailBinding.inflate(layoutInflater)
         mFlDetails.addView(mLayoutProductDetailMtgDetailBinding.root)
 
@@ -360,9 +334,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpPokemon() {
-        mLayoutProductDetailCardTopBinding = LayoutProductDetailCardTopBinding.inflate(layoutInflater)
-        mFlTop.addView(mLayoutProductDetailCardTopBinding.root)
-
         mLayoutProductDetailMainDetailsBinding = LayoutProductDetailMainDetailsBinding.inflate(layoutInflater)
         mLayoutProductDetailMainDetailsBinding.run {
             mFlDetails.addView(root)
@@ -391,8 +362,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
 
     private fun setUpUpForSell() {
         rvUpForSell.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = ProductAdapter(mProductType, CustomProductCell.State.FOR_SALE)
         }
     }
@@ -410,7 +380,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             rvRecentSell = it.rvRecentSell
             rvUpForSell = it.rvUpForSell
             rvRelated = it.rvRelated
-            mFlTop = it.flTop
             mFlDetails = it.flDetail
             mMcvDescription = it.cvCardDescription
             mTvDescription = it.tvDescription
@@ -425,21 +394,10 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setViewData(data: SealedDomainModel) {
-        mLayoutProductDetailCardTopBinding.run {
-            tvTitle.text = data.name
-            tvRow1Column2.text = data.set
-        }
-        mTvDescription.text = data.description
+       mTvDescription.text = data.description
     }
 
     private fun setViewData(data: MTGDomainModel) {
-        mLayoutProductDetailCardTopBinding.run {
-            tvTitle.text = data.name
-            tvRow1Column2.text = data.setName
-            tvRow2Collum2.text = getString(R.string.text_desh_product_detail)
-            tvRow2Collum4.text = getString(R.string.text_desh_product_detail)
-        }
-
         mLayoutProductDetailMtgDetailBinding.run {
             clvStandard.setType(if(data.standard) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
             clvBrawl.setType(if(data.brawl) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
@@ -450,7 +408,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             clvPenny.setType(if(data.penny) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
             clvCommander.setType(if(data.commander) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
             clvVintage.setType(if(data.vintage) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
-            clvHistoric.setType(if(false) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvHistoric.setType(if(data.historic) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
 
             tvTitle.text = data.typeLine
             tvTextLine1.text = data.flavorText
@@ -459,13 +417,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setViewData(data: YugiohDomainModel) {
-        mLayoutProductDetailCardTopBinding.run {
-            tvTitle.text = data.name
-            tvRow1Column2.text = data.set
-            tvRow2Collum2.text = data.number
-            tvRow2Collum4.text = data.rarity
-        }
-
         mLayoutProductDetailMainDetailsBinding.run {
             tvRow2Column1.text = data.number
             tvRow2Column2.text = data.productType.toString()
@@ -477,13 +428,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setViewData(data: PokemonDomainModel) {
-        mLayoutProductDetailCardTopBinding.run {
-            tvTitle.text = data.name
-            tvRow1Column2.text = data.set
-            tvRow2Collum2.text = data.number
-            tvRow2Collum4.text = data.rarity
-        }
-
         mLayoutProductDetailMainDetailsBinding.run {
             tvRow2Column1.text = data.number
             tvRow2Column2.text = data.cardType
@@ -491,27 +435,21 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             tvRow4Column2.text = data.hp
             tvRow6Column1.text = data.rarity
             tvRow6Column2.text = data.stage
-            tvRow8Column1.text = data.japaneseNumber.toString()
+            tvRow8Column1.text = data.japaneseNumber
             tvRow8Column2.text = data.japaneseSet
         }
     }
 
     private fun setViewData(data: FunkoDomainModel) {
-        mLayoutProductDetailToyTopBinding.run {
-            tvTitle.text = data.name
-            tvRow1Column2.text = data.license
-            tvRow2Column2.text = data.itemNumber
-        }
-
-        mLayoutProductDetailMainDetailsBinding.run {
-            tvRow2Column1.text = if(data.releaseDate.isEmpty())data.releaseDate else getString(R.string.text_na)
-            tvRow2Column2.text = if(data.category.isEmpty())data.category else getString(R.string.text_na)
+       mLayoutProductDetailMainDetailsBinding.run {
+            tvRow2Column1.text = data.releaseDate
+            tvRow2Column2.text = data.category
 
             tvRow4Column2.text = data.productType.toString()
-            tvRow4Column1.text = if(data.itemNumber.isEmpty())data.itemNumber else getString(R.string.text_na)
+            tvRow4Column1.text = data.itemNumber
 
-            tvRow6Column2.text = if(data.license.isEmpty())data.license else getString(R.string.text_na)
-            tvRow6Column1.text = if(data.exclusivity.isEmpty())data.exclusivity else getString(R.string.text_na)
+            tvRow6Column2.text = data.license
+            tvRow6Column1.text = data.exclusivity
         }
     }
 }
