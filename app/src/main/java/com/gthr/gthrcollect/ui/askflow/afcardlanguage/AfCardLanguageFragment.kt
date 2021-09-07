@@ -90,6 +90,7 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
                     is State.Loading -> {
                     }
                     is State.Success -> {
+                        //Check if the pokemon model is of Promo type
                         if (isPromo(mProductDisplayModel, it.data)) {
                             val navigationOptions =
                                 NavOptions.Builder().setPopUpTo(R.id.afCardLanguageFragment, true)

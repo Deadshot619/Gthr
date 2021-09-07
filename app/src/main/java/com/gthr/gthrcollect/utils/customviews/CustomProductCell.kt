@@ -104,7 +104,7 @@ class CustomProductCell @JvmOverloads constructor(
        }
        setProductRarity(productDisplayModel.rarity.toString())
        setPrice(productDisplayModel.lowestAskCost.toString())
-       mIvMain.setImageByUrl(productDisplayModel.firImageURL.toString())
+       setImage(productDisplayModel.firImageURL.toString())
        setProductNumber(productDisplayModel.productNumber.toString())
        setProductName(productDisplayModel.name.toString())
    }
@@ -170,6 +170,10 @@ class CustomProductCell @JvmOverloads constructor(
             mTvCardState.visible()
         else
             mTvCardState.gone()
+    }
+
+    fun setImage(url: String) {
+        mIvMain.setImageByUrl(url)
     }
 
     fun setPrice(value: String) {

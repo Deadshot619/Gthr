@@ -135,8 +135,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                     }
                     is State.Success -> {
                         showProgressBar(false)
-                        mViewModel.retrieveLanguageList(ProductType.YUGIOH)
-                        setNameAndNumber(it.data.name, it.data.number)
+                        setInitialData(ProductDisplayModel(it.data))
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -152,8 +151,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                     }
                     is State.Success -> {
                         showProgressBar(false)
-                        mViewModel.retrieveLanguageList(ProductType.POKEMON)
-                        setNameAndNumber(it.data.name, it.data.number)
+                        setInitialData(ProductDisplayModel(it.data))
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -169,8 +167,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                     }
                     is State.Success -> {
                         showProgressBar(false)
-                        mViewModel.retrieveLanguageList(ProductType.MAGIC_THE_GATHERING)
-                        setNameAndNumber(it.data.name, it.data.id)
+                        setInitialData(ProductDisplayModel(it.data))
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -186,8 +183,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                     }
                     is State.Success -> {
                         showProgressBar(false)
-                        mProductItem.setType(CustomProductCell.Type.FUNKO)
-                        setNameAndNumber(it.data.name, it.data.itemNumber)
+                        setInitialData(ProductDisplayModel(it.data))
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -203,8 +199,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                     }
                     is State.Success -> {
                         showProgressBar(false)
-                        mProductItem.setType(CustomProductCell.Type.SEALED)
-                        setNameAndNumber(it.data.name, it.data.set)
+                        setInitialData(ProductDisplayModel(it.data))
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -319,9 +314,22 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         supportActionBar?.setDisplayHomeAsUpEnabled(isVisible)
     }
 
-    private fun setNameAndNumber(name: String, number: String) {
-        mProductItem.setProductName(name)
-        mProductItem.setProductNumber(number)
+    /**
+     * Set initial data to [mProductItem] view
+     */
+    private fun setInitialData(productDisplayModel: ProductDisplayModel) {
+        mProductItem.run {
+            setProductName(productDisplayModel.name.toString())
+            setProductNumber(productDisplayModel.productNumber.toString())
+            setProductRarity(productDisplayModel.rarity.toString())
+            setImage(productDisplayModel.firImageURL.toString())
+            when (productDisplayModel.productCategory) {
+                ProductCategory.TOYS -> setType(CustomProductCell.Type.FUNKO)
+                ProductCategory.SEALED -> setType(CustomProductCell.Type.SEALED)
+                else -> setType(CustomProductCell.Type.CARDS)
+            }
+            mViewModel.retrieveLanguageList(productDisplayModel.productType!!)
+        }
     }
 
     internal fun getAskFlowType(): AskFlowType = mAskFlowType
