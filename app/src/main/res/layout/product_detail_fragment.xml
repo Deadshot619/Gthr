@@ -46,7 +46,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginTop="@dimen/margin_normal"
-                    android:src="@drawable/product"
+                    tools:src="@drawable/ic_product_error"
                     android:scaleType="fitCenter"
                     app:layout_constraintDimensionRatio="h,1:1"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
@@ -243,6 +243,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:constraint_referenced_ids=",tv_up_for_sell,rv_up_for_sell,csav_up_for_sales_see_all" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group_related"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tv_related,rv_related," />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

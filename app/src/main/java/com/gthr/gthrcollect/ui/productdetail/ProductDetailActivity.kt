@@ -20,10 +20,8 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
-import com.gthr.gthrcollect.utils.customviews.CustomLegalityView
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.setProfileImage
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 
@@ -60,17 +58,18 @@ class ProductDetailActivity :
     }
 
     private fun setUpObserver() {
+
         mViewModel.mMtgProductDetails.observe(this) { it ->
-            it.peekContent()?.let {
+            it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
-                        if(it.data.imageID.isNotEmpty())
-                            mViewModel.getProductImage(it.data.imageID)
                         if(it.data.objectID.isNotEmpty())
-                            mViewModel.getRecentSale(it.data.objectID)
+                            mViewModel.getRecentSaleList(it.data.objectID)
+                        if(it.data.setName.isNotEmpty())
+                            mViewModel.getRelatedProductList(it.data.setName,ProductType.MAGIC_THE_GATHERING)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -78,16 +77,16 @@ class ProductDetailActivity :
             }
         }
         mViewModel.mFunkoProductDetails.observe(this) { it ->
-            it.peekContent()?.let {
+            it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
-                        if(it.data.imageID.isNotEmpty())
-                            mViewModel.getProductImage(it.data.imageID)
                         if(it.data.objectID.isNotEmpty())
-                            mViewModel.getRecentSale(it.data.objectID)
+                            mViewModel.getRecentSaleList(it.data.objectID)
+                        if(it.data.license.isNotEmpty())
+                            mViewModel.getRelatedProductList(it.data.license,ProductType.FUNKO)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -95,16 +94,16 @@ class ProductDetailActivity :
             }
         }
         mViewModel.mPokemonProductDetails.observe(this) { it ->
-            it.peekContent()?.let {
+            it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
-                        if(it.data.imageID.isNotEmpty())
-                            mViewModel.getProductImage(it.data.imageID)
                         if(it.data.objectID.isNotEmpty())
-                            mViewModel.getRecentSale(it.data.objectID)
+                            mViewModel.getRecentSaleList(it.data.objectID)
+                        if(it.data.set.isNotEmpty())
+                            mViewModel.getRelatedProductList(it.data.set,ProductType.POKEMON)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -112,16 +111,16 @@ class ProductDetailActivity :
             }
         }
         mViewModel.mSealedProductDetails.observe(this) { it ->
-            it.peekContent()?.let {
+            it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
-                        if(it.data.imageID.isNotEmpty())
-                            mViewModel.getProductImage(it.data.imageID)
                         if(it.data.objectID.isNotEmpty())
-                            mViewModel.getRecentSale(it.data.objectID)
+                            mViewModel.getRecentSaleList(it.data.objectID)
+                        if(it.data.set.isNotEmpty())
+                            mViewModel.getRelatedProductList(it.data.set,ProductType.SEALED_POKEMON)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -129,16 +128,16 @@ class ProductDetailActivity :
             }
         }
         mViewModel.mYugiohProductDetails.observe(this) { it ->
-            it.peekContent()?.let {
+            it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         GthrLogger.i("dschjds", "Product: ${it.data}")
                         showProgressBar(false)
-                        if(it.data.imageID.isNotEmpty())
-                            mViewModel.getProductImage(it.data.imageID)
                         if(it.data.objectID.isNotEmpty())
-                            mViewModel.getRecentSale(it.data.objectID)
+                            mViewModel.getRecentSaleList(it.data.objectID)
+                        if(it.data.set.isNotEmpty())
+                            mViewModel.getRelatedProductList(it.data.set,ProductType.YUGIOH)
                         setViewData(it.data)
                     }
                     is State.Failed -> showProgressBar(false)
@@ -154,6 +153,28 @@ class ProductDetailActivity :
             ProductType.YUGIOH -> seUpYugioh()
             ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> setUpSealed()
             ProductType.FUNKO -> setUpFunko()
+        }
+        when (mProductDisplayModel.productType) {
+            ProductType.POKEMON -> mViewModel.getProductDetails(
+                mProductDisplayModel.refKey!!,
+                ProductType.POKEMON
+            )
+            ProductType.MAGIC_THE_GATHERING -> mViewModel.getProductDetails(
+                mProductDisplayModel.refKey!!,
+                ProductType.MAGIC_THE_GATHERING
+            )
+            ProductType.YUGIOH -> mViewModel.getProductDetails(
+                mProductDisplayModel.refKey!!,
+                ProductType.YUGIOH
+            )
+            ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> mViewModel.getProductDetails(
+                mProductDisplayModel.refKey!!,
+                ProductType.SEALED_POKEMON
+            )
+            ProductType.FUNKO -> mViewModel.getProductDetails(
+                mProductDisplayModel.refKey!!,
+                ProductType.FUNKO
+            )
         }
     }
 

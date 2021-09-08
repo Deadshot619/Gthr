@@ -70,4 +70,7 @@ data class FunkoModel(
     @get:PropertyName(FirebaseRealtimeDatabase.EXCLUSIVITY)
     @set:PropertyName(FirebaseRealtimeDatabase.EXCLUSIVITY)
     var exclusivity: String? = "",
+    @get:PropertyName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
+    @set:PropertyName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
+    var firImageURL: String? = "",
 )

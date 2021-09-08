@@ -11,10 +11,8 @@ import androidx.constraintlayout.widget.Group
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.utils.enums.ProductType
-import com.gthr.gthrcollect.utils.extensions.getImageDrawable
-import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.extensions.setImageByUrl
-import com.gthr.gthrcollect.utils.extensions.visible
 
 class CustomProductCell @JvmOverloads constructor(
     context: Context,
@@ -183,7 +181,7 @@ class CustomProductCell @JvmOverloads constructor(
     }
 
     fun setImage(url: String) {
-        mIvMain.setImageByUrl(url)
+        mIvMain.setProductImage(url)
     }
 
     fun setPrice(value: String) {

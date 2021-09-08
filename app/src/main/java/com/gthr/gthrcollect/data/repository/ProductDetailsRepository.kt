@@ -79,20 +79,9 @@ class ProductDetailsRepository {
     }.flowOn(Dispatchers.IO)
 
 
-    fun getProductImage(image: String) = flow<State<String>> {
-        emit(State.loading())
-        val ref = mStorageRef.child(FirebaseStorage.GENERAL).child(FirebaseStorage.PRODUCT_IMAGES).child(image)
-        val imageUrl = ref.downloadUrl.await()
-        emit(State.success(imageUrl.toString()))
-    }.catch {
-        // If exception is thrown, emit failed state along with message.
-        emit(State.failed(it.message.toString()))
-    }.flowOn(Dispatchers.IO)
-
-    fun getRecentSell(objectId : String) = flow<State<List<RecentSaleDomainModel>>>{
+    fun getRecentSellList(objectId : String) = flow<State<List<RecentSaleDomainModel>>>{
         emit(State.loading())
         val data: DataSnapshot = mFirebaseRD.child(FirebaseRealtimeDatabase.SALE_HISTORY_MODEL).orderByChild(FirebaseRealtimeDatabase.OBJECT_I_D).equalTo(objectId).get().await()
-
         if(data.childrenCount>0){
             val list = mutableListOf<RecentSaleDomainModel>()
             data.children.forEach {
@@ -110,24 +99,16 @@ class ProductDetailsRepository {
             emit(State.success(data = finalList))
         }
         else{
-//            val list = getRandomDateRecentSaleDomainModelList().sortedByDescending {
-//                val input = SimpleDateFormat("MM.dd.yyyy")
-//                val date = input.parse(it.date)
-//                return@sortedByDescending date.time
-//            }
-//            emit(State.success(data = list))
-
             emit(State.success(data = getEmptyRecentSaleDomainModelList()))
         }
 
 
     }.catch {
         // If exception is thrown, emit failed state along with message.
-        Log.i("dschjds", "getRecentSell: ${it.message.toString()}")
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
-    fun getRelatedProduct(value : String,type: ProductType) = flow<State<List<ProductDisplayModel>>>{
+    fun getRelatedProductList(value : String, type: ProductType) = flow<State<List<ProductDisplayModel>>>{
         emit(State.loading())
         var ref = mFirebaseRD
         val networkModelType = when (type) {

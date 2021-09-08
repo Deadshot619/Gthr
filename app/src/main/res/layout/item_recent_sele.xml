@@ -37,8 +37,8 @@
             android:textSize="@dimen/text_size_extra_small" />
 
         <TextView
-            android:visibility="gone"
-            android:layout_marginHorizontal="@dimen/margin_recent_sale"
+
+            android:layout_marginEnd="@dimen/margin_recent_sale"
             android:id="@+id/tv_customization"
             android:layout_width="0dp"
             android:layout_weight="2"
@@ -52,6 +52,7 @@
             android:textSize="@dimen/text_size_extra_small" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:visibility="gone"
             android:paddingHorizontal="@dimen/text_size_extra_small"
             android:gravity="center_vertical"
             android:id="@+id/ll_customization"

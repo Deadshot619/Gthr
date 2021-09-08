@@ -11,3 +11,7 @@ fun ImageView.setImageByUrl(url: String){
 fun ImageView.setProfileImage(url: String){
     Glide.with(this).load(url).error(R.drawable.profile_pic).into(this)
 }
+
+fun ImageView.setProductImage(url: String){
+    Glide.with(this).load(url).error(R.drawable.ic_product_error).into(this)
+}

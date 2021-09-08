@@ -19,6 +19,8 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:layout_marginTop="@dimen/margin_small"
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
@@ -56,6 +58,8 @@
                     style="@style/ProductBlueTextTitle"/>
 
                 <TextView
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:id="@+id/tv_row1_column2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -106,6 +110,8 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:id="@+id/tv_row2_collum2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -144,6 +150,8 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:id="@+id/tv_row2_collum4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

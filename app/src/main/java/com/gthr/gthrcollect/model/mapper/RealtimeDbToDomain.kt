@@ -43,6 +43,7 @@ fun FunkoModel.toFunkoDomainModel(refKey: String) = FunkoDomainModel(
     tier = this.tier ?: "",
     exclusivity = if(this.exclusivity.isNullOrEmpty()) "N/A" else this.exclusivity!! ,
     imageID = this.imageID?: "",
+    firImageURL = this.firImageURL?: "",
     refKey = refKey
 )
 
