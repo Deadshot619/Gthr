@@ -40,7 +40,7 @@ data class ProductDisplayModel(
         productNumber = model.itemNumber.toString(),
         numberOfFavorites = model.numberOfFavorites,
         tier = model.tier.toString(),
-        rarity = ProductCategory.TOYS.title
+        rarity = ProductType.FUNKO.title.capitalize()
     )
 
     constructor(model: MTGDomainModel) : this(
@@ -112,6 +112,6 @@ data class ProductDisplayModel(
         productNumber = null,
         numberOfFavorites = model.numberOfFavorites,
         tier = model.tier.toString(),
-        rarity = ProductCategory.SEALED.title.toUpperCase()
+        rarity = ProductCategory.SEALED.title.capitalize()
     )
 }
