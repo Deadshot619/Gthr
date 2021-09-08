@@ -98,23 +98,25 @@ class CustomProductCell @JvmOverloads constructor(
            ProductType.POKEMON,
            ProductType.YUGIOH -> {
                setType(Type.CARDS)
+               setProductName(productDisplayModel.description)
                setProductNumber(productDisplayModel.productNumber.toString())
            }
            ProductType.FUNKO -> {
                setType(Type.FUNKO)
+               setProductName(productDisplayModel.name.toString())
                setProductNumber(productDisplayModel.productNumber.toString())
            }
            ProductType.SEALED_YUGIOH,
            ProductType.SEALED_POKEMON,
            ProductType.SEALED_MTG -> {
                setType(Type.SEALED)
+               setProductName(productDisplayModel.name.toString())
                setProductNumber(productDisplayModel.description.toString())
            }
        }
        setProductRarity(productDisplayModel.rarity.toString())
        setPrice(productDisplayModel.lowestAskCost.toString())
        setImage(productDisplayModel.firImageURL.toString())
-       setProductName(productDisplayModel.name.toString())
    }
 
     fun setState(state:State){
@@ -191,13 +193,13 @@ class CustomProductCell @JvmOverloads constructor(
         )
     }
 
-    fun setProductNumber(value: String) {
-        mTvRow2Collum2.text = value
+    fun setProductNumber(value: String?) {
+        mTvRow2Collum2.text = value ?: "-"
     }
 
 
-    fun setProductName(value: String) {
-        mTvRow1Collum2.text = value
+    fun setProductName(value: String?) {
+        mTvRow1Collum2.text = value ?: "-"
     }
 
     fun setLanguage(language: String) {

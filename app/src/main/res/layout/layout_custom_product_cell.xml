@@ -70,32 +70,36 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_product_rarity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:background="@drawable/bg_product_type"
-                android:gravity="center"
-                android:paddingHorizontal="@dimen/padding_custom_product"
-                android:paddingVertical="@dimen/padding_custom_product"
-                android:text="Funko"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_extra_small"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_main"
-                app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-                app:layout_constraintTop_toBottomOf="@+id/iv_main"
-                app:layout_constraintWidth_percent="0.45" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_product_rarity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_product_type"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingHorizontal="@dimen/padding_custom_product"
+            android:paddingVertical="@dimen/padding_custom_product"
+            android:text="Funko"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_extra_small"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_main"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@+id/iv_main"
+            app:layout_constraintVertical_bias="0.727"
+            app:layout_constraintWidth_percent="0.45" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:layout_marginEnd="@dimen/margin_small_custom_product"
-                android:src="@drawable/ic_red_cross"
-                app:layout_constraintBottom_toTopOf="@id/tv_product_rarity"
-                app:layout_constraintEnd_toEndOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_small_custom_product"
+            android:src="@drawable/ic_red_cross"
+            app:layout_constraintBottom_toTopOf="@id/tv_product_rarity"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
