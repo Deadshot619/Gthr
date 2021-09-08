@@ -154,6 +154,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_search_title" />
 
+                <!--Progress Bar-->
+                <include
+                    android:id="@+id/layout_progress"
+                    layout="@layout/layout_progress_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/csv_search" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -416,13 +424,6 @@
                 android:textSize="@dimen/text_size_medium" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <!--Progress Bar-->
-        <include
-            android:id="@+id/layout_progress"
-            layout="@layout/layout_progress_bar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

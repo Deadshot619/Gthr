@@ -1,7 +1,5 @@
 package com.gthr.gthrcollect.model.domain
 
-import com.google.firebase.database.PropertyName
-import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.enums.ProductType
 
 data class MTGDomainModel(
@@ -35,16 +33,16 @@ data class MTGDomainModel(
     val brawl : Boolean,
     val commander : Boolean,
     val duel : Boolean,
-    val future : Boolean,
-    val legacy : Boolean,
-    val modern : Boolean,
-    val oldschool : Boolean,
-    val pauper : Boolean,
-    val penny : Boolean,
-    val pioneer : Boolean,
-    val vintage : Boolean,
-    val standard : Boolean,
+    val future: Boolean,
+    val legacy: Boolean,
+    val modern: Boolean,
+    val oldschool: Boolean,
+    val pauper: Boolean,
+    val penny: Boolean,
+    val pioneer: Boolean,
+    val vintage: Boolean,
+    val standard: Boolean,
     val historic: Boolean,
-    val power: Int,
-    val toughness: Int,
+    val power: /*Int*/ String,
+    val toughness: /*Int*/ String,
 )

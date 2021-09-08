@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
-import com.gthr.gthrcollect.databinding.*
+import com.gthr.gthrcollect.databinding.LayoutProductDetailMainDetailsBinding
+import com.gthr.gthrcollect.databinding.LayoutProductDetailMtgDetailBinding
+import com.gthr.gthrcollect.databinding.ProductDetailFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
@@ -413,7 +415,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
 
             tvTitle.text = data.typeLine
             tvTextLine1.text = data.flavorText
-            tvOutOf.text = (data.power/data.toughness).toString()
+            tvOutOf.text = (data.power/*/data.toughness*/).toString()
         }
     }
 

@@ -87,9 +87,9 @@ fun MTGModel.toMTGDomainModel(refKey: String) = MTGDomainModel(
     pioneer = this.pioneer ?: false,
     vintage = this.vintage ?: false,
     standard = this.standard ?: false,
-    historic = this.historic?:false,
-    power = this.power ?:-1,
-    toughness = this.toughness ?:-1,
+    historic = this.historic ?: false,
+    power = this.power ?: "",
+    toughness = this.toughness ?: "",
 )
 
 fun PokemonModel.toPokemonDomainModel(refKey: String) = PokemonDomainModel(

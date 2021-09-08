@@ -6,43 +6,55 @@ import androidx.lifecycle.viewModelScope
 import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.model.Event
 import com.gthr.gthrcollect.model.State
-import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.model.domain.SearchCollection
-import com.gthr.gthrcollect.model.domain.SearchProductDomainModel
-import com.gthr.gthrcollect.model.network.cloudfunction.SearchProductModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SearchViewModel(private val repository: SearchRepository) : BaseViewModel() {
 
-    private val _productList = MutableLiveData<Event<State< List<ProductDisplayModel>>>>()
-    val productList: LiveData<Event<State< List<ProductDisplayModel>>>>
+    private var searchProductJob: Job? = null
+    private var searchCollectionJob: Job? = null
+
+    private val _productList = MutableLiveData<Event<State<List<ProductDisplayModel>>>>()
+    val productList: LiveData<Event<State<List<ProductDisplayModel>>>>
         get() = _productList
 
-    private val _collectionList = MutableLiveData<Event<State< List<SearchCollection>>>>()
-    val collectionList: LiveData<Event<State< List<SearchCollection>>>>
+    private val _collectionList = MutableLiveData<Event<State<List<SearchCollection>>>>()
+    val collectionList: LiveData<Event<State<List<SearchCollection>>>>
         get() = _collectionList
 
-
-    fun searchProducts(searchTerm: String?=null, productCategory:String?=null, productType :String?=null, limit:Int?=null, page:Int?=null) {
-
-      viewModelScope.launch {
-            repository.fetchProducts(searchTerm,productCategory,productType,limit,page).collect {
-                _productList.value = Event(it)
-            }
+    fun searchProducts(
+        searchTerm: String? = null,
+        productCategory: String? = null,
+        productType: String? = null,
+        limit: Int? = null,
+        page: Int? = null
+    ) {
+        searchProductJob?.cancel()
+        searchProductJob = viewModelScope.launch {
+            repository.fetchProducts(searchTerm, productCategory, productType, limit, page)
+                .collect {
+                    _productList.value = Event(it)
+                }
         }
     }
 
     fun searchCollection(searchTerm: String?=null, limit:Int?=null, page:Int?=null) {
-
-        viewModelScope.launch {
-            repository.fetchCollection(searchTerm,limit,page).collect {
+        searchCollectionJob?.cancel()
+        searchCollectionJob = viewModelScope.launch {
+            repository.fetchCollection(searchTerm, limit, page).collect {
                 _collectionList.value = Event(it)
             }
         }
     }
 
 
+    override fun onCleared() {
+        super.onCleared()
+        searchProductJob?.cancel()
+        searchCollectionJob?.cancel()
+    }
 }

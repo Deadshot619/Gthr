@@ -26,6 +26,7 @@ import com.gthr.gthrcollect.utils.customviews.*
 import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.animateVisibility
 import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 
@@ -120,14 +121,14 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
-                    is State.Failed -> showProgressBar(false)
+                    is State.Failed -> {
+                        showToast(it.message)
+                        showProgressBar(false)
+                    }
                     is State.Success -> {
                         mProductAdapter.submitList(it.data)
                         showProgressBar(false)
-                        if (mDrawer.isDrawerVisible(GravityCompat.END)) {
-                            mDrawer.closeDrawer(GravityCompat.END)
-                        }
-                        GthrLogger.e("observedata","data: ${it.data}")
+                        GthrLogger.e("observedata", "data: ${it.data}")
                     }
                 }
             }
@@ -137,14 +138,17 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
-                    is State.Failed -> showProgressBar(false)
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
                     is State.Success -> {
                         mAdapterCollections.submitList(it.data)
                         showProgressBar(false)
                         if (mDrawer.isDrawerVisible(GravityCompat.END)) {
                             mDrawer.closeDrawer(GravityCompat.END)
                         }
-                        GthrLogger.e("observedata","data: ${it.data}")
+                        GthrLogger.e("observedata", "data: ${it.data}")
                     }
                 }
             }

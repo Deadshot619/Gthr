@@ -3,7 +3,6 @@ package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
 import com.google.firebase.database.PropertyName
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -130,8 +129,8 @@ data class MTGModel(
 
     @get:PropertyName(FirebaseRealtimeDatabase.POWER)
     @set:PropertyName(FirebaseRealtimeDatabase.POWER)
-    var power: Int? = -1,
+    var power: /*Int*/String? = /*-1*/"",
     @get:PropertyName(FirebaseRealtimeDatabase.TOUGHNESS)
     @set:PropertyName(FirebaseRealtimeDatabase.TOUGHNESS)
-    var toughness: Int? = -1,
+    var toughness: /*Int*/String? = /*-1*/"",
 )

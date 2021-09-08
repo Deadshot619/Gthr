@@ -4,7 +4,6 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.GthrCollect
-import com.gthr.gthrcollect.data.remote.fetchCollectionData
 import com.gthr.gthrcollect.data.remote.fetchData
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
@@ -33,19 +32,14 @@ class SearchRepository {
         emit(State.loading())
 
         val data = hashMapOf(
-            CloudFunctions.SEARCK_KEY to searchTerm,
-            CloudFunctions.PRODUCT_CATEGORY to productCategory,
-            CloudFunctions.PRODUCT_TYPE to productType,
-            CloudFunctions.LIMIT to limit.toString()
+            CloudFunctions.SEARCK_KEY to (searchTerm ?: ""),
+            CloudFunctions.PRODUCT_CATEGORY to (productCategory ?: ""),
+            CloudFunctions.PRODUCT_TYPE to (productType ?: ""),
+            CloudFunctions.LIMIT to (limit ?: 60)
         )
-        GthrLogger.d("searchTerm", data.toString())
 
-        val endPoint =
-            "${CloudFunctions.SEARCH_PRODUCT}?${CloudFunctions.LIMIT}=${limit ?: ""}&${CloudFunctions.SEARCK_KEY}=${searchTerm ?: ""}" +
-                    "&${CloudFunctions.PRODUCT_CATEGORY}=${productCategory ?: ""}&${CloudFunctions.PRODUCT_TYPE}=${productType ?: ""}&"
-        GthrLogger.d("mayank", "endPoint: $endPoint")
         val productData =
-            fetchData<List<HashMap<String, String>>>(endPoint, data).await()
+            fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_PRODUCT, data).await()
         val productList = mutableListOf<ProductDisplayModel>()
 
         productData.forEachIndexed { index, it ->
@@ -169,24 +163,25 @@ class SearchRepository {
         // Emit loading state
         emit(State.loading())
 
-        val userId = GthrCollect.prefs?.collectionInfoModel?.userRefKey.toString()
-
-        val endPoint =
-            "${CloudFunctions.SEARCH_COLLECTION}?${CloudFunctions.LIMIT}=${limit ?: ""}&${CloudFunctions.SEARCK_KEY}=${searchTerm ?: ""}" +
-                    "&${CloudFunctions.USERID}=${userId ?: ""}"
-
-        GthrLogger.d("searchTermCollection", endPoint)
+        val data = hashMapOf(
+            CloudFunctions.USERID to (GthrCollect.prefs?.collectionInfoModel?.userRefKey ?: ""),
+            CloudFunctions.SEARCK_KEY to (searchTerm ?: ""),
+            CloudFunctions.LIMIT to (limit ?: 60)
+        )
 
         val collectionData =
-            fetchCollectionData<List<HashMap<String, String>>>(endPoint).await()
+            fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_COLLECTION, data).await()
         val collectionList = mutableListOf<SearchCollection>()
 
         collectionData.forEachIndexed { index, it ->
             try {
-                val profileImage :String? = collectionData[index][FirebaseRealtimeDatabase.PROFILE_URL_KEY] ?: ""
-                val productImage :String? = collectionData[index][FirebaseRealtimeDatabase.PRODUCT_IMAGE] ?: ""
-                val userName :String?= collectionData[index][FirebaseRealtimeDatabase.DISPLAY_NAME] ?: ""
-                val  data = SearchCollection(index,profileImage,userName,productImage)
+                val profileImage: String? =
+                    collectionData[index][FirebaseRealtimeDatabase.PROFILE_URL_KEY] ?: ""
+                val productImage: String? =
+                    collectionData[index][FirebaseRealtimeDatabase.PRODUCT_IMAGE] ?: ""
+                val userName: String? =
+                    collectionData[index][FirebaseRealtimeDatabase.DISPLAY_NAME] ?: ""
+                val data = SearchCollection(index, profileImage, userName, productImage)
 
                 collectionList.add(data)
                 GthrLogger.d("collectionData", "${data}")
