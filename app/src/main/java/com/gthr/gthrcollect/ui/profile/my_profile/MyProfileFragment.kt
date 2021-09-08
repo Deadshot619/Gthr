@@ -1,6 +1,5 @@
 package com.gthr.gthrcollect.ui.profile.my_profile
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.view.View
@@ -10,10 +9,10 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.ProfileRepository
 import com.gthr.gthrcollect.databinding.MyProfileBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
@@ -22,9 +21,6 @@ import com.gthr.gthrcollect.ui.editprofile.EditProfileActivity
 import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.ui.profile.ProfileViewModel
-import com.gthr.gthrcollect.data.repository.ProfileRepository
-import com.gthr.gthrcollect.model.domain.FollowDomainModel
-import com.gthr.gthrcollect.ui.profile.follow.FollowUserAdapter
 import com.gthr.gthrcollect.utils.customviews.*
 import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
 import com.gthr.gthrcollect.utils.extensions.*
@@ -32,9 +28,7 @@ import com.gthr.gthrcollect.utils.logger.GthrLogger
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     private val repository = ProfileRepository()

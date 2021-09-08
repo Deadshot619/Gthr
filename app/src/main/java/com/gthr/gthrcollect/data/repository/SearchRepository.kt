@@ -3,6 +3,8 @@ package com.gthr.gthrcollect.data.repository
 import com.google.firebase.database.ktx.database
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
+import com.gthr.gthrcollect.GthrCollect
+import com.gthr.gthrcollect.data.remote.fetchCollectionData
 import com.gthr.gthrcollect.data.remote.fetchData
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
@@ -162,5 +164,43 @@ class SearchRepository {
         }
       return null
     }
+
+    fun fetchCollection(searchTerm : String?=null,limit:Int?=null, page:Int?=null) = flow<State<List<SearchCollection>>> {
+        // Emit loading state
+        emit(State.loading())
+
+        val userId = GthrCollect.prefs?.collectionInfoModel?.userRefKey.toString()
+
+        val endPoint =
+            "${CloudFunctions.SEARCH_COLLECTION}?${CloudFunctions.LIMIT}=${limit ?: ""}&${CloudFunctions.SEARCK_KEY}=${searchTerm ?: ""}" +
+                    "&${CloudFunctions.USERID}=${userId ?: ""}"
+
+        GthrLogger.d("searchTermCollection", endPoint)
+
+        val collectionData =
+            fetchCollectionData<List<HashMap<String, String>>>(endPoint).await()
+        val collectionList = mutableListOf<SearchCollection>()
+
+        collectionData.forEachIndexed { index, it ->
+            try {
+                val profileImage :String? = collectionData[index][FirebaseRealtimeDatabase.PROFILE_URL_KEY] ?: ""
+                val productImage :String? = collectionData[index][FirebaseRealtimeDatabase.PRODUCT_IMAGE] ?: ""
+                val userName :String?= collectionData[index][FirebaseRealtimeDatabase.DISPLAY_NAME] ?: ""
+                val  data = SearchCollection(index,profileImage,userName,productImage)
+
+                collectionList.add(data)
+                GthrLogger.d("collectionData", "${data}")
+            }catch (ex:Exception){
+                print(ex.message)
+            }
+        }
+
+        emit(State.success(collectionList))
+
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+        GthrLogger.d("collectionData", "${it.message}}")
+    }.flowOn(Dispatchers.IO)
 
 }

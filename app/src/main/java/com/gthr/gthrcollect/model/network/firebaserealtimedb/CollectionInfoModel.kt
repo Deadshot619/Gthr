@@ -11,7 +11,7 @@ data class CollectionInfoModel(
     @SerialName(FirebaseRealtimeDatabase.BUY_LIST)
     val buyList: List<String>? = listOf(),
     @SerialName(FirebaseRealtimeDatabase.COLLECTION_DISPLAY_NAME)
-    val collectionDisplayName: String = "",
+    var collectionDisplayName: String = "",
     @SerialName(FirebaseRealtimeDatabase.COLLECTION_RAW_NAME)
     val collectionRawName: String = "",
     @SerialName(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST)

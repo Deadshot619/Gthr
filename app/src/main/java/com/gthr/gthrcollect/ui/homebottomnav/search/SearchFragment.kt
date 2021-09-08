@@ -113,7 +113,6 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
             }
         }
-
     }
 
     private fun setUpObservers() {
@@ -124,6 +123,23 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                     is State.Failed -> showProgressBar(false)
                     is State.Success -> {
                         mProductAdapter.submitList(it.data)
+                        showProgressBar(false)
+                        if (mDrawer.isDrawerVisible(GravityCompat.END)) {
+                            mDrawer.closeDrawer(GravityCompat.END)
+                        }
+                        GthrLogger.e("observedata","data: ${it.data}")
+                    }
+                }
+            }
+        }
+
+        mViewModel.collectionList.observe(viewLifecycleOwner) {  it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Failed -> showProgressBar(false)
+                    is State.Success -> {
+                        mAdapterCollections.submitList(it.data)
                         showProgressBar(false)
                         if (mDrawer.isDrawerVisible(GravityCompat.END)) {
                             mDrawer.closeDrawer(GravityCompat.END)
@@ -201,6 +217,8 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
         mCctCollections.setOnClickListener {
             setCollectionSelected()
+
+            searchCollection(mLimit)
         }
 
         mIvFilter.setOnClickListener {
@@ -304,7 +322,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
         mCfcvCards.setOnClickListener {
             selectCard()
-           
+
         }
 
         mCfcvSealed.setOnClickListener {
@@ -314,8 +332,12 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mSearchBar.setOnKeyListener(object : View.OnKeyListener {
             override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    if (!mSearchBar.text.toString().trim().isNullOrEmpty())
-                        searchProduct(mSelectedCategory,mSelectedProductType,mLimit)
+                    if (!mSearchBar.text.toString().trim().isNullOrEmpty()){
+                        if (mCctCollections.mIsActive)  searchCollection(mLimit)
+
+                        if (mCctProduct.mIsActive) searchProduct(mSelectedCategory,mSelectedProductType,mLimit)
+
+                    }
                     return true
                 }
                 return false
@@ -494,13 +516,18 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             category.setActive(category == subCategory && !category.mIsActive)
         }
     }
-    
+
     private fun searchProduct(productCategory:ProductCategory?=null,productType: ProductType?=null,limit:Int?=null){
         mSelectedCategory=productCategory
         mSelectedProductType=productType
         mLimit=limit
         mSearchKey=mSearchBar.text.toString().trim()
         mViewModel.searchProducts(mSearchKey,mSelectedCategory?.title,mSelectedProductType?.title,mLimit)
+    }
+
+    private fun searchCollection(limit:Int? ){
+        mSearchKey=mSearchBar.text.toString().trim()
+        mViewModel.searchCollection(mSearchKey,limit)
     }
 
     companion object {

@@ -20,3 +20,18 @@ fun <T> fetchData(funName: String, parameter: HashMap<String, String?>) : Task<T
             result
         }
 }
+
+fun <T> fetchCollectionData(funName: String) : Task<T> {
+    // Create the arguments to the callable function.
+
+    val functions: FirebaseFunctions = Firebase.functions
+
+    return functions
+        .getHttpsCallable(funName)
+        .call()
+        .continueWith { task ->
+            val result = task.result?.data as T
+            GthrLogger.d("mayank", "result: ${task.result}")
+            result
+        }
+}
