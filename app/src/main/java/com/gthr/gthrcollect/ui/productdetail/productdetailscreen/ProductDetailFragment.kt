@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.LayoutProductDetailMainDetailsBinding
@@ -19,6 +20,7 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModelFactory
@@ -37,7 +39,8 @@ import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 
-class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetailFragmentBinding>() {
+class ProductDetailFragment :
+    BaseFragment<ProductDetailsViewModel, ProductDetailFragmentBinding>() {
 
     override val mViewModel: ProductDetailsViewModel by activityViewModels {
         ProductDetailsViewModelFactory(
@@ -58,8 +61,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var mBtnBuy: CustomProductButton
     private lateinit var mBtnCollect: CustomProductButton
     private lateinit var mBtnSell: CustomProductButton
-    private lateinit var mGroupUpForSell : Group
-    private lateinit var mGroupRelated : Group
+    private lateinit var mGroupUpForSell: Group
+    private lateinit var mGroupRelated: Group
 
     private lateinit var mRecentSellSeeAll: CustomSeeAllView
     private lateinit var mUpForSellSeeAll: CustomSeeAllView
@@ -68,14 +71,15 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var mProductDisplayModel: ProductDisplayModel
     private lateinit var mProductType: ProductType
     private lateinit var mProductCategory: ProductCategory
-    private lateinit var mRelatedAdapter : ProductAdapter
+    private lateinit var mRelatedAdapter: ProductAdapter
 
     //Mtg Details view
     private lateinit var mLayoutProductDetailMtgDetailBinding: LayoutProductDetailMtgDetailBinding
+
     //Funko,Pokemon Details view
     private lateinit var mLayoutProductDetailMainDetailsBinding: LayoutProductDetailMainDetailsBinding
 
-    private lateinit var recentSaleAdapter : RecentSellAdapter
+    private lateinit var recentSaleAdapter: RecentSellAdapter
 
     override fun onBinding() {
         mViewBinding.lifecycleOwner = viewLifecycleOwner
@@ -102,11 +106,10 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                     is State.Failed -> showProgressBar(false)
                     is State.Success -> {
                         GthrLogger.i("dskjvjnkdf", "ProductDisplayModel : ${it.data}")
-                        if(it.data.isEmpty()){
+                        if (it.data.isEmpty()) {
                             mGroupRelated.gone()
                             mGroupUpForSell.gone()
-                        }
-                        else{
+                        } else {
                             mGroupUpForSell.visible()
                             mGroupRelated.visible()
                             mRelatedAdapter.submitList(it.data)
@@ -122,13 +125,13 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                     is State.Loading -> showProgressBar()
                     is State.Failed -> showProgressBar(false)
                     is State.Success -> {
-                        if(it.data.size<6)
+                        if (it.data.size < 6)
                             recentSaleAdapter.submitList(it.data)
-                        else{
+                        else {
                             val list = it.data.take(5)
                             recentSaleAdapter.submitList(list)
                         }
-                        GthrLogger.i("dschjds", "Recent Sale : ${it.data}")
+                        GthrLogger.i("dschsdsjds", "Recent Sale : ${it.data}")
                         showProgressBar(false)
                     }
                 }
@@ -209,31 +212,40 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             upForSellSeeAll()
         }
         mBtnBuy.setOnClickListener {
-            startActivity(
-                AskFlowActivity.getInstance(
-                    requireContext(),
-                    AskFlowType.BUY,
-                    mProductDisplayModel
+            if (isUserLoggedIn())
+                startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.BUY,
+                        mProductDisplayModel
+                    )
                 )
-            )
+            else
+                startActivity(HomeBottomNavActivity.getInstance(requireContext()))
         }
         mBtnCollect.setOnClickListener {
-            startActivity(
-                AskFlowActivity.getInstance(
-                    requireContext(),
-                    AskFlowType.COLLECT,
-                    mProductDisplayModel
+            if (isUserLoggedIn())
+                startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.COLLECT,
+                        mProductDisplayModel
+                    )
                 )
-            )
+            else
+                startActivity(HomeBottomNavActivity.getInstance(requireContext()))
         }
         mBtnSell.setOnClickListener {
-            startActivity(
-                AskFlowActivity.getInstance(
-                    requireContext(),
-                    AskFlowType.SELL,
-                    mProductDisplayModel
+            if (isUserLoggedIn())
+                startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.SELL,
+                        mProductDisplayModel
+                    )
                 )
-            )
+            else
+                startActivity(HomeBottomNavActivity.getInstance(requireContext()))
         }
     }
 
@@ -261,40 +273,25 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> setUpSealed()
             ProductType.FUNKO -> setUpFunko()
         }
-//        when (mProductType) {
-//            ProductType.POKEMON -> mViewModel.getProductDetails(
-//                mProductDisplayModel.refKey!!,
-//                ProductType.POKEMON
-//            )
-//            ProductType.MAGIC_THE_GATHERING -> mViewModel.getProductDetails(
-//                mProductDisplayModel.refKey!!,
-//                ProductType.MAGIC_THE_GATHERING
-//            )
-//            ProductType.YUGIOH -> mViewModel.getProductDetails(
-//                mProductDisplayModel.refKey!!,
-//                ProductType.YUGIOH
-//            )
-//            ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> mViewModel.getProductDetails(
-//                mProductDisplayModel.refKey!!,
-//                ProductType.SEALED_POKEMON
-//            )
-//            ProductType.FUNKO -> mViewModel.getProductDetails(
-//                mProductDisplayModel.refKey!!,
-//                ProductType.FUNKO
-//            )
-//        }
     }
 
     private fun setUpFunko() {
-        mLayoutProductDetailMainDetailsBinding = LayoutProductDetailMainDetailsBinding.inflate(layoutInflater)
+        mLayoutProductDetailMainDetailsBinding =
+            LayoutProductDetailMainDetailsBinding.inflate(layoutInflater)
         mFlDetails.addView(mLayoutProductDetailMainDetailsBinding.root)
 
-        mLayoutProductDetailMainDetailsBinding.tvRow1Column1.text = getString(R.string.text_release_date_product_detail)
-        mLayoutProductDetailMainDetailsBinding.tvRow1Column2.text = getString(R.string.text_category_product_detail)
-        mLayoutProductDetailMainDetailsBinding.tvRow3Column1.text = getString(R.string.text_item_number_product_dtail)
-        mLayoutProductDetailMainDetailsBinding.tvRow3Column2.text = getString(R.string.text_product_type_product_detail)
-        mLayoutProductDetailMainDetailsBinding.tvRow5Column1.text = getString(R.string.text_exclusivity_product_detail)
-        mLayoutProductDetailMainDetailsBinding.tvRow5Column2.text = getString(R.string.text_license_product_detail)
+        mLayoutProductDetailMainDetailsBinding.tvRow1Column1.text =
+            getString(R.string.text_release_date_product_detail)
+        mLayoutProductDetailMainDetailsBinding.tvRow1Column2.text =
+            getString(R.string.text_category_product_detail)
+        mLayoutProductDetailMainDetailsBinding.tvRow3Column1.text =
+            getString(R.string.text_item_number_product_dtail)
+        mLayoutProductDetailMainDetailsBinding.tvRow3Column2.text =
+            getString(R.string.text_product_type_product_detail)
+        mLayoutProductDetailMainDetailsBinding.tvRow5Column1.text =
+            getString(R.string.text_exclusivity_product_detail)
+        mLayoutProductDetailMainDetailsBinding.tvRow5Column2.text =
+            getString(R.string.text_license_product_detail)
 
         mLayoutProductDetailMainDetailsBinding.groupYugioh.gone()
 
@@ -306,7 +303,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun seUpYugioh() {
-        mLayoutProductDetailMainDetailsBinding = LayoutProductDetailMainDetailsBinding.inflate(layoutInflater)
+        mLayoutProductDetailMainDetailsBinding =
+            LayoutProductDetailMainDetailsBinding.inflate(layoutInflater)
         mFlDetails.addView(mLayoutProductDetailMainDetailsBinding.root)
 
         mLayoutProductDetailMainDetailsBinding.run {
@@ -323,14 +321,16 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpMGT() {
-        mLayoutProductDetailMtgDetailBinding = LayoutProductDetailMtgDetailBinding.inflate(layoutInflater)
+        mLayoutProductDetailMtgDetailBinding =
+            LayoutProductDetailMtgDetailBinding.inflate(layoutInflater)
         mFlDetails.addView(mLayoutProductDetailMtgDetailBinding.root)
 
         mMcvDescription.gone()
     }
 
     private fun setUpPokemon() {
-        mLayoutProductDetailMainDetailsBinding = LayoutProductDetailMainDetailsBinding.inflate(layoutInflater)
+        mLayoutProductDetailMainDetailsBinding =
+            LayoutProductDetailMainDetailsBinding.inflate(layoutInflater)
         mLayoutProductDetailMainDetailsBinding.run {
             mFlDetails.addView(root)
             tvRow1Column1.text = getString(R.string.text_number_product_detail)
@@ -347,7 +347,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setUpRelated() {
-        mRelatedAdapter = ProductAdapter(mProductType, CustomProductCell.State.NORMAL){
+        mRelatedAdapter = ProductAdapter(mProductType, CustomProductCell.State.NORMAL) {
             startActivity(ProductDetailActivity.getInstance(requireContext(), it))
         }
 
@@ -362,7 +362,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
 
     private fun setUpUpForSell() {
         rvUpForSell.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = mRelatedAdapter
         }
     }
@@ -396,22 +397,22 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setViewData(data: SealedDomainModel) {
-       mTvDescription.text = data.description
+        mTvDescription.text = data.description
     }
 
     private fun setViewData(data: MTGDomainModel) {
         mIvProduct.setProductImage(data.firImageURL)
         mLayoutProductDetailMtgDetailBinding.run {
-            clvStandard.setType(if(data.standard) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
-            clvBrawl.setType(if(data.brawl) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
-            clvPioneer.setType(if(data.pioneer) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
-            clvModern.setType(if(data.modern) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
-            clvPauper.setType(if(data.pauper) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
-            clvLegacy.setType(if(data.legacy) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
-            clvPenny.setType(if(data.penny) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
-            clvCommander.setType(if(data.commander) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
-            clvVintage.setType(if(data.vintage) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
-            clvHistoric.setType(if(data.historic) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvStandard.setType(if (data.standard) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvBrawl.setType(if (data.brawl) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvPioneer.setType(if (data.pioneer) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvModern.setType(if (data.modern) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvPauper.setType(if (data.pauper) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvLegacy.setType(if (data.legacy) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvPenny.setType(if (data.penny) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvCommander.setType(if (data.commander) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvVintage.setType(if (data.vintage) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
+            clvHistoric.setType(if (data.historic) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
 
             tvTitle.text = data.typeLine
             tvTextLine1.text = data.flavorText
@@ -421,6 +422,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
 
     private fun setViewData(data: YugiohDomainModel) {
         mIvProduct.setProductImage(data.firImageURL)
+        mTvDescription.text = data.firstDescription
         mLayoutProductDetailMainDetailsBinding.run {
             tvRow2Column1.text = data.number
             tvRow2Column2.text = data.productType.toString()
@@ -457,5 +459,11 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             tvRow6Column2.text = data.license
             tvRow6Column1.text = data.exclusivity
         }
+    }
+
+    private fun isUserLoggedIn(): Boolean {
+        GthrCollect.prefs?.signedInUser?.let {
+            return@isUserLoggedIn !it.email.isNullOrEmpty() && it.uid.isNotEmpty()
+        } ?: return false
     }
 }

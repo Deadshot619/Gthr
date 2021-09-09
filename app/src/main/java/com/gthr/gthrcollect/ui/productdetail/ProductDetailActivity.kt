@@ -13,12 +13,14 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.*
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.ui.base.BaseActivity
+import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
@@ -269,7 +271,12 @@ class ProductDetailActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_share -> showToast("Share")
-            R.id.menu_favourite -> showToast("Favourite")
+            R.id.menu_favourite -> {
+                if(isUserLoggedIn())
+                    showToast("Favourite")
+                else
+                    startActivity(HomeBottomNavActivity.getInstance(this))
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -294,8 +301,8 @@ class ProductDetailActivity :
         mLayoutProductDetailCardTopBinding.run {
             tvTitle.text = data.name
             tvRow1Column2.text = data.setName
-            tvRow2Collum2.text = getString(R.string.text_desh_product_detail)
-            tvRow2Collum4.text = getString(R.string.text_desh_product_detail)
+            tvRow2Collum2.text = data.collectorNumber
+            tvRow2Collum4.text = data.rarity
         }
     }
 
@@ -323,5 +330,11 @@ class ProductDetailActivity :
             tvRow1Column2.text = data.license
             tvRow2Column2.text = data.itemNumber
         }
+    }
+
+    private fun isUserLoggedIn(): Boolean {
+        GthrCollect.prefs?.signedInUser?.let {
+            return@isUserLoggedIn !it.email.isNullOrEmpty() && it.uid.isNotEmpty()
+        } ?: return false
     }
 }

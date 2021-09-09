@@ -55,7 +55,7 @@ data class ProductDisplayModel(
         highestBidCost = model.highestBidCost,
         lowestAskID = model.lowestAskID,
         highestBidID = model.highestBidID,
-        productNumber = model.id,
+        productNumber = model.collectorNumber,
         numberOfFavorites = model.numberOfFavorites,
         tier = "0",
         rarity = model.rarity

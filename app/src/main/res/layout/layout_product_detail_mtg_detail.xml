@@ -12,11 +12,11 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
+            app:cardUseCompatPadding="true"
             android:id="@+id/mcv_detail"
             android:layout_marginBottom="@dimen/margin_extra_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
             app:cardCornerRadius="@dimen/radius"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -86,6 +86,7 @@
 
         <com.google.android.material.card.MaterialCardView
             app:cardCornerRadius="@dimen/radius"
+            app:cardUseCompatPadding="true"
             android:id="@+id/cv_legal"
             android:layout_marginTop="@dimen/margin_extra_small"
             android:layout_width="match_parent"
@@ -146,7 +147,7 @@
                     android:id="@+id/clv_brawl"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginEnd="@dimen/margin_mini"
-                    android:layout_marginStart="@dimen/margin_extra_small"
+                    android:layout_marginStart="@dimen/margin_normal"
                     app:layout_constraintEnd_toEndOf="@id/guideline_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -200,7 +201,7 @@
                     android:id="@+id/clv_historic"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginEnd="@dimen/margin_mini"
-                    android:layout_marginStart="@dimen/margin_extra_small"
+                    android:layout_marginStart="@dimen/margin_normal"
                     app:layout_constraintEnd_toEndOf="@id/guideline_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -254,7 +255,7 @@
                     android:id="@+id/clv_Pauper"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginEnd="@dimen/margin_mini"
-                    android:layout_marginStart="@dimen/margin_extra_small"
+                    android:layout_marginStart="@dimen/margin_normal"
                     app:layout_constraintEnd_toEndOf="@id/guideline_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -308,7 +309,7 @@
                     android:id="@+id/clv_penny"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginEnd="@dimen/margin_mini"
-                    android:layout_marginStart="@dimen/margin_extra_small"
+                    android:layout_marginStart="@dimen/margin_normal"
                     app:layout_constraintEnd_toEndOf="@id/guideline_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -363,7 +364,7 @@
                     android:id="@+id/clv_vintage"
                     android:layout_marginVertical="@dimen/margin_medium"
                     android:layout_marginEnd="@dimen/margin_mini"
-                    android:layout_marginStart="@dimen/margin_extra_small"
+                    android:layout_marginStart="@dimen/margin_normal"
                     app:layout_constraintEnd_toEndOf="@id/guideline_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -395,6 +396,7 @@
                     android:background="@color/disable"
                     app:layout_constraintBottom_toBottomOf="@+id/clv_commander"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.45"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/clv_standard" />
 

@@ -9,13 +9,13 @@ import kotlinx.serialization.Serializable
 data class RecentSaleModel(
     @get:PropertyName(FirebaseRealtimeDatabase.CONDITION)
     @set:PropertyName(FirebaseRealtimeDatabase.CONDITION)
-    var condition: String? = "",
+    var condition: Int? = -1,
     @get:PropertyName(FirebaseRealtimeDatabase.DATE)
     @set:PropertyName(FirebaseRealtimeDatabase.DATE)
     var date: String? = "",
     @get:PropertyName(FirebaseRealtimeDatabase.EDITION)
     @set:PropertyName(FirebaseRealtimeDatabase.EDITION)
-    var edition: String? = "",
+    var edition: Int? = -1,
     @get:PropertyName(FirebaseRealtimeDatabase.LANGUAGE)
     @set:PropertyName(FirebaseRealtimeDatabase.LANGUAGE)
     var language: Int? = -1,

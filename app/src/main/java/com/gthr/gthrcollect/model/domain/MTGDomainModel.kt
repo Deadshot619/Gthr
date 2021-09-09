@@ -30,9 +30,9 @@ data class MTGDomainModel(
     val typeLine: String,
     val refKey: String,
 
-    val brawl : Boolean,
-    val commander : Boolean,
-    val duel : Boolean,
+    val brawl: Boolean,
+    val commander: Boolean,
+    val duel: Boolean,
     val future: Boolean,
     val legacy: Boolean,
     val modern: Boolean,
@@ -45,4 +45,5 @@ data class MTGDomainModel(
     val historic: Boolean,
     val power: /*Int*/ String,
     val toughness: /*Int*/ String,
+    val collectorNumber: String,
 )

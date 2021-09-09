@@ -82,6 +82,7 @@ object FirebaseRealtimeDatabase {
     const val HISTORIC = "historic"
     const val POWER = "power"
     const val TOUGHNESS = "toughness"
+    const val COLLECTOR_NUMBER = "collectorNumber"
 
     /*PokemonModel*/
     const val HP = "hp"

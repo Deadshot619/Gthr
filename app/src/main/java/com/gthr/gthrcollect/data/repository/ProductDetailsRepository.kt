@@ -16,6 +16,7 @@ import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.helper.getEmptyRecentSaleDomainModel
 import com.gthr.gthrcollect.utils.helper.getEmptyRecentSaleDomainModelList
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -81,30 +82,37 @@ class ProductDetailsRepository {
 
     fun getRecentSellList(objectId : String) = flow<State<List<RecentSaleDomainModel>>>{
         emit(State.loading())
-        val data: DataSnapshot = mFirebaseRD.child(FirebaseRealtimeDatabase.SALE_HISTORY_MODEL).orderByChild(FirebaseRealtimeDatabase.OBJECT_I_D).equalTo(objectId).get().await()
+        val data: DataSnapshot = mFirebaseRD.child(FirebaseRealtimeDatabase.SALE_HISTORY_MODEL).orderByChild(FirebaseRealtimeDatabase.OBJECT_ID).equalTo(objectId).get().await()
+        GthrLogger.i("dschsdsjds", "getRecentSellList: "+data)
+        GthrLogger.i("dschsdsjds", "getRecentSellList: "+data.childrenCount)
         if(data.childrenCount>0){
             val list = mutableListOf<RecentSaleDomainModel>()
             data.children.forEach {
                 list.add(it.getValue(RecentSaleModel::class.java)?.toDomainModel(it.key!!)!!)
             }
+
+            GthrLogger.i("dschsdsjds", "list: "+list)
             val sortedList = list.sortedByDescending{
                 val input = SimpleDateFormat(RECENT_SALE_DATE_DISPLAY_FORMAT)
                 val date = input.parse(it.date)
                 return@sortedByDescending date.time
             }
-
+            GthrLogger.i("dschsdsjds", "sortedList: "+sortedList)
             val finalList = mutableListOf<RecentSaleDomainModel>()
             finalList.add(getEmptyRecentSaleDomainModel())
             finalList.addAll(sortedList)
+            GthrLogger.i("dschsdsjds", "finalList : ${finalList}")
             emit(State.success(data = finalList))
         }
         else{
+            GthrLogger.i("dschsdsjds", "Empty")
             emit(State.success(data = getEmptyRecentSaleDomainModelList()))
         }
 
 
     }.catch {
         // If exception is thrown, emit failed state along with message.
+        GthrLogger.i("dschsdsjds", "error: "+it.message.toString())
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 

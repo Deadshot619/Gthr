@@ -68,7 +68,7 @@ fun MTGModel.toMTGDomainModel(refKey: String) = MTGDomainModel(
     objectID = this.objectID ?: "",
     oracleId = this.oracleId ?: "",
     productType = getProductType(this.productType ?: "") ?: ProductType.MAGIC_THE_GATHERING,
-    rarity = this.rarity ?: "",
+    rarity = if(this.rarity.isNullOrEmpty()) "-" else this.rarity!!,
     releasedAt = this.releasedAt ?: "",
     setName = this.setName ?: "",
     setType = this.setType ?: "",
@@ -90,6 +90,7 @@ fun MTGModel.toMTGDomainModel(refKey: String) = MTGDomainModel(
     historic = this.historic ?: false,
     power = this.power ?: "",
     toughness = this.toughness ?: "",
+    collectorNumber = if(this.collectorNumber.isNullOrEmpty()) "-" else this.collectorNumber!!
 )
 
 fun PokemonModel.toPokemonDomainModel(refKey: String) = PokemonDomainModel(
@@ -153,7 +154,7 @@ fun YugiohModel.toYugiohDomainModel(key: String) = YugiohDomainModel(
     english = this.english ?: -1,
     englishOG = this.englishOG ?: -1,
     euroEnglish = this.euroEnglish ?: -1,
-    firstDescription = this.firstDescription ?: "",
+    firstDescription = if(this.firstDescription.isNullOrEmpty()) "-" else this.firstDescription!!,
     french = this.french ?: -1,
     frenchCanadian = this.frenchCanadian ?: -1,
     frenchOG = this.frenchOG ?: -1,
@@ -187,12 +188,12 @@ fun YugiohModel.toYugiohDomainModel(key: String) = YugiohDomainModel(
 )
 
 fun RecentSaleModel.toDomainModel(key : String) = RecentSaleDomainModel(
-    condition = this.condition?:"",
+    condition = this.condition?:-1,
     date = this.date?.toRecentSaleDate()?:"",
-    edition = this.edition?:"",
+    edition = this.edition?:-1,
     language = this.language?:-1,
     objectId = this.objectId?:"",
-    price = if(this.price!=null) "${this.price}" else "",
+    price = if(this.price!=null) "$${this.price}" else "",
     customization = if(condition==null) "New" else "",
     key = key
 )

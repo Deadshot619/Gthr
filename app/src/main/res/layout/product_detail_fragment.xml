@@ -147,28 +147,31 @@
                     android:id="@+id/fl_Detail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_extra_small"
+                    android:layout_marginTop="@dimen/margin_small"
                     app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/tv_details" />
 
                 <com.google.android.material.card.MaterialCardView
+                    app:cardUseCompatPadding="true"
                     android:id="@+id/cv_card_description"
-                    android:minHeight="@dimen/min_height_description"
-                    android:layout_marginBottom="@dimen/margin_extra_small"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginBottom="@dimen/margin_extra_large"
+                    android:minHeight="@dimen/min_height_description"
                     app:cardCornerRadius="@dimen/radius"
-                    app:layout_constraintTop_toBottomOf="@+id/fl_Detail"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start">
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@+id/fl_Detail"
+                    app:layout_constraintVertical_bias="0.0">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="@dimen/margin_small"
-                        android:layout_marginHorizontal="@dimen/margin_normal">
+                        android:layout_marginHorizontal="@dimen/margin_normal"
+                        android:layout_marginVertical="@dimen/margin_small">
 
                         <TextView
                             android:id="@+id/tv_title"

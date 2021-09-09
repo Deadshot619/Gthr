@@ -79,10 +79,11 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_recent_sale"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:cardUseCompatPadding="true"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/margin_normal"
                     app:cardCornerRadius="@dimen/radius_cardview_product_recent_sale"
-                    android:layout_marginVertical="@dimen/margin_normal"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintTop_toBottomOf="@+id/tv_recent_sales">
@@ -90,7 +91,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_recent_sell"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="match_parent" />
 
                 </com.google.android.material.card.MaterialCardView>
             </androidx.constraintlayout.widget.ConstraintLayout>

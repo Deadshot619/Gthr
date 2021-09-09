@@ -1,5 +1,6 @@
 package com.gthr.gthrcollect.ui.productdetail.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -113,10 +114,13 @@ class RecentSellAdapter(val productType : ProductType) : ListAdapter<RecentSaleD
                     binding.tvDate.text = item.date
                     binding.tvSalePrice.text = item.price
 
-                    val condition = getConditionFromDisplayName(item.condition)
+                    Log.i("dfflkmckdf", "bind: ${item.condition.toString()}")
+
+                    val condition = getCondition(item.condition)
+                    Log.i("dfflkmckdf", "condition: ${condition}")
                     mTvConditionValue.text = condition.abbreviatedName
                     mTvConditionTitle.text = binding.root.context?.getConditionTitle(condition.type)
-                    mTvEdition.text =  getEditionTypeFromRowType(item.edition).title
+                    mTvEdition.text =  getEditionTypeFromRowType(item.edition.toString()).title
                 }
                 ProductType.FUNKO,ProductType.SEALED_POKEMON,ProductType.SEALED_YUGIOH,ProductType.SEALED_MTG -> {
                     binding.llCustomization.gone()

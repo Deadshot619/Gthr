@@ -133,4 +133,7 @@ data class MTGModel(
     @get:PropertyName(FirebaseRealtimeDatabase.TOUGHNESS)
     @set:PropertyName(FirebaseRealtimeDatabase.TOUGHNESS)
     var toughness: /*Int*/String? = /*-1*/"",
+    @get:PropertyName(FirebaseRealtimeDatabase.COLLECTOR_NUMBER)
+    @set:PropertyName(FirebaseRealtimeDatabase.COLLECTOR_NUMBER)
+    var collectorNumber: /*Int*/String? = /*-1*/"",
 )

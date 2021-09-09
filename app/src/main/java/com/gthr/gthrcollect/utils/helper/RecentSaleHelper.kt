@@ -2,11 +2,11 @@ package com.gthr.gthrcollect.utils.helper
 
 import com.gthr.gthrcollect.model.domain.RecentSaleDomainModel
 
-fun getEmptyRecentSaleDomainModel() = RecentSaleDomainModel("","","","",-1,"","","")
+fun getEmptyRecentSaleDomainModel() = RecentSaleDomainModel("",-1,"",-1,-1,"","","")
 
-private fun getDashRecentSaleDomainModel() = RecentSaleDomainModel("","","--.--.----","",-1,"","\$-.--","-")
+private fun getDashRecentSaleDomainModel() = RecentSaleDomainModel("",-1,"--.--.----",-1,-1,"","\$-.--","-")
 
-private fun getDateRecentSaleDomainModel(date : String) = RecentSaleDomainModel("","",date,"",-1,"","\$-.--","-")
+private fun getDateRecentSaleDomainModel(date : String) = RecentSaleDomainModel("",-1,date,-1,-1,"","\$-.--","-")
 
 fun getEmptyRecentSaleDomainModelList() : List<RecentSaleDomainModel>{
     val list = mutableListOf<RecentSaleDomainModel>()
