@@ -12,13 +12,11 @@ import com.gthr.gthrcollect.databinding.MarketFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
+import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
-import com.gthr.gthrcollect.utils.enums.ProductCategoryFilter
-import com.gthr.gthrcollect.utils.enums.ProductSortFilter
-import com.gthr.gthrcollect.utils.enums.ProductTypeOld
-import com.gthr.gthrcollect.utils.enums.SearchType
+import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Job
@@ -133,11 +131,24 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
     }
 
     private fun setUpPopularCollections() {
+
+
+
         mRvPopularCollections.apply {
 
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
-            mAdapterPopularCollections=PopularCollectionAdapter()
+            mAdapterPopularCollections=PopularCollectionAdapter{
+
+                it.objectId?.let {
+                    startActivity( ProfileActivity.getInstance(requireActivity(),
+                        ProfileNavigationType.PROFILE,it))
+                }
+            }
             adapter = mAdapterPopularCollections
+
+
+
+
         }
     }
 
