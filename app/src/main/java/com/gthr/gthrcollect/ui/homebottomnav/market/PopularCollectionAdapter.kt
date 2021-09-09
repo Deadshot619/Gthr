@@ -26,9 +26,9 @@ class PopularCollectionAdapter(val callback : (data: SearchCollection) -> Unit):
     inner class PopularCollectionViewHolder(var binding:  ItemCollectionBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(data:SearchCollection) {
 
-            binding.ivMain.setCollectionProductImage(data.productImage!!)
-            binding.ivUser.setProfileImage(data.productImage)
-            binding.tvUserMage.text=data.name
+            binding.ivMain.setCollectionProductImage(data.productImage.toString())
+            binding.ivUser.setProfileImage(data.profileUrl.toString())
+            binding.tvUserMage.text = data.name
 
             binding.ivMain.clipToOutline = true
             binding.root.setOnClickListener {

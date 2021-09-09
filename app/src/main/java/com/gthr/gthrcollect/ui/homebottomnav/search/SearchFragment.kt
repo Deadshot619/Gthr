@@ -106,7 +106,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
         if(args.type==SearchType.COLLECTIONS){
             setCollectionSelected()
-            searchProduct()
+            searchCollection(mLimit)
         }
         else if(args.type==SearchType.PRODUCT){
             when(args.sortFilter){
@@ -201,8 +201,6 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
         mCctCollections.setOnClickListener {
             setCollectionSelected()
-
-            searchCollection(mLimit)
         }
 
         mIvFilter.setOnClickListener {
@@ -415,6 +413,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 mCctCollections.setActive(false)
                 mIvFilter.visible()
                 this.mTvTitle.text = getString(R.string.text_most_fav)
+                searchProduct()
             }
             mCctForSale -> {
                 mCctProduct.setActive(false)
@@ -429,6 +428,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 mCctCollections.setActive(true)
                 mIvFilter.gone()
                 this.mTvTitle.text = getString(R.string.text_most_followed)
+                searchCollection(mLimit)
             }
         }
 
@@ -458,6 +458,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mIvFilter = mViewBinding.ivFilter
         mTvTitle = mViewBinding.tvSearchTitle
         mRvMain = mViewBinding.rvMain
+        mSearchBar = mViewBinding.csvSearch
 
         mCfcvAskLowest = mViewBinding.cfcvAskLowest
         mCfcvAskHighest = mViewBinding.cfcvAskHighest
@@ -490,8 +491,6 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mCategories = listOf(mCfcvCards, mCfcvToys, mCfcvSealed)
         mCardSubCategories = listOf(mCfscvCardsPokemon, mCfscvCardsYuGiOh, mCfscvCardsMagic)
         mSealedSubCategories = listOf(mCfscvSealedPokemon, mCfscvSealedYuGiOh, mCfscvSealedMagic)
-
-        mSearchBar=mViewBinding.csvSearch
 
         initProgressBar(mViewBinding.layoutProgress)
     }
