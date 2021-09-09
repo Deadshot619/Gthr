@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/drawable/ic_baseline_cancel_24.xml" value="0.184375" />
+        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/drawable/ic_round_close.xml" value="0.184375" />
+        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/drawable/ic_search.xml" value="0.184375" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/item_feed.xml" value="0.20833333333333334" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/layout_custom_product_cell.xml" value="0.29365079365079366" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/layout_product_detail_mtg_detail.xml" value="0.4" />
