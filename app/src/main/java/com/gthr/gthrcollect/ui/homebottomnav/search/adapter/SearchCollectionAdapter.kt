@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.ItemCollectionBinding
 import com.gthr.gthrcollect.model.domain.SearchCollection
+import com.gthr.gthrcollect.utils.extensions.setCollectionProductImage
 import com.gthr.gthrcollect.utils.extensions.setProfileImage
 
 class SearchCollectionAdapter(val callback : (data: SearchCollection) -> Unit) : ListAdapter<SearchCollection,SearchCollectionAdapter.SearchCollectionViewHolder>(DiffCallback) {
@@ -24,7 +25,7 @@ class SearchCollectionAdapter(val callback : (data: SearchCollection) -> Unit) :
     inner class SearchCollectionViewHolder(var binding: ItemCollectionBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data:SearchCollection) {
-            binding.ivMain.setProfileImage(data.productImage.toString())
+            binding.ivMain.setCollectionProductImage(data.productImage.toString())
             binding.ivUser.setProfileImage(data.profileUrl.toString())
             binding.tvUserMage.text=data.name
             binding.ivMain.clipToOutline = true

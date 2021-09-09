@@ -9,9 +9,10 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ItemCollectionBinding
 import com.gthr.gthrcollect.model.domain.SearchCollection
 import com.gthr.gthrcollect.utils.extensions.getScreenWidth
+import com.gthr.gthrcollect.utils.extensions.setCollectionProductImage
 import com.gthr.gthrcollect.utils.extensions.setProfileImage
 
-class PopularCollectionAdapter: ListAdapter<SearchCollection, PopularCollectionAdapter.PopularCollectionViewHolder>(DiffCallback) {
+class PopularCollectionAdapter(val callback : (data: SearchCollection) -> Unit): ListAdapter<SearchCollection, PopularCollectionAdapter.PopularCollectionViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<SearchCollection>() {
         override fun areItemsTheSame(oldItem: SearchCollection, newItem: SearchCollection): Boolean {
@@ -25,13 +26,13 @@ class PopularCollectionAdapter: ListAdapter<SearchCollection, PopularCollectionA
     inner class PopularCollectionViewHolder(var binding:  ItemCollectionBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(data:SearchCollection) {
 
-            binding.ivMain.setProfileImage(data.productImage!!)
+            binding.ivMain.setCollectionProductImage(data.productImage!!)
             binding.ivUser.setProfileImage(data.productImage)
             binding.tvUserMage.text=data.name
 
             binding.ivMain.clipToOutline = true
             binding.root.setOnClickListener {
-
+                callback(data)
             }
         }
     }
