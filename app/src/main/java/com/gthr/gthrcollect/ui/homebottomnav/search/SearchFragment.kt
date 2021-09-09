@@ -29,17 +29,23 @@ import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.logger.GthrLogger
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.channels.ticker
+import kotlinx.coroutines.launch
 
 class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
-    var mSelectedSort:String?=null
-    var mSelectedCategory:ProductCategory?=null
-    var mSelectedProductType:ProductType?=null
-    var mSearchKey:String?=null
-    var mLimit:Int?=null
+    var mSelectedSort: String? = null
+    var mSelectedCategory: ProductCategory? = null
+    var mSelectedProductType: ProductType? = null
+    var mSearchKey: String? = null
+    var mLimit: Int? = null
+
+    var mSearchTypingJob: Job? = null
 
     override fun getViewBinding() = SearchFragmentBinding.inflate(layoutInflater)
-    override val mViewModel: SearchViewModel by viewModels{
+    override val mViewModel: SearchViewModel by viewModels {
         SearchViewModelFactory(
             SearchRepository()
         )
@@ -336,10 +342,13 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mSearchBar.setOnKeyListener(object : View.OnKeyListener {
             override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    if (!mSearchBar.text.toString().trim().isNullOrEmpty()){
-                        if (mCctCollections.mIsActive)  searchCollection(mLimit)
-
-                        if (mCctProduct.mIsActive) searchProduct(mSelectedCategory,mSelectedProductType,mLimit)
+                    if (!mSearchBar.text.toString().trim().isNullOrEmpty()) {
+                        if (mCctCollections.mIsActive) searchCollection(mLimit)
+                        if (mCctProduct.mIsActive) searchProduct(
+                            mSelectedCategory,
+                            mSelectedProductType,
+                            mLimit
+                        )
 
                     }
                     return true
@@ -347,6 +356,19 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 return false
             }
         })
+
+        mSearchBar.setTextChangeListener {
+            mSearchTypingJob?.cancel()
+            mSearchTypingJob = MainScope().launch {
+                ticker(SEARCH_DELAY).receive()  //Add some delay before an api call
+                if (mCctCollections.mIsActive) searchCollection(mLimit)
+                if (mCctProduct.mIsActive) searchProduct(
+                    mSelectedCategory,
+                    mSelectedProductType,
+                    mLimit
+                )
+            }
+        }
     }
 
     private fun selectToys() {
@@ -536,5 +558,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
     companion object {
         private const val spanCount = 2
+
+        private const val SEARCH_DELAY = 1000L
     }
 }

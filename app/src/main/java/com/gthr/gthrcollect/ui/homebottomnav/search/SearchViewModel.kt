@@ -33,7 +33,7 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
         limit: Int? = null,
         page: Int? = null
     ) {
-        searchProductJob?.cancel()
+        clearJobs()
         searchProductJob = viewModelScope.launch {
             repository.fetchProducts(searchTerm, productCategory, productType, limit, page)
                 .collect {
@@ -42,8 +42,8 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
         }
     }
 
-    fun searchCollection(searchTerm: String?=null, limit:Int?=null, page:Int?=null) {
-        searchCollectionJob?.cancel()
+    fun searchCollection(searchTerm: String? = null, limit: Int? = null, page: Int? = null) {
+        clearJobs()
         searchCollectionJob = viewModelScope.launch {
             repository.fetchCollection(searchTerm, limit, page).collect {
                 _collectionList.value = Event(it)
@@ -51,10 +51,13 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
         }
     }
 
+    private fun clearJobs() {
+        searchProductJob?.cancel()
+        searchCollectionJob?.cancel()
+    }
 
     override fun onCleared() {
         super.onCleared()
-        searchProductJob?.cancel()
-        searchCollectionJob?.cancel()
+        clearJobs()
     }
 }

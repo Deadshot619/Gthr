@@ -2,9 +2,7 @@ package com.gthr.gthrcollect.utils.customviews
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.View
-import android.widget.EditText
 import androidx.appcompat.widget.AppCompatEditText
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.utils.extensions.afterTextChanged
@@ -28,26 +26,27 @@ class CustomSearchView @JvmOverloads constructor(
         this.setHintTextColor(getResolvedColor(R.color.hint_color))
         this.compoundDrawablePadding = paddingVertical
 
-
-        this.afterTextChanged {
-            if(it.isNotEmpty()){
-                setSearchBackground(false)
-            }
-            else{
-                setSearchBackground(true)
-            }
-        }
-
+        setTextChangeListener {}
     }
 
-    fun setSearchBackground(isEmpty : Boolean){
-        if(isEmpty){
+    fun setSearchBackground(isEmpty: Boolean) {
+        if (isEmpty) {
             this.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search, 0, 0, 0)
             this.background = getImageDrawable(R.drawable.bg_search_edit_text_gray)
-        }
-        else{
+        } else {
             this.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             this.background = getImageDrawable(R.drawable.bg_search_edit_text_blue)
+        }
+    }
+
+    fun setTextChangeListener(search: (String) -> Unit) {
+        this.afterTextChanged {
+            if (it.isNotEmpty()) {
+                setSearchBackground(false)
+            } else {
+                setSearchBackground(true)
+            }
+            search(it)
         }
     }
 }

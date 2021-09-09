@@ -38,6 +38,8 @@ class SearchRepository {
             CloudFunctions.LIMIT to (limit ?: 60)
         )
 
+        GthrLogger.d("mayank", data.toString())
+
         val productData =
             fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_PRODUCT, data).await()
         val productList = mutableListOf<ProductDisplayModel>()
@@ -168,6 +170,8 @@ class SearchRepository {
             CloudFunctions.SEARCK_KEY to (searchTerm ?: ""),
             CloudFunctions.LIMIT to (limit ?: 60)
         )
+
+        GthrLogger.d("mayank", data.toString())
 
         val collectionData =
             fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_COLLECTION, data).await()
