@@ -397,6 +397,7 @@ class ProductDetailFragment :
     }
 
     private fun setViewData(data: SealedDomainModel) {
+        mIvProduct.setProductImage(data.firImageURL)
         mTvDescription.text = data.description
     }
 
