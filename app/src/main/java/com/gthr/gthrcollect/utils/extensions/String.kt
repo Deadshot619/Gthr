@@ -43,3 +43,10 @@ fun String.toRecentSaleDate() : String? {
     }
     return null
 }
+
+fun String.isValidPrice(): String {
+    this.toFloatOrNull()?.let {
+        if (it > 0.0 && it < 999999999.0) return this
+    }
+    return "-.--"
+}

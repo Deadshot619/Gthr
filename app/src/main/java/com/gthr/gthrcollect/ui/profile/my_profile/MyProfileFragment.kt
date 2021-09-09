@@ -231,7 +231,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         mFollowers.setCount(data.followersList?.size.toString())
         mFollowing.setCount(
             if (isOtherUser())
-                "0"
+                data.collectionList?.size?.toString() ?: "0"
             else
                 data.favoriteCollectionList?.size.toString()
         )

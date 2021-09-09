@@ -273,7 +273,7 @@ class ProductDetailActivity :
             R.id.menu_share -> showToast("Share")
             R.id.menu_favourite -> {
                 if(isUserLoggedIn())
-                    showToast("Favourite")
+                    showToast("Favorite")
                 else
                     startActivity(HomeBottomNavActivity.getInstance(this))
             }

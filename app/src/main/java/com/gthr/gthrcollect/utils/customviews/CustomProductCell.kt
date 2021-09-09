@@ -12,7 +12,6 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.*
-import com.gthr.gthrcollect.utils.extensions.setImageByUrl
 
 class CustomProductCell @JvmOverloads constructor(
     context: Context,
@@ -187,7 +186,7 @@ class CustomProductCell @JvmOverloads constructor(
     fun setPrice(value: String) {
         mTvPrice.text = String.format(
             context.getString(R.string.text_price_value),
-            value.toFloatOrNull() ?: "-"
+            value.isValidPrice()
         )
     }
 
