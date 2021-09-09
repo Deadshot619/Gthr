@@ -15,7 +15,8 @@ fun <T> fetchData(funName: String, parameter: HashMap<*, *>): Task<T> {
         .call(parameter)
         .continueWith { task ->
             val result = task.result?.data as T
-            GthrLogger.d("result", "result: ${task.toString()}")
+            GthrLogger.d("result", "Result: ${task.toString()}")
+            GthrLogger.d("result", "Result: ${result}")
             result
         }
 }

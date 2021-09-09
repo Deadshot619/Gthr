@@ -47,6 +47,16 @@ object FirebaseRealtimeDatabase {
     const val FAVORITE_PRODUCT_LIST = "favoriteProductList"
     const val FOLLOWERS_LIST = "followersList"
     const val SELL_LIST = "sellList"
+    const val COLLECTION_LIST = "collectionList"
+
+    /*CollectionInfoItemModel*/
+    const val ITEM_REF_KEY = "itemRefKey"
+    const val MARKET_COST = "marketCost"
+    const val PRODUCt_TYPE = "productType"
+    const val ASK_REF_KEY = "askRefKey"
+    const val FRONT_IMAGE_URL = "frontImageURL"
+    const val BACK_IMAGE_URL = "backImageURL"
+
 
     /*MTGDomainModel*/
     const val CARD_BACK_ID = "card_back_id"

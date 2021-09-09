@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.FeedRepository
+import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.MarketFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
-import com.gthr.gthrcollect.ui.productdetail.adapter.ProductAdapter
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
@@ -20,6 +20,7 @@ import com.gthr.gthrcollect.utils.enums.ProductSortFilter
 import com.gthr.gthrcollect.utils.enums.ProductTypeOld
 import com.gthr.gthrcollect.utils.enums.SearchType
 import com.gthr.gthrcollect.utils.extensions.showToast
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -28,10 +29,12 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
 
     override fun getViewBinding() = MarketFragmentBinding.inflate(layoutInflater)
 
-    private val repository = FeedRepository()
+    private val feedRepository = FeedRepository()
+    private val searchRepository = SearchRepository()
+
     override val mViewModel: MarketViewModel by viewModels {
             MarketViewModelFactory(
-            repository
+                feedRepository,searchRepository
         )
     }
 
@@ -56,6 +59,9 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
 
     //List of Collection filter views
     private lateinit var mCctvList: List<CustomCollectionTypeView>
+
+    private lateinit var mAdapterPopularCollections: PopularCollectionAdapter
+
 
     override fun onBinding() {
         initViews()
@@ -105,13 +111,33 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
                 }
             }
         }
+
+        mViewModel.collectionList.observe(viewLifecycleOwner) {  it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Success -> {
+                        mAdapterPopularCollections.submitList(it.data)
+                        showProgressBar(false)
+
+                        GthrLogger.e("observedata", "data: ${it.data}")
+                    }
+                }
+            }
+        }
+
     }
 
     private fun setUpPopularCollections() {
         mRvPopularCollections.apply {
 
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
-            adapter = PopularCollectionAdapter()
+            mAdapterPopularCollections=PopularCollectionAdapter()
+            adapter = mAdapterPopularCollections
         }
     }
 

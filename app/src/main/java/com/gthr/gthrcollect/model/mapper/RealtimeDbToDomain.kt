@@ -5,6 +5,7 @@ import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.toRecentSaleDate
 import com.gthr.gthrcollect.utils.getProductType
+import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
 
 fun CollectionInfoModel.toCollectionInfoDomainModel(collectionId: String = "") =
     CollectionInfoDomainModel(
@@ -18,8 +19,21 @@ fun CollectionInfoModel.toCollectionInfoDomainModel(collectionId: String = "") =
         sellList = sellList,
         userRefKey = userRefKey,
         profileImage = profileImageURL,
-        collectionId = collectionId
+        collectionId = collectionId,
+        collectionList=collectionList
     )
+
+fun CollectionItemModel.toCollectionItemDomainModel()=CollectionItemDomainModel(
+    id=id,
+    itemRefKey=itemRefKey,
+    marketCost=marketCost,
+    productType= getProductType(productType.toString()),
+    edition= getEditionTypeFromRowType(edition.toString() ),
+    askRefKey=askRefKey,
+    frontImageURL = frontImageURL,
+    backImageURL= backImageURL
+
+)
 
 fun FunkoModel.toFunkoDomainModel(refKey: String) = FunkoDomainModel(
     exclusive = this.exclusive ?: "",
@@ -197,4 +211,6 @@ fun RecentSaleModel.toDomainModel(key : String) = RecentSaleDomainModel(
     customization = if(condition==null) "New" else "",
     key = key
 )
+
+
 

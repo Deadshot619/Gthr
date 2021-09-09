@@ -22,6 +22,7 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.SearchCollectionAdapter
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
+import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.utils.customviews.*
 import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.animateVisibility
@@ -105,6 +106,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
         if(args.type==SearchType.COLLECTIONS){
             setCollectionSelected()
+            searchProduct()
         }
         else if(args.type==SearchType.PRODUCT){
             when(args.sortFilter){
@@ -164,37 +166,9 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
     private fun setUpRecyclerView() {
         mAdapterCollections = SearchCollectionAdapter {
-            when {
-                it % 5 == 0 -> startActivity(
-                    ProductDetailActivity.getInstance(
-                        requireContext(),
-                        null
-                    )
-                )
-                it % 5 == 1 -> startActivity(
-                    ProductDetailActivity.getInstance(
-                        requireContext(),
-                        null
-                    )
-                )
-                it % 5 == 2 -> startActivity(
-                    ProductDetailActivity.getInstance(
-                        requireContext(),
-                        null
-                    )
-                )
-                it % 5 == 3 -> startActivity(
-                    ProductDetailActivity.getInstance(
-                        requireContext(),
-                        null
-                    )
-                )
-                it % 5 == 4 -> startActivity(
-                    ProductDetailActivity.getInstance(
-                        requireContext(),
-                        null
-                    )
-                )
+
+            it.objectId?.let {
+               startActivity( ProfileActivity.getInstance(requireActivity(),ProfileNavigationType.PROFILE,it))
             }
         }
         mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL){

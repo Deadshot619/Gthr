@@ -41,7 +41,8 @@ class HomeBottomNavActivity : BaseActivity<HomeBottomNavViewModel, ActivityHomeB
     }
 
     fun goToSearch(type : SearchType,sortFilter : ProductSortFilter,categoryFilter : ProductCategoryFilter){
-        findNavController(R.id.nav_host_fragment).navigate(R.id.searchFragment, SearchFragmentArgs(type = type,sortFilter =sortFilter,categoryFilter = categoryFilter).toBundle())
+        findNavController(R.id.nav_host_fragment).navigate(R.id.searchFragment,
+            SearchFragmentArgs(type = type,sortFilter =sortFilter,categoryFilter = categoryFilter).toBundle())
     }
 
     companion object {

@@ -14,7 +14,7 @@ class TestProductAdapter(val state : CustomProductCell.State) : ListAdapter<Sear
 
     companion object DiffCallback : DiffUtil.ItemCallback<SearchCollection>() {
         override fun areItemsTheSame(oldItem: SearchCollection, newItem: SearchCollection): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.objectId == newItem.objectId
         }
         override fun areContentsTheSame(oldItem: SearchCollection, newItem: SearchCollection): Boolean {
             return oldItem == newItem

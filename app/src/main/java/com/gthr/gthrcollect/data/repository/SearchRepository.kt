@@ -3,6 +3,7 @@ package com.gthr.gthrcollect.data.repository
 import com.google.firebase.database.ktx.database
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.data.remote.fetchData
 import com.gthr.gthrcollect.model.State
@@ -12,6 +13,7 @@ import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.constants.CloudFunctions
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.extensions.fromJsonString
 import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +22,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
 import java.util.*
+import kotlin.collections.HashMap
 
 class SearchRepository {
 
@@ -175,26 +178,38 @@ class SearchRepository {
 
         val collectionData =
             fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_COLLECTION, data).await()
-        val collectionList = mutableListOf<SearchCollection>()
+        val searchCollectionList = mutableListOf<SearchCollection>()
 
         collectionData.forEachIndexed { index, it ->
             try {
                 val profileImage: String? =
                     collectionData[index][FirebaseRealtimeDatabase.PROFILE_URL_KEY] ?: ""
-                val productImage: String? =
-                    collectionData[index][FirebaseRealtimeDatabase.PRODUCT_IMAGE] ?: ""
                 val userName: String? =
                     collectionData[index][FirebaseRealtimeDatabase.DISPLAY_NAME] ?: ""
-                val data = SearchCollection(index, profileImage, userName, productImage)
 
-                collectionList.add(data)
+                val objectId: String? =
+                    collectionData[index][FirebaseRealtimeDatabase.OBJECT_ID] ?: ""
+
+
+                /*    val collectionItemList  = collectionData[index][FirebaseRealtimeDatabase.COLLECTION_LIST] as List<HashMap<String,String>>
+
+                    val productImage  = collectionItemList[0][FirebaseRealtimeDatabase.FRONT_IMAGE_URL]
+                  GthrLogger.d("productImage", "${productImage}")
+
+                GthrLogger.d("collectionItemList", "${collectionItemList}")
+                  val gson=Gson().fromJson(collectionItemList, listOf<CollectionItemModel>()::class.java)
+                  */
+                val data = SearchCollection(objectId, profileImage, userName, profileImage)
+
+                searchCollectionList.add(data)
                 GthrLogger.d("collectionData", "${data}")
             }catch (ex:Exception){
                 print(ex.message)
+                GthrLogger.d("collectionData", "${ex.message}}")
             }
         }
 
-        emit(State.success(collectionList))
+        emit(State.success(searchCollectionList))
 
     }.catch {
         // If exception is thrown, emit failed state along with message.

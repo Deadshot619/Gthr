@@ -10,11 +10,11 @@ import com.gthr.gthrcollect.databinding.ItemCollectionBinding
 import com.gthr.gthrcollect.model.domain.SearchCollection
 import com.gthr.gthrcollect.utils.extensions.setProfileImage
 
-class SearchCollectionAdapter(val callback : (position : Int) -> Unit) : ListAdapter<SearchCollection,SearchCollectionAdapter.SearchCollectionViewHolder>(DiffCallback) {
+class SearchCollectionAdapter(val callback : (data: SearchCollection) -> Unit) : ListAdapter<SearchCollection,SearchCollectionAdapter.SearchCollectionViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<SearchCollection>() {
         override fun areItemsTheSame(oldItem: SearchCollection, newItem: SearchCollection): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.objectId == newItem.objectId
         }
         override fun areContentsTheSame(oldItem: SearchCollection, newItem: SearchCollection): Boolean {
             return oldItem == newItem
@@ -24,12 +24,12 @@ class SearchCollectionAdapter(val callback : (position : Int) -> Unit) : ListAda
     inner class SearchCollectionViewHolder(var binding: ItemCollectionBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data:SearchCollection) {
-            binding.ivMain.setProfileImage(data.productImage!!)
-            binding.ivUser.setProfileImage(data.productImage)
+            binding.ivMain.setProfileImage(data.productImage.toString())
+            binding.ivUser.setProfileImage(data.profileUrl.toString())
             binding.tvUserMage.text=data.name
             binding.ivMain.clipToOutline = true
             binding.root.setOnClickListener {
-                  callback(layoutPosition)
+                  callback(data)
             }
         }
     }

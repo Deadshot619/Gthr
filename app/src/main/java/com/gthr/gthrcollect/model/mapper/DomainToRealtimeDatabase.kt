@@ -14,5 +14,7 @@ fun UserInfoDomainModel.toRealtimeDatabaseModel() = CollectionInfoModel(
     favoriteCollectionList = null,
     favoriteProductList = null,
     followersList = null,
-    sellList = null
+    sellList = null,
+    collectionList = null,
 )
+
