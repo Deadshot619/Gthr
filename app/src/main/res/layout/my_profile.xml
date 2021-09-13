@@ -133,6 +133,7 @@
 
                 <com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
                     android:id="@+id/cctv_all"
+                    app:ccv_isActive="true"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_collection_type"
@@ -162,8 +163,7 @@
                     android:layout_marginHorizontal="@dimen/margin_collection_type"
                     android:layout_weight="1"
                     app:cccv_text="Buylist"
-                    app:ccv_isActive="true"
-                    app:ccv_isUpdate="true" />
+                    />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </com.google.android.material.card.MaterialCardView>
@@ -181,12 +181,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_main"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="@dimen/margin_small"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@+id/csv_search"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:spanCount="2"
             tools:listitem="@layout/item_collection" />
 

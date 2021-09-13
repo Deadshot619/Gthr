@@ -114,7 +114,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     }
 
     private fun setViewsForOtherUser() {
-        mAdapter = if (isOtherUser()) {
+        if (isOtherUser()) {
             mEdit.gone()
             mBtnFollow.visible()
             mFollowing.setTypeCollection()
@@ -122,10 +122,10 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 startConstraintSet.setVisibility(R.id.linearLayoutCompat, View.GONE)
                 startConstraintSet.setVisibility(R.id.collection_layout, View.GONE)
             }
-            CollectionsAdapter(CustomProductCell.State.FOR_SALE) { }
-        } else {
-            CollectionsAdapter(CustomProductCell.State.WANT) { }
+
         }
+
+        mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) { }
     }
 
     private fun setUpObservers() {
@@ -256,8 +256,8 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         }
     }
 
-    private fun goToProfilePage(type: ProfileNavigationType, userId : String?=null) {
-        startActivity(ProfileActivity.getInstance(requireContext(), type,  userId))
+    private fun goToProfilePage(type: ProfileNavigationType, userId: String? = null) {
+        startActivity(ProfileActivity.getInstance(requireContext(), type, userId))
     }
 
     //Method to select Single Collection Filter
@@ -269,6 +269,16 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             mCctvList.forEach {
                 it.setActive(it == this@selectView)
             }
+            when {
+                mAll.mIsActive || mCards.mIsActive || mToys.mIsActive -> {
+                    mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) { }
+                    mRvMain.adapter = mAdapter
+                }
+                mBuyList.mIsActive -> {
+                    mAdapter = CollectionsAdapter(CustomProductCell.State.WANT) { }
+                    mRvMain.adapter = mAdapter
+                }
+            }
         }
     }
 
@@ -278,10 +288,12 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         data?.let {
-            when(requestCode) {
+            when (requestCode) {
                 REQUEST_CODE_EDIT_PROFILE -> {
                     if (resultCode == RESULT_OK)
-                        mViewModel.fetchUserProfileData(GthrCollect.prefs?.getUserCollectionId().toString())
+                        mViewModel.fetchUserProfileData(
+                            GthrCollect.prefs?.getUserCollectionId().toString()
+                        )
                 }
             }
         }
