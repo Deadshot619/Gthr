@@ -8,8 +8,6 @@
     android:background="@color/black"
     tools:context=".ui.customcameraactivities.IdImagePreview">
 
-
-
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="0dp"
@@ -17,7 +15,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -34,30 +31,16 @@
             app:layout_constraintBottom_toTopOf="@id/frame_layout"
             />
 
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_cardImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerInside"
-            tools:background="@drawable/border"
-            android:src="@drawable/ic_launcher_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_idImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_launcher_background"
+            tools:src="@drawable/ic_launcher_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </FrameLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -95,8 +78,5 @@
             app:secondary_button_state="YELLOW"
             />
 
-
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
