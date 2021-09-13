@@ -1,6 +1,5 @@
 package com.gthr.gthrcollect.ui.askflow
 
-import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -48,13 +47,13 @@ class AskFlowViewModel(private val repository : AskFlowRepository): BaseViewMode
         get() = _selectedConditionValue
 
     /* Front & Back Image */
-    private val _frontImageBitmap = MutableLiveData<Bitmap>()
-    val frontImageBitmap: LiveData<Bitmap>
-        get() = _frontImageBitmap
+    private val _frontImageUrl = MutableLiveData<String>()
+    val frontImageUrl: LiveData<String>
+        get() = _frontImageUrl
 
-    private val _backImageBitmap = MutableLiveData<Bitmap>()
-    val backImageBitmap: LiveData<Bitmap>
-        get() = _backImageBitmap
+    private val _backImageUrl = MutableLiveData<String>()
+    val backImageUrl: LiveData<String>
+        get() = _backImageUrl
 
 
     /** Language, Edition & Condition Lists for [ProductCategory.CARDS] */
@@ -82,12 +81,12 @@ class AskFlowViewModel(private val repository : AskFlowRepository): BaseViewMode
         _isSell.value = isSell
     }
 
-    fun setFrontImage(bitmap: Bitmap) {
-        _frontImageBitmap.value = bitmap
+    fun setFrontImage(bitmapUrl: String) {
+        _frontImageUrl.value = bitmapUrl
     }
 
-    fun setBackImage(bitmap: Bitmap) {
-        _backImageBitmap.value = bitmap
+    fun setBackImage(bitmapUrl: String) {
+        _backImageUrl.value = bitmapUrl
     }
 
     fun setAskPrice(price: Float) {

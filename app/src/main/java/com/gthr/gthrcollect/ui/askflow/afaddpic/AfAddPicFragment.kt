@@ -22,10 +22,7 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.customcameraactivities.CustomCardCamera
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.AskFlowType
-import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.showPermissionSnackBar
-import com.gthr.gthrcollect.utils.extensions.showToast
-import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.extensions.*
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -169,8 +166,8 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
                 REQUEST_CODE_FRONT_ID -> {
 
                     if (resultCode == Activity.RESULT_OK) {
-                        mViewModel.setFrontImage(bitmap)
                         mFrontImageUrl = data.getStringExtra(CustomCardCamera.INTENT_KEY_URL) ?: ""
+                        mViewModel.setFrontImage(mFrontImageUrl)
 
                         // when front image is captured and capturing back image
                         if (mBackImageUrl.isNullOrEmpty()) {
@@ -191,8 +188,8 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
                 //  result when captured BACK image FIRST
                 REQUEST_CODE_BACK_ID -> {
                     if (resultCode == Activity.RESULT_OK) {
-                        mViewModel.setBackImage(bitmap)
                         mBackImageUrl = data.getStringExtra(CustomCardCamera.INTENT_KEY_URL) ?: ""
+                        mViewModel.setBackImage(mBackImageUrl)
 
                         // when back image is captured and capturing first image
                         if (mFrontImageUrl.isNullOrEmpty()) {
@@ -253,16 +250,14 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
 
                         // if FRONT image is re-captured
                         if (mIsFrontView) {
-                            mViewModel.setFrontImage(bitmap)
                             mFrontImageUrl =
                                 data.getStringExtra(CustomCardCamera.INTENT_KEY_URL) ?: ""
+                            mViewModel.setFrontImage(mFrontImageUrl)
                         } else {
                             // if BACK image is re-captured
-
-                            mViewModel.setBackImage(bitmap)
                             mBackImageUrl =
                                 data.getStringExtra(CustomCardCamera.INTENT_KEY_URL) ?: ""
-
+                            mViewModel.setBackImage(mBackImageUrl)
                         }
                     }
                 }
@@ -301,7 +296,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
                 if (mViewModel.isSell.value != true)
                     activity?.finish()
                 else {
-                    if (mViewModel.frontImageBitmap.value != null && mViewModel.backImageBitmap.value != null)
+                    if (mViewModel.frontImageUrl.value != null && mViewModel.backImageUrl.value != null)
                         findNavController().navigate(AfAddPicFragmentDirections.actionAfAddPicFragmentToAfReviewYourAskFragment())
                     else
                         showToast("Please add pictures!")
@@ -324,17 +319,17 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
             }
         })
 
-        mViewModel.frontImageBitmap.observe(this, {
+        mViewModel.frontImageUrl.observe(this, {
             if (it != null) {
                 mIvFrontImage.visible()
-                mIvFrontImage.setImageBitmap(it)
+                mIvFrontImage.setImage(it)
                 mFront_repls.gone()
             }
         })
 
-        mViewModel.backImageBitmap.observe(this, {
+        mViewModel.backImageUrl.observe(this, {
             if (it != null) {
-                mIvBackImage.setImageBitmap(it)
+                mIvBackImage.setImage(it)
                 mIvBackImage.visible()
                 mBack_repls.gone()
             }
@@ -353,5 +348,4 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
     }
-
 }

@@ -27,6 +27,7 @@ import com.gthr.gthrcollect.utils.enums.ConditionType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.invisible
+import com.gthr.gthrcollect.utils.extensions.setImage
 import com.gthr.gthrcollect.utils.extensions.visible
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -113,15 +114,15 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
     private fun setUpObservers() {
         /* Front & Back Image */
-        mViewModel.frontImageBitmap.observe(this, {
+        mViewModel.frontImageUrl.observe(this, {
             if (it != null)
-                mProductItem.mIvMain.setImageBitmap(it)
+                mProductItem.mIvMain.setImage(it)
         })
 
-        mViewModel.backImageBitmap.observe(this, {
+        mViewModel.backImageUrl.observe(this, {
             if (it != null) {
                 mCvBackImage.visible()
-                mIvBackImage.setImageBitmap(it)
+                mIvBackImage.setImage(it)
             } else
                 mCvBackImage.invisible()
         })
@@ -247,11 +248,18 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
     private fun setUpClickListeners() {
         mProductItem.setOnClickListener {
-            startActivity(FullProductImage.getInstance(this, null))
+            startActivity(
+                FullProductImage.getInstance(
+                    this,
+                    (mViewModel.frontImageUrl.value ?: mProductDisplayModel.firImageURL)
+                )
+            )
         }
 
         mCvBackImage.setOnClickListener {
-            startActivity(FullProductImage.getInstance(this, null))
+            mViewModel.backImageUrl.value?.let {
+                startActivity(FullProductImage.getInstance(this, it))
+            }
         }
     }
 

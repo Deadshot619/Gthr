@@ -3,12 +3,11 @@ package com.gthr.gthrcollect.utils.extensions
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.gthr.gthrcollect.R
-import java.util.*
 
 private val colors = listOf(R.color.purple_200, R.color.red, R.color.blue, R.color.yellow_gradient_end_color)
 
-fun ImageView.setImageByUrl(url: String){
-    Glide.with(this).load(url).into(  this)
+fun ImageView.setImage(url: String) {
+    Glide.with(this).load(url).into(this)
 }
 
 fun ImageView.setProfileImage(url: String){

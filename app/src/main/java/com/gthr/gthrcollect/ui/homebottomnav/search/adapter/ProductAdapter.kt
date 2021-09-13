@@ -8,9 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.databinding.ItemTestProductBinding
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
-import com.gthr.gthrcollect.utils.enums.ProductType
-import com.gthr.gthrcollect.utils.enums.ProductTypeOld
-import com.gthr.gthrcollect.utils.extensions.setImageByUrl
 
 class ProductAdapter(val state: CustomProductCell.State, val callback : (data: ProductDisplayModel) -> Unit) :
     ListAdapter<ProductDisplayModel, ProductAdapter.FavSoldViewHolder>(DiffCallback) {

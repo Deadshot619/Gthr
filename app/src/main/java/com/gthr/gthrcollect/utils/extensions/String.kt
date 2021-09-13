@@ -1,5 +1,7 @@
 package com.gthr.gthrcollect.utils.extensions
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.gthr.gthrcollect.utils.constants.CalendarConstants.RECENT_SALE_DATE_DISPLAY_FORMAT
 import com.gthr.gthrcollect.utils.constants.CalendarConstants.RECENT_SALE_DATE_NETWORK_FORMAT
 import java.text.ParseException
@@ -50,3 +52,5 @@ fun String.isValidPrice(): String {
     }
     return "-.--"
 }
+
+fun String.urlToBitmap(): Bitmap? = BitmapFactory.decodeFile(this)
