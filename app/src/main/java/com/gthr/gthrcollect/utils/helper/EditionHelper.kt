@@ -79,14 +79,38 @@ fun getPokemonEditionList(rawKey: Int) : List<EditionType> {
 fun getMTGEditionList(): List<EditionType> =
     listOf<EditionType>(EditionType.FOIL, EditionType.NON_FOIL)
 
+
+fun getEditionTypeFromRowType(row : String) : EditionType{
+    return EditionType.values().find { row == it.title }?:EditionType.NOTHING
+}
+
 fun getSelectedMTGEdition(key: Int): EditionType {
     return when (key) {
         0 -> EditionType.FOIL
         1 -> EditionType.NON_FOIL
-        else -> EditionType.FOIL
+        else -> EditionType.NOTHING
     }
 }
 
-fun getEditionTypeFromRowType(row : String) : EditionType{
-    return EditionType.values().find { row == it.title }?:EditionType.NOTHING
+fun getPokemonSelectedEdition(key: Int) : EditionType {
+    return when (key) {
+        1-> EditionType.UNLIMITED
+        5-> EditionType.REVERSE_HOLO_UNLIMITED
+        7-> EditionType.PROMO
+        8-> EditionType.JUMBO_PROMO
+        9-> EditionType.FIRST_EDITION
+        10-> EditionType.REVERSE_HOLO_FIRST_EDITION
+        11-> EditionType.FOURTH_PRINT_UK
+        else -> EditionType.NOTHING
+    }
+}
+
+fun getYugiohSelectedEdition(key: Int) : EditionType {
+    return when (key) {
+        0 -> EditionType.NONE
+        1 -> EditionType.FIRST_EDITION
+        2 -> EditionType.LIMITED_EDITION
+        3 -> EditionType.UNLIMITED
+        else -> EditionType.NOTHING
+    }
 }

@@ -17,7 +17,8 @@ enum class EditionType(val title: String) {
     PROMO("Promo"),
     JUMBO_PROMO("Jumbo"),
     NON_FOIL("Non Foil"),
-    FOIL("Foil")
+    FOIL("Foil"),
+    NONE("None")
 }
 
 
