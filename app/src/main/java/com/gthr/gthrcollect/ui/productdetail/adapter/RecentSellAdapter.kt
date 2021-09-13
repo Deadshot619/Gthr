@@ -110,17 +110,21 @@ class RecentSellAdapter(val productType : ProductType) : ListAdapter<RecentSaleD
                         ProductType.YUGIOH -> getYugiohLanguageDomainModel(item.language).abbreviatedName
                         else -> ""
                     }
+                    mTvEdition.text = when (productType) {
+                        ProductType.MAGIC_THE_GATHERING -> getSelectedMTGEdition(item.language).title
+                        ProductType.POKEMON -> getPokemonSelectedEdition(item.language).title
+                        ProductType.YUGIOH -> getYugiohSelectedEdition(item.language).title
+                        else -> ""
+                    }
 
                     binding.tvDate.text = item.date
                     binding.tvSalePrice.text = item.price
 
-                    Log.i("dfflkmckdf", "bind: ${item.condition.toString()}")
 
                     val condition = getCondition(item.condition)
-                    Log.i("dfflkmckdf", "condition: ${condition}")
                     mTvConditionValue.text = condition.abbreviatedName
                     mTvConditionTitle.text = binding.root.context?.getConditionTitle(condition.type)
-                    mTvEdition.text =  getEditionTypeFromRowType(item.edition.toString()).title
+
                 }
                 ProductType.FUNKO,ProductType.SEALED_POKEMON,ProductType.SEALED_YUGIOH,ProductType.SEALED_MTG -> {
                     binding.llCustomization.gone()
