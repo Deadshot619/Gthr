@@ -426,7 +426,7 @@ class ProductDetailFragment :
         mTvDescription.text = data.firstDescription
         mLayoutProductDetailMainDetailsBinding.run {
             tvRow2Column1.text = data.number
-            tvRow2Column2.text = data.productType.toString()
+            tvRow2Column2.text = data.cardType
             tvRow4Column1.text = data.set
             tvRow4Column2.text = data.stats
             tvRow6Column1.text = data.rarity
