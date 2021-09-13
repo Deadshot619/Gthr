@@ -9,8 +9,7 @@ import com.gthr.gthrcollect.databinding.ItemTestProductBinding
 import com.gthr.gthrcollect.model.domain.CollectionProductDomainModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 
-class CollectionsAdapter(val state: CustomProductCell.State, val callback: (CollectionProductDomainModel) -> Unit) :
-    ListAdapter<CollectionProductDomainModel, CollectionsAdapter.FavSoldViewHolder>(DiffCallback) {
+class CollectionsAdapter(val state: CustomProductCell.State, val callback: (CollectionProductDomainModel) -> Unit) : ListAdapter<CollectionProductDomainModel, CollectionsAdapter.FavSoldViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<CollectionProductDomainModel>() {
         override fun areItemsTheSame(oldItem: CollectionProductDomainModel, newItem: CollectionProductDomainModel): Boolean {
