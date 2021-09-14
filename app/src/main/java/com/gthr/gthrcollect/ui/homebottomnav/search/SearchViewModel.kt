@@ -9,6 +9,7 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.model.domain.SearchCollection
 import com.gthr.gthrcollect.ui.base.BaseViewModel
+import com.gthr.gthrcollect.utils.extensions.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -26,6 +27,52 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
     val collectionList: LiveData<Event<State<List<SearchCollection>>>>
         get() = _collectionList
 
+    private val _loadMore = MutableLiveData<Event<Boolean>>()
+    val loadMore: LiveData<Event<Boolean>>
+        get() = _loadMore
+
+
+    private val _productDisplayList = MutableLiveData<MutableList<ProductDisplayModel>>()
+    val productDisplayList: LiveData<MutableList<ProductDisplayModel>>
+        get() = _productDisplayList
+
+    private val _collectionDisplayList = MutableLiveData<MutableList<SearchCollection>>()
+    val collectionDisplayList: LiveData<MutableList<SearchCollection>>
+        get() = _collectionDisplayList
+
+    fun setCollectionDisplayList(list : List<SearchCollection>){
+        _collectionDisplayList.addAllSearchCollection(list)
+    }
+
+    fun clearCollectionDisplayList(){
+        _collectionDisplayList.clear()
+    }
+
+    fun addSearchCollectionLoadMore(){
+        _collectionDisplayList.addSearchCollectionLoadMore()
+    }
+
+    fun removeSearchCollectionLoadMore(){
+        _collectionDisplayList.removeSearchCollectionLoadMore()
+    }
+
+    fun setProductDisplayList(list : List<ProductDisplayModel>){
+        _productDisplayList.addAllProductDisplayModel(list)
+    }
+
+    fun clearProductDisplayList(){
+        _productDisplayList.clear()
+    }
+
+    fun addProductDisplayModelLoadMore(){
+        _productDisplayList.addProductDisplayModelLoadMore()
+    }
+
+    fun removeProductDisplayModelLoadMore(){
+        _productDisplayList.removeProductDisplayModelLoadMore()
+    }
+
+
     fun searchProducts(
         searchTerm: String? = null,
         productCategory: String? = null,
@@ -37,7 +84,7 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
         searchProductJob = viewModelScope.launch {
             repository.fetchProducts(searchTerm, productCategory, productType, limit, page)
                 .collect {
-                    _productList.value = Event(it)
+                  _productList.value = Event(it)
                 }
         }
     }

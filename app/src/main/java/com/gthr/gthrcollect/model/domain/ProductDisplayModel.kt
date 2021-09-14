@@ -1,6 +1,7 @@
 package com.gthr.gthrcollect.model.domain
 
 import android.os.Parcelable
+import com.gthr.gthrcollect.utils.enums.AdapterViewType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import kotlinx.parcelize.Parcelize
@@ -21,9 +22,29 @@ data class ProductDisplayModel(
     var productNumber: String?,
     var numberOfFavorites: Int?,
     var tier: String?,
-    var rarity: String?
+    var rarity: String?,
+    val viewType : AdapterViewType = AdapterViewType.VIEW_TYPE_ITEM
 ) : Parcelable {
     //TODO 01/08/21 : Modify firImageUrl added
+
+    constructor(viewType : AdapterViewType) : this(
+        objectID = "",
+        productType = ProductType.YUGIOH,
+        productCategory = ProductCategory.TOYS,
+        refKey = "",
+        firImageURL = "",
+        name = "",
+        description = "",
+        lowestAskCost = -1,
+        highestBidCost = -1,
+        lowestAskID = "",
+        highestBidID = "",
+        productNumber = "".toString(),
+        numberOfFavorites = -1,
+        tier = "".toString(),
+        rarity = ProductType.FUNKO.title.capitalize(),
+        viewType = viewType
+    )
 
     constructor(model: FunkoDomainModel) : this(
         objectID = model.objectID,

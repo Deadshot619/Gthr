@@ -34,7 +34,8 @@ class SearchRepository {
             CloudFunctions.SEARCK_KEY to (searchTerm ?: ""),
             CloudFunctions.PRODUCT_CATEGORY to (productCategory ?: ""),
             CloudFunctions.PRODUCT_TYPE to (productType ?: ""),
-            CloudFunctions.LIMIT to (limit ?: 60)
+            CloudFunctions.LIMIT to (limit ?: 60),
+            CloudFunctions.PAGE to (page ?:0)
         )
 
         GthrLogger.d("mayank", data.toString())
@@ -167,8 +168,11 @@ class SearchRepository {
         val data = hashMapOf(
             CloudFunctions.USERID to (GthrCollect.prefs?.collectionInfoModel?.userRefKey ?: ""),
             CloudFunctions.SEARCK_KEY to (searchTerm ?: ""),
-            CloudFunctions.LIMIT to (limit ?: 60)
+            CloudFunctions.LIMIT to (limit ?: 60),
+            CloudFunctions.PAGE to (page ?: 0)
         )
+
+        GthrLogger.d("mayank", data.toString())
 
         val collectionData =
             fetchData<List<HashMap<String, *>>>(CloudFunctions.SEARCH_COLLECTION, data).await()
