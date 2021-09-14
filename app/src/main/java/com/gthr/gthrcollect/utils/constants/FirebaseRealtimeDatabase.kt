@@ -4,6 +4,8 @@ object FirebaseRealtimeDatabase {
 
     /*Collection Info Model*/
     const val COLLECTION_INFO_MODEL = "collectionInfoModel"
+    const val SHIPPING_TIER = "shippingTier"
+
 
     /*Product Details*/
     const val YUGIOH_MODEL = "yugiohModel"

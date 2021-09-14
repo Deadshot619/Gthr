@@ -186,6 +186,8 @@
                     android:text="@string/text_add_ask_flow"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_shipping_reimbursement" />
 
@@ -198,6 +200,8 @@
                     android:text="@string/text_promo_code_ask_flow"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_add_promo_code"
                     app:layout_constraintEnd_toStartOf="@+id/tv_add_promo_code"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -237,7 +241,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:fontFamily="@font/lato_bold"
-                        android:text="$25.81"
+                        android:text="$-"
                         android:textColor="@color/light_blue"
                         android:textSize="@dimen/text_size_normal" />
 
@@ -348,7 +352,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/et_buy_value"
+                        android:id="@+id/tv_buy_value"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:background="@drawable/edit_text_blue_outline_bg"
@@ -371,6 +375,7 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:visibility="gone"
+                    tools:visibility="visible"
                     android:id="@+id/ll_buy_total"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -428,10 +433,11 @@
                     android:visibility="visible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="cv_ask_type,iv_terms_and_conditions,ll_total,tv_payout,tv_address,tv_terms_and_conditions,tv_agree_to,tv_payment_processing_value,tv_selling_fee,tv_promo_code,tv_selling_fee_value,tv_add_promo_code,tv_payment_processing,tv_shipping_reimbursement,tv_shipping_reimbursement_value" />
+                    app:constraint_referenced_ids="cv_ask_type,iv_terms_and_conditions,ll_total,tv_payout,tv_address,tv_terms_and_conditions,tv_agree_to,tv_payment_processing_value,tv_selling_fee,tv_selling_fee_value,tv_payment_processing,tv_shipping_reimbursement,tv_shipping_reimbursement_value" />
 
                 <androidx.constraintlayout.widget.Group
                     android:visibility="gone"
+                    tools:visibility="visible"
                     android:id="@+id/group_buy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

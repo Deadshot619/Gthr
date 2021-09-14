@@ -62,6 +62,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         mProductCategory = mProductDisplayModel.productCategory!!
 
         mViewModel.setProductType(mProductType)
+        mViewModel.setProductDisplayModel(mProductDisplayModel)
 
         initViews()
         setSupportActionBar(mToolbar)
@@ -81,14 +82,6 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             mProductItem = cpcProductItem
             mCvBackImage = cvBackImage
             mIvBackImage = ivBackImage
-
-            mProductItem.run {
-                setPrice("-")
-                setLanguage("-")
-                setConditionTitle(getString(R.string.raw))
-                setConditionValue("-")
-                setEdition("-")
-            }
 
             when (mAskFlowType) {
                 AskFlowType.BUY -> mProductItem.setState(CustomProductCell.State.WANT)
@@ -327,16 +320,16 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
      */
     private fun setInitialData(productDisplayModel: ProductDisplayModel) {
         mProductItem.run {
-            setProductName(productDisplayModel.name.toString())
-            setProductNumber(productDisplayModel.productNumber.toString())
-            setProductRarity(productDisplayModel.rarity.toString())
-            setImage(productDisplayModel.firImageURL.toString())
-            when (productDisplayModel.productCategory) {
-                ProductCategory.TOYS -> setType(CustomProductCell.Type.FUNKO)
-                ProductCategory.SEALED -> setType(CustomProductCell.Type.SEALED)
-                else -> setType(CustomProductCell.Type.CARDS)
+            setValue(productDisplayModel)
+            setPrice("-")
+
+            if (mProductCategory == ProductCategory.CARDS) {
+                setLanguage("-")
+                setConditionTitle(getString(R.string.raw))
+                setConditionValue("-")
+                setEdition("-")
+                mViewModel.retrieveLanguageList(productDisplayModel.productType!!)
             }
-            mViewModel.retrieveLanguageList(productDisplayModel.productType!!)
         }
     }
 

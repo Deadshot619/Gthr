@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfPlaceYourAskFragmentBinding
+import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
@@ -22,6 +23,7 @@ import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.isValidPrice
 import com.gthr.gthrcollect.utils.extensions.visible
 
 class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFragmentBinding>() {
@@ -50,9 +52,12 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
     private lateinit var mTvRow2Value: TextView
     private lateinit var mTvRow3: TextView
     private lateinit var mTvRow3Value: TextView
+    private lateinit var mTvTotalValue: TextView
     private lateinit var mAddressBtn: TextView
 
-
+    //Buylist
+    private lateinit var mTvBuyListValue: AppCompatTextView
+    private lateinit var mTvTotalBuyListValue: TextView
 
     override fun onBinding() {
         setHasOptionsMenu(false)
@@ -63,8 +68,38 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
 
     private fun setUpObserve() {
         mViewModel.askPrice.observe(viewLifecycleOwner) {
-            mTvRateValue.text = "$ ${it}"
+            mTvRateValue.text = String.format(getString(R.string.text_price_value), it)
         }
+
+        mViewModel.buyListPrice.observe(viewLifecycleOwner) {
+            mTvBuyListValue.text =
+                String.format(getString(R.string.text_price_value), it.toString().isValidPrice())
+            mTvTotalBuyListValue.text =
+                String.format(getString(R.string.text_price_value), it.toString().isValidPrice())
+        }
+
+        mViewModel.shippingTierInfo.observe(viewLifecycleOwner, {
+            it?.peekContent()?.let {
+                when (it) {
+                    is State.Failed -> {
+                    }
+                    is State.Loading -> {
+                    }
+                    is State.Success -> {
+                        when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
+                            AskFlowType.SELL, AskFlowType.COLLECT -> {
+                                mTvRow3Value.text =
+                                    it.data.frontEndShippingProcessing.isValidPrice().getAddedRate()
+                            }
+                            AskFlowType.BUY_DIRECTLY_FROM_SOMEONE -> {
+                                mTvRow1Value.text =
+                                    it.data.frontEndShippingProcessing.isValidPrice().getAddedRate()
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
 
     private fun setUpOnClickListeners() {
@@ -158,7 +193,16 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             mTvRow3 = tvShippingReimbursement
             mTvRow3Value = tvShippingReimbursementValue
             mAddressBtn = tvAddress
+            mTvTotalValue = tvTotalValue
+
+            mTvBuyListValue = tvBuyValue
+            mTvTotalBuyListValue = tvBuyTotalValue
         }
+
+        mTvTotalValue.text = String.format(
+            getString(R.string.text_price_value),
+            mViewModel.totalRate.toString().isValidPrice()
+        )
 
         when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
             AskFlowType.BUY -> {
@@ -175,9 +219,9 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 mTvRate.text = getString(R.string.text_price)
                 mTvRateValue.text = "$55.00"
                 mTvRow1.text = getString(R.string.text_purchase_shipping)
-                mTvRow1Value.text = "+3.99"
+                mTvRow1Value.text = "+0.0"
                 mTvRow2.text = getString(R.string.text_sales_tax)
-                mTvRow2Value.text = "+0.55"
+                mTvRow2Value.text = "+0.0"
                 mTvRow3.gone()
                 mTvRow3Value.gone()
                 mBtnNext.text = getString(R.string.text_accept)
@@ -185,9 +229,15 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
             else -> {
                 mBtnNext.text = getString(R.string.text_place_your_ask)
+                mTvRow1Value.text = "-${mViewModel.sellingFee}"
+                mTvRow2Value.text = "-${mViewModel.paymentProcessing}"
+                mTvRow3Value.text = "+0.0"
                 mGroup.visible()
                 mGroupBuy.gone()
             }
         }
     }
+
+    fun String.getAddedRate(): String = "+$this"
+    fun String.getSubtractedRate(): String = "-$this"
 }

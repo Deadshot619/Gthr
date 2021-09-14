@@ -4,6 +4,7 @@ import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.toRecentSaleDate
+import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
 
@@ -212,5 +213,33 @@ fun RecentSaleModel.toDomainModel(key : String) = RecentSaleDomainModel(
     key = key
 )
 
+fun AskItemModel.toAskItemDomainModel() = AskItemDomainModel(
+    refKey = refKey,
+    creatorUID = creatorUID,
+    duration = duration,
+    askPrice = askPrice,
+    totalPayout = totalPayout,
+    itemRefKey = itemRefKey,
+    itemObjectID = itemObjectID,
+    productType = getProductType(productType.toString()),
+    productCategory = getProductCategory(getProductType(productType.toString())!!),
+    edition = getEditionTypeFromRowType(edition.toString()),
+    condition = condition,
+    language = language,
+    returnName = returnName,
+    returnAddressLine1 = returnAddressLine1,
+    returnAddressLine2 = returnAddressLine2,
+    returnCity = returnCity,
+    returnState = returnState,
+    returnZipCode = returnZipCode,
+    returnCountry = returnCountry,
+    frontImageURL = frontImageURL,
+    backImageURL = backImageURL
+)
 
-
+fun ShippingInfoModel.toDomainModel() = ShippingInfoDomainModel(
+    billing = billing,
+    frontEndShippingProcessing = frontEndShippingProcessing,
+    service = service,
+    refKey = refKey,
+)

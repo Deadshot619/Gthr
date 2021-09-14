@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_extra_large"
                     android:fontFamily="@font/lato"
-                    android:text="$22.00"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_selling_fee"
@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_extra_large"
                     android:fontFamily="@font/lato"
-                    android:text="$22.00"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_payment_processing"
@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_extra_large"
                     android:fontFamily="@font/lato"
-                    android:text="$22.00"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_shipping_reimbursement"
@@ -183,6 +183,8 @@
                     android:text="@string/text_add_ask_flow"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_shipping_reimbursement" />
 
@@ -193,9 +195,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_extra_large"
                     android:layout_marginEnd="@dimen/margin_normal"
+
                     android:text="@string/text_promo_code_ask_flow"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_add_promo_code"
                     app:layout_constraintEnd_toStartOf="@+id/tv_add_promo_code"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -238,7 +243,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:fontFamily="@font/lato_bold"
-                        android:text="$25.81"
+                        android:text="-"
                         android:textColor="@color/light_blue"
                         android:textSize="@dimen/text_size_normal" />
 
@@ -277,7 +282,7 @@
                         android:fontFamily="@font/lato"
                         android:gravity="end|center_vertical"
                         android:maxLines="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:hint="@string/text_type_buylist_price_here_buy_flow"
                         android:paddingHorizontal="@dimen/padding_normal"
                         android:textColor="@color/black"
@@ -324,7 +329,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:fontFamily="@font/lato_bold"
-                        android:text="$25.81"
+                        android:text="-"
                         android:textColor="@color/light_blue"
                         android:textSize="@dimen/text_size_normal" />
 
@@ -350,11 +355,12 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="cv_ask_type,tv_selling_fee,tv_shipping_reimbursement_value,tv_selling_fee_value,tv_payment_processing,ll_total,tv_promo_code,tv_payment_processing_value,tv_shipping_reimbursement,tv_add_promo_code" />
+                    app:constraint_referenced_ids="cv_ask_type,tv_selling_fee,tv_shipping_reimbursement_value,tv_selling_fee_value,tv_payment_processing,ll_total,tv_payment_processing_value,tv_shipping_reimbursement" />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/group_buy"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:constraint_referenced_ids="ll_buy_total,cv_buy" />

@@ -402,7 +402,7 @@ class ProductDetailFragment :
     }
 
     private fun setViewData(data: MTGDomainModel) {
-        mIvProduct.setProductImage(data.firImageURL)
+        mIvProduct.setProductImage(data.imageUris)
         mLayoutProductDetailMtgDetailBinding.run {
             clvStandard.setType(if (data.standard) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)
             clvBrawl.setType(if (data.brawl) CustomLegalityView.Type.LEGAL else CustomLegalityView.Type.NOT_LEGAL)

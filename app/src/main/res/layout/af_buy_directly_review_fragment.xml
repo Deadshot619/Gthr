@@ -53,7 +53,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/et_email"
+                        android:id="@+id/tv_price"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:background="@drawable/edit_text_blue_outline_bg"
@@ -119,6 +119,8 @@
                     android:text="@string/text_sales_tax"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintEnd_toStartOf="@+id/tv_sales_tax_value"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -134,6 +136,8 @@
                     android:text="-"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_sales_tax"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -154,6 +158,8 @@
                     android:text="@string/text_add_ask_flow"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_sales_tax" />
 
@@ -166,6 +172,8 @@
                     android:text="@string/text_promo_code_ask_flow"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_add_promo_code"
                     app:layout_constraintEnd_toStartOf="@+id/tv_add_promo_code"
                     app:layout_constraintHorizontal_bias="0.0"

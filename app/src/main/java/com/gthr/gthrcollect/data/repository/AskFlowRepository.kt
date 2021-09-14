@@ -3,6 +3,7 @@ package com.gthr.gthrcollect.data.repository
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.ShippingInfoDomainModel
 import com.gthr.gthrcollect.model.mapper.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
@@ -67,4 +68,17 @@ class AskFlowRepository {
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
+    fun getShippingTierInfo(tier: String) = flow<State<ShippingInfoDomainModel>> {
+        emit(State.loading())
+
+        val tierData =
+            mFirebaseRD.child(FirebaseRealtimeDatabase.SHIPPING_TIER).child(tier).get().await()
+        val data = (tierData.getValue(ShippingInfoModel::class.java)
+            ?: ShippingInfoModel()).toDomainModel()
+
+        emit(State.Success(data))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
 }

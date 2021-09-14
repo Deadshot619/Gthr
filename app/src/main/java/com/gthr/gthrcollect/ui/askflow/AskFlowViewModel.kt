@@ -12,13 +12,21 @@ import com.gthr.gthrcollect.utils.enums.ConditionType
 import com.gthr.gthrcollect.utils.enums.EditionType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.extensions.isValidPrice
+import com.gthr.gthrcollect.utils.extensions.toTwoDecimal
 import com.gthr.gthrcollect.utils.helper.*
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class AskFlowViewModel(private val repository : AskFlowRepository): BaseViewModel() {
+class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewModel() {
+
+    var shippingTierJob: Job? = null
 
     var productType: ProductType? = null
+        private set
+
+    var productDisplayModel: ProductDisplayModel? = null
         private set
 
     private val _isSell = MutableLiveData<Boolean>()
@@ -28,6 +36,44 @@ class AskFlowViewModel(private val repository : AskFlowRepository): BaseViewMode
     private val _askPrice = MutableLiveData<Float>()
     val askPrice: LiveData<Float>
         get() = _askPrice
+
+    private val _buyListPrice = MutableLiveData<Float>()
+    val buyListPrice: LiveData<Float>
+        get() = _buyListPrice
+
+    private val _shippingTierInfo = MutableLiveData<Event<State<ShippingInfoDomainModel>>>()
+    val shippingTierInfo: LiveData<Event<State<ShippingInfoDomainModel>>>
+        get() = _shippingTierInfo
+
+    val totalRate: Float
+        get() = addRates(
+            //Price
+            askPrice.value?.toFloat(),
+            //Shipping Price
+            if (shippingTierInfo.value?.peekContent() == null)
+                -0f
+            else
+                -((shippingTierInfo.value?.peekContent() as State.Success).data.frontEndShippingProcessing.toFloatOrNull()
+                    ?: 0f),
+            sellingFee,
+            paymentProcessing
+        )
+
+    val sellingFee: Float
+        get() = (((askPrice.value?.toFloat() ?: 0f) * PERCENT_SELLING_FEE) / 100).toTwoDecimal()
+
+    val paymentProcessing: Float
+        get() = (((askPrice.value?.toFloat()
+            ?: 0f) * PERCENT_PAYMENT_PROCESSING) / 100).toTwoDecimal()
+
+    private fun addRates(vararg rate: Float?): Float {
+        var total = 0f
+        rate.forEach {
+            if (it != null)
+                total += it
+        }
+        return total
+    }
 
     /* Selected Language, Edition, Condition Title & Value */
     private val _selectedLanguage = MutableLiveData<Event<LanguageDomainModel>>()
@@ -77,6 +123,10 @@ class AskFlowViewModel(private val repository : AskFlowRepository): BaseViewMode
         this.productType = productType
     }
 
+    fun setProductDisplayModel(productDisplayModel: ProductDisplayModel) {
+        this.productDisplayModel = productDisplayModel
+    }
+
     fun setSell(isSell: Boolean) {
         _isSell.value = isSell
     }
@@ -90,7 +140,11 @@ class AskFlowViewModel(private val repository : AskFlowRepository): BaseViewMode
     }
 
     fun setAskPrice(price: Float) {
-        _askPrice.value = price
+        _askPrice.value = price.toString().isValidPrice().toFloatOrNull() ?: 0f
+    }
+
+    fun setBuylistPrice(price: Float) {
+        _buyListPrice.value = price.toString().isValidPrice().toFloatOrNull() ?: 0f
     }
 
     fun setSelectedLanguage(languageDomainModel: LanguageDomainModel) {
@@ -182,6 +236,14 @@ class AskFlowViewModel(private val repository : AskFlowRepository): BaseViewMode
         }
     }
 
+    fun getShippingTierInfo(tier: String) {
+        shippingTierJob?.cancel()
+        shippingTierJob = viewModelScope.launch {
+            repository.getShippingTierInfo(tier).collect {
+                _shippingTierInfo.value = Event(it)
+            }
+        }
+    }
 
     fun retrieveLanguageList(type: ProductType) {
         viewModelScope.launch {
@@ -226,5 +288,15 @@ class AskFlowViewModel(private val repository : AskFlowRepository): BaseViewMode
         viewModelScope.launch {
             _conditionList.value = Event(getConditionList(type))
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        shippingTierJob?.cancel()
+    }
+
+    companion object {
+        private const val PERCENT_SELLING_FEE = 8.5f
+        private const val PERCENT_PAYMENT_PROCESSING = 2.9f
     }
 }
