@@ -3,8 +3,6 @@ package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
 import com.google.firebase.database.PropertyName
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
 data class RecentSaleModel(
     @get:PropertyName(FirebaseRealtimeDatabase.CONDITION)
@@ -24,7 +22,7 @@ data class RecentSaleModel(
     var objectId: String? = "",
     @get:PropertyName(FirebaseRealtimeDatabase.PRICE)
     @set:PropertyName(FirebaseRealtimeDatabase.PRICE)
-    var price: Int?= -1
+    var price: Double? = -1.0
 )
 
 data class RecentSaleModel1(

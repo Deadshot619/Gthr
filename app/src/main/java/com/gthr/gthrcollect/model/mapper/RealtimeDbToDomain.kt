@@ -203,13 +203,13 @@ fun YugiohModel.toYugiohDomainModel(key: String) = YugiohDomainModel(
 )
 
 fun RecentSaleModel.toDomainModel(key : String) = RecentSaleDomainModel(
-    condition = this.condition?:-1,
-    date = this.date?.toRecentSaleDate()?:"",
-    edition = this.edition?:-1,
-    language = this.language?:-1,
-    objectId = this.objectId?:"",
-    price = if(this.price!=null) "$${this.price}" else "",
-    customization = if(condition==null) "New" else "",
+    condition = this.condition ?: -1,
+    date = this.date?.toRecentSaleDate() ?: "",
+    edition = this.edition ?: -1,
+    language = this.language ?: -1,
+    objectId = this.objectId ?: "",
+    price = if (this.price != null) String.format("$%.2f", this.price) else "",
+    customization = if (condition == null) "New" else "",
     key = key
 )
 

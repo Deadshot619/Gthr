@@ -93,7 +93,7 @@ class AfBuyDirectlyReviewFragment :
         })
     }
 
-    private fun getPriceValue(): Float? = mTvPrice.text.toString().toFloatOrNull()
+    private fun getPriceValue(): Double? = mTvPrice.text.toString().toDoubleOrNull()
 
     private fun goToNextPage() {
         mViewModel.setAskPrice(getPriceValue()!!)

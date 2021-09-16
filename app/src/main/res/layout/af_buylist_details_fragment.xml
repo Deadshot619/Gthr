@@ -51,7 +51,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/et_buy_value"
+                        android:id="@+id/tv_buy_list_value"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:background="@drawable/edit_text_blue_outline_bg"
@@ -99,7 +99,7 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <TextView
-                        android:id="@+id/tv_buy_total_value"
+                        android:id="@+id/tv_total_buy_list_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
@@ -109,9 +109,6 @@
                         android:textSize="@dimen/text_size_normal" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -163,7 +160,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_summary" />
 
         <TextView
-            android:id="@+id/tv_date_level"
+            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_light"
@@ -172,14 +169,14 @@
             android:text="Date"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_small"
-            app:layout_constraintEnd_toStartOf="@+id/tv_date"
+            app:layout_constraintEnd_toStartOf="@+id/tv_date_value"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_add_status" />
 
         <TextView
-            android:id="@+id/tv_date"
+            android:id="@+id/tv_date_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -188,11 +185,11 @@
             android:text="June 24, 2020"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_small"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_date_level"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tv_date_level"
-            app:layout_constraintTop_toTopOf="@+id/tv_date_level" />
+            app:layout_constraintStart_toEndOf="@+id/tv_date"
+            app:layout_constraintTop_toTopOf="@+id/tv_date" />
 
         <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
             android:id="@+id/btn_next"
@@ -207,7 +204,7 @@
             android:text="@string/text_finish_buy_flow"
             android:textSize="@dimen/text_size_small"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_value"
             app:secondary_button_state="BLUE_GRADIENT" />
 
 

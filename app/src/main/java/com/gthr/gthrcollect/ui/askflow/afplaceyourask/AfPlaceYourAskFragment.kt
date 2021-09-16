@@ -68,14 +68,12 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
 
     private fun setUpObserve() {
         mViewModel.askPrice.observe(viewLifecycleOwner) {
-            mTvRateValue.text = String.format(getString(R.string.text_price_value), it)
+            mTvRateValue.text = String.format(getString(R.string.rate_common), it)
         }
 
         mViewModel.buyListPrice.observe(viewLifecycleOwner) {
-            mTvBuyListValue.text =
-                String.format(getString(R.string.text_price_value), it.toString().isValidPrice())
-            mTvTotalBuyListValue.text =
-                String.format(getString(R.string.text_price_value), it.toString().isValidPrice())
+            mTvBuyListValue.text = String.format(getString(R.string.rate_common), it)
+            mTvTotalBuyListValue.text = String.format(getString(R.string.rate_common), it)
         }
 
         mViewModel.shippingTierInfo.observe(viewLifecycleOwner, {
@@ -229,9 +227,12 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
             else -> {
                 mBtnNext.text = getString(R.string.text_place_your_ask)
-                mTvRow1Value.text = "-${mViewModel.sellingFee}"
-                mTvRow2Value.text = "-${mViewModel.paymentProcessing}"
-                mTvRow3Value.text = "+0.0"
+                mTvRow1Value.text =
+                    String.format(getString(R.string.rate_negative), mViewModel.sellingFee)
+                "-${mViewModel.sellingFee}"
+                mTvRow2Value.text =
+                    String.format(getString(R.string.rate_negative), mViewModel.paymentProcessing)
+                mTvRow3Value.text = "+0.00"
                 mGroup.visible()
                 mGroupBuy.gone()
             }

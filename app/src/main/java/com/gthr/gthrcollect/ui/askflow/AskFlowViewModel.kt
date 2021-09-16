@@ -33,46 +33,50 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val isSell: LiveData<Boolean>
         get() = _isSell
 
-    private val _askPrice = MutableLiveData<Float>()
-    val askPrice: LiveData<Float>
+    private val _askPrice = MutableLiveData<Double>()
+    val askPrice: LiveData<Double>
         get() = _askPrice
 
-    private val _buyListPrice = MutableLiveData<Float>()
-    val buyListPrice: LiveData<Float>
+    private val _buyListPrice = MutableLiveData<Double>()
+    val buyListPrice: LiveData<Double>
         get() = _buyListPrice
 
     private val _shippingTierInfo = MutableLiveData<Event<State<ShippingInfoDomainModel>>>()
     val shippingTierInfo: LiveData<Event<State<ShippingInfoDomainModel>>>
         get() = _shippingTierInfo
 
-    val totalRate: Float
+    val totalRate: Double
         get() = addRates(
             //Price
-            askPrice.value?.toFloat(),
+            askPrice.value?.toDouble(),
             //Shipping Price
-            if (shippingTierInfo.value?.peekContent() == null)
-                -0f
-            else
-                -((shippingTierInfo.value?.peekContent() as State.Success).data.frontEndShippingProcessing.toFloatOrNull()
-                    ?: 0f),
+            -shippingProcessing,
             sellingFee,
             paymentProcessing
         )
 
-    val sellingFee: Float
-        get() = (((askPrice.value?.toFloat() ?: 0f) * PERCENT_SELLING_FEE) / 100).toTwoDecimal()
+    val shippingProcessing: Double
+        get() = if (shippingTierInfo.value?.peekContent() == null)
+            0.00
+        else
+            ((shippingTierInfo.value?.peekContent() as State.Success).data.frontEndShippingProcessing.toDoubleOrNull()
+                ?: 0.00)
 
-    val paymentProcessing: Float
-        get() = (((askPrice.value?.toFloat()
-            ?: 0f) * PERCENT_PAYMENT_PROCESSING) / 100).toTwoDecimal()
+    val sellingFee: Double
+        get() = (((askPrice.value?.toDouble()
+            ?: 0.00) * PERCENT_SELLING_FEE) / 100.00).toTwoDecimal()
 
-    private fun addRates(vararg rate: Float?): Float {
-        var total = 0f
+    val paymentProcessing: Double
+        get() = (((askPrice.value?.toDouble()
+            ?: 0.00) * PERCENT_PAYMENT_PROCESSING) / 100.00).toTwoDecimal()
+
+    private fun addRates(vararg rate: Double?): Double {
+        var total = 0.00
         rate.forEach {
             if (it != null)
                 total += it
         }
-        return total
+        return total.toTwoDecimal()
     }
 
     /* Selected Language, Edition, Condition Title & Value */
@@ -139,12 +143,12 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         _backImageUrl.value = bitmapUrl
     }
 
-    fun setAskPrice(price: Float) {
-        _askPrice.value = price.toString().isValidPrice().toFloatOrNull() ?: 0f
+    fun setAskPrice(price: Double) {
+        _askPrice.value = price.toString().isValidPrice().toDoubleOrNull() ?: 0.00
     }
 
-    fun setBuylistPrice(price: Float) {
-        _buyListPrice.value = price.toString().isValidPrice().toFloatOrNull() ?: 0f
+    fun setBuylistPrice(price: Double) {
+        _buyListPrice.value = price.toString().isValidPrice().toDoubleOrNull() ?: 0.00
     }
 
     fun setSelectedLanguage(languageDomainModel: LanguageDomainModel) {
@@ -243,6 +247,19 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                 _shippingTierInfo.value = Event(it)
             }
         }
+    }
+
+    fun setStaticShippingInfo() {
+        _shippingTierInfo.value = Event(
+            State.success(
+                ShippingInfoDomainModel(
+                    billing = 0,
+                    frontEndShippingProcessing = "0.5",
+                    service = "",
+                    refKey = null
+                )
+            )
+        )
     }
 
     fun retrieveLanguageList(type: ProductType) {

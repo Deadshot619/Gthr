@@ -14,6 +14,7 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.utils.DecimalDigitsInputFilter
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.extensions.afterTextChanged
@@ -48,7 +49,7 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFr
     private fun setUpTextChangeListeners() {
         mEtAsk.afterTextChanged {
             mBtnNext.setState(
-                if (it.toFloatOrNull() == null)
+                if (it.toDoubleOrNull() == null)
                     CustomSecondaryButton.State.DISABLE
                 else
                     CustomSecondaryButton.State.BLUE_GRADIENT
@@ -57,7 +58,7 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFr
 
         mEtBuyValue.afterTextChanged {
             mBtnNext.setState(
-                if (it.toFloatOrNull() == null)
+                if (it.toDoubleOrNull() == null)
                     CustomSecondaryButton.State.DISABLE
                 else
                     CustomSecondaryButton.State.BLUE_GRADIENT
@@ -73,6 +74,9 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFr
             mGroupBuy = groupBuy
             mEtAsk = etAsk
             mEtBuyValue = etBuyValue
+
+            mEtAsk.filters = arrayOf(DecimalDigitsInputFilter.getFilter())
+            mEtBuyValue.filters = arrayOf(DecimalDigitsInputFilter.getFilter())
         }
 
         when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
@@ -102,10 +106,16 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFr
                         getBuylistPrice()?.let {
                             goToNextPage(it)
                         }
+                    AskFlowType.SELL, AskFlowType.COLLECT ->
+                        getAskValue()?.let {
+                            val tier = getTier(mViewModel.productDisplayModel!!, it).toString()
+                            if (tier == "0")
+                                mViewModel.setStaticShippingInfo()
+                        }
                     else ->
                         getAskValue()?.let {
                             val tier =
-                                getTier(mViewModel.productDisplayModel!!, it.toDouble()).toString()
+                                getTier(mViewModel.productDisplayModel!!, it).toString()
                             if (tier == "0")
                                 mViewModel.getShippingTierInfo(tier)
                             else
@@ -139,11 +149,11 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFr
         })
     }
 
-    private fun getAskValue(): Float? = mEtAsk.text.toString().toFloatOrNull()
+    private fun getAskValue(): Double? = mEtAsk.text.toString().toDoubleOrNull()
 
-    private fun getBuylistPrice(): Float? = mEtBuyValue.text.toString().toFloatOrNull()
+    private fun getBuylistPrice(): Double? = mEtBuyValue.text.toString().toDoubleOrNull()
 
-    private fun goToNextPage(value: Float) {
+    private fun goToNextPage(value: Double) {
         when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
             AskFlowType.BUY -> mViewModel.setBuylistPrice(value)
             else -> mViewModel.setAskPrice(value)
