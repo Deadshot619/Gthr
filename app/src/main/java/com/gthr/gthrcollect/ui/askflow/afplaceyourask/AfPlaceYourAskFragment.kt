@@ -52,6 +52,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
     private lateinit var mTvRow2Value: TextView
     private lateinit var mTvRow3: TextView
     private lateinit var mTvRow3Value: TextView
+    private lateinit var mTvTotalTitle: TextView
     private lateinit var mTvTotalValue: TextView
     private lateinit var mAddressBtn: TextView
 
@@ -191,6 +192,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             mTvRow3 = tvShippingReimbursement
             mTvRow3Value = tvShippingReimbursementValue
             mAddressBtn = tvAddress
+            mTvTotalTitle = tvTotal
             mTvTotalValue = tvTotalValue
 
             mTvBuyListValue = tvBuyValue
@@ -199,7 +201,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
 
         mTvTotalValue.text = String.format(
             getString(R.string.text_price_value),
-            mViewModel.totalRate.toString().isValidPrice()
+            mViewModel.totalPayoutRate.toString().isValidPrice()
         )
 
         when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
@@ -233,6 +235,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 mTvRow2Value.text =
                     String.format(getString(R.string.rate_negative), mViewModel.paymentProcessing)
                 mTvRow3Value.text = "+0.00"
+                mTvTotalTitle.text = getString(R.string.text_total_payout_usd)
                 mGroup.visible()
                 mGroupBuy.gone()
             }

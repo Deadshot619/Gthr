@@ -45,14 +45,14 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val shippingTierInfo: LiveData<Event<State<ShippingInfoDomainModel>>>
         get() = _shippingTierInfo
 
-    val totalRate: Double
+    val totalPayoutRate: Double
         get() = addRates(
             //Price
             askPrice.value?.toDouble(),
             //Shipping Price
-            -shippingProcessing,
-            sellingFee,
-            paymentProcessing
+            +shippingProcessing,
+            -sellingFee,
+            -paymentProcessing
         )
 
     val shippingProcessing: Double

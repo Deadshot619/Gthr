@@ -2,6 +2,7 @@ package com.gthr.gthrcollect.ui.askflow.afreviewyourask
 
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.activityViewModels
@@ -35,6 +36,7 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFr
     private lateinit var mIvBack: ImageView
     private lateinit var mEtAsk: AppCompatEditText
     private lateinit var mEtBuyValue: AppCompatEditText
+    private lateinit var mTvTotalTitle: TextView
 
     private lateinit var mGroup: Group
     private lateinit var mGroupBuy: Group
@@ -74,6 +76,7 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFr
             mGroupBuy = groupBuy
             mEtAsk = etAsk
             mEtBuyValue = etBuyValue
+            mTvTotalTitle = tvTotal
 
             mEtAsk.filters = arrayOf(DecimalDigitsInputFilter.getFilter())
             mEtBuyValue.filters = arrayOf(DecimalDigitsInputFilter.getFilter())
@@ -87,6 +90,7 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFr
             }
             else -> {
                 mBtnNext.text = getString(R.string.text_review_your_ask_flow)
+                mTvTotalTitle.text = getString(R.string.text_total_payout_usd)
                 mGroup.visible()
                 mGroupBuy.gone()
             }
@@ -111,6 +115,8 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFr
                             val tier = getTier(mViewModel.productDisplayModel!!, it).toString()
                             if (tier == "0")
                                 mViewModel.setStaticShippingInfo()
+                            else
+                                goToNextPage(it)
                         }
                     else ->
                         getAskValue()?.let {

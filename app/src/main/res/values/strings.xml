@@ -451,6 +451,8 @@
     <string name="bgs">BGS</string>
     <string name="cgc">CGC</string>
     <string name="text_new_condition">New</string>
+    <string name="text_total_usd">Total (USD)</string>
+    <string name="text_total_payout_usd">Total Payout (USD)</string>
 
     <string name="bl_bgs">BL BGS 10</string>
     <string name="bgs_9">BGS 9.5</string>
