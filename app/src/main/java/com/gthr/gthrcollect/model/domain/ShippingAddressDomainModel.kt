@@ -16,4 +16,5 @@ data class ShippingAddressDomainModel(
     var country: String,
     var postalCode: String,
     var isSelected: Boolean,
+    var addresKey: Int=0,
 ) : Parcelable

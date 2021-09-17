@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_normal"
+        android:padding="@dimen/padding_small"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_normal">
+
+            <com.stripe.android.view.CardInputWidget
+                android:id="@+id/cardInputWidget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="parent" />
+
+            <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+                android:id="@+id/cancelButton"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_percent="0.30"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_extra_small"
+                android:drawablePadding="@dimen/dp_5"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/cancel"
+                android:textSize="@dimen/text_size_small"
+                android:paddingHorizontal="@dimen/padding_large"
+                android:paddingVertical="@dimen/padding_extra_small"
+                android:layout_marginBottom="@dimen/margin_extra_large"
+                android:layout_marginEnd="@dimen/margin_normal"
+                app:secondary_button_state="BLUE"
+                app:layout_constraintTop_toBottomOf="@+id/cardInputWidget"
+                app:layout_constraintRight_toLeftOf="@+id/payButtonId"/>
+
+
+            <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+                android:id="@+id/payButtonId"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_percent="0.30"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_extra_small"
+                android:drawablePadding="@dimen/dp_5"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/pay_btn_text"
+                android:textSize="@dimen/text_size_small"
+                app:layout_constraintTop_toBottomOf="@+id/cardInputWidget"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:secondary_button_state="GREEN" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

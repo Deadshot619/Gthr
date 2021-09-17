@@ -200,10 +200,30 @@ class SearchRepository {
 
                     var frontImage: String? = null
                     collectionData[index][FirebaseRealtimeDatabase.COLLECTION_LIST]?.let label@{
+
+
+
                         val collectionItemList = it as HashMap<String, HashMap<String, String>>
 
-                        frontImage = collectionItemList.entries.iterator()
-                                .next().value[FirebaseRealtimeDatabase.FRONT_IMAGE_URL] ?: ""
+                        if (!collectionItemList.isEmpty()){
+
+                            frontImage = collectionItemList.entries.iterator().next().value[FirebaseRealtimeDatabase.FRONT_IMAGE_URL] ?: ""
+
+                            if (frontImage.isNullOrEmpty()){
+
+                                val productType: String? = (collectionData[index][FirebaseRealtimeDatabase.PRODUCT_TYPE] ?: "") as String
+
+                                if (!productType.isNullOrEmpty() || !objectId.isNullOrEmpty()){
+
+                                        GthrLogger.d("productTypeObj","$productType $objectId")
+
+                                    frontImage="https://firebasestorage.googleapis.com/v0/b/dlc-db.appspot.com/o/bannerImage%2FhomePageBanner.png?alt=media&token=5a61149d-168f-4a19-9ac8-b0cd0e5fb528"
+
+                                }
+                            }
+                        }else{
+                            frontImage="https://firebasestorage.googleapis.com/v0/b/dlc-db-staging.appspot.com/o/general%2FProduct%20Images%2FStoutland-V.SWSH05.117.37634.thumb.png?alt=media&token=26ba4b5b-9f56-4ac0-8974-93f6610e58d7"
+                        }
                     }
 
                     GthrLogger.d("FRONT_IMAGE_URL","it-> ${it["userRefKey"]} ) $frontImage")
@@ -215,6 +235,7 @@ class SearchRepository {
                     searchCollectionList.add(data)
                 } catch (ex: Exception) {
                     print(ex.message)
+                    GthrLogger.d("Exception","${ex.message}")
                 }
             }
 
@@ -284,6 +305,29 @@ class SearchRepository {
         // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))
         GthrLogger.e("searchAsk", "${it.message}}")
+    }.flowOn(Dispatchers.IO)
+
+
+    fun strip() = flow<State<List<SearchCollection>>> {
+        // Emit loading state
+        emit(State.loading())
+
+        val data = hashMapOf("ask_id" to 0,
+            "shipping_tier" to 0
+        )
+
+        val collectionData =
+            fetchData<List<HashMap<String, *>>>("createBuyNowPaymentIntent", data).await()
+        val searchCollectionList = mutableListOf<SearchCollection>()
+
+        GthrLogger.e("createBuyNowPaymentIntent", collectionData.toString())
+
+        emit(State.success(searchCollectionList))
+
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+        GthrLogger.d("collectionData", "${it.message}}")
     }.flowOn(Dispatchers.IO)
 
 }

@@ -30,6 +30,13 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
     val collectionList: LiveData<Event<State<List<SearchCollection>>>>
         get() = _collectionList
 
+    private val _payment = MutableLiveData<Event<State<List<SearchCollection>>>>()
+    val payment: LiveData<Event<State<List<SearchCollection>>>>
+        get() = _payment
+
+    init {
+        stripPayment()
+    }
 
     private val _loadMore = MutableLiveData<Event<Boolean>>()
     val loadMore: LiveData<Event<Boolean>>
@@ -129,6 +136,15 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
         searchCollectionJob = viewModelScope.launch {
             repository.fetchCollection(searchTerm, limit, page).collect {
                 _collectionList.value = Event(it)
+            }
+        }
+    }
+
+    fun stripPayment() {
+
+        viewModelScope.launch {
+            repository.strip().collect {
+                _payment.value = Event(it)
             }
         }
     }

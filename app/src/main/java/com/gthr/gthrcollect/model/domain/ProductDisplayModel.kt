@@ -168,6 +168,7 @@ data class ProductDisplayModel(
         rarity = model.productRarity?.capitalize(),
         forsaleItemNodel = model,
         isForSale = isForSale
+
     )
 
     constructor(model: SearchBidsDomainModel, isForSale: Boolean = false) : this(

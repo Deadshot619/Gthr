@@ -213,7 +213,6 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
 
                 mLowestAskAdapter =
                     AskAdapter(CustomProductCell.State.FOR_SALE) {
-
                         startActivity(
                             AskFlowActivity.getInstance(
                                 requireContext(),
@@ -242,6 +241,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
 
                 mHighestAskAdapter =
                     AskAdapter(CustomProductCell.State.FOR_SALE) {
+
                         startActivity(
                             AskFlowActivity.getInstance(
                                 requireContext(),
@@ -249,6 +249,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
                                 it
                             )
                         )
+
 
                     }
                 mRvHighestAsk.adapter = mHighestAskAdapter

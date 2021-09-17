@@ -1,7 +1,6 @@
 package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
 import com.google.firebase.database.PropertyName
-import kotlinx.serialization.Serializable
 
 data class ReceiptModel(
     @get:PropertyName("refKey")
@@ -18,16 +17,16 @@ data class ReceiptModel(
     var objectID: String? = null,
     @get:PropertyName("buyerCharge")
     @set:PropertyName("buyerCharge")
-    var buyerCharge: Any? = null,
+    var buyerCharge: String? = null,
     @get:PropertyName("sellerPayout")
     @set:PropertyName("sellerPayout")
-    var sellerPayout: Any? = null,
+    var sellerPayout: String? = null,
     @get:PropertyName("appFee")
     @set:PropertyName("appFee")
-    var appFee: Any? = null,
+    var appFee: Double? = 0.00,
     @get:PropertyName("paymentID")
     @set:PropertyName("paymentID")
-    var paymentID: Any? = null,
+    var paymentID: String? = null,
     @get:PropertyName("buyerUID")
     @set:PropertyName("buyerUID")
     var buyerUID: String? = null,
@@ -57,7 +56,7 @@ data class ReceiptModel(
     var orderStatus: String? = null,
     @get:PropertyName("shippingTierKey")
     @set:PropertyName("shippingTierKey")
-    var shippingTierKey: Any? = null,
+    var shippingTierKey: Int? = null,
     @get:PropertyName("buyerShippingName")
     @set:PropertyName("buyerShippingName")
     var buyerShippingName: String? = null,
@@ -102,11 +101,11 @@ data class ReceiptModel(
     var sellerShippingCountry: String? = null,
     @get:PropertyName("edition")
     @set:PropertyName("edition")
-    var edition: Any? = null,
+    var edition: String? = null,
     @get:PropertyName("lang")
     @set:PropertyName("lang")
-    var lang: Any? = null,
+    var lang: String? = null,
     @get:PropertyName("condition")
     @set:PropertyName("condition")
-    var condition: Any? = null,
+    var condition: String? = null,
 )

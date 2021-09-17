@@ -498,6 +498,8 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 ADDRESS_REQUEST_CODE -> if (resultCode == Activity.RESULT_OK) {
                     val address = data.getParcelableExtra<ShippingAddressDomainModel>(KEY_ADDRESS)!!
                     mViewModel.setAddress(address)
+
+
                     Log.i("dsfbvjudrs", "onActivityResult: " + address)
                 }
 
@@ -648,7 +650,6 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         const val STRIPE_URL = "url"
         const val stripeAccCreatingURL =
             "https://connect.stripe.com/express/oauth/authorize?client_id=ca_H0t1jArVq47Fpzm3txMvm0v8lVszMewb&state=sv_53124&redirect_uri=https://gthrcollect.page.link/redirect"
-
         fun getReturnIntent(shippingAddressDomainModel: ShippingAddressDomainModel) =
             Intent().apply {
                 putExtra(KEY_ADDRESS, shippingAddressDomainModel)

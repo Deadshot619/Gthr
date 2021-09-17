@@ -29,6 +29,9 @@ import com.gthr.gthrcollect.utils.helper.*
 import io.ktor.util.*
 import java.text.SimpleDateFormat
 import java.util.*
+import android.content.Intent
+import android.net.Uri
+
 
 class PurchaseDetailsFragment :
     BaseFragment<ReceiptDetailViewModel, PurchaseDetailsFragmentBinding>() {
@@ -83,6 +86,8 @@ class PurchaseDetailsFragment :
     private lateinit var mTvPaymentId: TextView
     private lateinit var mIvPaymentLogo: ImageView
     private lateinit var mTvOrderedDate: TextView
+    private lateinit var mTvTrackPackage: TextView
+    private lateinit var mTvOrderId: TextView
 
     private lateinit var llNumberRarity: LinearLayoutCompat
     private lateinit var llRarity: LinearLayoutCompat
@@ -172,6 +177,8 @@ class PurchaseDetailsFragment :
             mTvPaymentId = tvPaymentId
             mIvPaymentLogo = ivPaymentLogo
             mTvOrderedDate = tvOrderedDate
+            mTvTrackPackage = tvTrackPackage
+            mTvOrderId = tvOrderId
 
             this@PurchaseDetailsFragment.llNumberRarity = llNumberRarity
             this@PurchaseDetailsFragment.llRarity = llRarity
@@ -191,6 +198,13 @@ class PurchaseDetailsFragment :
                 if(it.collectionId!=GthrCollect.prefs?.getUserCollectionId())
                     startActivity(ProfileActivity.getInstance(requireContext(),ProfileNavigationType.PROFILE,it.collectionId))
             }
+        }
+
+        mTvTrackPackage.setOnClickListener{
+            val url = "${mViewModel.receiptModel?.trackingLink}"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
         }
 
         mBtnReportIssue.setOnClickListener {
@@ -221,11 +235,14 @@ class PurchaseDetailsFragment :
     private fun setUpReceiptTypeViews(receiptType: ReceiptType) {
         when (receiptType) {
             ReceiptType.PURCHASED -> {
+
+                mTvOrderId.text=mViewModel.receiptModel?.trackingNumber ?: "-"
+                mViewModel.getShippingTierInfo(mReceiptModel.shippingTierKey.toString())
                 mTvSummaryTitle.text = getString(R.string.text_purchase_summary)
                 mTvSummaryR1C1.text = getString(R.string.text_sale_price)
-                mTvSummaryR1C2.text = "$22.00"
+                mTvSummaryR1C2.text = "$--"
                 mTvSummaryR2C1.text = getString(R.string.text_purchase_shipping)
-                mTvSummaryR2C2.text = "+ \$2.95"
+                mTvSummaryR2C2.text = "+ \$--"
 
                 mTvSummaryR3C1.invisible()
                 mTvSummaryR3C2.invisible()
@@ -253,15 +270,18 @@ class PurchaseDetailsFragment :
                 }
             }
             ReceiptType.SOLD -> {
+                mViewModel.getShippingTierInfo(mReceiptModel.shippingTierKey.toString())
+
+                mTvOrderId.text=mViewModel.receiptModel?.trackingNumber ?: "-"
                 mTvSummaryTitle.text = getString(R.string.text_sold_summary)
                 mTvSummaryR1C1.text = getString(R.string.text_sale_price)
-                mTvSummaryR1C2.text = "$22.00"
+                mTvSummaryR1C2.text = "$--"
                 mTvSummaryR2C1.text = String.format(getString(R.string.text_selling_fee), "8.5")
-                mTvSummaryR2C2.text = "- \$5.23"
+                mTvSummaryR2C2.text = "- \$--"
                 mTvSummaryR3C1.text = String.format(getString(R.string.text_payment_processing), "2.9")
-                mTvSummaryR3C2.text = "- \$1.60"
+                mTvSummaryR3C2.text = "- \$--"
                 mTvSummaryR4C1.text = getString(R.string.text_shipping_reimbursement)
-                mTvSummaryR4C2.text = "+ \$0.55"
+                mTvSummaryR4C2.text = "+ \$--"
 
                 mTvTotalValue.text = String.format(getString(R.string.rate_common),mReceiptModel.sellerPayout.toString().toDouble())
                 mTvOrderedDate.text = mReceiptModel.date?.toReceiptDate()
@@ -436,5 +456,30 @@ class PurchaseDetailsFragment :
                 }
             }
         })
+
+        mViewModel.shippingTierInfo.observe(viewLifecycleOwner){
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Failed -> {
+                        showProgressBar(false)
+                    }
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+
+                        if (mReceiptType==ReceiptType.PURCHASED){
+                            mTvSummaryR2C2.text= String.format(getString(R.string.rate_positive),it.data.frontEndShippingProcessing.toDouble())
+                            val salePrice= (mReceiptModel.buyerCharge?.toDouble()?: 0.0) - (it.data.frontEndShippingProcessing.toDouble())
+                            mTvSummaryR1C2.text= String.format(getString(R.string.rate_common),salePrice)
+
+                        }
+
+                    }
+                }
+            }
+        }
+
     }
 }

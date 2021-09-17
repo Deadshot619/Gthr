@@ -250,5 +250,19 @@ class ReceiptRepository {
         }.flowOn(Dispatchers.IO)
 
 
+    fun getShippingTierInfo(tier: String) = flow<State<ShippingInfoDomainModel>> {
+        emit(State.loading())
+
+        val tierData =
+            mFirebaseRD.child(FirebaseRealtimeDatabase.SHIPPING_TIER).child(tier).get().await()
+        val data = (tierData.getValue(ShippingInfoModel::class.java)
+            ?: ShippingInfoModel()).toDomainModel()
+
+        emit(State.Success(data))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
 
 }

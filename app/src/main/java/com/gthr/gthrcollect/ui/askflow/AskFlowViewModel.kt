@@ -9,6 +9,8 @@ import com.gthr.gthrcollect.model.Event
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.mapper.toRealtimeDatabaseModel
+import com.gthr.gthrcollect.model.network.cloudfunction.StripePaymentModel
+import com.gthr.gthrcollect.model.network.firebaserealtimedb.ReceiptModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
 import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.enums.ConditionType
@@ -151,7 +153,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         setSelectedConditionTitle(ConditionType.UG)  //Default selection UG i.e. Raw
         val addressList = GthrCollect.prefs?.userInfoModel?.addressList
         addressList?.let {
-            for (address in addressList) {
+            for (index in addressList.indices){
+                val address= addressList[index]
+                address.addresKey=index
                 if (address.isSelected) {
                     mAddress = address
                     break
@@ -541,8 +545,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                     returnState = mAddress?.state,
                     returnZipCode = mAddress?.postalCode,
                     returnCountry = mAddress?.country,
-                    frontImageURL = mFrontImageDownloadUrl,
-                    backImageURL = mBackImageDownloadUrl
+                    frontImageURL = null,
+                    backImageURL = null,
+                    addresskey =mAddress?.addresKey
                 )
             } else
                 when (productType) {
@@ -567,8 +572,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                             returnState = mAddress?.state,
                             returnZipCode = mAddress?.postalCode,
                             returnCountry = mAddress?.country,
-                            frontImageURL = mFrontImageDownloadUrl,
-                            backImageURL = mBackImageDownloadUrl
+                        frontImageURL = null,
+                        backImageURL = null,
+                        addresskey = mAddress?.addresKey
                         )
                 }
                 ProductType.FUNKO, ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
@@ -592,8 +598,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                         returnState = mAddress?.state,
                         returnZipCode = mAddress?.postalCode,
                         returnCountry = mAddress?.country,
-                        frontImageURL = mFrontImageDownloadUrl,
-                        backImageURL = mBackImageDownloadUrl
+                        frontImageURL = null,
+                        backImageURL = null,
+                        addresskey = mAddress?.addresKey
                     )
                 }
                 else -> null
@@ -734,17 +741,38 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     }
 
     //Variable to get Updated Payout Link of Stripe
-    private val _accountDetails = MutableLiveData<Event<State<String>>>()
-    val accountDetails: LiveData<Event<State<String>>>
-        get() = _accountDetails
+    private val _paymentData = MutableLiveData<Event<State<StripePaymentModel>>>()
+    val paymentData: LiveData<Event<State<StripePaymentModel>>>
+        get() = _paymentData
 
-    fun createStripeAccount(code: String) {
+    fun generateClientSecret(askKey: String, shippingTier :String) {
         viewModelScope.launch {
-            repository.CreateStripeAccount(code).collect {
-                _accountDetails.value = Event(it)
+            repository.generateClientSecret(askKey,shippingTier).collect {
+                _paymentData.value = Event(it)
             }
         }
     }
+
+    //Variable to create Buy Now
+    private val _buyNowData = MutableLiveData<Event<State<ReceiptDomainModel>>>()
+    val buyNowData: LiveData<Event<State<ReceiptDomainModel>>>
+        get() = _buyNowData
+
+    fun createBuyNow( askId: String? = null,
+                      buyerCharge: String? = null,
+                      buyerAddressKey: String? = null,
+                      sellerAddressKey: String? = null,
+                      shippingTierKey: String? = null,
+                      appFee: String? = null,
+                      paymentId: String? = null,
+                      sellerPayout: String? = null) {
+        viewModelScope.launch {
+            repository.buyNow(askId,buyerCharge,buyerAddressKey,sellerAddressKey,shippingTierKey,appFee,paymentId,sellerPayout).collect {
+                _buyNowData.value = Event(it)
+            }
+        }
+    }
+
 
     //Variable to indicate whether Collection data has been updated in Firebase
     private val _mDisplayName = MutableLiveData<Event<State<String>>>()
@@ -865,6 +893,6 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     }
 
     companion object {
-        private const val SALES_TAX_VALUE = 0.55
+        private const val SALES_TAX_VALUE = 0.0
     }
 }

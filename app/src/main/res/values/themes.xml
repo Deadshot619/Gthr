@@ -135,4 +135,29 @@
         <item name="android:paddingTop">@dimen/padding_extra_light</item>
         <item name="android:paddingBottom">@dimen/padding_extra_light</item>
     </style>
+
+
+  <!--  <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">-->
+    <style name="DialogStyle" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">56dp</item>
+        <item name="cornerSizeTopLeft">56dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/CustomShapeAppearanceBottomSheetDialog</item>
+    </style>
+
+    <style name="CustomShapeAppearanceBottomSheetDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">56dp</item>
+        <item name="cornerSizeTopLeft">56dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
 </resources>

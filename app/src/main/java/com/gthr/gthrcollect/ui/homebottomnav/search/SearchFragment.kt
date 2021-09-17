@@ -100,7 +100,6 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
     private lateinit var mAdapterCollections: SearchCollectionAdapter
     private lateinit var mProductAdapter: ProductAdapter
-
     private lateinit var mSearchBar: CustomSearchView
 
 

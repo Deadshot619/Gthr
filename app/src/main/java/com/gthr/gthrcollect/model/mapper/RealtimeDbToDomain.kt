@@ -251,7 +251,8 @@ fun AskItemModel.toAskItemDomainModel() = AskItemDomainModel(
     returnZipCode = returnZipCode,
     returnCountry = returnCountry,
     frontImageURL = frontImageURL,
-    backImageURL = backImageURL
+    backImageURL = backImageURL,
+    addresskey=addresskey
 )
 
 fun ShippingInfoModel.toDomainModel() = ShippingInfoDomainModel(
@@ -259,6 +260,8 @@ fun ShippingInfoModel.toDomainModel() = ShippingInfoDomainModel(
     frontEndShippingProcessing = frontEndShippingProcessing,
     service = service,
     refKey = refKey,
+    tierLevel=tierLevel
+
 )
 
 fun ReceiptModel.toReceiptDomainModel(key: String? = null) = ReceiptDomainModel(

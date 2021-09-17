@@ -68,6 +68,8 @@ object FirebaseRealtimeDatabase {
     const val RETURN_STATE = "returnState"
     const val RETURN_ZIPCODE = "returnZipCode"
     const val RETURN_COUNTRY = "returnCountry"
+    const val ADDRESS_KEY = "addressKey"
+
 
 
     /*ConditionModel*/

@@ -26,4 +26,5 @@ data class AskItemDomainModel(
     var returnCountry: String?,
     var frontImageURL: String?,
     var backImageURL: String?,
+    var addresskey: Int?,
 )

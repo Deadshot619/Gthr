@@ -67,7 +67,8 @@ fun AskItemDomainModel.toRealtimeDatabaseModel() = AskItemModel(
     returnZipCode = returnZipCode,
     returnCountry = returnCountry,
     frontImageURL = frontImageURL,
-    backImageURL = backImageURL
+    backImageURL = backImageURL,
+    addresskey=addresskey
 )
 
 fun BidItemDomainModel.toRealtimeDatabaseModel() = BidItemModel(

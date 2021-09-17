@@ -10,7 +10,6 @@ data class ReceiptDomainModel(
     var imageUrl: String? = null,
     var totalAskPrice: Double? = null,
     var shippingReimbursement: Double? = null,
-
     var refKey: String? = null,
     var itemRefKey: String? = null,
     var productType: ProductType? = null,
@@ -46,4 +45,5 @@ data class ReceiptDomainModel(
     var edition: String? = null,
     var lang: Int? = null,
     var condition: String? = null,
+    var order_status: String? = null,
 ) : Parcelable

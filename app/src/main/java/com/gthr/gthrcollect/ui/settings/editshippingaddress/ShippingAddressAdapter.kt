@@ -44,6 +44,8 @@ class ShippingAddressAdapter(private val clickListener: SAClickListener) :
             bindingView.cavAddress.run {
                 updateValues(shippingAddressDomainModel)
                 setOnClickListener {
+                    val index= layoutPosition
+                    shippingAddressDomainModel.addresKey=index
                     clickListener.onClickAddress(shippingAddressDomainModel)
                 }
                 onEditClick {

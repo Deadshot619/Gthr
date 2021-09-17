@@ -4,5 +4,6 @@ data class ShippingInfoModel(
     var billing: Long = -1,
     var frontEndShippingProcessing: String = "",
     var service: String = "",
-    var refKey: String? = ""
+    var refKey: String? = "",
+    val tierLevel : Int? = null
 )

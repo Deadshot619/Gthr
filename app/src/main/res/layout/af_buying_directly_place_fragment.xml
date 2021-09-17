@@ -119,6 +119,8 @@
                     android:text="@string/text_payment_processing_2_9_ask_flow"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintEnd_toStartOf="@+id/tv_payment_processing_value"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -132,6 +134,8 @@
                     android:layout_marginEnd="@dimen/margin_extra_large"
                     android:fontFamily="@font/lato"
                     android:text="$22.00"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_payment_processing"
@@ -378,6 +382,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mcv_main"
             app:secondary_button_state="DISABLE" />
+
+        <!-- Adding bottom sheet after main content -->
+      <!--  <include layout="@layout/stripe_bottomsheet"
+            android:id="@+id/bottomSheetId"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

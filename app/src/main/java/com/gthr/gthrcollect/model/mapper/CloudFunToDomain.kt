@@ -1,11 +1,13 @@
 package com.gthr.gthrcollect.model.mapper
 
 import com.gthr.gthrcollect.model.domain.ForSaleItemDomainModel
+import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
 import com.gthr.gthrcollect.model.domain.SearchBidsDomainModel
 import com.gthr.gthrcollect.model.domain.SearchProductDomainModel
 import com.gthr.gthrcollect.model.network.cloudfunction.ForSaleItemModel
 import com.gthr.gthrcollect.model.network.cloudfunction.SearchBidsModel
 import com.gthr.gthrcollect.model.network.cloudfunction.SearchProductModel
+import com.gthr.gthrcollect.model.network.firebaserealtimedb.ReceiptModel
 import com.gthr.gthrcollect.utils.getProductCategoryFromRaw
 import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
@@ -88,3 +90,39 @@ fun SearchBidsModel.toSearchBidsDomainModel() = SearchBidsDomainModel(
     product_rarity = product_rarity,
     updatedAt = updatedAt,
 )
+
+fun ReceiptModel.toReceiptDomainModel() =
+    ReceiptDomainModel(
+        date = date,
+        appFee = appFee.toString(),
+        objectID = objectID,
+        shippingTierKey = shippingTierKey.toString(),
+        buyerCharge = buyerCharge,
+        edition = edition,
+        buyerShippingState = buyerShippingState,
+        buyerShippingCity = buyerShippingCity,
+        itemRefKey = itemRefKey,
+        sellerUID = sellerUID,
+        sellerPayout = sellerPayout,
+        trackingNumber = trackingNumber,
+        lang = lang?.toInt(),
+        sellerShippingAddressLine1 = sellerShippingAddressLine1,
+        sellerShippingCity = sellerShippingCity,
+        sellerShippingAddressLine2 = sellerShippingAddressLine2,
+        trackingLink = trackingLink,
+        productType = getProductType(productType.toString()),
+        sellerShippingZipCode = sellerShippingZipCode,
+        buyerShippingAddressLine2 = buyerShippingAddressLine2,
+        buyerShippingAddressLine1 = buyerShippingAddressLine1,
+        buyerShippingCountry = buyerShippingCountry,
+        buyerShippingName = buyerShippingName,
+        buyerShippingZipCode = buyerShippingZipCode,
+        saleID = saleID,
+        sellerShippingCountry = sellerShippingCountry,
+        sellerShippingName = sellerShippingName,
+        condition = condition,
+        buyerUID = buyerUID,
+        paymentID = paymentID,
+        sellerShippingState = sellerShippingState
+
+        )

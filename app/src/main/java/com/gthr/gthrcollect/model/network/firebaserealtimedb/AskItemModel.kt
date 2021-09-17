@@ -69,4 +69,8 @@ data class AskItemModel(
     @set:PropertyName(FirebaseRealtimeDatabase.BACK_IMAGE_URL)
     @get:PropertyName(FirebaseRealtimeDatabase.BACK_IMAGE_URL)
     var backImageURL: String?,
+    @set:PropertyName(FirebaseRealtimeDatabase.ADDRESS_KEY)
+    @get:PropertyName(FirebaseRealtimeDatabase.ADDRESS_KEY)
+    var addresskey: Int?
+
 )

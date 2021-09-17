@@ -9,26 +9,55 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.gthr.gthrcollect.GthrCollect
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfBuyingDirectlyPlaceFragmentBinding
+import com.gthr.gthrcollect.databinding.StripeBottomsheetBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel
+import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
+import com.gthr.gthrcollect.ui.askflow.afplaceyourask.AfPlaceYourAskFragment
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
+import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
+import com.gthr.gthrcollect.utils.constants.StripeConstants
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+import com.gthr.gthrcollect.utils.enums.ReceiptType
+import com.gthr.gthrcollect.utils.enums.SettingFlowType
 import com.gthr.gthrcollect.utils.enums.WebViewType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.isValidPrice
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.helper.getOrderStatusFromRaw
+import com.gthr.gthrcollect.utils.logger.GthrLogger
+import com.stripe.android.PaymentConfiguration
+import com.stripe.android.Stripe
+import com.stripe.android.getPaymentIntentResult
+import com.stripe.android.model.ConfirmPaymentIntentParams
+import com.stripe.android.model.StripeIntent
+import kotlinx.coroutines.launch
+
 
 class AfBuyDirectlyPlaceFragment :
     BaseFragment<AskFlowViewModel, AfBuyingDirectlyPlaceFragmentBinding>() {
+
+    private lateinit var stripe: Stripe
+    lateinit var dialog: BottomSheetDialog
+
+    var mBuyerCharge: String? = null
+    var mAppFee: String? = null
+    var mSellerPayout: String? = null
+    var mClientSecret: String? = null
+    var mPaymentMethodId: String? = null
+    var isPaymentComplete: Boolean = false
+
 
     override val mViewModel: AskFlowViewModel by activityViewModels {
         AskFlowViewModelFactory(AskFlowRepository())
@@ -60,10 +89,15 @@ class AfBuyDirectlyPlaceFragment :
     private lateinit var mPayout: TextView
 
     override fun onBinding() {
+
+        PaymentConfiguration.init(requireContext(), StripeConstants.STRIPE_PUBLISHABLE_KEY)
+        stripe = Stripe(requireContext(), StripeConstants.STRIPE_PUBLISHABLE_KEY)
+
         setHasOptionsMenu(false)
         initViews()
         setUpOnClickListeners()
         setUpObserve()
+
     }
 
     private fun setUpObserve() {
@@ -79,12 +113,97 @@ class AfBuyDirectlyPlaceFragment :
                     is State.Loading -> {
                     }
                     is State.Success -> {
+
                         mTvRow1Value.text =
                             it.data.frontEndShippingProcessing.isValidPrice().getAddedRate()
                     }
                 }
             }
         })
+
+        mViewModel.paymentData.observe(viewLifecycleOwner) {
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+
+                        GthrLogger.e("paymentData", it.data.clientSecret!!)
+
+                        mBuyerCharge = it.data.buyerCharge
+                        mAppFee = it.data.appFee
+                        mSellerPayout = it.data.sellerPayout
+                        mClientSecret = it.data.clientSecret
+
+                        showBottomSheet(mClientSecret!!)
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.buyNowData.observe(viewLifecycleOwner) {
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+
+                        //  showToast(it.data.toString())
+                        GthrLogger.e("buyNowData", it.data.toString())
+
+                        startActivity(
+                            ReceiptDetailActivity.getInstance(
+                                requireContext(),
+                                ReceiptType.PURCHASED,
+                                it.data,
+                                getOrderStatusFromRaw(it.data.orderStatus.toString())
+                            )
+                        )
+                        activity?.finish()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun showBottomSheet(paymentIntentClientSecret: String) {
+
+        val binding: StripeBottomsheetBinding
+        binding = StripeBottomsheetBinding.inflate(layoutInflater)
+        dialog = BottomSheetDialog(requireContext(), R.style.DialogStyle)
+
+        binding.cancelButton.setOnClickListener {
+            dialog.setCancelable(false)
+            dialog.dismiss()
+        }
+
+        binding.payButtonId.setOnClickListener {
+            binding.cardInputWidget.paymentMethodCreateParams?.let { params ->
+                (activity as AskFlowActivity).showProgressBar()
+                dialog.setCancelable(false)
+                val confirmParams = ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams(
+                    params,
+                    paymentIntentClientSecret
+                )
+                stripe.confirmPayment(this, confirmParams)
+            }
+        }
+        dialog.setCancelable(false)
+        dialog.setContentView(binding.root)
+        dialog.show()
     }
 
     private fun setUpOnClickListeners() {
@@ -110,15 +229,72 @@ class AfBuyDirectlyPlaceFragment :
         }
 
         mBtnNext.setOnClickListener {
-            /*startActivity(
-                ReceiptDetailActivity.getInstance(
-                    requireContext(),
-                    ReceiptType.PURCHASED,
-                    ReceiptDomainModel(),
-                    CustomDeliveryButton.OrderStatus.ORDERED
+
+             if (mClientSecret.isNullOrEmpty()) {
+                 mViewModel.generateClientSecret(getAskRefKey(), getShippingTeirKey())
+             } else {
+                 showBottomSheet(mClientSecret!!)
+             }
+
+
+/*
+            mViewModel.productDisplayModel?.forsaleItemNodel?.let {
+
+                val aa = ReceiptDomainModel(
+                    imageUrl = it.productFirImageURL,
+                    totalAskPrice = it.price,
+                    shippingReimbursement = 1.23,
+                    refKey = it.askRefKey,
+                    itemRefKey = it.itemRefKey,
+                    productType = it.productType,
+                    objectID = it.itemObjectID,
+                    buyerCharge = mViewModel.totalPaymentRate.toString(),
+                    sellerPayout = "52.27",
+                    appFee = "11.72",
+                    paymentID = "123",
+                    buyerUID = "123",
+                    sellerUID = "123",
+                    date = "9/29/2021",
+                    saleID = "123",
+                    trackingNumber = "123",
+                    abbrevaitedPaymentNumber = "123",
+                    paymentProvider = "123",
+                    trackingLink = "123",
+                    orderStatus = "123",
+                    "Tier",
+                    "Name",
+                    "Address1",
+                    "Address2",
+                    "123",
+                    "Owings Mills 2",
+                    "113233",
+                    "123",
+                    "123",
+                    "123",
+                    "123",
+                    "Owings Mills",
+                    "MD",
+                    "21117",
+                    "Country",
+                    edition = it.edition,
+                    lang = it.language?.key,
+                    condition = it.condition?.displayName,
+                    "DELIVERED"
                 )
-            )*/
-            activity?.finish()
+
+                startActivity(
+                    ReceiptDetailActivity.getInstance(
+                        requireContext(),
+                        ReceiptType.PURCHASED,
+                        aa,
+                        CustomDeliveryButton.OrderStatus.DELIVERED
+                    )
+                )
+
+            }
+*/
+
+
         }
 
         mTvTermsAndConditions.setOnClickListener {
@@ -132,27 +308,110 @@ class AfBuyDirectlyPlaceFragment :
 
         mAddressBtn.setOnClickListener {
 
+            startActivityForResult(
+                SettingsActivity.getInstance(
+                    requireContext(),
+                    SettingFlowType.SHIPPING_ADDRESS
+                ), AfPlaceYourAskFragment.ADDRESS_REQUEST_CODE
+            )
+
         }
 
         mPayout.setOnClickListener {
-            mViewModel.checkStripeAccId(GthrCollect.prefs?.collectionInfoModel?.userRefKey)
+            //     mViewModel.generateClientSecret("-MkVqcXil5KoYq7JA_-3", "0")
+
+            if (!isTnCCheked){
+               showToast(getString(R.string.term_condition_note))
+                return@setOnClickListener
+            }
+            if (mClientSecret.isNullOrEmpty()) {
+                mViewModel.generateClientSecret(getAskRefKey(), getShippingTeirKey())
+            } else {
+                showBottomSheet(mClientSecret!!)
+            }
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (data != null) {
-            when (requestCode) {
-                STRIPE_AUTH -> if (resultCode == Activity.RESULT_OK) {
-                    val auth = data.getIntExtra(STRIPE_AUTH_KEY,-0)
-                    if (auth==1){
-                        mViewModel.setPayoutAuth(true)
-                        showToast(getString(R.string.stripe_account_create_success))
-                    }
+
+            if (stripe.isPaymentResult(requestCode, data)) {
+                lifecycleScope.launch {
+                    runCatching {
+                        stripe.getPaymentIntentResult(requestCode, data!!).intent
+                    }.fold(
+                        onSuccess = { paymentIntent ->
+
+                            val status = paymentIntent.status
+                            if (status == StripeIntent.Status.Succeeded) {
+
+                                (activity as AskFlowActivity)?.showProgressBar(true)
+
+
+                                isPaymentComplete = true
+                                mClientSecret = null
+                                dialog.setCancelable(false)
+                                mPaymentMethodId = paymentIntent.paymentMethod?.id.toString()
+
+                                dialog.dismiss()
+
+                                //    buyNowFunction(mPaymentMethodId.toString())
+
+                                mViewModel.createBuyNow(
+                                    getAskRefKey(),
+                                    mBuyerCharge,
+                                    mViewModel.mAddress?.addresKey.toString(),
+                                    "0",
+                                    getShippingTeirKey(),
+                                    mAppFee,
+                                    mPaymentMethodId,
+                                    mSellerPayout
+                                )
+
+
+                                showToast("Payment succeeded")
+
+                            } else if (status == StripeIntent.Status.RequiresPaymentMethod) {
+
+                                dialog.setCancelable(false)
+                                dialog.dismiss()
+                                isPaymentComplete = false
+                                mClientSecret = null
+                                showToast("Payment failed")
+                                (activity as AskFlowActivity)?.showProgressBar(false)
+
+                            }
+                        },
+                        onFailure = {
+                            dialog.setCancelable(false)
+                            dialog.dismiss()
+                            isPaymentComplete = false
+                            mClientSecret = null
+                            showToast("Payment failed")
+                            (activity as AskFlowActivity)?.showProgressBar(false)
+                        }
+                    )
+                }
+            }
+
+            if (requestCode == ADDRESS_REQUEST_CODE) {
+                if (resultCode == Activity.RESULT_OK) {
+                    val address = data.getParcelableExtra<ShippingAddressDomainModel>(KEY_ADDRESS)!!
+                    mViewModel.setAddress(address)
+                    (activity as AskFlowActivity)?.showProgressBar(false)
+
+                    //  showToast(address.addresKey.toString())
+                    GthrLogger.i("dsfbvjudrs", "onActivityResult: " + address.addresKey)
                 }
             }
         }
+
+
     }
+
 
     private fun toggleTnC(toggleOn: Boolean) {
         if (toggleOn) {
@@ -196,24 +455,40 @@ class AfBuyDirectlyPlaceFragment :
         mTvRow1.text = getString(R.string.text_purchase_shipping)
         mTvRow2.text = getString(R.string.text_sales_tax)
         mTvRow2Value.text = getString(R.string.rate_positive, mViewModel.salesTax)
+        mTvRow2.gone()
+        mTvRow2Value.gone()
+
         mTvRow3.gone()
         mTvRow3Value.gone()
         mBtnNext.text = getString(R.string.text_accept)
         mViewBinding.executePendingBindings()
+
     }
 
     fun String.getAddedRate(): String = "+$this"
     fun String.getSubtractedRate(): String = "-$this"
 
+    fun getAskRefKey(): String {
+        val ref = mViewModel.productDisplayModel?.forsaleItemNodel?.askRefKey.toString()
+        GthrLogger.d("ref", "$ref")
+        return ref
+    }
 
-    companion object{
+    fun getShippingTeirKey(): String {
+        return (mViewModel.shippingTierInfo.value?.peekContent() as State.Success).data.tierLevel.toString()
+    }
+
+
+    companion object {
 
         const val KEY_ADDRESS = "address"
-        const val STRIPE_AUTH = 100
-        const val STRIPE_AUTH_KEY = "AUTH"
+        const val ADDRESS_REQUEST_CODE = 123
 
-        fun getReturnIntent(shippingAddressDomainModel : ShippingAddressDomainModel) =  Intent().apply {
-            putExtra(KEY_ADDRESS,shippingAddressDomainModel)
-        }
+
+        fun getReturnIntent(shippingAddressDomainModel: ShippingAddressDomainModel) =
+            Intent().apply {
+                putExtra(KEY_ADDRESS, shippingAddressDomainModel)
+            }
     }
+
 }
