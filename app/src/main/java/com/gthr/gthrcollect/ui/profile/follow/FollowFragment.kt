@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.databinding.FollowFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
@@ -21,12 +22,12 @@ import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
 import com.gthr.gthrcollect.utils.extensions.showToast
 
 class FollowFragment : BaseFragment<ProfileViewModel, FollowFragmentBinding>() {
-    private val repository = ProfileRepository()
 
 
     override val mViewModel: ProfileViewModel by viewModels {
         MyProfileViewModelFactory(
-            repository,
+            ProfileRepository(),
+            DynamicLinkRepository(),
             null
         )
     }

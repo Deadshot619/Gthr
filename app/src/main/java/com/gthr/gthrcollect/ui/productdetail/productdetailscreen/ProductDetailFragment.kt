@@ -1,5 +1,6 @@
 package com.gthr.gthrcollect.ui.productdetail.productdetailscreen
 
+import android.util.Log
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.LayoutProductDetailMainDetailsBinding
 import com.gthr.gthrcollect.databinding.LayoutProductDetailMtgDetailBinding
@@ -34,17 +36,18 @@ import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.isUserLoggedIn
 import com.gthr.gthrcollect.utils.extensions.setProductImage
 import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 
-class ProductDetailFragment :
-    BaseFragment<ProductDetailsViewModel, ProductDetailFragmentBinding>() {
+class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetailFragmentBinding>() {
 
     override val mViewModel: ProductDetailsViewModel by activityViewModels {
         ProductDetailsViewModelFactory(
-            ProductDetailsRepository()
+            ProductDetailsRepository(),
+            DynamicLinkRepository()
         )
     }
 
@@ -131,7 +134,7 @@ class ProductDetailFragment :
                             val list = it.data.take(5)
                             recentSaleAdapter.submitList(list)
                         }
-                        GthrLogger.i("dschsdsjds", "Recent Sale : ${it.data}")
+                        GthrLogger.i("dsbkjsdn", "Recent Sale : ${it.data}")
                         showProgressBar(false)
                     }
                 }
@@ -142,7 +145,7 @@ class ProductDetailFragment :
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
-                        GthrLogger.i("dschjds", "Product: ${it.data}")
+                        GthrLogger.i("dsbkjsdn", "Product hello : ${it.data}")
                         showProgressBar(false)
                         setViewData(it.data)
                     }
@@ -155,7 +158,7 @@ class ProductDetailFragment :
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
-                        GthrLogger.i("dschjds", "Product: ${it.data}")
+                        GthrLogger.i("dsbkjsdn", "Product hello : ${it.data}")
                         showProgressBar(false)
                         setViewData(it.data)
                     }
@@ -168,7 +171,7 @@ class ProductDetailFragment :
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
-                        GthrLogger.i("dschjds", "Product: ${it.data}")
+                        GthrLogger.i("dsbkjsdn", "Product hello : ${it.data}")
                         showProgressBar(false)
                         setViewData(it.data)
                     }
@@ -181,7 +184,7 @@ class ProductDetailFragment :
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
-                        GthrLogger.i("dschjds", "Product: ${it.data}")
+                        GthrLogger.i("dsbkjsdn", "Product hello : ${it.data}")
                         showProgressBar(false)
                         setViewData(it.data)
                     }
@@ -194,7 +197,7 @@ class ProductDetailFragment :
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
-                        GthrLogger.i("dschjds", "Product: ${it.data}")
+                        GthrLogger.i("dsbkjsdn", "Product hello : ${it.data}")
                         showProgressBar(false)
                         setViewData(it.data)
                     }
@@ -212,7 +215,7 @@ class ProductDetailFragment :
             upForSellSeeAll()
         }
         mBtnBuy.setOnClickListener {
-            if (isUserLoggedIn())
+            if (GthrCollect.prefs?.isUserLoggedIn()==true)
                 startActivity(
                     AskFlowActivity.getInstance(
                         requireContext(),
@@ -224,7 +227,7 @@ class ProductDetailFragment :
                 startActivity(HomeBottomNavActivity.getInstance(requireContext()))
         }
         mBtnCollect.setOnClickListener {
-            if (isUserLoggedIn())
+            if (GthrCollect.prefs?.isUserLoggedIn()==true)
                 startActivity(
                     AskFlowActivity.getInstance(
                         requireContext(),
@@ -236,7 +239,7 @@ class ProductDetailFragment :
                 startActivity(HomeBottomNavActivity.getInstance(requireContext()))
         }
         mBtnSell.setOnClickListener {
-            if (isUserLoggedIn())
+            if (GthrCollect.prefs?.isUserLoggedIn()==true)
                 startActivity(
                     AskFlowActivity.getInstance(
                         requireContext(),
@@ -348,7 +351,7 @@ class ProductDetailFragment :
 
     private fun setUpRelated() {
         mRelatedAdapter = ProductAdapter(mProductType, CustomProductCell.State.NORMAL) {
-            startActivity(ProductDetailActivity.getInstance(requireContext(), it))
+            startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
         }
 
         rvRelated.apply {
@@ -422,6 +425,7 @@ class ProductDetailFragment :
     }
 
     private fun setViewData(data: YugiohDomainModel) {
+        Log.i("dschjds", "setViewData: "+data.firImageURL)
         mIvProduct.setProductImage(data.firImageURL)
         mTvDescription.text = data.firstDescription
         mLayoutProductDetailMainDetailsBinding.run {
@@ -462,9 +466,5 @@ class ProductDetailFragment :
         }
     }
 
-    private fun isUserLoggedIn(): Boolean {
-        GthrCollect.prefs?.signedInUser?.let {
-            return@isUserLoggedIn !it.email.isNullOrEmpty() && it.uid.isNotEmpty()
-        } ?: return false
-    }
+
 }

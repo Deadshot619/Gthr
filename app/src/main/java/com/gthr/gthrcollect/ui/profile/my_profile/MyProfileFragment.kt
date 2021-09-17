@@ -10,14 +10,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.data.repository.ProfileRepository
 import com.gthr.gthrcollect.databinding.MyProfileBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editprofile.EditProfileActivity
+import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.ui.profile.ProfileViewModel
@@ -31,7 +34,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
-    private val repository = ProfileRepository()
+
 
     private val args by navArgs<MyProfileFragmentArgs>()
 
@@ -40,7 +43,8 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
 
     override val mViewModel: ProfileViewModel by viewModels {
         MyProfileViewModelFactory(
-            repository,
+            ProfileRepository(),
+            DynamicLinkRepository(),
             otherUserId
         )
     }
@@ -129,6 +133,26 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     }
 
     private fun setUpObservers() {
+        mViewModel.mProductDynamicLink.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        val intent = Intent()
+                        // val msg = "Click and install this application $shortLink Refer code : mayankbaba"
+                        intent.action = Intent.ACTION_SEND
+                        intent.putExtra(Intent.EXTRA_TEXT, it.data)
+                        intent.type = "text/plain"
+                        startActivity(intent)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
         mViewModel.userCollectionInfo.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
@@ -186,6 +210,10 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     }
 
     private fun setUpClickListeners() {
+        mIvShare.setOnClickListener {
+            mViewModel.getProductDynamicLink(otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString())
+        }
+
         mFollowers.setOnClickListener {
             goToProfilePage(ProfileNavigationType.FOLLOWERS, otherUserId)
         }
@@ -211,11 +239,20 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         }
 
         mBtnFollow.setOnClickListener {
-            if (mBtnFollow.mCurrentType == CustomFollowView.Type.FOLLOW) {
-                mViewModel.followToUser(otherUserId!!)
-            } else {
-                mViewModel.unFollowToUser(otherUserId!!)
+            if(GthrCollect.prefs?.isUserLoggedIn()==true){
+                if (mBtnFollow.mCurrentType == CustomFollowView.Type.FOLLOW) {
+                    mViewModel.followToUser(otherUserId!!)
+                } else {
+                    mViewModel.unFollowToUser(otherUserId!!)
+                }
             }
+            else{
+                startActivity(HomeBottomNavActivity.getInstance(requireContext()).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                })
+                activity?.finish()
+            }
+
         }
 
         mCctvList.forEach { view ->

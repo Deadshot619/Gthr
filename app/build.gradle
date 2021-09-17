@@ -128,6 +128,9 @@ dependencies {
     //Firebase functions
     implementation 'com.google.firebase:firebase-functions-ktx'
 
+    //Firebase-dynamic-links
+    implementation 'com.google.firebase:firebase-dynamic-links-ktx'
+
     // FirebaseUI Storage only
     // implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
 

@@ -18,6 +18,7 @@ import com.gthr.gthrcollect.utils.helper.getEmptyRecentSaleDomainModel
 import com.gthr.gthrcollect.utils.helper.getEmptyRecentSaleDomainModelList
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -78,6 +79,60 @@ class ProductDetailsRepository {
         // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
+
+    suspend fun <T> getProductDetailsByObjectId(objectId: String, type: ProductType) = flow<State<T>> {
+        var ref = mFirebaseRD
+        val networkModelType = when (type) {
+            ProductType.MAGIC_THE_GATHERING -> {
+                ref = ref.child(FirebaseRealtimeDatabase.MTG_MODEL)
+                MTGModel::class.java
+            }
+            ProductType.YUGIOH -> {
+                ref = ref.child(FirebaseRealtimeDatabase.YUGIOH_MODEL)
+                YugiohModel::class.java
+            }
+            ProductType.POKEMON -> {
+                ref = ref.child(FirebaseRealtimeDatabase.POKEMON_MODEL)
+                PokemonModel::class.java
+            }
+            ProductType.FUNKO -> {
+                ref = ref.child(FirebaseRealtimeDatabase.FUNKO_MODEL)
+                FunkoModel::class.java
+            }
+            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
+                ref = ref.child(FirebaseRealtimeDatabase.SEALED_MODEL)
+                SealedModel::class.java
+            }
+        }
+        val await = ref.orderByChild(FirebaseRealtimeDatabase.OBJECT_ID).equalTo(objectId).get().await()
+
+        if (await.childrenCount == 1L) {
+            val snapShot = await.children.iterator().next()
+            val productDetailsNetworkModel = snapShot.getValue(networkModelType)
+            val productDetailsDomainModel = when (type) {
+                ProductType.MAGIC_THE_GATHERING -> (productDetailsNetworkModel as MTGModel).toMTGDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.YUGIOH -> (productDetailsNetworkModel as YugiohModel).toYugiohDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.POKEMON -> (productDetailsNetworkModel as PokemonModel).toPokemonDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.FUNKO -> (productDetailsNetworkModel as FunkoModel).toFunkoDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> (productDetailsNetworkModel as SealedModel).toSealedDomainModel(
+                    snapShot.key ?: ""
+                )
+            }
+            emit(State.Success(productDetailsDomainModel as T))
+        }
+        else{
+            emit(State.failed("No data found"))
+        }
+    }
+
 
 
     fun getRecentSellList(objectId : String) = flow<State<List<RecentSaleDomainModel>>>{

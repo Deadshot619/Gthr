@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.gthr.gthrcollect.GthrCollect
+import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.model.Event
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
@@ -12,12 +13,13 @@ import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
 import com.gthr.gthrcollect.model.mapper.toRealtimeDatabaseModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
 import com.gthr.gthrcollect.data.repository.ProfileRepository
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val repository: ProfileRepository, private val otherUserId: String?) : BaseViewModel() {
+class ProfileViewModel(private val mProfileRepository: ProfileRepository, private val mDynamicLinkRepository : DynamicLinkRepository, private val otherUserId: String?) : BaseViewModel() {
 
     private var uploadImageJob: Job? = null
 
@@ -44,13 +46,17 @@ class ProfileViewModel(private val repository: ProfileRepository, private val ot
     val unFollowUser: LiveData<Event<State<String>>>
         get() = _unFollowUser
 
+    private val _mProductDynamicLink = MutableLiveData<Event<State<String>>>()
+    val mProductDynamicLink: LiveData<Event<State<String>>>
+        get() = _mProductDynamicLink
+
     init {
         fetchUserProfileData(otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString())
     }
 
     fun fetchUserProfileData(collectionId: String) {
         viewModelScope.launch {
-            repository.fetchUserProfileData(collectionId).collect {
+            mProfileRepository.fetchUserProfileData(collectionId).collect {
                 _userCollectionInfo.value = Event(it)
             }
         }
@@ -58,7 +64,7 @@ class ProfileViewModel(private val repository: ProfileRepository, private val ot
 
     fun fetchFollowingData(collectionId: String) {
         viewModelScope.launch {
-            repository.fetchMyFollowing(collectionId).collect {
+            mProfileRepository.fetchMyFollowing(collectionId).collect {
                 _followersList.value = Event(it)
             }
         }
@@ -66,7 +72,7 @@ class ProfileViewModel(private val repository: ProfileRepository, private val ot
 
     fun fetchFollowersData(collectionId: String) {
         viewModelScope.launch {
-            repository.fetchMyFollowersList(collectionId).collect {
+            mProfileRepository.fetchMyFollowersList(collectionId).collect {
                 _followingList.value = Event(it)
             }
         }
@@ -74,7 +80,7 @@ class ProfileViewModel(private val repository: ProfileRepository, private val ot
 
     fun followToUser(collectionId: String) {
         viewModelScope.launch {
-            repository.followToUser(collectionId).collect {
+            mProfileRepository.followToUser(collectionId).collect {
                 _followUser.value = Event(it)
             }
         }
@@ -82,8 +88,16 @@ class ProfileViewModel(private val repository: ProfileRepository, private val ot
 
     fun unFollowToUser(collectionId: String) {
         viewModelScope.launch {
-            repository.unFollowToUser(collectionId).collect {
+            mProfileRepository.unFollowToUser(collectionId).collect {
                 _unFollowUser.value = Event(it)
+            }
+        }
+    }
+
+    fun getProductDynamicLink(value : String){
+        viewModelScope.launch {
+            mDynamicLinkRepository.getCollectionsDynamicLink(value).collect {
+                _mProductDynamicLink.value = Event(it)
             }
         }
     }

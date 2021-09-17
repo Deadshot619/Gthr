@@ -234,7 +234,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                         it
                     )
                 )
-                else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it))
+                else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
             }
         }
 

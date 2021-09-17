@@ -15,24 +15,27 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.*
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
+import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
+import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 
-class ProductDetailActivity :
-    BaseActivity<ProductDetailsViewModel, ActivityProductDetailBinding>() {
+class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProductDetailBinding>() {
     override fun getViewBinding() = ActivityProductDetailBinding.inflate(layoutInflater)
     override val mViewModel: ProductDetailsViewModel by viewModels {
         ProductDetailsViewModelFactory(
-            ProductDetailsRepository()
+            ProductDetailsRepository(),
+            DynamicLinkRepository()
         )
     }
 
@@ -40,7 +43,8 @@ class ProductDetailActivity :
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var mToolbar: Toolbar
 
-    private lateinit var mProductDisplayModel: ProductDisplayModel
+    private var mObjectId : String? = null
+    private var mProductType: ProductType? = null
 
     private lateinit var mFlTop: FrameLayout
     //Top View for pokemon, mtg, Sealed, Yugioh
@@ -49,17 +53,41 @@ class ProductDetailActivity :
     private lateinit var mLayoutProductDetailToyTopBinding: LayoutProductDetailToyTopBinding
 
     override fun onBinding() {
-        mProductDisplayModel = intent.getParcelableExtra<ProductDisplayModel>(KEY_PRODUCT_DISPLAY_MODEL)!!
+        mObjectId = intent.getStringExtra(KEY_OBJECT_ID)
+        mProductType = intent.getSerializableExtra(KEY_PRODUCT_TYPE) as ProductType
 
         initViews()
-        setUpNavGraph()
-        setSupportActionBar(mToolbar)
-        setUpNavigationAndActionBar()
         setUpProductType()
         setUpObserver()
     }
 
     private fun setUpObserver() {
+
+        mViewModel.mProductDynamicLink.observe(this){
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        val intent = Intent()
+                       // val msg = "Click and install this application $shortLink Refer code : mayankbaba"
+                        intent.action = Intent.ACTION_SEND
+                        intent.putExtra(Intent.EXTRA_TEXT, it.data)
+                        intent.type = "text/plain"
+                        startActivity(intent)
+                    }
+                    is State.Failed -> showProgressBar(false)
+                }
+            }
+        }
+
+        mViewModel.mProductDisplayModel.observe(this){
+            it.contentIfNotHandled?.let {
+                setUpNavGraph(it)
+                setSupportActionBar(mToolbar)
+                setUpNavigationAndActionBar()
+            }
+        }
 
         mViewModel.mMtgProductDetails.observe(this) { it ->
             it.contentIfNotHandled?.let {
@@ -73,6 +101,7 @@ class ProductDetailActivity :
                         if(it.data.setName.isNotEmpty())
                             mViewModel.getRelatedProductList(it.data.setName,ProductType.MAGIC_THE_GATHERING)
                         setViewData(it.data)
+                        mViewModel.setProductDisplayModel(ProductDisplayModel(it.data))
                     }
                     is State.Failed -> showProgressBar(false)
                 }
@@ -90,6 +119,7 @@ class ProductDetailActivity :
                         if(it.data.license.isNotEmpty())
                             mViewModel.getRelatedProductList(it.data.license,ProductType.FUNKO)
                         setViewData(it.data)
+                        mViewModel.setProductDisplayModel(ProductDisplayModel(it.data))
                     }
                     is State.Failed -> showProgressBar(false)
                 }
@@ -107,6 +137,7 @@ class ProductDetailActivity :
                         if(it.data.set.isNotEmpty())
                             mViewModel.getRelatedProductList(it.data.set,ProductType.POKEMON)
                         setViewData(it.data)
+                        mViewModel.setProductDisplayModel(ProductDisplayModel(it.data))
                     }
                     is State.Failed -> showProgressBar(false)
                 }
@@ -124,6 +155,7 @@ class ProductDetailActivity :
                         if(it.data.set.isNotEmpty())
                             mViewModel.getRelatedProductList(it.data.set,ProductType.SEALED_POKEMON)
                         setViewData(it.data)
+                        mViewModel.setProductDisplayModel(ProductDisplayModel(it.data))
                     }
                     is State.Failed -> showProgressBar(false)
                 }
@@ -141,6 +173,7 @@ class ProductDetailActivity :
                         if(it.data.set.isNotEmpty())
                             mViewModel.getRelatedProductList(it.data.set,ProductType.YUGIOH)
                         setViewData(it.data)
+                        mViewModel.setProductDisplayModel(ProductDisplayModel(it.data))
                     }
                     is State.Failed -> showProgressBar(false)
                 }
@@ -149,35 +182,38 @@ class ProductDetailActivity :
     }
 
     private fun setUpProductType() {
-        when (mProductDisplayModel.productType) {
-            ProductType.POKEMON -> setUpPokemon()
-            ProductType.MAGIC_THE_GATHERING -> setUpMGT()
-            ProductType.YUGIOH -> seUpYugioh()
-            ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> setUpSealed()
-            ProductType.FUNKO -> setUpFunko()
+        if(mObjectId!=null&&mProductType!=null){
+            when (mProductType) {
+                ProductType.POKEMON -> setUpPokemon()
+                ProductType.MAGIC_THE_GATHERING -> setUpMGT()
+                ProductType.YUGIOH -> seUpYugioh()
+                ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> setUpSealed()
+                ProductType.FUNKO -> setUpFunko()
+            }
+            when (mProductType) {
+                ProductType.POKEMON -> mViewModel.getProductDetails(
+                    mObjectId!!,
+                    ProductType.POKEMON
+                )
+                ProductType.MAGIC_THE_GATHERING -> mViewModel.getProductDetails(
+                    mObjectId!!,
+                    ProductType.MAGIC_THE_GATHERING
+                )
+                ProductType.YUGIOH -> mViewModel.getProductDetails(
+                    mObjectId!!,
+                    ProductType.YUGIOH
+                )
+                ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> mViewModel.getProductDetails(
+                    mObjectId!!,
+                    ProductType.SEALED_POKEMON
+                )
+                ProductType.FUNKO -> mViewModel.getProductDetails(
+                    mObjectId!!,
+                    ProductType.FUNKO
+                )
+            }
         }
-        when (mProductDisplayModel.productType) {
-            ProductType.POKEMON -> mViewModel.getProductDetails(
-                mProductDisplayModel.refKey!!,
-                ProductType.POKEMON
-            )
-            ProductType.MAGIC_THE_GATHERING -> mViewModel.getProductDetails(
-                mProductDisplayModel.refKey!!,
-                ProductType.MAGIC_THE_GATHERING
-            )
-            ProductType.YUGIOH -> mViewModel.getProductDetails(
-                mProductDisplayModel.refKey!!,
-                ProductType.YUGIOH
-            )
-            ProductType.SEALED_POKEMON, ProductType.SEALED_MTG, ProductType.SEALED_YUGIOH -> mViewModel.getProductDetails(
-                mProductDisplayModel.refKey!!,
-                ProductType.SEALED_POKEMON
-            )
-            ProductType.FUNKO -> mViewModel.getProductDetails(
-                mProductDisplayModel.refKey!!,
-                ProductType.FUNKO
-            )
-        }
+
     }
 
     private fun setUpPokemon() {
@@ -208,7 +244,7 @@ class ProductDetailActivity :
         mFlTop.addView(mLayoutProductDetailToyTopBinding.root)
     }
 
-    private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination
+    private fun setUpNavGraph(mProductDisplayModel : ProductDisplayModel ) { //Setting NavGraph manually so that we can pass data to start destination
         findNavController(R.id.nav_host_fragment)
             .setGraph(
                 R.navigation.product_detail_nav_graph,
@@ -270,7 +306,9 @@ class ProductDetailActivity :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_share -> showToast("Share")
+            R.id.menu_share -> {
+                mViewModel.getProductDynamicLink(mObjectId!!,mProductType!!)
+            }
             R.id.menu_favourite -> {
                 if(isUserLoggedIn())
                     showToast("Favorite")
@@ -279,15 +317,6 @@ class ProductDetailActivity :
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    companion object {
-        private const val KEY_PRODUCT_DISPLAY_MODEL = "key_product_display_model"
-
-        fun getInstance(context: Context, productDisplayModel: ProductDisplayModel?) =
-            Intent(context, ProductDetailActivity::class.java).apply {
-                putExtra(KEY_PRODUCT_DISPLAY_MODEL, productDisplayModel)
-            }
     }
 
     private fun setViewData(data: SealedDomainModel) {
@@ -336,5 +365,17 @@ class ProductDetailActivity :
         GthrCollect.prefs?.signedInUser?.let {
             return@isUserLoggedIn !it.email.isNullOrEmpty() && it.uid.isNotEmpty()
         } ?: return false
+    }
+
+    companion object {
+
+        private const val KEY_PRODUCT_TYPE = "key_product_type"
+        private const val KEY_OBJECT_ID = "key_object_id"
+
+        fun getInstance(context: Context, objectId: String?,type : ProductType?) =
+            Intent(context, ProductDetailActivity::class.java).apply {
+                putExtra(KEY_PRODUCT_TYPE, type)
+                putExtra(KEY_OBJECT_ID, objectId)
+            }
     }
 }

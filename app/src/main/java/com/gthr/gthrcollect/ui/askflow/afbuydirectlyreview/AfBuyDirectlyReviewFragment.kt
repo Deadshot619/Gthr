@@ -58,7 +58,7 @@ class AfBuyDirectlyReviewFragment :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_info)
-            startActivity(ProductDetailActivity.getInstance(this.requireContext(), null))
+            startActivity(ProductDetailActivity.getInstance(this.requireContext(), null,null))
         return super.onOptionsItemSelected(item)
     }
 
