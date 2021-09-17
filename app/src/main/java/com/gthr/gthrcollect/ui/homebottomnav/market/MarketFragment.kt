@@ -59,6 +59,8 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
     private lateinit var mCctvList: List<CustomCollectionTypeView>
 
     private lateinit var mAdapterPopularCollections: PopularCollectionAdapter
+    private lateinit var mLowestAskAdapter: AskAdapter
+    private lateinit var mHighestAskAdapter: AskAdapter
 
 
     override fun onBinding() {
@@ -128,44 +130,111 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
             }
         }
 
+        // lowestAskList Obesrver
+        mViewModel.lowestAskList.observe(viewLifecycleOwner) {  it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Success -> {
+                        mLowestAskAdapter.submitList(it.data)
+
+                        showProgressBar(false)
+
+                        GthrLogger.e("observedata", "data: ${it.data}")
+                    }
+                }
+            }
+        }
+
+        // Height list ask observer
+        mViewModel.heightAskList.observe(viewLifecycleOwner) {  it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Success -> {
+                        mHighestAskAdapter.submitList(it.data)
+
+                        showProgressBar(false)
+
+                        GthrLogger.e("observedata", "data: ${it.data}")
+                    }
+                }
+            }
+        }
+
+
     }
 
     private fun setUpPopularCollections() {
 
-
-
         mRvPopularCollections.apply {
 
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
-            mAdapterPopularCollections=PopularCollectionAdapter{
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            mAdapterPopularCollections = PopularCollectionAdapter {
 
                 it.objectId?.let {
-                    startActivity( ProfileActivity.getInstance(requireActivity(),
-                        ProfileNavigationType.PROFILE,it))
+                    startActivity(
+                        ProfileActivity.getInstance(
+                            requireActivity(),
+                            ProfileNavigationType.PROFILE, it
+                        )
+                    )
                 }
             }
             adapter = mAdapterPopularCollections
-
-
-
-
         }
+
+
+
     }
 
-    private fun setUpLowestAsk() {
-        mRvLowestAsk.apply {
 
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
-            adapter = ProductAdapter(ProductTypeOld.FUNKO, CustomProductCell.State.FOR_SALE)
-        }
+    private fun setUpLowestAsk() {
+        // Fetching Lowest Ask
+        mViewModel.searchLowestAsk(isAscending = 0, limit = 10)
+
+
+          /*  layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+            adapter = ProductAdapter(ProductTypeOld.FUNKO, CustomProductCell.State.FOR_SALE)*/
+
+            mRvLowestAsk.apply {
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+                mLowestAskAdapter =
+                    AskAdapter(CustomProductCell.State.FOR_SALE) {}
+                mRvLowestAsk.adapter = mLowestAskAdapter
+
+            }
+
+
     }
 
     private fun setUpHighestAsk() {
-        mRvHighestAsk.apply {
+        mViewModel.searchHeightsAsk(isAscending = 1, limit = 10)
 
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
-            adapter = ProductAdapter(ProductTypeOld.FUNKO,CustomProductCell.State.FOR_SALE)
-        }
+               /*   layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+            adapter = ProductAdapter(ProductTypeOld.FUNKO,CustomProductCell.State.FOR_SALE)*/
+
+            mRvHighestAsk.apply {
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+                mHighestAskAdapter =
+                    AskAdapter(CustomProductCell.State.FOR_SALE) { }
+                mRvHighestAsk.adapter = mHighestAskAdapter
+
+            }
+
     }
 
 
@@ -173,31 +242,45 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
         mAll.setOnClickListener {
             mCurrentMarketType = MarketType.ALL
             mAll.selectView()
+
+
+            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = null, limit = 10)
+            mViewModel.searchLowestAsk(isAscending = 0,productCategory = null,limit = 10)
         }
 
         mCards.setOnClickListener {
             mCurrentMarketType = MarketType.CARDS
             mCards.selectView()
+            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = ProductCategory.CARDS.title,limit = 10)
+            mViewModel.searchLowestAsk(isAscending = 0,productCategory = ProductCategory.CARDS.title,limit = 10)
         }
 
         mSealed.setOnClickListener {
             mCurrentMarketType = MarketType.SEALED
             mSealed.selectView()
+            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = ProductCategory.SEALED.title,limit = 10)
+            mViewModel.searchLowestAsk(isAscending = 0,productCategory = ProductCategory.SEALED.title,limit = 10)
+
+
         }
 
         mFunko.setOnClickListener {
             mCurrentMarketType = MarketType.FUNKO
             mFunko.selectView()
+            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = ProductCategory.TOYS.title,limit = 10)
+            mViewModel.searchLowestAsk(isAscending = 0,productCategory = ProductCategory.TOYS.title,limit = 10)
+
+
         }
 
         mPopularCollectionsSeeAll.setOnClickListener {
             goToSearch(SearchType.COLLECTIONS,ProductSortFilter.NONE,getProductCategoryFilter())
         }
         mLowestAskSeeAll.setOnClickListener {
-            goToSearch(SearchType.PRODUCT,ProductSortFilter.LOWEST_ASK,getProductCategoryFilter())
+            goToSearch(SearchType.FOR_SALE,ProductSortFilter.LOWEST_ASK,getProductCategoryFilter())
         }
         mHighestAskSeeAll.setOnClickListener {
-            goToSearch(SearchType.PRODUCT,ProductSortFilter.HIGHEST_ASK,getProductCategoryFilter())
+            goToSearch(SearchType.FOR_SALE,ProductSortFilter.HIGHEST_ASK,getProductCategoryFilter())
         }
     }
 

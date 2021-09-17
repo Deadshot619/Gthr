@@ -1,9 +1,12 @@
 package com.gthr.gthrcollect.model.domain
 
 import android.os.Parcelable
+import com.gthr.gthrcollect.model.network.cloudfunction.ForSaleItemModel
 import com.gthr.gthrcollect.utils.enums.AdapterViewType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.getProductCategory
+import com.gthr.gthrcollect.utils.getProductType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -23,7 +26,8 @@ data class ProductDisplayModel(
     var numberOfFavorites: Int?,
     var tier: String?,
     var rarity: String?,
-    val viewType : AdapterViewType = AdapterViewType.VIEW_TYPE_ITEM
+    val viewType : AdapterViewType = AdapterViewType.VIEW_TYPE_ITEM,
+    val forsaleItemNodel: ForSaleItemDomainModel?=null
 ) : Parcelable {
     //TODO 01/08/21 : Modify firImageUrl added
 
@@ -135,4 +139,24 @@ data class ProductDisplayModel(
         tier = model.tier.toString(),
         rarity = ProductCategory.SEALED.title.capitalize()
     )
+
+    constructor(model: ForSaleItemDomainModel) : this(
+        objectID = model.itemObjectID,
+        productType = model.productType,
+        productCategory = getProductCategory(getProductType(model.productType?.title.toString())!!),
+        refKey = model.askRefKey,
+        firImageURL = model.productFirImageURL,
+        name = model.productProductName,
+        description = model.productGroup,
+        lowestAskCost = model.price,
+        highestBidCost =0,
+        lowestAskID = "",
+        highestBidID ="",
+        productNumber = model.productProductNumber.toString(),
+        numberOfFavorites = model.productNumberOfFavorites,
+        tier = "",
+        rarity = model.productRarity?.capitalize(),
+        forsaleItemNodel = model
+    )
+
 }

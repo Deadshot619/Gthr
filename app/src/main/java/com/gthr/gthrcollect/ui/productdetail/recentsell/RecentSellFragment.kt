@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
+import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.RecentSellFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.base.BaseFragment
@@ -21,7 +22,8 @@ class RecentSellFragment : BaseFragment<ProductDetailsViewModel, RecentSellFragm
     override val mViewModel: ProductDetailsViewModel by activityViewModels{
         ProductDetailsViewModelFactory(
             ProductDetailsRepository(),
-            DynamicLinkRepository()
+            DynamicLinkRepository(),
+            SearchRepository()
         )
     }
     override fun getViewBinding() = RecentSellFragmentBinding.inflate(layoutInflater)

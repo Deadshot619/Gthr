@@ -42,7 +42,6 @@ class FollowUserAdapter(
             binding.root.setOnClickListener {
                 callback.onClick(data)
             }
-
             binding.btnEditAccountInfo.mTvTitle.setText(data.collectionDisplayName)
             Glide.with(binding.root.context).load(data.profileImage).into(binding.userImage)
         }

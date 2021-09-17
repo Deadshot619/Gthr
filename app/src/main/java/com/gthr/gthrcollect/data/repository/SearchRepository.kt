@@ -1,17 +1,21 @@
 package com.gthr.gthrcollect.data.repository
 
 import com.google.firebase.database.ktx.database
-import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
+import com.google.gson.JsonElement
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.data.remote.fetchData
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.mapper.*
+import com.gthr.gthrcollect.model.network.cloudfunction.ForSaleItemModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.constants.CloudFunctions
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.extensions.fromJsonElement
+import com.gthr.gthrcollect.utils.extensions.gson
+import com.gthr.gthrcollect.utils.extensions.toJsonElement
 import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
@@ -24,9 +28,15 @@ class SearchRepository {
 
     private val mFirebaseRD = Firebase.database.reference
 
-    private lateinit var functions: FirebaseFunctions
-
-    fun fetchProducts(searchTerm : String?=null, productCategory:String?=null, productType :String?=null, limit:Int?=null, page:Int?=null) = flow<State<List<ProductDisplayModel>>> {
+    fun fetchProducts(
+        searchTerm: String? = null,
+        productCategory: String? = null,
+        productType: String? = null,
+        limit: Int? = null,
+        page: Int? = null,
+        isAscending:Int?=null,
+        sortBy: String? = null
+    ) = flow<State<List<ProductDisplayModel>>> {
         // Emit loading state
         emit(State.loading())
 
@@ -35,10 +45,12 @@ class SearchRepository {
             CloudFunctions.PRODUCT_CATEGORY to (productCategory ?: ""),
             CloudFunctions.PRODUCT_TYPE to (productType ?: ""),
             CloudFunctions.LIMIT to (limit ?: 60),
-            CloudFunctions.PAGE to (page ?:0)
+            CloudFunctions.PAGE to (page ?: 0),
+            CloudFunctions.IS_ASCENDING to (isAscending ?: null),
+            CloudFunctions.SORT_BY to (sortBy ?: "lowestAskCost")
         )
 
-        GthrLogger.d("mayank", data.toString())
+        GthrLogger.d("ProductsMayank", data.toString())
 
         val productData =
             fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_PRODUCT, data).await()
@@ -65,17 +77,17 @@ class SearchRepository {
                         getProductType(productType)!!
                     )
                     data?.let {
-                        val prodDisplay= ProductDisplayModel(data)
+                        val prodDisplay = ProductDisplayModel(data)
                         productList.add(prodDisplay)
                     }
                 }
-                ProductType.POKEMON ->{
+                ProductType.POKEMON -> {
                     val data = getProductDetailsByObjectId2<PokemonDomainModel>(
                         objectID!!,
                         getProductType(productType)!!
                     )
                     data?.let {
-                        val prodDisplay= ProductDisplayModel(data)
+                        val prodDisplay = ProductDisplayModel(data)
                         productList.add(prodDisplay)
                     }
                 }
@@ -108,7 +120,6 @@ class SearchRepository {
         // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
-
 
     suspend fun <T> getProductDetailsByObjectId2(id: String, type: ProductType): T? {
         var ref = mFirebaseRD
@@ -158,47 +169,103 @@ class SearchRepository {
             }
             return productDetailsDomainModel as T
         }
-      return null
+        return null
     }
 
-    fun fetchCollection(searchTerm : String?=null,limit:Int?=null, page:Int?=null) = flow<State<List<SearchCollection>>> {
+    fun fetchCollection(searchTerm: String? = null, limit: Int? = null, page: Int? = null) =
+        flow<State<List<SearchCollection>>> {
+            // Emit loading state
+            emit(State.loading())
+
+            val data = hashMapOf(
+                CloudFunctions.USERID to (GthrCollect.prefs?.collectionInfoModel?.userRefKey ?: ""),
+                CloudFunctions.SEARCK_KEY to (searchTerm ?: ""),
+                CloudFunctions.LIMIT to (limit ?: 60),
+                CloudFunctions.PAGE to (page ?: 0)
+            )
+
+            GthrLogger.d("mayank", data.toString())
+
+            val collectionData =
+                fetchData<List<HashMap<String, *>>>(CloudFunctions.SEARCH_COLLECTION, data).await()
+            val searchCollectionList = mutableListOf<SearchCollection>()
+
+            collectionData.forEachIndexed { index, it ->
+                try {
+                    val profileImage: String? =
+                        (collectionData[index][FirebaseRealtimeDatabase.PROFILE_URL_KEY]
+                            ?: "") as String
+                    val userName: String? =
+                        (collectionData[index][FirebaseRealtimeDatabase.DISPLAY_NAME]
+                            ?: "") as String
+                    val objectId: String? =
+                        (collectionData[index][FirebaseRealtimeDatabase.OBJECT_ID] ?: "") as String
+
+                    var frontImage: String? = null
+                    collectionData[index][FirebaseRealtimeDatabase.COLLECTION_LIST]?.let label@{
+                        val collectionItemList = it as HashMap<String, HashMap<String, String>>
+                        frontImage = collectionItemList.entries.iterator()
+                            .next().value[FirebaseRealtimeDatabase.FRONT_IMAGE_URL] ?: ""
+                    }
+
+                    val data = SearchCollection(objectId, profileImage, userName, frontImage)
+
+                    searchCollectionList.add(data)
+                } catch (ex: Exception) {
+                    print(ex.message)
+                }
+            }
+
+            emit(State.success(searchCollectionList))
+
+        }.catch {
+            // If exception is thrown, emit failed state along with message.
+            emit(State.failed(it.message.toString()))
+            GthrLogger.d("collectionData", "${it.message}}")
+        }.flowOn(Dispatchers.IO)
+
+    fun fetchSearchAsk(
+        searchTerm: String? = null,
+        limit: Int? = null,
+        page: Int? = null,
+        sortBy: String? = null,
+        isAscending: Int? = null,
+        productCategory: String? = null,
+        productType: String? = null,
+        objectId: String? = null
+    ) = flow<State<List<ProductDisplayModel>>> {
         // Emit loading state
         emit(State.loading())
 
+        GthrLogger.e("productCategory", "${productCategory}")
+
         val data = hashMapOf(
-            CloudFunctions.USERID to (GthrCollect.prefs?.collectionInfoModel?.userRefKey ?: ""),
-            CloudFunctions.SEARCK_KEY to (searchTerm ?: ""),
             CloudFunctions.LIMIT to (limit ?: 60),
-            CloudFunctions.PAGE to (page ?: 0)
+            CloudFunctions.SEARCK_KEY to (searchTerm ?: ""),
+            CloudFunctions.PAGE to (page ?: 0),
+            CloudFunctions.IS_ASCENDING to (isAscending ?: 0),
+            CloudFunctions.SORT_BY to (sortBy ?: "price"),
+            CloudFunctions.PRODUCT_CATEGORY to (productCategory ?: ""),
+            CloudFunctions.PRODUCT_TYPE to (productType ?: ""),
+            CloudFunctions.OBJECT_ID to (objectId ?: "")
         )
 
-        GthrLogger.d("mayank", data.toString())
+        GthrLogger.d("DataSearchAsk", data.toString())
+        val askData =
+            fetchData<List<HashMap<String, *>>>(CloudFunctions.SEARCH_ASK, data).await()
+        val searchCollectionList = mutableListOf<ProductDisplayModel>()
 
-        val collectionData =
-            fetchData<List<HashMap<String, *>>>(CloudFunctions.SEARCH_COLLECTION, data).await()
-        val searchCollectionList = mutableListOf<SearchCollection>()
+        GthrLogger.e("askData", "${askData.toString()}}")
 
-        collectionData.forEachIndexed { index, it ->
+        askData.forEachIndexed { index, it ->
             try {
-                val profileImage: String? =
-                    (collectionData[index][FirebaseRealtimeDatabase.PROFILE_URL_KEY]
-                        ?: "") as String
-                val userName: String? =
-                    (collectionData[index][FirebaseRealtimeDatabase.DISPLAY_NAME] ?: "") as String
-                val objectId: String? =
-                    (collectionData[index][FirebaseRealtimeDatabase.OBJECT_ID] ?: "") as String
+                //  val gson = Gson()
+                val jsonElement: JsonElement = gson.toJsonElement(it)
+                val saleItem: ForSaleItemModel = gson.fromJsonElement(jsonElement)!!
 
-                var frontImage: String? = null
-                collectionData[index][FirebaseRealtimeDatabase.COLLECTION_LIST]?.let label@{
-                    val collectionItemList = it as HashMap<String, HashMap<String, String>>
-                    frontImage = collectionItemList.entries.iterator()
-                        .next().value[FirebaseRealtimeDatabase.FRONT_IMAGE_URL] ?: ""
-                }
+                searchCollectionList.add(ProductDisplayModel(saleItem.toDomainModel()))
 
-                val data = SearchCollection(objectId, profileImage, userName, frontImage)
-
-                searchCollectionList.add(data)
-            }catch (ex:Exception){
+            } catch (ex: Exception) {
                 print(ex.message)
             }
         }
@@ -208,7 +275,7 @@ class SearchRepository {
     }.catch {
         // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))
-        GthrLogger.d("collectionData", "${it.message}}")
+        GthrLogger.d("askData", "${it.message}}")
     }.flowOn(Dispatchers.IO)
 
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
+import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.model.Event
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
@@ -14,7 +15,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ProductDetailsViewModel(private val mProductDetailsRepository : ProductDetailsRepository,private val mDynamicLinkRepository : DynamicLinkRepository) : ViewModel() {
+class ProductDetailsViewModel(private val mProductDetailsRepository : ProductDetailsRepository,private val mDynamicLinkRepository : DynamicLinkRepository,private val repositorySearch: SearchRepository) : ViewModel() {
+
+    private var searchAskJob: Job? = null
+
 
     var favoriteJob: Job? = null
 
@@ -53,6 +57,13 @@ class ProductDetailsViewModel(private val mProductDetailsRepository : ProductDet
     private val _mProductDynamicLink = MutableLiveData<Event<State<String>>>()
     val mProductDynamicLink: LiveData<Event<State<String>>>
         get() = _mProductDynamicLink
+
+    private val _upForSaleList = MutableLiveData<Event<State<List<ProductDisplayModel>>>>()
+    val upForSaleList: LiveData<Event<State<List<ProductDisplayModel>>>>
+        get() = _upForSaleList
+
+
+
 
     fun getProductDetails(objectId : String, type : ProductType) {
         viewModelScope.launch {
@@ -108,6 +119,20 @@ class ProductDetailsViewModel(private val mProductDetailsRepository : ProductDet
 
     fun setProductDisplayModel(productDisplayModel: ProductDisplayModel) {
         _mProductDisplayModel.value = Event(productDisplayModel)
+    }
+
+    fun fetchUpForSale(searchTerm: String? = null, limit: Int? = null, page: Int? = null, sortBy:String?=null,isAscending:Int?, productCategory: String? = null,productType: String? = null, objectId: String? = null) {
+        searchAskJob = viewModelScope.launch {
+            repositorySearch.fetchSearchAsk(searchTerm, limit, page,sortBy,isAscending,productCategory,productType,objectId).collect {
+                _upForSaleList.value = Event(it)
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        searchAskJob?.cancel()
+
     }
 
     private val _isFavorite = MutableLiveData<Event<State<Boolean>>>()

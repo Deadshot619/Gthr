@@ -17,6 +17,7 @@ import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
+import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.*
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
@@ -33,7 +34,8 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
     override val mViewModel: ProductDetailsViewModel by viewModels {
         ProductDetailsViewModelFactory(
             ProductDetailsRepository(),
-            DynamicLinkRepository()
+            DynamicLinkRepository(),
+            SearchRepository()
         )
     }
 

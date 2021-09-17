@@ -2,7 +2,6 @@ package com.gthr.gthrcollect.ui.homebottomnav.search
 
 import android.view.KeyEvent
 import android.view.View
-import android.widget.ProgressBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -20,6 +19,7 @@ import com.gthr.gthrcollect.databinding.SearchFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.ForSaleAdapter
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.SearchCollectionAdapter
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
@@ -43,6 +43,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     var mSelectedProductType: ProductType? = null
     var mSearchKey: String? = null
     var mLimit: Int = 20
+    var mAscending:Int?=null
 
     private var mPage = 0
     private var mIsLoading = false
@@ -114,18 +115,44 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             setCollectionSelected()
             searchCollection(mLimit, true)
         } else if (args.type == SearchType.PRODUCT) {
+
+
             when (args.sortFilter) {
                 ProductSortFilter.LOWEST_ASK -> selectSortingCategory(mCfcvAskLowest)
                 ProductSortFilter.HIGHEST_ASK -> selectSortingCategory(mCfcvAskHighest)
                 ProductSortFilter.NONE -> {
+                    selectSortingCategory(mCfcvMostFavourite)
                 }
             }
             when (args.categoryFilter) {
                 ProductCategoryFilter.CARD -> selectCard()
                 ProductCategoryFilter.TOY -> selectToys()
                 ProductCategoryFilter.SEALED -> selectSealed()
-                ProductCategoryFilter.NONE -> searchProduct(limit = mLimit, setReset = true)
+                ProductCategoryFilter.NONE ->{}
             }
+        }else if (args.type == SearchType.FOR_SALE){
+            setSelectedCct(mCctForSale)
+
+            when (args.sortFilter) {
+                ProductSortFilter.LOWEST_ASK -> {
+                    selectSortingCategory(mCfcvAskLowest)
+                    setLabelText()
+                    mAscending=0
+                    searchForSale(mLimit,true,ascending = mAscending,mSelectedCategory,mSelectedProductType)
+                }
+                ProductSortFilter.HIGHEST_ASK -> {
+                    selectSortingCategory(mCfcvAskHighest)
+                    setLabelText()
+                    mAscending=1
+                    searchForSale(mLimit,true,ascending = mAscending,mSelectedCategory,mSelectedProductType)
+                }
+                ProductSortFilter.NONE -> {
+                    setLabelText()
+                    selectSortingCategory(mCfcvMostFavourite)
+                    searchForSale(mLimit,true,mAscending,mSelectedCategory,mSelectedProductType)
+                }
+            }
+
         }
     }
 
@@ -138,6 +165,11 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mViewModel.collectionDisplayList.observe(viewLifecycleOwner) {
             mAdapterCollections.submitList(it.map { it.copy() })
         }
+
+        mViewModel.saleDisplayList.observe(viewLifecycleOwner) {
+            mProductAdapter.submitList(it.map { it.copy() })
+        }
+
 
         mViewModel.productList.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
@@ -209,6 +241,40 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             }
         }
 
+        mViewModel.forSaleListList.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        if (mPage == 0)
+                            showProgressBar()
+                        else
+                            mViewModel.addSaleDisplayModelLoadMore()
+                    }
+                    is State.Failed -> {
+                        showToast(it.message)
+                        mIsLoading = false
+                        if (mPage == 0)
+                            showProgressBar(false)
+                        else
+                            mViewModel.removeSaleDisplayModelLoadMore()
+                    }
+                    is State.Success -> {
+                        if (mDrawer.isDrawerVisible(GravityCompat.END)) {
+                            mDrawer.closeDrawer(GravityCompat.END)
+                        }
+                        showProgressBar(false)
+                        mViewModel.setSaleDisplayList(it.data)
+                        if (it.data.size < mLimit) {
+                            mHasNext = false
+                            GthrLogger.e("mayank", "data: ${mHasNext}")
+                        }
+                        mIsLoading = false
+                        mPage++
+                        GthrLogger.e("mayank", "data: ${it.data.size}")
+                    }
+                }
+            }
+        }
     }
 
     private fun setUpRecyclerView() {
@@ -273,16 +339,21 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                             if (total - 1 == lastVisibleItemCount) {
                                 mIsLoading = true
 
-                                if (mCctProduct.mIsActive || mCctForSale.mIsActive)
+                                if (mCctProduct.mIsActive){
                                     searchProduct(
                                         productCategory = mSelectedCategory,
                                         productType = mSelectedProductType,
-                                        limit = mLimit
+                                        limit = mLimit,false,mAscending
                                     )
-                                else {
-                                    searchCollection(mLimit)
                                 }
 
+                                 if(mCctForSale.mIsActive){
+                                    searchForSale(mLimit,true,ascending = mAscending,mSelectedCategory,mSelectedProductType)
+
+                                 }
+                                if(mCctCollections.mIsActive) {
+                                    searchCollection(mLimit)
+                                }
                             }
                     }
                 }
@@ -294,14 +365,18 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
     private fun setUpOnClickListeners() {
         mCctProduct.setOnClickListener {
             setSelectedCct(mCctProduct)
-            mRvMain.adapter = mProductAdapter
+            setUpDrawerView()
+
         }
         mCctForSale.setOnClickListener {
             setSelectedCct(mCctForSale)
-            mRvMain.adapter = mProductAdapter
+            setLabelText()
+            setUpDrawerView()
         }
         mCctCollections.setOnClickListener {
             setCollectionSelected()
+
+            setUpDrawerView()
         }
 
         mIvFilter.setOnClickListener {
@@ -314,27 +389,100 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
         mCfcvAskLowest.setOnClickListener {
             mSelectedSort = selectSortingCategory(mCfcvAskLowest).toString()
-            //  showToast(mCfcvAskLowest.text.toString())
+            setLabelText()
+
+            if(mCctProduct.mIsActive){
+                if ( mCfcvAskLowest.mIsActive){
+                    mAscending=0
+                    searchProduct(mSelectedCategory,mSelectedProductType,mLimit,true, mAscending)
+                }else{
+                    mAscending=null
+                    searchProduct(mSelectedCategory,mSelectedProductType,mLimit,true, mAscending) }
+            }
+
+            // Set to Lowest Price First and 0 for Low
+            if(mCctForSale.mIsActive){
+               if ( mCfcvAskLowest.mIsActive){
+                   mAscending=0
+                   searchForSale(mLimit,true,ascending = mAscending,mSelectedCategory,mSelectedProductType)
+               }else{
+                   mAscending=null
+                   searchForSale(mLimit,true,ascending = mAscending,mSelectedCategory,mSelectedProductType)
+               }
+            }
         }
 
         mCfcvAskHighest.setOnClickListener {
             mSelectedSort = selectSortingCategory(mCfcvAskHighest).toString()
+            setLabelText()
             //   showToast(mCfcvAskHighest.text.toString())
+
+            if(mCctProduct.mIsActive){
+                if ( mCfcvAskHighest.mIsActive){
+                    mAscending=1
+                    searchProduct(mSelectedCategory,mSelectedProductType,mLimit,true, mAscending)
+                }else{
+                    mAscending=null
+                    searchProduct(mSelectedCategory,mSelectedProductType,mLimit,true, mAscending) }
+            }
+
+            // Set to Highest Price First and 1 for High
+            if(mCctForSale.mIsActive){
+                if ( mCfcvAskHighest.mIsActive){
+                    mAscending=1
+                    searchForSale(mLimit,true, mAscending,mSelectedCategory,mSelectedProductType)
+                }else{
+                    mAscending=null
+                    searchForSale(mLimit,true, mAscending,mSelectedCategory,mSelectedProductType) }
+            }
         }
 
         mCfcvMostFavourite.setOnClickListener {
             mSelectedSort = selectSortingCategory(mCfcvMostFavourite).toString()
-            //  showToast(mCfcvMostFavourite.text.toString())
+            setLabelText()
+
+            if(mCctProduct.mIsActive){
+                if ( mCfcvMostFavourite.mIsActive){
+                    mAscending=null
+                    searchProduct(mSelectedCategory,mSelectedProductType,mLimit,true, mAscending)
+                }else{
+                    mAscending=0
+                    searchProduct(mSelectedCategory,mSelectedProductType,mLimit,true, mAscending) }
+            }
+
+            if(mCctForSale.mIsActive){
+                if ( mCfcvMostFavourite.mIsActive){
+                    mAscending=null
+                    searchForSale(mLimit,true, mAscending,mSelectedCategory,mSelectedProductType)
+                }else{
+                    mAscending=0
+                    searchForSale(mLimit,true,mAscending,mSelectedCategory,mSelectedProductType) }
+            }
         }
 
         mCfscvCardsPokemon.setOnClickListener {
             setSealedSubCategoryUnSelected()
             mCardSubCategories.selectSubCategory(mCfscvCardsPokemon)
 
+            // when Product is selected
+            if (mCctProduct.mIsActive){
+                if (mCfscvCardsPokemon.mIsActive) {
+                    searchProduct(ProductCategory.CARDS, ProductType.POKEMON, mLimit, setReset = true,mAscending)
+                } else {
+                    searchProduct(ProductCategory.CARDS, null, mLimit, setReset = true,mAscending)
+                }
+            }
+
+            // when Sealed is selected
+            if (mCctForSale.mIsActive)
             if (mCfscvCardsPokemon.mIsActive) {
-                searchProduct(ProductCategory.CARDS, ProductType.POKEMON, mLimit, setReset = true)
+                mSelectedCategory=ProductCategory.CARDS
+                mSelectedProductType=ProductType.POKEMON
+                searchForSale( mLimit, setReset = true,mAscending,mSelectedCategory, mSelectedProductType)
             } else {
-                searchProduct(ProductCategory.CARDS, null, mLimit, setReset = true)
+                mSelectedCategory=ProductCategory.CARDS
+                mSelectedProductType=null
+                searchForSale( mLimit, setReset = true,mAscending,mSelectedCategory, mSelectedProductType)
             }
         }
 
@@ -342,13 +490,29 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             setSealedSubCategoryUnSelected()
             mCardSubCategories.selectSubCategory(mCfscvCardsYuGiOh)
             //  showToast(mSelectedProductType)
-            if (mCfscvCardsYuGiOh.mIsActive) {
-                searchProduct(ProductCategory.CARDS, ProductType.YUGIOH, mLimit, setReset = true)
 
-            } else {
-                searchProduct(ProductCategory.CARDS, null, mLimit, setReset = true)
-
+            // when Product is selected
+            if (mCctProduct.mIsActive){
+                if (mCfscvCardsYuGiOh.mIsActive) {
+                    searchProduct(ProductCategory.CARDS, ProductType.YUGIOH, mLimit, setReset = true,mAscending)
+                } else {
+                    searchProduct(ProductCategory.CARDS, null, mLimit, setReset = true,mAscending)
+                }
             }
+
+            // when Sealed is selected
+            if (mCctForSale.mIsActive){
+                if (mCfscvCardsYuGiOh.mIsActive) {
+                    mSelectedCategory=ProductCategory.CARDS
+                    mSelectedProductType=ProductType.SEALED_YUGIOH
+                    searchForSale( mLimit, setReset = true,mAscending,mSelectedCategory, mSelectedProductType)
+                } else {
+                    mSelectedCategory=ProductCategory.CARDS
+                    mSelectedProductType=null
+                    searchForSale( mLimit, setReset = true,mAscending,mSelectedCategory, mSelectedProductType)
+                }
+            }
+
         }
 
         mCfscvCardsMagic.setOnClickListener {
@@ -356,75 +520,162 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             mCardSubCategories.selectSubCategory(mCfscvCardsMagic)
             //  showToast(mSelectedProductType)
 
-            if (mCfscvCardsMagic.mIsActive) {
-                searchProduct(
-                    ProductCategory.CARDS,
-                    ProductType.MAGIC_THE_GATHERING,
-                    mLimit,
-                    setReset = true
-                )
-
-            } else {
-                searchProduct(ProductCategory.CARDS, null, mLimit, setReset = true)
+            // when Product is selected
+            if (mCctProduct.mIsActive){
+                if (mCfscvCardsMagic.mIsActive) {
+                    searchProduct(
+                        ProductCategory.CARDS,
+                        ProductType.MAGIC_THE_GATHERING,
+                        mLimit,
+                        setReset = true,mAscending)
+                } else {
+                    searchProduct(ProductCategory.CARDS, null, mLimit, setReset = true,mAscending) }
             }
-        }
 
-        mCfcvToys.setOnClickListener {
-            selectToys()
+            // when Sealed is selected
+            if (mCctForSale.mIsActive){
+                if (mCfscvCardsMagic.mIsActive) {
+                    mSelectedCategory=ProductCategory.CARDS
+                    mSelectedProductType=ProductType.MAGIC_THE_GATHERING
+                    searchForSale(
+                        mLimit,
+                        setReset = true,mAscending, mSelectedCategory,
+                      mSelectedProductType)}
+                else {
+                    mSelectedCategory=ProductCategory.CARDS
+                    mSelectedProductType=null
+                    searchForSale( mLimit, setReset = true,mAscending,mSelectedCategory, mSelectedProductType)
+                }
+            }
         }
 
         mCfscvSealedPokemon.setOnClickListener {
             setCardSubCategoryUnSelected()
             mSealedSubCategories.selectSubCategory(mCfscvSealedPokemon)
-            if (mCfscvSealedPokemon.mIsActive) {
-                searchProduct(
-                    ProductCategory.SEALED,
-                    ProductType.SEALED_POKEMON,
-                    mLimit,
-                    setReset = true
-                )
-            } else {
-                searchProduct(ProductCategory.SEALED, null, mLimit, setReset = true)
 
+            // when Product is selected
+            if (mCctProduct.mIsActive){
+                if (mCfscvSealedPokemon.mIsActive) {
+                    searchProduct(
+                        ProductCategory.SEALED,
+                        ProductType.SEALED_POKEMON,
+                        mLimit,
+                        setReset = true,mAscending
+                    )
+                } else {
+                    searchProduct(ProductCategory.SEALED, null, mLimit, setReset = true,mAscending)
+
+                }
             }
+
+            // when Sealed is selected
+            if (mCctForSale.mIsActive){
+                if (mCfscvSealedPokemon.mIsActive) {
+                    mSelectedCategory=ProductCategory.SEALED
+                    mSelectedProductType=ProductType.SEALED_POKEMON
+
+                    searchForSale(
+
+                        mLimit,setReset = true,mAscending, mSelectedCategory,
+                        mSelectedProductType
+                    )
+                } else {
+                    mSelectedProductType=null
+                    mSelectedCategory=ProductCategory.SEALED
+                    searchForSale(mLimit, setReset = true,mAscending,mSelectedCategory, mSelectedProductType)
+
+                }
+            }
+
+
         }
 
         mCfscvSealedYuGiOh.setOnClickListener {
             setCardSubCategoryUnSelected()
             mSealedSubCategories.selectSubCategory(mCfscvSealedYuGiOh)
 
-            if (mCfscvSealedYuGiOh.mIsActive) {
-                searchProduct(
-                    ProductCategory.SEALED,
-                    ProductType.SEALED_YUGIOH,
-                    mLimit,
-                    setReset = true
-                )
-            } else {
-                searchProduct(ProductCategory.SEALED, null, mLimit, setReset = true)
+            // when Product is selected
+            if (mCctProduct.mIsActive){
+                if (mCfscvSealedYuGiOh.mIsActive) {
+                    searchProduct(
+                        ProductCategory.SEALED,
+                        ProductType.SEALED_YUGIOH,
+                        mLimit,
+                        setReset = true,mAscending
+                    )
+                } else {
+                    searchProduct(ProductCategory.SEALED, null, mLimit, setReset = true,mAscending)
+                }
             }
+
+            // when Sealed is selected
+            if (mCctForSale.mIsActive){
+                if (mCfscvSealedYuGiOh.mIsActive) {
+                    mSelectedCategory=ProductCategory.SEALED
+                    mSelectedProductType=ProductType.SEALED_YUGIOH
+
+                    searchForSale(
+                        mLimit,
+                        setReset = true,mAscending,   mSelectedCategory,
+                        mSelectedProductType,
+                    )
+                } else {
+                    mSelectedCategory=ProductCategory.SEALED
+                    mSelectedProductType=null
+
+                    searchForSale( mLimit, setReset = true,mAscending,mSelectedCategory, mSelectedProductType,)
+                }
+            }
+
+
+
         }
 
         mCfscvSealedMagic.setOnClickListener {
             setCardSubCategoryUnSelected()
             mSealedSubCategories.selectSubCategory(mCfscvSealedMagic)
 
-            if (mCfscvSealedMagic.mIsActive) {
-                searchProduct(
-                    ProductCategory.SEALED,
-                    ProductType.SEALED_MTG,
-                    mLimit,
-                    setReset = true
-                )
-            } else {
-                searchProduct(ProductCategory.SEALED, null, mLimit, setReset = true)
+            // when Product is selected
+            if (mCctProduct.mIsActive){
+                if (mCfscvSealedMagic.mIsActive) {
+                    searchProduct(
+                        ProductCategory.SEALED,
+                        ProductType.SEALED_MTG,
+                        mLimit,
+                        setReset = true,mAscending
+                    )
+                } else {
+                    searchProduct(ProductCategory.SEALED, null, mLimit, setReset = true,mAscending)
+                }
             }
+
+            // when Sealed is selected
+            if (mCctForSale.mIsActive){
+                if (mCfscvSealedMagic.mIsActive) {
+                    mSelectedCategory=ProductCategory.SEALED
+                    mSelectedProductType=ProductType.SEALED_MTG
+
+                    searchForSale(
+                        mLimit,
+                        setReset = true,mAscending,   mSelectedCategory,
+                       mSelectedProductType
+                    )
+                } else {
+                    mSelectedCategory=ProductCategory.SEALED
+                    mSelectedProductType=null
+                    searchForSale( mLimit, setReset = true,mAscending,mSelectedCategory, mSelectedProductType)
+                }
+            }
+
         }
 
         mCfcvCards.setOnClickListener {
             selectCard()
         }
 
+        mCfcvToys.setOnClickListener {
+            selectToys()
+        }
         mCfcvSealed.setOnClickListener {
             selectSealed()
         }
@@ -438,8 +689,11 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                             mSelectedCategory,
                             mSelectedProductType,
                             mLimit,
-                            setReset = true
+                            setReset = true,mAscending
                         )
+                        if (mCctForSale.mIsActive)  {
+                            searchForSale(mLimit,true,ascending = mAscending,mSelectedCategory,mSelectedProductType)
+                        }
                     }
                     return true
                 }
@@ -452,12 +706,15 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             mSearchTypingJob = MainScope().launch {
                 ticker(SEARCH_DELAY).receive()  //Add some delay before an api call
                 if (mCctCollections.mIsActive) searchCollection(mLimit, true)
-                if (mCctProduct.mIsActive) searchProduct(
-                    mSelectedCategory,
-                    mSelectedProductType,
-                    mLimit,
-                    setReset = true
-                )
+
+                if (mCctProduct.mIsActive) searchProduct(mSelectedCategory, mSelectedProductType, mLimit, setReset = true,mAscending)
+
+                if (mCctForSale.mIsActive){
+
+                    searchForSale(mLimit,true,ascending = mAscending,mSelectedCategory,mSelectedProductType)
+                }
+
+
             }
         }
     }
@@ -469,11 +726,28 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         setCardSubCategoryUnSelected()
         setSealedSubCategoryUnSelected()
 
-        if (mCfcvToys.mIsActive) {
-            searchProduct(ProductCategory.TOYS, null, mLimit, setReset = true)
-        } else {
-            searchProduct(null, null, mLimit, setReset = true)
+        // when Product is selected
+        if (mCctProduct.mIsActive){
+            if (mCfcvToys.mIsActive) {
+                searchProduct(ProductCategory.TOYS, null, mLimit, setReset = true,mAscending)
+            } else {
+                searchProduct(null, null, mLimit, setReset = true,mAscending)
+            }
         }
+
+        // when For Sale is selected
+        if(mCctForSale.mIsActive){
+            if (mCfcvToys.mIsActive) {
+                mSelectedCategory=ProductCategory.TOYS
+                mSelectedProductType=null
+                searchForSale(mLimit, setReset = true,mAscending,mSelectedCategory, mSelectedProductType )
+            } else {
+                mSelectedCategory=null
+                mSelectedProductType=null
+                searchForSale( mLimit, setReset = true,mAscending,mSelectedCategory, mSelectedProductType )
+            }
+        }
+
     }
 
     private fun selectSealed() {
@@ -490,15 +764,32 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             !mToggleSealed
         }
 
-        if (mCfcvSealed.mIsActive) {
-            searchProduct(ProductCategory.SEALED, null, mLimit, setReset = true)
-        } else {
-            searchProduct(null, null, mLimit, setReset = true)
+        // when For Product is selected
+        if (mCctProduct.mIsActive){
+            if (mCfcvSealed.mIsActive) {
+                searchProduct(ProductCategory.SEALED, null, mLimit, setReset = true,mAscending)
+            } else {
+                searchProduct(null, null, mLimit, setReset = true,mAscending)
+            }
+        }
+
+
+        // when For Sale is selected
+        if(mCctForSale.mIsActive){
+            if (mCfcvSealed.mIsActive) {
+                mSelectedCategory=ProductCategory.SEALED
+                mSelectedProductType=null
+                searchForSale(mLimit, setReset = true,0,mSelectedCategory, mSelectedProductType )
+            } else {
+                mSelectedCategory=null
+                mSelectedProductType=null
+                searchForSale( mLimit, setReset = true,0,mSelectedCategory, mSelectedProductType )
+            }
         }
     }
 
     private fun selectCard() {
-        mToggleCards = if (mToggleCards) {
+            mToggleCards = if (mToggleCards) {
             mLayoutCards.animateVisibility(mToggleCards)
             mLayoutSealed.animateVisibility(false)
             selectCategory(mCfcvCards)
@@ -510,10 +801,28 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             mLayoutCards.animateVisibility(mToggleCards)
             !mToggleCards
         }
-        if (mCfcvCards.mIsActive) {
-            searchProduct(ProductCategory.CARDS, null, mLimit, setReset = true)
-        } else {
-            searchProduct(null, null, mLimit, setReset = true)
+
+        // when For Product is selected
+        if(mCctProduct.mIsActive){
+            if (mCfcvCards.mIsActive) {
+                searchProduct(ProductCategory.CARDS, null, mLimit, true,mAscending)
+            } else {
+                searchProduct(null, null, mLimit, true,mAscending)
+            }
+        }
+
+
+        // when For Sale is selected
+        if(mCctForSale.mIsActive){
+            if (mCfcvCards.mIsActive) {
+                mSelectedCategory=ProductCategory.CARDS
+                mSelectedProductType=null
+                searchForSale(mLimit, setReset = true,0,mSelectedCategory, mSelectedProductType )
+            } else {
+                mSelectedCategory=null
+                mSelectedProductType=null
+                searchForSale( mLimit, setReset = true,0,mSelectedCategory, mSelectedProductType )
+            }
         }
     }
 
@@ -532,7 +841,21 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 mCctCollections.setActive(false)
                 mIvFilter.visible()
                 this.mTvTitle.text = getString(R.string.text_most_fav)
-                searchProduct(limit = mLimit, setReset = true)
+                mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL) {
+                    when {
+                        mCctForSale.mIsActive -> startActivity(
+                            AskFlowActivity.getInstance(
+                                requireContext(),
+                                AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
+                                it
+                            )
+                        )
+                        else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
+                    }
+                }
+
+                mRvMain.adapter = mProductAdapter
+                searchProduct(mSelectedCategory,mSelectedProductType,limit = mLimit, setReset = true,mAscending)
             }
             mCctForSale -> {
                 mCctProduct.setActive(false)
@@ -540,6 +863,21 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 mCctCollections.setActive(false)
                 mIvFilter.visible()
                 this.mTvTitle.text = getString(R.string.text_most_fav)
+                mProductAdapter = ProductAdapter(CustomProductCell.State.FOR_SALE) {
+                    when {
+                        mCctForSale.mIsActive -> startActivity(
+                            AskFlowActivity.getInstance(
+                                requireContext(),
+                                AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
+                                it
+                            )
+                        )
+                        else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
+                    }
+                }
+
+                mRvMain.adapter = mProductAdapter
+                searchForSale(mLimit,setReset=true,pCategory = mSelectedCategory,pType = mSelectedProductType)
             }
             mCctCollections -> {
                 mCctProduct.setActive(false)
@@ -547,7 +885,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 mCctCollections.setActive(true)
                 mIvFilter.gone()
                 this.mTvTitle.text = getString(R.string.text_most_followed)
-                searchCollection(mLimit, true)
+                searchCollection(mLimit, setReset=true)
             }
         }
 
@@ -634,17 +972,31 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
     }
 
+
+
     private fun resetProduct() {
         mPage = 0
         mHasNext = true
         mViewModel.clearProductDisplayList()
     }
 
+    private fun resetSale() {
+        mPage = 0
+        mHasNext = true
+        mViewModel.clearSaleDisplayList()
+    }
+
+    private fun resetCollection() {
+        mPage = 0
+        mHasNext = true
+        mViewModel.clearCollectionDisplayList()
+    }
     private fun searchProduct(
         productCategory: ProductCategory? = null,
         productType: ProductType? = null,
         limit: Int? = null,
-        setReset: Boolean = false
+        setReset: Boolean = false,
+        isAscending:Int?=null
     ) {
         if (setReset)
             resetProduct()
@@ -652,19 +1004,14 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         mSelectedProductType = productType
         mSearchKey = mSearchBar.text.toString().trim()
 
-        mViewModel.searchProducts(
+        mViewModel.searchProductsList(
             mSearchKey,
             mSelectedCategory?.title,
             mSelectedProductType?.title,
             mLimit,
-            mPage
+            mPage,
+            isAscending
         )
-    }
-
-    private fun resetCollection() {
-        mPage = 0
-        mHasNext = true
-        mViewModel.clearCollectionDisplayList()
     }
 
     private fun searchCollection(limit: Int?, setReset: Boolean = false) {
@@ -673,6 +1020,35 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
         mSearchKey = mSearchBar.text.toString().trim()
         mViewModel.searchCollection(mSearchKey, limit, mPage)
+    }
+
+    private fun searchForSale(limit: Int?, setReset: Boolean = false, ascending:Int?=null,pCategory: ProductCategory? = null,
+                              pType: ProductType? = null) {
+        if (setReset)
+            resetSale()
+
+        mSearchKey = mSearchBar.text.toString().trim()
+        mViewModel.searchAsk(mSearchKey, limit, mPage,isAscending = ascending,productCategory = pCategory?.title  ,productType = pType?.title )
+    }
+
+    // Hiding Sort Section for Product Tab
+    private fun setUpDrawerView(){
+
+        if (mCctCollections.mIsActive){
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        }else{
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        }
+    }
+
+    private fun setLabelText(){
+        if (mCfcvAskLowest.mIsActive){
+            mTvTitle.text=getString(R.string.text_filter_ask_lowest)
+        }else if (mCfcvAskHighest.mIsActive){
+            mTvTitle.text=getString(R.string.text_filter_ask_highest)
+        }else{
+            mTvTitle.text=getString(R.string.text_filter_most_favorited)
+        }
     }
 
     companion object {

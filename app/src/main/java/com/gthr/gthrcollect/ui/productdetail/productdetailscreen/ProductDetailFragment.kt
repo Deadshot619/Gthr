@@ -17,6 +17,7 @@ import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
+import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.LayoutProductDetailMainDetailsBinding
 import com.gthr.gthrcollect.databinding.LayoutProductDetailMtgDetailBinding
 import com.gthr.gthrcollect.databinding.ProductDetailFragmentBinding
@@ -26,6 +27,7 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
+import com.gthr.gthrcollect.ui.homebottomnav.market.AskAdapter
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModelFactory
@@ -48,7 +50,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     override val mViewModel: ProductDetailsViewModel by activityViewModels {
         ProductDetailsViewModelFactory(
             ProductDetailsRepository(),
-            DynamicLinkRepository()
+            DynamicLinkRepository(),
+            SearchRepository()
         )
     }
 
@@ -76,6 +79,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     private lateinit var mProductType: ProductType
     private lateinit var mProductCategory: ProductCategory
     private lateinit var mRelatedAdapter: ProductAdapter
+    private lateinit var mUpForSaleAdapter: AskAdapter
+
 
     //Mtg Details view
     private lateinit var mLayoutProductDetailMtgDetailBinding: LayoutProductDetailMtgDetailBinding
@@ -98,7 +103,11 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         setUpRelated()
         setUpUpForSell()
         setUpProductType()
+
+        mViewModel.fetchUpForSale(null,10,0,"price",1,null,objectId = mProductDisplayModel.objectID)
+
         setUpObserver()
+
 
     }
 
@@ -206,6 +215,26 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 }
             }
         }
+
+        mViewModel.upForSaleList.observe(viewLifecycleOwner) {  it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Success -> {
+                        mUpForSaleAdapter.submitList(it.data)
+
+                        showProgressBar(false)
+
+                        GthrLogger.e("observedata", "data: ${it.data}")
+                    }
+                }
+            }
+        }
+
     }
 
     private fun setUpOnClickListeners() {
@@ -384,7 +413,11 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         rvUpForSell.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = mRelatedAdapter
+
+            mUpForSaleAdapter = AskAdapter(CustomProductCell.State.NORMAL) {}
+
+
+            rvUpForSell.adapter = mUpForSaleAdapter
         }
     }
 

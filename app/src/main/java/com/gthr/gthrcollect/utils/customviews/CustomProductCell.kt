@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.model.domain.ForSaleItemDomainModel
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.*
@@ -90,31 +91,61 @@ class CustomProductCell @JvmOverloads constructor(
     }
 
    fun setValue(productDisplayModel: ProductDisplayModel){
-       when (productDisplayModel.productType) {
-           ProductType.MAGIC_THE_GATHERING,
-           ProductType.POKEMON,
-           ProductType.YUGIOH -> {
-               setType(Type.CARDS)
-               setProductName(productDisplayModel.description)
-               setProductNumber(productDisplayModel.productNumber.toString())
+       if (productDisplayModel.forsaleItemNodel != null){
+           setValue(productDisplayModel.forsaleItemNodel)
+       }else{
+           when (productDisplayModel.productType) {
+               ProductType.MAGIC_THE_GATHERING,
+               ProductType.POKEMON,
+               ProductType.YUGIOH -> {
+                   setType(Type.CARDS)
+                   setProductName(productDisplayModel.description)
+                   setProductNumber(productDisplayModel.productNumber.toString())
+               }
+               ProductType.FUNKO -> {
+                   setType(Type.FUNKO)
+                   setProductName(productDisplayModel.name.toString())
+                   setProductNumber(productDisplayModel.productNumber.toString())
+               }
+               ProductType.SEALED_YUGIOH,
+               ProductType.SEALED_POKEMON,
+               ProductType.SEALED_MTG -> {
+                   setType(Type.SEALED)
+                   setProductName(productDisplayModel.name.toString())
+                   setProductNumber(productDisplayModel.description.toString())
+               }
            }
-           ProductType.FUNKO -> {
-               setType(Type.FUNKO)
-               setProductName(productDisplayModel.name.toString())
-               setProductNumber(productDisplayModel.productNumber.toString())
-           }
-           ProductType.SEALED_YUGIOH,
-           ProductType.SEALED_POKEMON,
-           ProductType.SEALED_MTG -> {
-               setType(Type.SEALED)
-               setProductName(productDisplayModel.name.toString())
-               setProductNumber(productDisplayModel.description.toString())
-           }
+           setProductRarity(productDisplayModel.rarity.toString())
+           setPrice(productDisplayModel.lowestAskCost.toString())
+           setImage(productDisplayModel.firImageURL.toString())
        }
-       setProductRarity(productDisplayModel.rarity.toString())
-       setPrice(productDisplayModel.lowestAskCost.toString())
-       setImage(productDisplayModel.firImageURL.toString())
    }
+   private fun setValue(model: ForSaleItemDomainModel){
+        when (model.productType) {
+            ProductType.MAGIC_THE_GATHERING,
+            ProductType.POKEMON,
+            ProductType.YUGIOH -> {
+                setType(Type.CARDS)
+                setProductName(model.productProductName)
+                setProductNumber(model.productProductNumber.toString())
+            }
+            ProductType.FUNKO -> {
+                setType(Type.FUNKO)
+                setProductName(model.productProductName)
+                setProductNumber(model.productProductNumber.toString())
+            }
+            ProductType.SEALED_YUGIOH,
+            ProductType.SEALED_POKEMON,
+            ProductType.SEALED_MTG -> {
+                setType(Type.SEALED)
+                setProductName(model.productProductName)
+                setProductNumber(model.productProductNumber.toString())
+            }
+        }
+        setProductRarity(model.productRarity.toString())
+        setPrice(model.price.toString())
+        setImage(model.productFirImageURL.toString())
+    }
 
     fun setState(state:State){
         mCurrentState = state

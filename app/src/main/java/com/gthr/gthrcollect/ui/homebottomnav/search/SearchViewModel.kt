@@ -8,6 +8,7 @@ import com.gthr.gthrcollect.model.Event
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.model.domain.SearchCollection
+import com.gthr.gthrcollect.model.network.cloudfunction.ForSaleItemModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
 import com.gthr.gthrcollect.utils.extensions.*
 import kotlinx.coroutines.Job
@@ -18,6 +19,8 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
 
     private var searchProductJob: Job? = null
     private var searchCollectionJob: Job? = null
+    private var searchAskJob: Job? = null
+
 
     private val _productList = MutableLiveData<Event<State<List<ProductDisplayModel>>>>()
     val productList: LiveData<Event<State<List<ProductDisplayModel>>>>
@@ -26,6 +29,7 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
     private val _collectionList = MutableLiveData<Event<State<List<SearchCollection>>>>()
     val collectionList: LiveData<Event<State<List<SearchCollection>>>>
         get() = _collectionList
+
 
     private val _loadMore = MutableLiveData<Event<Boolean>>()
     val loadMore: LiveData<Event<Boolean>>
@@ -40,6 +44,15 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
     val collectionDisplayList: LiveData<MutableList<SearchCollection>>
         get() = _collectionDisplayList
 
+    private val _forSaleListList = MutableLiveData<Event<State<List<ProductDisplayModel>>>>()
+    val forSaleListList: LiveData<Event<State<List<ProductDisplayModel>>>>
+        get() = _forSaleListList
+
+    private val _saleDisplayList = MutableLiveData<MutableList<ProductDisplayModel>>()
+    val saleDisplayList: LiveData<MutableList<ProductDisplayModel>>
+        get() = _saleDisplayList
+
+    // For Collections
     fun setCollectionDisplayList(list : List<SearchCollection>){
         _collectionDisplayList.addAllSearchCollection(list)
     }
@@ -56,6 +69,7 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
         _collectionDisplayList.removeSearchCollectionLoadMore()
     }
 
+    // For Products
     fun setProductDisplayList(list : List<ProductDisplayModel>){
         _productDisplayList.addAllProductDisplayModel(list)
     }
@@ -72,17 +86,38 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
         _productDisplayList.removeProductDisplayModelLoadMore()
     }
 
+    //  For Sale
 
-    fun searchProducts(
+    fun setSaleDisplayList(list : List<ProductDisplayModel>){
+        _saleDisplayList.addAllProductDisplayModel(list)
+    }
+
+    fun clearSaleDisplayList(){
+        _saleDisplayList.clear()
+    }
+
+    fun addSaleDisplayModelLoadMore(){
+        _saleDisplayList.addProductDisplayModelLoadMore()
+    }
+
+    fun removeSaleDisplayModelLoadMore(){
+        _saleDisplayList.removeProductDisplayModelLoadMore()
+    }
+
+
+
+    fun searchProductsList(
         searchTerm: String? = null,
         productCategory: String? = null,
         productType: String? = null,
         limit: Int? = null,
-        page: Int? = null
+        page: Int? = null,
+        isAscending:Int?=null,
+        sortBy: String? = null
     ) {
         clearJobs()
         searchProductJob = viewModelScope.launch {
-            repository.fetchProducts(searchTerm, productCategory, productType, limit, page)
+            repository.fetchProducts(searchTerm, productCategory, productType, limit, page,isAscending,sortBy)
                 .collect {
                   _productList.value = Event(it)
                 }
@@ -94,6 +129,15 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
         searchCollectionJob = viewModelScope.launch {
             repository.fetchCollection(searchTerm, limit, page).collect {
                 _collectionList.value = Event(it)
+            }
+        }
+    }
+
+    fun searchAsk(searchTerm: String? = null, limit: Int? = null, page: Int? = null, sortBy:String?=null,isAscending:Int?=null,productCategory:String?=null,productType:String?=null) {
+        clearJobs()
+        searchAskJob = viewModelScope.launch {
+            repository.fetchSearchAsk(searchTerm, limit, page,sortBy,isAscending,productCategory,productType).collect {
+                _forSaleListList.value = Event(it)
             }
         }
     }

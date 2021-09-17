@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
+import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.LayoutProductDetailCardTopBinding
 import com.gthr.gthrcollect.databinding.LayoutProductDetailToyTopBinding
 import com.gthr.gthrcollect.databinding.UpForSellFragmentBinding
@@ -25,7 +26,8 @@ class UpForSellFragment : BaseFragment<ProductDetailsViewModel,UpForSellFragment
     override val mViewModel: ProductDetailsViewModel by activityViewModels{
         ProductDetailsViewModelFactory(
             ProductDetailsRepository(),
-            DynamicLinkRepository()
+            DynamicLinkRepository(),
+            SearchRepository()
         )
     }
     override fun getViewBinding() =  UpForSellFragmentBinding.inflate(layoutInflater)
