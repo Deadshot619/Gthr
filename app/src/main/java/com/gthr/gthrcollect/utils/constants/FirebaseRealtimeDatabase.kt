@@ -17,6 +17,9 @@ object FirebaseRealtimeDatabase {
 
 
     /*Common*/
+
+    const val KEY = "key"
+    const val TYPE = "type"
     const val FIR_IMAGE_URL = "firImageURL"
     const val USER_REF_KEY = "userRefKey"
     const val PROFILE_URL_KEY = "profileImageURL"
@@ -40,6 +43,27 @@ object FirebaseRealtimeDatabase {
     const val CARD_TYPE = "cardType"
 
 
+    /*AskItemModel*/
+    const val ASK_ITEM_MODEL = "askItemModel"
+    const val REF_KEY = "refKey"
+    const val CREATOR_UID = "creatorUID"
+    const val DURATION = "duration"
+    const val ASK_PRICE = "askPrice"
+    const val TOTAL_PAYOUT = "totalPayout"
+    const val ITEM_OBJECT_ID = "itemObjectID"
+    const val PRODUCT_CATEGORY = "productCategory"
+    const val RETURN_NAME = "returnName"
+    const val RETURN_ADDRESSLINE1 = "returnAddressLine1"
+    const val RETURN_ADDRESSLINE2 = "returnAddressLine2"
+    const val RETURN_CITY = "returnCity"
+    const val RETURN_STATE = "returnState"
+    const val RETURN_ZIPCODE = "returnZipCode"
+    const val RETURN_COUNTRY = "returnCountry"
+
+
+    /*ConditionModel*/
+    const val ABBREVIATED_NAME = "abbreviatedName"
+
     /*CollectionInfoModel*/
     const val ABOUT = "about"
     const val BUY_LIST = "buyList"
@@ -58,6 +82,10 @@ object FirebaseRealtimeDatabase {
     const val ASK_REF_KEY = "askRefKey"
     const val FRONT_IMAGE_URL = "frontImageURL"
     const val BACK_IMAGE_URL = "backImageURL"
+    const val _CONDITION = "condition"
+    const val _EDITION = "edition"
+    const val _LANGUAGE = "language"
+
 
 
     /*MTGDomainModel*/
@@ -150,8 +178,8 @@ object FirebaseRealtimeDatabase {
     const val STATS = "stats"
 
     /*Recent Sale*/
-    const val CONDITION = "Condition"
     const val DATE = "Date"
+    const val CONDITION = "Condition"
     const val EDITION = "Edition"
     const val LANGUAGE = "Language"
     const val PRICE = "price"

@@ -20,7 +20,7 @@ data class CollectionInfoDomainModel(
     )
 
 data class CollectionItemDomainModel(
-    var id: String,
+    var id: String?,
     var itemRefKey: String?,
     var marketCost: Double,
     var productType: ProductType?,
@@ -28,6 +28,6 @@ data class CollectionItemDomainModel(
     var askRefKey: String?,
     var frontImageURL: String?,
     var backImageURL: String?,
-    //  var condition: ConditionItem?,
-    //  var language: LanguageItem?
+    var condition: ConditionDomainModel?,
+    var language: LanguageDomainModel?
 )

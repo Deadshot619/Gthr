@@ -43,7 +43,7 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
         setUpNavigationAndActionBar()
 
         if (mSettingsType == SettingFlowType.SHIPPING_ADDRESS){
-            mNavController.navigate(SettingsFragmentDirections.actionSettingsFragmentToEditShippingAddressFragment())
+            mNavController.navigate(SettingsFragmentDirections.actionSettingsFragmentToEditShippingAddressFragment(true))
         }
 
     }

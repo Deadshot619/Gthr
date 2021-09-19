@@ -1,7 +1,6 @@
 package com.gthr.gthrcollect.model.network.algolia
 
 import com.gthr.gthrcollect.utils.constants.AlgoliaConstants
-import com.gthr.gthrcollect.utils.constants.Firestore
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

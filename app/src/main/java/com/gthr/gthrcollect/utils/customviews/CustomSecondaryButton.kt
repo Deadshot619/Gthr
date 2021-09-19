@@ -19,12 +19,15 @@ class CustomSecondaryButton @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : AppCompatButton(context, attrs, defStyleAttr) {
 
+    var mCurrentState : State = State.BLUE
+
     init {
         val attrs = getContext().obtainStyledAttributes(attrs, R.styleable.CustomSecondaryButton)
         val state = State.values()[attrs.getInt(
             R.styleable.CustomSecondaryButton_secondary_button_state,
             1
         )]
+        mCurrentState = state
 
         this.textAlignment = View.TEXT_ALIGNMENT_CENTER
         val padding = resources.getDimensionPixelOffset(R.dimen.padding_large)
@@ -38,6 +41,7 @@ class CustomSecondaryButton @JvmOverloads constructor(
 
 
     fun setState(state: State) {
+        mCurrentState = state
         this.background = when (state) {
             State.DISABLE -> {
                 this.isEnabled = false

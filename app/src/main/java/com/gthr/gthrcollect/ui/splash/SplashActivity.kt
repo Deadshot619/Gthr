@@ -1,35 +1,22 @@
 package com.gthr.gthrcollect.ui.splash
 
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.algolia.search.client.ClientSearch
+import com.algolia.search.model.*
+import com.algolia.search.model.indexing.Partial
 import com.gthr.gthrcollect.databinding.ActivitySplashBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
-import androidx.annotation.NonNull
-
-import com.google.android.gms.tasks.OnFailureListener
-
-import android.content.Intent
-import android.net.Uri
-import android.util.Log
-import android.widget.Toast
-
-import com.google.firebase.dynamiclinks.ShortDynamicLink
-
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.FirebaseUser
 
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
-import com.google.firebase.dynamiclinks.PendingDynamicLinkData
-import com.google.firebase.auth.FirebaseAuth
 
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.dynamiclinks.DynamicLink
-import com.google.firebase.dynamiclinks.DynamicLink.AndroidParameters
-import com.google.firebase.dynamiclinks.DynamicLink.IosParameters
 import com.gthr.gthrcollect.GthrCollect
+import com.gthr.gthrcollect.utils.constants.AlgoliaConstants
 import com.gthr.gthrcollect.utils.constants.DynamicLinkConstants
 import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
 import com.gthr.gthrcollect.utils.getProductType

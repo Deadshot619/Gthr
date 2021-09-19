@@ -3,6 +3,7 @@ package com.gthr.gthrcollect.model.network.firebaserealtimedb
 import com.algolia.search.serialize.KeyFrom
 import com.google.firebase.database.PropertyName
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
+import com.gthr.gthrcollect.utils.enums.ConditionType
 import com.gthr.gthrcollect.utils.enums.EditionType
 import com.gthr.gthrcollect.utils.enums.ProductType
 import kotlinx.serialization.Serializable
@@ -52,7 +53,7 @@ data class CollectionItemModel(
 
     @get:PropertyName(FirebaseRealtimeDatabase.ID)
     @set:PropertyName(FirebaseRealtimeDatabase.ID)
-    var id: String="",
+    var id: String?="",
 
     @get:PropertyName(FirebaseRealtimeDatabase.ITEM_REF_KEY)
     @set:PropertyName(FirebaseRealtimeDatabase.ITEM_REF_KEY)
@@ -66,11 +67,6 @@ data class CollectionItemModel(
     @set:PropertyName(FirebaseRealtimeDatabase.PRODUCT_TYPE)
     var productType: String?="",
 
-    @get:PropertyName(FirebaseRealtimeDatabase.EDITION)
-    @set:PropertyName(FirebaseRealtimeDatabase.EDITION)
-    var edition: String?="",
-
-
     @get:PropertyName(FirebaseRealtimeDatabase.ASK_REF_KEY)
     @set:PropertyName(FirebaseRealtimeDatabase.ASK_REF_KEY)
     var askRefKey: String?="",
@@ -83,6 +79,49 @@ data class CollectionItemModel(
     @set:PropertyName(FirebaseRealtimeDatabase.BACK_IMAGE_URL)
     var backImageURL: String?="",
 
-    //  var condition: ConditionItem?,
-    //  var language: LanguageItem?
+    @get:PropertyName(FirebaseRealtimeDatabase._CONDITION)
+    @set:PropertyName(FirebaseRealtimeDatabase._CONDITION)
+    var condition: ConditionModel? = null,
+
+    @get:PropertyName(FirebaseRealtimeDatabase._LANGUAGE)
+    @set:PropertyName(FirebaseRealtimeDatabase._LANGUAGE)
+    var language: LanguageModel? = null,
+
+    @get:PropertyName(FirebaseRealtimeDatabase._EDITION)
+    @set:PropertyName(FirebaseRealtimeDatabase._EDITION)
+    var edition: String?="",
+)
+
+@Serializable
+data class ConditionModel(
+    @get:PropertyName(FirebaseRealtimeDatabase.KEY)
+    @set:PropertyName(FirebaseRealtimeDatabase.KEY)
+    var key: Int ?=-1,
+
+    @get:PropertyName(FirebaseRealtimeDatabase.DISPLAY_NAME)
+    @set:PropertyName(FirebaseRealtimeDatabase.DISPLAY_NAME)
+    var displayName: String ?="",
+
+    @get:PropertyName(FirebaseRealtimeDatabase.TYPE)
+    @set:PropertyName(FirebaseRealtimeDatabase.TYPE)
+    var type: ConditionType? = null ,
+
+    @get:PropertyName(FirebaseRealtimeDatabase.ABBREVIATED_NAME)
+    @set:PropertyName(FirebaseRealtimeDatabase.ABBREVIATED_NAME)
+    var abbreviatedName: String ? = ""
+)
+
+@Serializable
+data class LanguageModel(
+    @get:PropertyName(FirebaseRealtimeDatabase.KEY)
+    @set:PropertyName(FirebaseRealtimeDatabase.KEY)
+    var key: Int ?=-1 ,
+
+    @get:PropertyName(FirebaseRealtimeDatabase.DISPLAY_NAME)
+    @set:PropertyName(FirebaseRealtimeDatabase.DISPLAY_NAME)
+    var displayName: String ?="",
+
+    @get:PropertyName(FirebaseRealtimeDatabase.ABBREVIATED_NAME)
+    @set:PropertyName(FirebaseRealtimeDatabase.ABBREVIATED_NAME)
+    var abbreviatedName: String ?=""
 )

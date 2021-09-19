@@ -2,6 +2,7 @@ package com.gthr.gthrcollect.model.mapper
 
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
+import com.gthr.gthrcollect.utils.enums.ConditionType
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.toRecentSaleDate
 import com.gthr.gthrcollect.utils.getProductCategory
@@ -32,8 +33,22 @@ fun CollectionItemModel.toCollectionItemDomainModel()=CollectionItemDomainModel(
     edition= getEditionTypeFromRowType(edition.toString() ),
     askRefKey=askRefKey,
     frontImageURL = frontImageURL,
-    backImageURL= backImageURL
+    backImageURL= backImageURL,
+    condition = condition?.toConditionDomainModel(),
+    language = language?.toLanguageDomainModel()
+)
 
+fun LanguageModel.toLanguageDomainModel() = LanguageDomainModel(
+    key = key ?: -1,
+    displayName = displayName ?: "",
+    abbreviatedName = abbreviatedName ?: ""
+)
+
+fun ConditionModel.toConditionDomainModel() = ConditionDomainModel(
+    key = key ?: -1,
+    displayName = displayName ?: "",
+    type = type ?: ConditionType.BGS,
+    abbreviatedName = abbreviatedName ?: ""
 )
 
 fun FunkoModel.toFunkoDomainModel(refKey: String) = FunkoDomainModel(
@@ -224,8 +239,8 @@ fun AskItemModel.toAskItemDomainModel() = AskItemDomainModel(
     productType = getProductType(productType.toString()),
     productCategory = getProductCategory(getProductType(productType.toString())!!),
     edition = getEditionTypeFromRowType(edition.toString()),
-    condition = condition,
-    language = language,
+    condition = condition?.toConditionDomainModel(),
+    language = language?.toLanguageDomainModel(),
     returnName = returnName,
     returnAddressLine1 = returnAddressLine1,
     returnAddressLine2 = returnAddressLine2,

@@ -232,7 +232,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                 )
             }
         })
-        mViewModel.selectedConditionValue.observe(this, {
+        mViewModel.selectedCondition.observe(this, {
             it.contentIfNotHandled?.let {
                 mProductItem.setConditionValue(it.abbreviatedName)
             }

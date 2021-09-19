@@ -21,6 +21,9 @@ class EditShippingAddressViewModel(val repository : AddressRepository) : BaseVie
 
 
 
+    private val _mDefaultAddress = MutableLiveData<Event<ShippingAddressDomainModel>>()
+    val mDefaultAddress: LiveData<Event<ShippingAddressDomainModel>>
+        get() = _mDefaultAddress
 
     fun getAllShippingAddress(uId : String){
         viewModelScope.launch {
@@ -30,9 +33,10 @@ class EditShippingAddressViewModel(val repository : AddressRepository) : BaseVie
         }
     }
 
-    fun updateAddressList(list : List<ShippingAddressDomainModel>){
+    fun updateAddressList(list : List<ShippingAddressDomainModel>,defaultAddress : ShippingAddressDomainModel? = null){
         viewModelScope.launch {
             repository.updateAddressListFirestore(list.toFirestoreModel(),GthrCollect.prefs?.signedInUser!!.uid).collect {
+                defaultAddress?.let { _mDefaultAddress.value = Event(defaultAddress) }
                 _mShippingAddressList.value = Event(it)
             }
         }

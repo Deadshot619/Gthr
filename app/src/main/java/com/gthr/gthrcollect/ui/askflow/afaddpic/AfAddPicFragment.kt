@@ -15,6 +15,7 @@ import com.google.android.material.card.MaterialCardView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfAddPicFragmentBinding
+import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
@@ -39,7 +40,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
     lateinit var mBack_repls: LinearLayout
 
     lateinit var mSkipBtn: CustomSecondaryButton
-
+    private var mIsNextBtnClicked : Boolean = false
 
     override fun getViewBinding() = AfAddPicFragmentBinding.inflate(layoutInflater)
     override val mViewModel: AskFlowViewModel by activityViewModels{
@@ -74,6 +75,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
 
             mIvFrontImage.gone()
             mIvBackImage.gone()
+            initProgressBar(layoutProgress)
 
             if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.COLLECT)
                 mBtnNext.text = getString(R.string.finish)
@@ -255,8 +257,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
                             mViewModel.setFrontImage(mFrontImageUrl)
                         } else {
                             // if BACK image is re-captured
-                            mBackImageUrl =
-                                data.getStringExtra(CustomCardCamera.INTENT_KEY_URL) ?: ""
+                            mBackImageUrl = data.getStringExtra(CustomCardCamera.INTENT_KEY_URL) ?: ""
                             mViewModel.setBackImage(mBackImageUrl)
                         }
                     }
@@ -293,8 +294,14 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
     private fun setUpClickListeners() {
         mViewBinding.run {
             mBtnNext.setOnClickListener {
-                if (mViewModel.isSell.value != true)
-                    activity?.finish()
+                mIsNextBtnClicked = true
+                if (mViewModel.isSell.value != true){
+                    if (mViewModel.frontImageUrl.value != null && mViewModel.backImageUrl.value != null){
+                        mViewModel.insertCollection()
+                    }
+                    else
+                        showToast("Please add pictures!")
+                }
                 else {
                     if (mViewModel.frontImageUrl.value != null && mViewModel.backImageUrl.value != null)
                         findNavController().navigate(AfAddPicFragmentDirections.actionAfAddPicFragmentToAfReviewYourAskFragment())
@@ -306,12 +313,94 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
                 findNavController().navigateUp()
             }
             mSkipBtn.setOnClickListener {
-                activity?.finish()
+                mIsNextBtnClicked = false
+                if (mViewModel.isSell.value != true){
+                    mViewModel.insertCollection()
+                }
             }
         }
     }
 
     private fun setUpObservers() {
+        mViewModel.insertCollectionRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        mViewModel.setCollectionKey(it.data)
+                        if(mIsNextBtnClicked)
+                            mViewModel.uploadFrontImage()
+                        else
+                            (activity as AskFlowActivity)?.finish()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.frontImageUpload.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        mViewModel.setFrontImageDownloadUrl(it.data)
+                        mViewModel.uploadBackImage()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.backImageUpload.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        mViewModel.setBackImageDownloadUrl(it.data)
+                        mViewModel.updateCollection()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.updateCollectionRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        (activity as AskFlowActivity)?.finish()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+
         mViewModel.isSell.observe(viewLifecycleOwner, {
             if (it) {
                 mSkipBtn.gone()

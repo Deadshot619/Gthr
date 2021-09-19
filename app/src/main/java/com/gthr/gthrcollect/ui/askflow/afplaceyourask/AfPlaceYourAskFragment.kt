@@ -1,6 +1,9 @@
 package com.gthr.gthrcollect.ui.askflow.afplaceyourask
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -12,6 +15,7 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfPlaceYourAskFragmentBinding
 import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
@@ -24,6 +28,7 @@ import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.isValidPrice
+import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.extensions.visible
 
 class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFragmentBinding>() {
@@ -68,6 +73,141 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
     }
 
     private fun setUpObserve() {
+
+
+        mViewModel.insertCollectionRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        mViewModel.setCollectionKey(it.data)
+                        mViewModel.uploadFrontImage()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.frontImageUpload.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        mViewModel.setFrontImageDownloadUrl(it.data)
+                        mViewModel.uploadBackImage()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.backImageUpload.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        mViewModel.setBackImageDownloadUrl(it.data)
+                        mViewModel.insertAsk()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+        mViewModel.insertAskRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        mViewModel.setAskId(it.data)
+                        mViewModel.updateCollection()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.updateCollectionRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        if(mViewModel.productDisplayModel?.lowestAskCost!!>mViewModel.askPrice.value!!&&
+                            mViewModel.productDisplayModel?.lowestAskID!=mViewModel.mAskId){
+                            mViewModel.updateProduct()
+                        }
+                        else{
+                            startActivity(
+                                ReceiptDetailActivity.getInstance(
+                                    requireContext(),
+                                    ReceiptType.SOLD,
+                                    ProductCategory.CARDS,
+                                    CustomDeliveryButton.Type.ASK_PLACED
+                                )
+                            )
+                            (activity as AskFlowActivity)?.finish()
+                        }
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.updateProductRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        startActivity(
+                            ReceiptDetailActivity.getInstance(
+                                requireContext(),
+                                ReceiptType.SOLD,
+                                ProductCategory.CARDS,
+                                CustomDeliveryButton.Type.ASK_PLACED
+                            )
+                        )
+                        (activity as AskFlowActivity)?.finish()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
         mViewModel.askPrice.observe(viewLifecycleOwner) {
             mTvRateValue.text = String.format(getString(R.string.rate_common), it)
         }
@@ -140,15 +280,10 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     activity?.finish()
                 }
                 else -> {
-                    startActivity(
-                        ReceiptDetailActivity.getInstance(
-                            requireContext(),
-                            ReceiptType.SOLD,
-                            ProductCategory.CARDS,
-                            CustomDeliveryButton.Type.ASK_PLACED
-                        )
-                    )
-                    activity?.finish()
+                    if(mViewModel.mAddress!=null)
+                        mViewModel.insertCollection()
+                    else
+                        showToast("Please select address")
                 }
             }
         }
@@ -163,7 +298,20 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         }
 
         mAddressBtn.setOnClickListener {
-            startActivity(SettingsActivity.getInstance(requireContext(), SettingFlowType.SHIPPING_ADDRESS))
+            startActivityForResult(SettingsActivity.getInstance(requireContext(), SettingFlowType.SHIPPING_ADDRESS),ADDRESS_REQUEST_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null) {
+            when (requestCode) {
+                ADDRESS_REQUEST_CODE -> if (resultCode == Activity.RESULT_OK) {
+                    val address = data.getParcelableExtra<ShippingAddressDomainModel>(KEY_ADDRESS)!!
+                    mViewModel.setAddress(address)
+                    Log.i("dsfbvjudrs", "onActivityResult: "+address)
+                }
+            }
         }
     }
 
@@ -244,4 +392,15 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
 
     fun String.getAddedRate(): String = "+$this"
     fun String.getSubtractedRate(): String = "-$this"
+
+    companion object{
+        const val ADDRESS_REQUEST_CODE = 123
+        const val KEY_ADDRESS = "address"
+
+
+        fun getReturnIntent(shippingAddressDomainModel : ShippingAddressDomainModel) =  Intent().apply {
+            putExtra(KEY_ADDRESS,shippingAddressDomainModel)
+        }
+
+    }
 }

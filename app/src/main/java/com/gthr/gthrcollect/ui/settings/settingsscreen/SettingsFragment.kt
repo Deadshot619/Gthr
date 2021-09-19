@@ -68,7 +68,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel, SettingsFragmentBinding
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToEditAccountInfoFragment())
         }
         mBtnShippingAddress.setOnClickListener {
-            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToEditShippingAddressFragment())
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToEditShippingAddressFragment(false))
         }
         mBtnActiveOffers.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToActiveOffersFragment())

@@ -1,20 +1,27 @@
 package com.gthr.gthrcollect.ui.askflow
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.model.Event
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
+import com.gthr.gthrcollect.model.mapper.toRealtimeDatabaseModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
+import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.enums.ConditionType
 import com.gthr.gthrcollect.utils.enums.EditionType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
 import com.gthr.gthrcollect.utils.extensions.isValidPrice
 import com.gthr.gthrcollect.utils.extensions.toTwoDecimal
+import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.helper.*
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -79,6 +86,8 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         return total.toTwoDecimal()
     }
 
+
+
     /* Selected Language, Edition, Condition Title & Value */
     private val _selectedLanguage = MutableLiveData<Event<LanguageDomainModel>>()
     val selectedLanguage: LiveData<Event<LanguageDomainModel>>
@@ -92,9 +101,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val selectedConditionTitle: LiveData<Event<ConditionType>>
         get() = _selectedConditionTitle
 
-    private val _selectedConditionValue = MutableLiveData<Event<ConditionDomainModel>>()
-    val selectedConditionValue: LiveData<Event<ConditionDomainModel>>
-        get() = _selectedConditionValue
+    private val _selectedCondition = MutableLiveData<Event<ConditionDomainModel>>()
+    val selectedCondition: LiveData<Event<ConditionDomainModel>>
+        get() = _selectedCondition
 
     /* Front & Back Image */
     private val _frontImageUrl = MutableLiveData<String>()
@@ -119,8 +128,48 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val conditionList: LiveData<Event<List<ConditionDomainModel>>>
         get() = _conditionList
 
+    //Variable to indicate whether Collection data has been updated in Firebase
+    private val _updateCollectionRDB = MutableLiveData<Event<State<Boolean>>>()
+    val updateCollectionRDB: LiveData<Event<State<Boolean>>>
+        get() = _updateCollectionRDB
+
+    //Variable to indicate whether Collection data has been added in Firebase
+    private val _insertCollectionRDB = MutableLiveData<Event<State<String>>>()
+    val insertCollectionRDB: LiveData<Event<State<String>>>
+        get() = _insertCollectionRDB
+
+    //Variable to indicate whether Ask data has been added in Firebase
+    private val _insertAskRDB = MutableLiveData<Event<State<String>>>()
+    val insertAskRDB: LiveData<Event<State<String>>>
+        get() = _insertAskRDB
+
+    //Variable to indicate whether Product data has been updated in Firebase
+    private val _updateProductRDB = MutableLiveData<Event<State<Boolean>>>()
+    val updateProductRDB: LiveData<Event<State<Boolean>>>
+        get() = _updateProductRDB
+
+
+    //Variable to indicate whether user front Id image uploaded
+    private val _frontImageUpload = MutableLiveData<Event<State<String>>>()
+    val frontImageUpload: LiveData<Event<State<String>>>
+        get() = _frontImageUpload
+
+    //Variable to indicate whether user back Id image uploaded
+    private val _backImageUpload = MutableLiveData<Event<State<String>>>()
+    val backImageUpload: LiveData<Event<State<String>>>
+        get() = _backImageUpload
+
     init {
         setSelectedConditionTitle(ConditionType.UG)  //Default selection UG i.e. Raw
+        val addressList = GthrCollect.prefs?.userInfoModel?.addressList
+        addressList?.let {
+            for(address in addressList){
+                if(address.isSelected){
+                    mAddress = address
+                    break
+                }
+            }
+        }
     }
 
     fun setProductType(productType: ProductType) {
@@ -167,7 +216,7 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     }
 
     fun setSelectedConditionValue(conditionDomainModel: ConditionDomainModel) {
-        _selectedConditionValue.value = Event(conditionDomainModel)
+        _selectedCondition.value = Event(conditionDomainModel)
     }
 
     /* Product Types */
@@ -306,6 +355,153 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
             _conditionList.value = Event(getConditionList(type))
         }
     }
+
+
+    var mFrontImageDownloadUrl = ""
+        private set
+
+    var mBackImageDownloadUrl = ""
+        private set
+
+    //Collection Item key use to store image in firebase Storage in collectionImage folder
+    var mCollectionKey = ""
+        private set
+
+    var mAskId = ""
+       private set
+
+    var mAddress : ShippingAddressDomainModel? = null
+        private set
+
+    fun setFrontImageDownloadUrl(url : String){
+        mFrontImageDownloadUrl = url
+    }
+
+    fun setBackImageDownloadUrl(url : String){
+        mBackImageDownloadUrl = url
+    }
+
+    fun setCollectionKey(key : String){
+        mCollectionKey = key
+    }
+
+    fun setAskId(key : String){
+        mAskId = key
+    }
+
+    fun setAddress(address : ShippingAddressDomainModel){
+        mAddress = address
+    }
+
+    fun insertCollection(){
+        viewModelScope.launch {
+            val data : CollectionItemDomainModel? = when(productType){
+                ProductType.MAGIC_THE_GATHERING,ProductType.YUGIOH,ProductType.POKEMON -> {
+                    CollectionItemDomainModel(
+                        marketCost = 0.0,
+                        productType = productType,
+                        edition = selectedEdition.value?.peekContent(),frontImageURL = null,
+                        backImageURL = null,askRefKey = null,
+                        id = null,itemRefKey = null,language = selectedLanguage.value?.peekContent(),
+                        condition = selectedCondition.value?.peekContent()
+                    )
+                }
+                ProductType.FUNKO,ProductType.SEALED_POKEMON,ProductType.SEALED_YUGIOH,ProductType.SEALED_MTG -> {
+                    CollectionItemDomainModel(
+                        marketCost = 0.0,
+                        productType = productType,
+                        edition = null,frontImageURL = null,
+                        backImageURL = null,askRefKey = null,
+                        id = null,itemRefKey = null,language = null,
+                        condition = null
+                    )
+                }
+                null -> null
+            }
+            repository.insertCollection(GthrCollect.prefs?.getUserCollectionId()!!,data?.toRealtimeDatabaseModel()!!).collect {
+                _insertCollectionRDB.value = Event(it)
+            }
+        }
+    }
+
+    fun updateCollection(){
+        viewModelScope.launch {
+            repository.updateCollection(GthrCollect.prefs?.getUserCollectionId()!!,mCollectionKey,mFrontImageDownloadUrl,mBackImageDownloadUrl,mAskId).collect {
+                _updateCollectionRDB.value = Event(it)
+            }
+        }
+    }
+
+    fun uploadFrontImage() {
+        viewModelScope.launch {
+            repository.uploadCollectionImage(frontImageUrl.value!!,mCollectionKey,FirebaseStorage.FRONT_IMAGE, GthrCollect.prefs!!.signedInUser!!.uid).collect {
+                _frontImageUpload.value = Event(it)
+            }
+        }
+    }
+
+    fun uploadBackImage() {
+       viewModelScope.launch {
+            repository.uploadCollectionImage(backImageUrl.value!!,mCollectionKey,FirebaseStorage.BACK_IMAGE,GthrCollect.prefs!!.signedInUser!!.uid).collect {
+                _backImageUpload.value = Event(it)
+            }
+        }
+    }
+
+    fun insertAsk(){
+        viewModelScope.launch {
+           val data = when(productType){
+                ProductType.MAGIC_THE_GATHERING,ProductType.YUGIOH,ProductType.POKEMON -> {
+                    AskItemDomainModel(
+                        refKey = "",duration = "",itemRefKey = "",
+                        creatorUID = GthrCollect.prefs?.signedInUser?.uid!!,
+                        askPrice = askPrice.value.toString(),
+                        totalPayout = totalPayoutRate.toString(),
+                        itemObjectID = productDisplayModel?.objectID!!,
+                        productType = productType,
+                        productCategory = getProductCategory(productType!!),
+                        edition = selectedEdition.value?.peekContent(),
+                        condition = selectedCondition.value?.peekContent(),
+                        language = selectedLanguage.value?.peekContent(),
+                        returnName = mAddress?.firstName, returnAddressLine1 = mAddress?.addressLine1, returnAddressLine2 = mAddress?.addressLine2,
+                        returnCity = mAddress?.city, returnState = mAddress?.state, returnZipCode = mAddress?.postalCode,
+                        returnCountry = mAddress?.country, frontImageURL = null, backImageURL = null
+                    )
+                }
+                ProductType.FUNKO,ProductType.SEALED_POKEMON,ProductType.SEALED_YUGIOH,ProductType.SEALED_MTG -> {
+                    AskItemDomainModel(
+                        refKey = "",duration = "",itemRefKey = "",
+                        creatorUID = GthrCollect.prefs?.signedInUser?.uid!!,
+                        askPrice = askPrice.value.toString(),
+                        totalPayout = totalPayoutRate.toString(),
+                        itemObjectID = productDisplayModel?.objectID!!,
+                        productType = productType,
+                        productCategory = getProductCategory(productType!!),
+                        edition = null, condition = null, language = null,
+                        returnName = mAddress?.firstName, returnAddressLine1 = mAddress?.addressLine1, returnAddressLine2 = mAddress?.addressLine2,
+                        returnCity = mAddress?.city, returnState = mAddress?.state, returnZipCode = mAddress?.postalCode,
+                        returnCountry = mAddress?.country, frontImageURL = null, backImageURL = null
+                    )
+                }
+               else -> null
+           }
+            repository.insertAsk(data?.toRealtimeDatabaseModel()!!).collect {
+                _insertAskRDB.value = Event(it)
+            }
+        }
+    }
+
+    fun updateProduct(){
+        viewModelScope.launch {
+            GthrLogger.i("shdbchjsdb", "productType:  $productType}")
+            GthrLogger.i("shdbchjsdb", "productDisplayModel?.refKey: ${productDisplayModel?.refKey}")
+            repository.updateProduct(askPrice.value!!.toInt(),mAskId,productType!!,productDisplayModel?.refKey!!,productDisplayModel?.objectID!!).collect {
+                _updateProductRDB.value = Event(it)
+            }
+        }
+    }
+
+
 
     override fun onCleared() {
         super.onCleared()
