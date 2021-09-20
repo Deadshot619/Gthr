@@ -142,11 +142,11 @@
             android:layout_marginStart="@dimen/margin_normal"
             android:gravity="center"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@id/ll_user_info"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/iv_three_dots_second"
-            app:layout_constraintTop_toTopOf="@id/ll_user_info">
+            app:layout_constraintTop_toTopOf="@id/guideline_top">
 
             <TextView
                 android:id="@+id/tv_three"
@@ -173,9 +173,9 @@
             android:layout_marginTop="@dimen/margin_normal"
             android:background="@color/view_stroke_color_grey"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/ll_id_verification"
-            app:layout_constraintStart_toStartOf="@id/ll_profile"
-            app:layout_constraintTop_toBottomOf="@id/ll_profile" />
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/ll_id_verification" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

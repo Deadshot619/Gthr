@@ -16,5 +16,6 @@ data class UserInfoDomainModel(
     var bio: String = "",
     var collectionId: String = "",
     var emailId: String = "",
-    var addressList : List<ShippingAddressDomainModel> = listOf(),
+    var isVerified: Boolean = false,
+    var addressList: List<ShippingAddressDomainModel> = listOf(),
 )

@@ -7,6 +7,7 @@ import android.os.Build
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -22,10 +23,12 @@ import com.gthr.gthrcollect.databinding.EaIdVerificationFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.customcameraactivities.CustomIdCamera
+import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModel
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModelFactory
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.CameraViews
+import com.gthr.gthrcollect.utils.enums.EditAccountInfoFlow
 import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import com.karumi.dexter.Dexter
@@ -69,6 +72,7 @@ class EaIdVerificationFragment :
 
     override fun onBinding() {
         initViews()
+        checkEditAccountFlowType()
         addListeners()
         setUpObservers()
     }
@@ -98,6 +102,12 @@ class EaIdVerificationFragment :
 
 
         initProgressBar(mViewBinding.layoutProgress)
+    }
+
+    private fun checkEditAccountFlowType() {
+        if ((activity as EditAccountInfoActivity).getEditAccountFlowType() == EditAccountInfoFlow.GOV_ID) {
+            mSkipBtn.gone()
+        }
     }
 
     private fun addListeners() {
@@ -181,7 +191,10 @@ class EaIdVerificationFragment :
                     is State.Success -> {
                         showProgressBar(false)
                         GthrLogger.e("uploadTask", "BackFrag")
-                        findNavController().navigate(EaIdVerificationFragmentDirections.actionEaIdVerificationFragmentToWelcomeFragment())
+                        if ((activity as EditAccountInfoActivity).getEditAccountFlowType() == EditAccountInfoFlow.GOV_ID)
+                            goBack()
+                        else
+                            findNavController().navigate(EaIdVerificationFragmentDirections.actionEaIdVerificationFragmentToWelcomeFragment())
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -192,13 +205,20 @@ class EaIdVerificationFragment :
         })
     }
 
+    fun goBack() {
+        val returnIntent = Intent()
+        activity?.setResult(AppCompatActivity.RESULT_OK, returnIntent)
+        activity?.finish()
+    }
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (data != null) {
             imageCheck += 1
-            val bitmap = BitmapFactory.decodeFile(data.getStringExtra(CustomIdCamera.INTENT_KEY_URL))
+            val bitmap =
+                BitmapFactory.decodeFile(data.getStringExtra(CustomIdCamera.INTENT_KEY_URL))
             if (requestCode == REQUEST_CODE_FRONT_ID) {
                 mIvFrontImage.visible()
                 mIvFrontImage.setImageBitmap(bitmap)

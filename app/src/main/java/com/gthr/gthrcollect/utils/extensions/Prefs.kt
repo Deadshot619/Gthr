@@ -1,6 +1,5 @@
 package com.gthr.gthrcollect.utils.extensions
 
-import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
 import com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel
 import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
@@ -25,5 +24,11 @@ fun Prefs.getUserCollectionId(): String? = userInfoModel?.collectionId
 fun Prefs.isUserLoggedIn(): Boolean {
     signedInUser?.let {
         return@isUserLoggedIn !it.email.isNullOrEmpty() && it.uid.isNotEmpty()
+    } ?: return false
+}
+
+fun Prefs.isUserGovIdVerified(): Boolean {
+    userInfoModel?.let {
+        return@isUserGovIdVerified it.isVerified
     } ?: return false
 }

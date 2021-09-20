@@ -86,7 +86,7 @@
     <string name="permission_denied">Permission to use device Camera denied! Cannot proceed ahead!</string>
     <string name="not_exist">Not exist :</string>
     <string name="next">Next</string>
-    <string name="compete_account_setup">Complete</string>
+    <string name="ea_complete">Complete</string>
     <string name="skip_id_verification">Skip</string>
     <string name="retake">Retake</string>
     <string name="dialog_skip_verification_title">Skip Verification</string>

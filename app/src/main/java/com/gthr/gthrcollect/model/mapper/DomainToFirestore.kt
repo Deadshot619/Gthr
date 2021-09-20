@@ -16,7 +16,8 @@ fun UserInfoDomainModel.toFirestoreModel(collectionId: String) =
         uid = GthrCollect.prefs?.signedInUser!!.uid,
         creationDate = "",
         collectionId = collectionId,
-        addressList = listOf()
+        addressList = listOf(),
+        isVerified = isVerified
     )
 
 fun EditAccInfoDomainModel.toFirestoreModel() =

@@ -13,6 +13,11 @@
         <action
             android:id="@+id/action_eaProfileFragment_to_eaUserInfoFragment"
             app:destination="@id/eaUserInfoFragment" />
+        <action
+            android:id="@+id/action_eaProfileFragment_to_eaIdVerificationFragment"
+            app:destination="@id/eaIdVerificationFragment"
+            app:popUpTo="@id/eaProfileFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/eaUserInfoFragment"

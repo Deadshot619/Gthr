@@ -1,5 +1,7 @@
 package com.gthr.gthrcollect.ui.productdetail.productdetailscreen
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatImageView
@@ -22,6 +24,7 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
@@ -33,12 +36,10 @@ import com.gthr.gthrcollect.utils.customviews.CustomProductButton
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.customviews.CustomSeeAllView
 import com.gthr.gthrcollect.utils.enums.AskFlowType
+import com.gthr.gthrcollect.utils.enums.EditAccountInfoFlow
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
-import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.isUserLoggedIn
-import com.gthr.gthrcollect.utils.extensions.setProductImage
-import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 
@@ -215,14 +216,22 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             upForSellSeeAll()
         }
         mBtnBuy.setOnClickListener {
-            if (GthrCollect.prefs?.isUserLoggedIn()==true)
-                startActivity(
-                    AskFlowActivity.getInstance(
-                        requireContext(),
-                        AskFlowType.BUY,
-                        mProductDisplayModel
+            if (GthrCollect.prefs?.isUserLoggedIn() == true)
+                if (GthrCollect.prefs?.isUserGovIdVerified() == true)
+                    startActivity(
+                        AskFlowActivity.getInstance(
+                            requireContext(),
+                            AskFlowType.BUY,
+                            mProductDisplayModel
+                        )
                     )
-                )
+                else
+                    startActivityForResult(
+                        EditAccountInfoActivity.getInstance(
+                            requireContext(),
+                            EditAccountInfoFlow.GOV_ID
+                        ), REQUEST_CODE_ID_VERIFICATION_BUY
+                    )
             else
                 startActivity(HomeBottomNavActivity.getInstance(requireContext()))
         }
@@ -239,14 +248,22 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 startActivity(HomeBottomNavActivity.getInstance(requireContext()))
         }
         mBtnSell.setOnClickListener {
-            if (GthrCollect.prefs?.isUserLoggedIn()==true)
-                startActivity(
-                    AskFlowActivity.getInstance(
-                        requireContext(),
-                        AskFlowType.SELL,
-                        mProductDisplayModel
+            if (GthrCollect.prefs?.isUserLoggedIn() == true)
+                if (GthrCollect.prefs?.isUserGovIdVerified() == true)
+                    startActivity(
+                        AskFlowActivity.getInstance(
+                            requireContext(),
+                            AskFlowType.SELL,
+                            mProductDisplayModel
+                        )
                     )
-                )
+                else
+                    startActivityForResult(
+                        EditAccountInfoActivity.getInstance(
+                            requireContext(),
+                            EditAccountInfoFlow.GOV_ID
+                        ), REQUEST_CODE_ID_VERIFICATION_SELL
+                    )
             else
                 startActivity(HomeBottomNavActivity.getInstance(requireContext()))
         }
@@ -466,5 +483,32 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        if (data != null && resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_CODE_ID_VERIFICATION_BUY)
+                startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.BUY,
+                        mProductDisplayModel
+                    )
+                )
+
+            if (requestCode == REQUEST_CODE_ID_VERIFICATION_SELL)
+                startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.SELL,
+                        mProductDisplayModel
+                    )
+                )
+        }
+    }
+
+    companion object {
+        private const val REQUEST_CODE_ID_VERIFICATION_BUY = 69
+        private const val REQUEST_CODE_ID_VERIFICATION_SELL = 420
+    }
 }

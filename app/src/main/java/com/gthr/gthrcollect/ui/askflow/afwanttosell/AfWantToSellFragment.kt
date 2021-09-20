@@ -1,16 +1,22 @@
 package com.gthr.gthrcollect.ui.askflow.afwanttosell
 
+import android.app.Activity
+import android.content.Intent
 import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfWantToSellFragmentBinding
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+import com.gthr.gthrcollect.utils.enums.EditAccountInfoFlow
 import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.isUserGovIdVerified
 
 class AfWantToSellFragment : BaseFragment<AskFlowViewModel, AfWantToSellFragmentBinding>() {
 
@@ -43,7 +49,15 @@ class AfWantToSellFragment : BaseFragment<AskFlowViewModel, AfWantToSellFragment
     private fun setUpClickListeners(){
         mViewBinding.run {
             mBtnNext.setOnClickListener {
-                findNavController().navigate(AfWantToSellFragmentDirections.actionAfWantToSellFragmentToAfAddPicFragment())
+                if (mViewModel.isSell.value == true && GthrCollect.prefs?.isUserGovIdVerified() != true)
+                    startActivityForResult(
+                        EditAccountInfoActivity.getInstance(
+                            requireContext(),
+                            EditAccountInfoFlow.GOV_ID
+                        ), REQUEST_CODE_ID_VERIFICATION_SELL
+                    )
+                else
+                    findNavController().navigate(AfWantToSellFragmentDirections.actionAfWantToSellFragmentToAfAddPicFragment())
             }
 
             mIvBack.setOnClickListener {
@@ -54,5 +68,18 @@ class AfWantToSellFragment : BaseFragment<AskFlowViewModel, AfWantToSellFragment
                 mViewModel.setSell(mSwitchWantToSell.isChecked)
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (data != null && resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_CODE_ID_VERIFICATION_SELL)
+                findNavController().navigate(AfWantToSellFragmentDirections.actionAfWantToSellFragmentToAfAddPicFragment())
+        }
+    }
+
+    companion object {
+        private const val REQUEST_CODE_ID_VERIFICATION_SELL = 69
     }
 }

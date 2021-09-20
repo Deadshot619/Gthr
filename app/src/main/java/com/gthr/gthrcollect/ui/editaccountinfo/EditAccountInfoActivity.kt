@@ -13,6 +13,7 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.EditAccountInfoRepository
 import com.gthr.gthrcollect.databinding.ActivityEditAccountInfoBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
+import com.gthr.gthrcollect.utils.enums.EditAccountInfoFlow
 import com.gthr.gthrcollect.utils.enums.EditAccountSection
 import com.gthr.gthrcollect.utils.extensions.getBackgroundDrawable
 import com.gthr.gthrcollect.utils.extensions.getResolvedColor
@@ -36,9 +37,20 @@ class EditAccountInfoActivity :
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration
 
+    private lateinit var mEditAccountInfoFlow: EditAccountInfoFlow
+
     override fun onBinding() {
+        mEditAccountInfoFlow =
+            intent.getSerializableExtra(EDIT_ACCOUNT_INFO_FLOW) as EditAccountInfoFlow
+
+        checkEditAccountFlowType()
+        setUpNavGraph()
         setSupportActionBar(mViewBinding.toolbar)
         setUpNavigationAndActionBar()
+    }
+
+    private fun setUpNavGraph() { //Setting NavGraph manually so that we can pass data to start destination
+        findNavController(R.id.nav_host_fragment).setGraph(R.navigation.edit_account_info_nav_graph)
     }
 
     private fun setUpNavigationAndActionBar() {
@@ -52,7 +64,11 @@ class EditAccountInfoActivity :
             mViewBinding.toolbar.title = ""     //Set Title as empty as we have used custom title
             setToolbarTitle(getString(R.string.edit_account_info_title))
             upButtonVisibility(isVisible = true)
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_up_button) //Set up button as <
+
+            if (getEditAccountFlowType() == EditAccountInfoFlow.GOV_ID)
+                supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_icon) //Set up button as x
+            else
+                supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_up_button) //Set up button as <
 
             when (nd.id) {
                 R.id.eaProfileFragment -> {
@@ -93,6 +109,17 @@ class EditAccountInfoActivity :
                 finish()
             }
             else -> super.onBackPressed()
+        }
+    }
+
+    private fun checkEditAccountFlowType() {
+        if (getEditAccountFlowType() == EditAccountInfoFlow.GOV_ID) {
+            mViewBinding.layoutSectionSelection.run {
+                llProfile.gone()
+                ivThreeDotsFirst.gone()
+                llUserInfo.gone()
+                ivThreeDotsSecond.gone()
+            }
         }
     }
 
@@ -165,7 +192,14 @@ class EditAccountInfoActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(isVisible)
     }
 
+    internal fun getEditAccountFlowType(): EditAccountInfoFlow = mEditAccountInfoFlow
+
     companion object {
-        fun getInstance(context: Context) = Intent(context, EditAccountInfoActivity::class.java)
+        private const val EDIT_ACCOUNT_INFO_FLOW = "edit_account_info_flow"
+
+        fun getInstance(context: Context, editAccountInfoFlow: EditAccountInfoFlow) =
+            Intent(context, EditAccountInfoActivity::class.java).apply {
+                putExtra(EDIT_ACCOUNT_INFO_FLOW, editAccountInfoFlow)
+            }
     }
 }

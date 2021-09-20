@@ -54,7 +54,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_section_selection"
-            app:navGraph="@navigation/edit_account_info_nav_graph" />
+            app:layout_constraintTop_toBottomOf="@id/layout_section_selection" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

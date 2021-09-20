@@ -201,6 +201,14 @@
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintGuide_percent="0.5" />
+
             <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
                 android:id="@+id/btn_skip_id"
                 android:layout_width="0dp"
@@ -208,9 +216,9 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/skip_id_verification"
+                android:layout_marginEnd="@dimen/margin_mini"
                 android:textSize="@dimen/text_size_small"
-                app:layout_constraintEnd_toStartOf="@+id/btn_complete_account"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="@id/guideline_middle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:secondary_button_state="BLUE"
@@ -224,13 +232,13 @@
                 android:drawablePadding="@dimen/dp_8"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:layout_marginStart="@dimen/margin_extra_small"
-                android:text="@string/compete_account_setup"
+                android:layout_marginStart="@dimen/margin_mini"
+                android:text="@string/ea_complete"
                 android:textSize="@dimen/text_size_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btn_skip_id"
+                app:layout_constraintStart_toStartOf="@id/guideline_middle"
                 app:secondary_button_state="DISABLE"
                 tools:layout_editor_absoluteY="0dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>

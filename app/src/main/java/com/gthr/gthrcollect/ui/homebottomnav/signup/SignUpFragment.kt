@@ -15,6 +15,7 @@ import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
 import com.gthr.gthrcollect.utils.customviews.CustomEmailEditText
 import com.gthr.gthrcollect.utils.customviews.CustomPasswordEditText
+import com.gthr.gthrcollect.utils.enums.EditAccountInfoFlow
 import com.gthr.gthrcollect.utils.extensions.isValidEmail
 import com.gthr.gthrcollect.utils.extensions.isValidPassword
 import com.gthr.gthrcollect.utils.extensions.showToast
@@ -85,7 +86,12 @@ class SignUpFragment : BaseFragment<SignUpViewModel, SignUpFragmentBinding>() {
                         showProgressBar(false)
                         if (it.data) {
                             GthrCollect.prefs?.signUpCred = SignUpAuthCred(mEmailId, mPassword)
-                            startActivity(EditAccountInfoActivity.getInstance(requireContext()))
+                            startActivity(
+                                EditAccountInfoActivity.getInstance(
+                                    requireContext(),
+                                    EditAccountInfoFlow.NORMAL
+                                )
+                            )
                         } else
                             showToast(getString(R.string.text_user_exists))
                     }

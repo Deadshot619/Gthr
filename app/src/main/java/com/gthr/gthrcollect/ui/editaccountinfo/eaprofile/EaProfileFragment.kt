@@ -10,10 +10,12 @@ import com.gthr.gthrcollect.data.repository.EditAccountInfoRepository
 import com.gthr.gthrcollect.databinding.EaProfileFragmentBinding
 import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModel
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoViewModelFactory
 import com.gthr.gthrcollect.utils.customviews.CustomEditText
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+import com.gthr.gthrcollect.utils.enums.EditAccountInfoFlow
 import com.gthr.gthrcollect.utils.extensions.afterTextChanged
 import com.gthr.gthrcollect.utils.extensions.isValidDisplayName
 
@@ -35,10 +37,16 @@ class EaProfileFragment : BaseFragment<EditAccountInfoViewModel, EaProfileFragme
     private lateinit var mEtBio: EditText
 
     override fun onBinding() {
+        checkEditAccountInfoFlowType()
         initViews()
         setUpClickListeners()
         setTextChangeListeners()
         setUpObservers()
+    }
+
+    private fun checkEditAccountInfoFlowType() {
+        if ((activity as EditAccountInfoActivity).getEditAccountFlowType() == EditAccountInfoFlow.GOV_ID)
+            findNavController().navigate(EaProfileFragmentDirections.actionEaProfileFragmentToEaIdVerificationFragment())
     }
 
     private fun initViews() {
