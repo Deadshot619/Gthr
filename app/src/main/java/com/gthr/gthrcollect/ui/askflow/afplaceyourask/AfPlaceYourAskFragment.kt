@@ -160,7 +160,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                         (activity as AskFlowActivity)?.showProgressBar(false)
                         if(mViewModel.productDisplayModel?.lowestAskCost!!>mViewModel.askPrice.value!!&&
                             mViewModel.productDisplayModel?.lowestAskID!=mViewModel.mAskId){
-                            mViewModel.updateProduct()
+                            mViewModel.updateProductForAsk()
                         }
                         else{
                             startActivity(
@@ -182,7 +182,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
         }
 
-        mViewModel.updateProductRDB.observe(viewLifecycleOwner){
+        mViewModel.updateProductForAskRDB.observe(viewLifecycleOwner){
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {

@@ -70,3 +70,13 @@ fun AskItemDomainModel.toRealtimeDatabaseModel() = AskItemModel(
     frontImageURL = frontImageURL,
     backImageURL = backImageURL
 )
+
+fun BidItemDomainModel.toRealtimeDatabaseModel() = BidItemModel(
+    bidPrice = bidPrice,
+    creatorUID = creatorUID,
+    itemObjectID = itemObjectID,
+    itemRefKey = itemRefKey,
+    productCategory = getProductCategory(getProductType(productType?.title!!)!!)?.title,
+    productType = productType?.title,
+    totalCost = totalCost,
+)

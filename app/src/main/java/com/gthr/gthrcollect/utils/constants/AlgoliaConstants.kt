@@ -15,6 +15,9 @@ object AlgoliaConstants {
     const val ABOUT = "about"
 
     /*item_Name*/
+     const val HIGHEST_BID_COST = "highestBidCost"
+     const val HIGHEST_BID_ID = "highestBidID"
+
      const val LOWEST_ASK_COST = "lowestAskCost"
      const val LOWEST_ASK_ID = "lowestAskID"
 

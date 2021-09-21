@@ -1,6 +1,5 @@
 package com.gthr.gthrcollect.ui.askflow
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -127,37 +126,6 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     private val _conditionList = MutableLiveData<Event<List<ConditionDomainModel>>>()
     val conditionList: LiveData<Event<List<ConditionDomainModel>>>
         get() = _conditionList
-
-    //Variable to indicate whether Collection data has been updated in Firebase
-    private val _updateCollectionRDB = MutableLiveData<Event<State<Boolean>>>()
-    val updateCollectionRDB: LiveData<Event<State<Boolean>>>
-        get() = _updateCollectionRDB
-
-    //Variable to indicate whether Collection data has been added in Firebase
-    private val _insertCollectionRDB = MutableLiveData<Event<State<String>>>()
-    val insertCollectionRDB: LiveData<Event<State<String>>>
-        get() = _insertCollectionRDB
-
-    //Variable to indicate whether Ask data has been added in Firebase
-    private val _insertAskRDB = MutableLiveData<Event<State<String>>>()
-    val insertAskRDB: LiveData<Event<State<String>>>
-        get() = _insertAskRDB
-
-    //Variable to indicate whether Product data has been updated in Firebase
-    private val _updateProductRDB = MutableLiveData<Event<State<Boolean>>>()
-    val updateProductRDB: LiveData<Event<State<Boolean>>>
-        get() = _updateProductRDB
-
-
-    //Variable to indicate whether user front Id image uploaded
-    private val _frontImageUpload = MutableLiveData<Event<State<String>>>()
-    val frontImageUpload: LiveData<Event<State<String>>>
-        get() = _frontImageUpload
-
-    //Variable to indicate whether user back Id image uploaded
-    private val _backImageUpload = MutableLiveData<Event<State<String>>>()
-    val backImageUpload: LiveData<Event<State<String>>>
-        get() = _backImageUpload
 
     init {
         setSelectedConditionTitle(ConditionType.UG)  //Default selection UG i.e. Raw
@@ -373,6 +341,20 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     var mAddress : ShippingAddressDomainModel? = null
         private set
 
+    var mBidId = ""
+        private set
+
+    var mBuyKey = ""
+        private set
+
+    fun setBidId(id : String){
+        mBidId = id
+    }
+
+    fun setBuyKey(key : String){
+        mBuyKey = key
+    }
+
     fun setFrontImageDownloadUrl(url : String){
         mFrontImageDownloadUrl = url
     }
@@ -392,6 +374,13 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     fun setAddress(address : ShippingAddressDomainModel){
         mAddress = address
     }
+
+
+
+    //Variable to indicate whether Collection data has been added in Firebase
+    private val _insertCollectionRDB = MutableLiveData<Event<State<String>>>()
+    val insertCollectionRDB: LiveData<Event<State<String>>>
+        get() = _insertCollectionRDB
 
     fun insertCollection(){
         viewModelScope.launch {
@@ -424,6 +413,11 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         }
     }
 
+    //Variable to indicate whether Collection data has been updated in Firebase
+    private val _updateCollectionRDB = MutableLiveData<Event<State<Boolean>>>()
+    val updateCollectionRDB: LiveData<Event<State<Boolean>>>
+        get() = _updateCollectionRDB
+
     fun updateCollection(){
         viewModelScope.launch {
             repository.updateCollection(GthrCollect.prefs?.getUserCollectionId()!!,mCollectionKey,mFrontImageDownloadUrl,mBackImageDownloadUrl,mAskId).collect {
@@ -431,6 +425,11 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
             }
         }
     }
+
+    //Variable to indicate whether user front Id image uploaded
+    private val _frontImageUpload = MutableLiveData<Event<State<String>>>()
+    val frontImageUpload: LiveData<Event<State<String>>>
+        get() = _frontImageUpload
 
     fun uploadFrontImage() {
         viewModelScope.launch {
@@ -440,6 +439,11 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         }
     }
 
+    //Variable to indicate whether user back Id image uploaded
+    private val _backImageUpload = MutableLiveData<Event<State<String>>>()
+    val backImageUpload: LiveData<Event<State<String>>>
+        get() = _backImageUpload
+
     fun uploadBackImage() {
        viewModelScope.launch {
             repository.uploadCollectionImage(backImageUrl.value!!,mCollectionKey,FirebaseStorage.BACK_IMAGE,GthrCollect.prefs!!.signedInUser!!.uid).collect {
@@ -447,6 +451,11 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
             }
         }
     }
+
+    //Variable to indicate whether Ask data has been added in Firebase
+    private val _insertAskRDB = MutableLiveData<Event<State<String>>>()
+    val insertAskRDB: LiveData<Event<State<String>>>
+        get() = _insertAskRDB
 
     fun insertAsk(){
         viewModelScope.launch {
@@ -491,17 +500,72 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         }
     }
 
-    fun updateProduct(){
+    //Variable to indicate whether Product data has been updated in Firebase
+    private val _updateProductForAskRDB = MutableLiveData<Event<State<Boolean>>>()
+    val updateProductForAskRDB: LiveData<Event<State<Boolean>>>
+        get() = _updateProductForAskRDB
+
+    fun updateProductForAsk(){
         viewModelScope.launch {
             GthrLogger.i("shdbchjsdb", "productType:  $productType}")
             GthrLogger.i("shdbchjsdb", "productDisplayModel?.refKey: ${productDisplayModel?.refKey}")
-            repository.updateProduct(askPrice.value!!.toInt(),mAskId,productType!!,productDisplayModel?.refKey!!,productDisplayModel?.objectID!!).collect {
-                _updateProductRDB.value = Event(it)
+            repository.updateProductForAsk(askPrice.value!!.toInt(),mAskId,productType!!,productDisplayModel?.refKey!!,productDisplayModel?.objectID!!).collect {
+                _updateProductForAskRDB.value = Event(it)
             }
         }
     }
 
+    //==========Bid===========
 
+    //Variable to indicate whether Bid data has been added in Firebase
+    private val _insertBidRDB = MutableLiveData<Event<State<String>>>()
+    val insertBidRDB: LiveData<Event<State<String>>>
+        get() = _insertBidRDB
+
+    fun insertBid(){
+        viewModelScope.launch {
+            val data = BidItemDomainModel(
+                bidPrice = buyListPrice.value.toString(),
+                creatorUID = GthrCollect.prefs?.signedInUser?.uid!!,
+                itemObjectID =  productDisplayModel?.objectID!!,
+                productType = productType,
+                productCategory = getProductCategory(productType!!),
+                itemRefKey = null,
+                totalCost = buyListPrice.value.toString()
+            )
+            repository.insertBid(data.toRealtimeDatabaseModel()).collect {
+                _insertBidRDB.value = Event(it)
+            }
+        }
+    }
+
+    //Variable to indicate whether Buy data has been added in Firebase
+    private val _insertBuyRDB = MutableLiveData<Event<State<String>>>()
+    val insertBuyRDB: LiveData<Event<State<String>>>
+        get() = _insertBuyRDB
+
+    fun insertBuy(){
+        viewModelScope.launch {
+            repository.insertBuy(GthrCollect.prefs?.getUserCollectionId()!!,mBidId).collect {
+                _insertBuyRDB.value = Event(it)
+            }
+        }
+    }
+
+    //Variable to indicate whether Product data has been updated in Firebase
+    private val _updateProductForBidRDB = MutableLiveData<Event<State<Boolean>>>()
+    val updateProductForBidRDB: LiveData<Event<State<Boolean>>>
+        get() = _updateProductForBidRDB
+
+    fun updateProductForBid(){
+        viewModelScope.launch {
+            GthrLogger.i("shdbchjsdb", "productType:  $productType}")
+            GthrLogger.i("shdbchjsdb", "productDisplayModel?.refKey: ${productDisplayModel?.refKey}")
+            repository.updateProductForBid(buyListPrice.value?.toInt()!!,mBidId,productType!!,productDisplayModel?.refKey!!,productDisplayModel?.objectID!!).collect {
+                _updateProductForBidRDB.value = Event(it)
+            }
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()

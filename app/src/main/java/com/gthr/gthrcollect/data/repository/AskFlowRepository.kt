@@ -1,7 +1,6 @@
 package com.gthr.gthrcollect.data.repository
 
 import android.net.Uri
-import android.util.Log
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.model.*
 import com.algolia.search.model.indexing.Partial
@@ -24,7 +23,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.io.File
 
@@ -146,9 +144,9 @@ class AskFlowRepository {
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
-    fun updateProduct(lowestAskCost : Int,lowestAskID : String,productType: ProductType, refKey : String,objectID: String) = flow<State<Boolean>> {
+    fun updateProductForAsk(lowestAskCost : Int, lowestAskID : String, productType: ProductType, refKey : String, objectID: String) = flow<State<Boolean>> {
         emit(State.loading())
-        uploadDataToAlgolia(objectID,lowestAskCost,lowestAskID)
+        updateToAlgoliaForAsk(objectID,lowestAskCost,lowestAskID)
         var ref = mFirebaseRD
         ref = when (productType) {
             ProductType.MAGIC_THE_GATHERING -> ref.child(FirebaseRealtimeDatabase.MTG_MODEL)
@@ -166,7 +164,7 @@ class AskFlowRepository {
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
-    private suspend fun uploadDataToAlgolia(objectID: String,lowestAskCost : Int,lowestAskID : String) {
+    private suspend fun updateToAlgoliaForAsk(objectID: String, lowestAskCost : Int, lowestAskID : String) {
         val scope = CoroutineScope(Dispatchers.IO).async {
             val client = ClientSearch(
                 applicationID = ApplicationID(AlgoliaConstants.APP_ID),
@@ -184,5 +182,63 @@ class AskFlowRepository {
         scope.await()
     }
 
+    fun insertBid(bidItemModel : BidItemModel) = flow<State<String>> {
+        emit(State.loading())
+        val push = mFirebaseRD.child(FirebaseRealtimeDatabase.BID_ITEM_MODEL).push()
+        bidItemModel.itemRefKey = push.key!!
+        GthrLogger.d("sdcbsjdb","bidItemId ${push.key}")
+        push.setValue(bidItemModel).await()
+        emit(State.success(push.key!!))
+    }.catch {
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+
+    fun insertBuy(collectionInfoId : String, bidItemId : String) = flow<State<String>>{
+        emit(State.loading())
+        val push = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionInfoId).child(FirebaseRealtimeDatabase.BUY_LIST).push()
+        push.setValue(bidItemId).await()
+        emit(State.success(push.key!!))
+    }.catch {
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    fun updateProductForBid(highestBidCost : Int, highestBidID : String, productType: ProductType, refKey : String, objectID: String) = flow<State<Boolean>> {
+        emit(State.loading())
+        updateToAlgoliaForBid(objectID,highestBidCost,highestBidID)
+        var ref = mFirebaseRD
+        ref = when (productType) {
+            ProductType.MAGIC_THE_GATHERING -> ref.child(FirebaseRealtimeDatabase.MTG_MODEL)
+            ProductType.YUGIOH -> ref.child(FirebaseRealtimeDatabase.YUGIOH_MODEL)
+            ProductType.POKEMON -> ref.child(FirebaseRealtimeDatabase.POKEMON_MODEL)
+            ProductType.FUNKO -> ref.child(FirebaseRealtimeDatabase.FUNKO_MODEL)
+            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> ref.child(FirebaseRealtimeDatabase.SEALED_MODEL)
+        }
+        val map = HashMap<String,Any>()
+        map[FirebaseRealtimeDatabase.HIGHEST_BID_COST] = highestBidCost
+        map[FirebaseRealtimeDatabase.HIGHEST_BID_ID] = highestBidID
+        ref.child(refKey).updateChildren(map).await()
+        emit(State.success(true))
+    }.catch {
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    private suspend fun updateToAlgoliaForBid(objectID: String, highestBidCost : Int, highestBidID : String) {
+        val scope = CoroutineScope(Dispatchers.IO).async {
+            val client = ClientSearch(
+                applicationID = ApplicationID(AlgoliaConstants.APP_ID),
+                apiKey = APIKey(AlgoliaConstants.APIKey)
+            )
+            val indexName = IndexName(AlgoliaConstants.ITEM_NAME)
+            val index = client.initIndex(indexName)
+
+            val ob = listOf(
+                ObjectID(objectID) to Partial.Update(Attribute(AlgoliaConstants.HIGHEST_BID_ID), highestBidID),
+                ObjectID(objectID) to Partial.Update(Attribute(AlgoliaConstants.HIGHEST_BID_COST), highestBidCost),
+            )
+            index.partialUpdateObjects(ob,true)
+        }
+        scope.await()
+    }
 
 }

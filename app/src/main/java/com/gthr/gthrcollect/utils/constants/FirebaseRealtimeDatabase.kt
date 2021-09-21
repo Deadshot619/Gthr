@@ -42,6 +42,10 @@ object FirebaseRealtimeDatabase {
     const val TIER = "tier"
     const val CARD_TYPE = "cardType"
 
+    /*bidItemModel*/
+    const val BID_ITEM_MODEL = "bidItemModel"
+    const val BID_PRICE = "bidPrice"
+    const val TOTAL_COST = "totalCost"
 
     /*AskItemModel*/
     const val ASK_ITEM_MODEL = "askItemModel"

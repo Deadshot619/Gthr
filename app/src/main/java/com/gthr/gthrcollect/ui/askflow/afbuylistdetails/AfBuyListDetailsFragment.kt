@@ -6,11 +6,14 @@ import androidx.fragment.app.activityViewModels
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfBuylistDetailsFragmentBinding
+import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.constants.CalendarConstants
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+import com.gthr.gthrcollect.utils.extensions.showToast
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,7 +54,7 @@ class AfBuyListDetailsFragment : BaseFragment<AskFlowViewModel, AfBuylistDetails
     private fun setUpClickListeners() {
         mViewBinding.run {
             mBtnNext.setOnClickListener {
-                activity?.finish()
+                mViewModel.insertBid()
             }
         }
     }
@@ -61,5 +64,62 @@ class AfBuyListDetailsFragment : BaseFragment<AskFlowViewModel, AfBuylistDetails
             mTvBuyListValue.text = String.format(getString(R.string.rate_common), it)
             mTvTotalBuyListValue.text = String.format(getString(R.string.rate_common), it)
         }
+
+        mViewModel.insertBidRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        mViewModel.setBidId(it.data)
+                        mViewModel.insertBuy()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.insertBuyRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        mViewModel.setBuyKey(it.data)
+                        if(mViewModel.productDisplayModel?.highestBidCost!!<mViewModel.buyListPrice.value!!&&mViewModel.mBidId!=mViewModel.productDisplayModel?.highestBidID)
+                            mViewModel.updateProductForBid()
+                        else
+                            (activity as AskFlowActivity)?.finish()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.updateProductForBidRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.finish()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
     }
 }
