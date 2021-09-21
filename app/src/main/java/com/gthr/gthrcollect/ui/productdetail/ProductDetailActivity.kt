@@ -20,11 +20,9 @@ import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.databinding.*
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
-import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
-import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.showToast
@@ -56,13 +54,13 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
         mObjectId = intent.getStringExtra(KEY_OBJECT_ID)
         mProductType = intent.getSerializableExtra(KEY_PRODUCT_TYPE) as ProductType
 
+        mViewModel.checkProductFavorite(mProductType!!, mObjectId!!)
         initViews()
         setUpProductType()
         setUpObserver()
     }
 
     private fun setUpObserver() {
-
         mViewModel.mProductDynamicLink.observe(this){
             it.contentIfNotHandled?.let {
                 when (it) {
@@ -170,8 +168,8 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
                         showProgressBar(false)
                         if(it.data.objectID.isNotEmpty())
                             mViewModel.getRecentSaleList(it.data.objectID)
-                        if(it.data.set.isNotEmpty())
-                            mViewModel.getRelatedProductList(it.data.set,ProductType.YUGIOH)
+                        if (it.data.set.isNotEmpty())
+                            mViewModel.getRelatedProductList(it.data.set, ProductType.YUGIOH)
                         setViewData(it.data)
                         mViewModel.setProductDisplayModel(ProductDisplayModel(it.data))
                     }
@@ -179,6 +177,40 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
                 }
             }
         }
+
+        mViewModel.addFavorites.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        showToast("Added!")
+                        mViewModel.checkProductFavorite(mProductType!!, mObjectId!!)
+                    }
+                }
+            }
+        })
+
+        mViewModel.removeFavorites.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        showToast("Removed!")
+                        mViewModel.checkProductFavorite(mProductType!!, mObjectId!!)
+                    }
+                }
+            }
+        })
     }
 
     private fun setUpProductType() {
@@ -256,6 +288,7 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
         mViewBinding.run {
             mToolbar = toolbar
             mFlTop = flTop
+            initProgressBar(layoutProgress)
         }
     }
 
@@ -311,7 +344,7 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
             }
             R.id.menu_favourite -> {
                 if(isUserLoggedIn())
-                    showToast("Favorite")
+                    addRemoveFavourite()
                 else
                     startActivity(HomeBottomNavActivity.getInstance(this))
             }
@@ -367,12 +400,20 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
         } ?: return false
     }
 
+    private fun addRemoveFavourite() {
+        val isFavorite = (mViewModel.isFavorite.value?.peekContent() as State.Success).data
+        if (isFavorite)
+            mViewModel.removeFavorites(mProductType!!, mObjectId!!)
+        else
+            mViewModel.addFavorites(mProductType!!, mObjectId!!)
+    }
+
     companion object {
 
         private const val KEY_PRODUCT_TYPE = "key_product_type"
         private const val KEY_OBJECT_ID = "key_object_id"
 
-        fun getInstance(context: Context, objectId: String?,type : ProductType?) =
+        fun getInstance(context: Context, objectId: String?, type: ProductType?) =
             Intent(context, ProductDetailActivity::class.java).apply {
                 putExtra(KEY_PRODUCT_TYPE, type)
                 putExtra(KEY_OBJECT_ID, objectId)

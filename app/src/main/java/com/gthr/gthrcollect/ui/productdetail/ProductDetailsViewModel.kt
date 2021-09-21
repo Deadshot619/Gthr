@@ -10,10 +10,13 @@ import com.gthr.gthrcollect.model.Event
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.utils.enums.ProductType
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ProductDetailsViewModel(private val mProductDetailsRepository : ProductDetailsRepository,private val mDynamicLinkRepository : DynamicLinkRepository) : ViewModel() {
+
+    var favoriteJob: Job? = null
 
     private val _mRecentSaleList = MutableLiveData<Event<State<List<RecentSaleDomainModel>>>>()
     val mRecentSaleList: LiveData<Event<State<List<RecentSaleDomainModel>>>>
@@ -97,14 +100,58 @@ class ProductDetailsViewModel(private val mProductDetailsRepository : ProductDet
 
     fun getProductDynamicLink(value : String, type: ProductType){
         viewModelScope.launch {
-            mDynamicLinkRepository.getProductDynamicLink(value,type).collect {
+            mDynamicLinkRepository.getProductDynamicLink(value, type).collect {
                 _mProductDynamicLink.value = Event(it)
             }
         }
     }
 
-    fun setProductDisplayModel(productDisplayModel : ProductDisplayModel){
+    fun setProductDisplayModel(productDisplayModel: ProductDisplayModel) {
         _mProductDisplayModel.value = Event(productDisplayModel)
     }
 
+    private val _isFavorite = MutableLiveData<Event<State<Boolean>>>()
+    val isFavorite: LiveData<Event<State<Boolean>>>
+        get() = _isFavorite
+
+    private val _addFavorites = MutableLiveData<Event<State<Boolean>>>()
+    val addFavorites: LiveData<Event<State<Boolean>>>
+        get() = _addFavorites
+
+    private val _removeFavorites = MutableLiveData<Event<State<Boolean>>>()
+    val removeFavorites: LiveData<Event<State<Boolean>>>
+        get() = _removeFavorites
+
+    //Method to check if a product is already favorite
+    fun checkProductFavorite(productType: ProductType, objectId: String) {
+        favoriteJob?.cancel()
+        favoriteJob = viewModelScope.launch {
+            mProductDetailsRepository.checkIfProductFavorite(productType, objectId).collect {
+                _isFavorite.value = Event(it)
+            }
+        }
+    }
+
+    fun addFavorites(productType: ProductType, objectId: String) {
+        favoriteJob?.cancel()
+        favoriteJob = viewModelScope.launch {
+            mProductDetailsRepository.addProductToFavorites(productType, objectId).collect {
+                _addFavorites.value = Event(it)
+            }
+        }
+    }
+
+    fun removeFavorites(productType: ProductType, objectId: String) {
+        favoriteJob?.cancel()
+        favoriteJob = viewModelScope.launch {
+            mProductDetailsRepository.removeProductFavorite(productType, objectId).collect {
+                _removeFavorites.value = Event(it)
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        favoriteJob?.cancel()
+    }
 }

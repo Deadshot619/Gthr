@@ -72,7 +72,12 @@
             android:layout_marginHorizontal="@dimen/guideline_edit_account_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
+        <include
+            android:id="@+id/layout_progress"
+            layout="@layout/layout_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

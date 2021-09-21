@@ -1,24 +1,30 @@
 package com.gthr.gthrcollect.data.repository
 
-import android.util.Log
+import com.algolia.search.client.ClientSearch
+import com.algolia.search.model.*
+import com.algolia.search.model.indexing.Partial
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.model.domain.RecentSaleDomainModel
 import com.gthr.gthrcollect.model.mapper.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
+import com.gthr.gthrcollect.utils.constants.AlgoliaConstants
 import com.gthr.gthrcollect.utils.constants.CalendarConstants.RECENT_SALE_DATE_DISPLAY_FORMAT
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
-import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
 import com.gthr.gthrcollect.utils.helper.getEmptyRecentSaleDomainModel
 import com.gthr.gthrcollect.utils.helper.getEmptyRecentSaleDomainModelList
 import com.gthr.gthrcollect.utils.logger.GthrLogger
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -220,10 +226,159 @@ class ProductDetailsRepository {
                 list.add(productDisplayModel)
             }
             emit(State.success(data = list))
-        }
-        else{
+        } else {
             emit(State.success(data = listOf()))
         }
     }
 
+
+    fun checkIfProductFavorite(productType: ProductType, objectId: String) = flow<State<Boolean>> {
+        emit(State.loading())
+
+        val favoriteListLink = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(GthrCollect.prefs?.getUserCollectionId()!!)
+            .child(FirebaseRealtimeDatabase.FAVORITE_PRODUCT_LIST)
+
+        //Get Fav list
+        val favoriteList: MutableList<String> =
+            favoriteListLink.get().await()
+                .getValue(object : GenericTypeIndicator<MutableList<String>>() {})
+                ?: mutableListOf()
+
+        if (favoriteList.contains(objectId))
+            emit(State.success(true))
+        else
+            emit(State.success(false))
+
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    fun addProductToFavorites(productType: ProductType, objectId: String) = flow<State<Boolean>> {
+        emit(State.loading())
+
+        val favoriteListLink = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(GthrCollect.prefs?.getUserCollectionId()!!)
+            .child(FirebaseRealtimeDatabase.FAVORITE_PRODUCT_LIST)
+
+        //Get Fav list
+        val favoriteList: MutableList<String> =
+            favoriteListLink.get().await()
+                .getValue(object : GenericTypeIndicator<MutableList<String>>() {})
+                ?: mutableListOf()
+
+        if (favoriteList.contains(objectId)) {
+            emit(State.Failed("Product already favorited!"))
+            return@flow
+        }
+        //Add objectId to list
+        favoriteList.add(objectId)
+
+        //Set List again
+        favoriteListLink.setValue(favoriteList).await()
+
+        val productTypeKey = when (productType) {
+            ProductType.MAGIC_THE_GATHERING -> FirebaseRealtimeDatabase.MTG_MODEL
+            ProductType.YUGIOH -> FirebaseRealtimeDatabase.YUGIOH_MODEL
+            ProductType.POKEMON -> FirebaseRealtimeDatabase.POKEMON_MODEL
+            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG ->
+                FirebaseRealtimeDatabase.SEALED_MODEL
+            ProductType.FUNKO -> FirebaseRealtimeDatabase.FUNKO_MODEL
+        }
+
+//        val favTotalLink =
+
+        var productModelKey = ""
+        mFirebaseRD.child(productTypeKey).orderByChild(FirebaseRealtimeDatabase.OBJECT_ID)
+            .equalTo(objectId).limitToFirst(1).get().await().children.forEach {
+            productModelKey = it.key!!
+        }
+
+        GthrLogger.i("keyyyy", productTypeKey.toString())
+        val link = mFirebaseRD.child(productTypeKey).child(productModelKey)
+            .child(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
+        var value: Int = link.get().await().getValue(Int::class.java) ?: 0
+        value += 1
+        updateFavoritesAlgolia(objectId, value)
+        link.setValue(value).await()
+
+        emit(State.success(true))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    fun removeProductFavorite(productType: ProductType, objectId: String) = flow<State<Boolean>> {
+        emit(State.loading())
+
+        val favoriteListLink = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(GthrCollect.prefs?.getUserCollectionId()!!)
+            .child(FirebaseRealtimeDatabase.FAVORITE_PRODUCT_LIST)
+
+        //Get Fav list
+        val favoriteList: MutableList<String> =
+            favoriteListLink.get().await()
+                .getValue(object : GenericTypeIndicator<MutableList<String>>() {})
+                ?: mutableListOf()
+
+        if (!favoriteList.contains(objectId)) {
+            emit(State.Failed("Product not favorited!"))
+            return@flow
+        }
+        //Remove objectId from list
+        favoriteList.remove(objectId)
+
+        //Set List again
+        favoriteListLink.setValue(favoriteList).await()
+
+        val productTypeKey = when (productType) {
+            ProductType.MAGIC_THE_GATHERING -> FirebaseRealtimeDatabase.MTG_MODEL
+            ProductType.YUGIOH -> FirebaseRealtimeDatabase.YUGIOH_MODEL
+            ProductType.POKEMON -> FirebaseRealtimeDatabase.POKEMON_MODEL
+            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG ->
+                FirebaseRealtimeDatabase.SEALED_MODEL
+            ProductType.FUNKO -> FirebaseRealtimeDatabase.FUNKO_MODEL
+        }
+
+        var productModelKey = ""
+        mFirebaseRD.child(productTypeKey).orderByChild(FirebaseRealtimeDatabase.OBJECT_ID)
+            .equalTo(objectId).limitToFirst(1).get().await().children.forEach {
+            productModelKey = it.key!!
+        }
+
+        GthrLogger.i("keyyyy", productTypeKey.toString())
+        val link = mFirebaseRD.child(productTypeKey).child(productModelKey)
+            .child(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
+        var value: Int = link.get().await().getValue(Int::class.java) ?: 0
+        if (value > 0)
+            value -= 1
+        updateFavoritesAlgolia(objectId, value)
+        link.setValue(value).await()
+
+        emit(State.success(true))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    private suspend fun updateFavoritesAlgolia(objectID: String, noOfFavs: Int) {
+        val scope = CoroutineScope(Dispatchers.IO).async {
+            val client = ClientSearch(
+                applicationID = ApplicationID(AlgoliaConstants.APP_ID),
+                apiKey = APIKey(AlgoliaConstants.APIKey)
+            )
+            val indexName = IndexName(AlgoliaConstants.ITEM_NAME)
+            val index = client.initIndex(indexName)
+
+            val ob = listOf(
+                ObjectID(objectID) to Partial.Update(
+                    Attribute(AlgoliaConstants.NUMBER_OF_FAVORITES),
+                    noOfFavs
+                ),
+            )
+            index.partialUpdateObjects(ob, true)
+        }
+        scope.await()
+    }
 }
