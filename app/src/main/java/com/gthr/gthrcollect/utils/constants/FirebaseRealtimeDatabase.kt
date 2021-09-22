@@ -18,6 +18,7 @@ object FirebaseRealtimeDatabase {
 
     /*Common*/
 
+    const val ITEM_OBJECT_ID = "itemObjectID"
     const val KEY = "key"
     const val TYPE = "type"
     const val FIR_IMAGE_URL = "firImageURL"
@@ -54,7 +55,6 @@ object FirebaseRealtimeDatabase {
     const val DURATION = "duration"
     const val ASK_PRICE = "askPrice"
     const val TOTAL_PAYOUT = "totalPayout"
-    const val ITEM_OBJECT_ID = "itemObjectID"
     const val PRODUCT_CATEGORY = "productCategory"
     const val RETURN_NAME = "returnName"
     const val RETURN_ADDRESSLINE1 = "returnAddressLine1"

@@ -51,6 +51,10 @@ data class CollectionItemModel(
     @set:PropertyName(FirebaseRealtimeDatabase.ID)
     var id: String?="",
 
+    @get:PropertyName(FirebaseRealtimeDatabase.OBJECT_ID)
+    @set:PropertyName(FirebaseRealtimeDatabase.OBJECT_ID)
+    var objectID: String?="",
+
     @get:PropertyName(FirebaseRealtimeDatabase.ITEM_REF_KEY)
     @set:PropertyName(FirebaseRealtimeDatabase.ITEM_REF_KEY)
     var itemRefKey: String?="",

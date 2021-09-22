@@ -32,6 +32,10 @@ class CustomCollectionChartsView @JvmOverloads constructor(
 
     }
 
+    fun setValue(text : String){
+        mTvAmount.text = text
+    }
+
     private fun setCurrentType(type: Type) {
         mCurrentType = type
         mClMain.background = when(type){

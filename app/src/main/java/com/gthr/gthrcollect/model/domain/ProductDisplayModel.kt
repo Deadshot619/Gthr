@@ -26,7 +26,8 @@ data class ProductDisplayModel(
         var tier: String?,
         var rarity: String?,
         val viewType: AdapterViewType = AdapterViewType.VIEW_TYPE_ITEM,
-        val forsaleItemNodel: ForSaleItemDomainModel? = null
+        val forsaleItemNodel: ForSaleItemDomainModel? = null,
+    val isForSale : Boolean? = false
 ) : Parcelable {
     //TODO 01/08/21 : Modify firImageUrl added
 
@@ -49,7 +50,7 @@ data class ProductDisplayModel(
             viewType = viewType
     )
 
-    constructor(model: FunkoDomainModel) : this(
+    constructor(model: FunkoDomainModel,isForSale : Boolean = false) : this(
         objectID = model.objectID,
         productType = model.productType,
         productCategory = ProductCategory.TOYS,
@@ -64,10 +65,11 @@ data class ProductDisplayModel(
         productNumber = model.itemNumber.toString(),
         numberOfFavorites = model.numberOfFavorites,
         tier = model.tier.toString(),
-        rarity = ProductType.FUNKO.title.capitalize()
+        rarity = ProductType.FUNKO.title.capitalize(),
+        isForSale = isForSale
     )
 
-    constructor(model: MTGDomainModel) : this(
+    constructor(model: MTGDomainModel,isForSale : Boolean = false) : this(
         objectID = model.objectID,
         productType = model.productType,
         productCategory = ProductCategory.CARDS,
@@ -82,10 +84,11 @@ data class ProductDisplayModel(
         productNumber = model.collectorNumber,
         numberOfFavorites = model.numberOfFavorites,
         tier = "0",
-        rarity = model.rarity
+        rarity = model.rarity,
+        isForSale = isForSale
     )
 
-    constructor(model: PokemonDomainModel) : this(
+    constructor(model: PokemonDomainModel,isForSale : Boolean = false) : this(
         objectID = model.objectID,
         productType = model.productType,
         productCategory = ProductCategory.CARDS,
@@ -100,10 +103,11 @@ data class ProductDisplayModel(
         productNumber = model.number.toString(),
         numberOfFavorites = model.numberOfFavorites,
         tier = "0",
-        rarity = model.rarity
+        rarity = model.rarity,
+        isForSale = isForSale
     )
 
-    constructor(model: YugiohDomainModel) : this(
+    constructor(model: YugiohDomainModel,isForSale : Boolean = false) : this(
         objectID = model.objectID,
         productType = model.productType,
         productCategory = ProductCategory.CARDS,
@@ -118,10 +122,11 @@ data class ProductDisplayModel(
         productNumber = model.number,
         numberOfFavorites = model.numberOfFavorites,
         tier = "0",
-        rarity = model.rarity
+        rarity = model.rarity,
+        isForSale = isForSale
     )
 
-    constructor(model: SealedDomainModel) : this(
+    constructor(model: SealedDomainModel,isForSale : Boolean = false) : this(
         objectID = model.objectID,
         productType = model.productType,
         productCategory = ProductCategory.SEALED,
@@ -136,7 +141,8 @@ data class ProductDisplayModel(
         productNumber = null,
         numberOfFavorites = model.numberOfFavorites,
         tier = model.tier.toString(),
-        rarity = ProductCategory.SEALED.title.capitalize()
+        rarity = ProductCategory.SEALED.title.capitalize(),
+        isForSale = isForSale
     )
 
     constructor(model: ForSaleItemDomainModel) : this(

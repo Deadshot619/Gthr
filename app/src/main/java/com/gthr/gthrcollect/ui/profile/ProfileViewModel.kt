@@ -13,6 +13,8 @@ import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
 import com.gthr.gthrcollect.model.mapper.toRealtimeDatabaseModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
 import com.gthr.gthrcollect.data.repository.ProfileRepository
+import com.gthr.gthrcollect.model.domain.ProductDisplayModel
+import com.gthr.gthrcollect.model.network.firebaserealtimedb.CollectionItemModel
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
 import kotlinx.coroutines.Job
@@ -49,6 +51,37 @@ class ProfileViewModel(private val mProfileRepository: ProfileRepository, privat
     private val _mProductDynamicLink = MutableLiveData<Event<State<String>>>()
     val mProductDynamicLink: LiveData<Event<State<String>>>
         get() = _mProductDynamicLink
+
+    private val _mAllCollectionProduct = MutableLiveData<Event<State<List<ProductDisplayModel>>>>()
+    val mAllCollectionProduct: LiveData<Event<State<List<ProductDisplayModel>>>>
+        get() = _mAllCollectionProduct
+
+    private val _mAllBidProduct = MutableLiveData<Event<State<List<ProductDisplayModel>>>>()
+    val mAllBidProduct: LiveData<Event<State<List<ProductDisplayModel>>>>
+        get() = _mAllBidProduct
+
+    private val _mDisplayCollectionProduct = MutableLiveData<Event<List<ProductDisplayModel>>>()
+    val mDisplayCollectionProduct: MutableLiveData<Event<List<ProductDisplayModel>>>
+        get() = _mDisplayCollectionProduct
+
+    var mAllCollectionProductList = listOf<ProductDisplayModel>()
+        private set
+
+    var mAllBidProductList = listOf<ProductDisplayModel>()
+        private set
+
+    fun setAllBidProduct(list : List<ProductDisplayModel>){
+        mAllBidProductList = list
+    }
+
+    fun setAllCollectionProductList(list : List<ProductDisplayModel>){
+        mAllCollectionProductList = list
+    }
+
+    fun setDisplayCollectionProducts(list : List<ProductDisplayModel>){
+        _mDisplayCollectionProduct.value = Event(list)
+    }
+
 
     init {
         fetchUserProfileData(otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString())
@@ -98,6 +131,21 @@ class ProfileViewModel(private val mProfileRepository: ProfileRepository, privat
         viewModelScope.launch {
             mDynamicLinkRepository.getCollectionsDynamicLink(value).collect {
                 _mProductDynamicLink.value = Event(it)
+            }
+        }
+    }
+
+    fun getCollectionProduct(map : Map<String, CollectionItemModel>){
+        viewModelScope.launch {
+            mProfileRepository.getCollectionProduct(map).collect {
+                _mAllCollectionProduct.value = Event(it)
+            }
+        }
+    }
+    fun fetchBidProducts(collectionId : String){
+        viewModelScope.launch {
+            mProfileRepository.fetchBidProducts(collectionId).collect {
+                _mAllBidProduct.value = Event(it)
             }
         }
     }

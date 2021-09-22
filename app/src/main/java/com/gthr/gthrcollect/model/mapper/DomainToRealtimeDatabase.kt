@@ -23,6 +23,7 @@ fun CollectionItemDomainModel.toRealtimeDatabaseModel() = CollectionItemModel(
     id = id,
     itemRefKey = itemRefKey,
     marketCost = marketCost,
+    objectID = objectID,
     askRefKey = askRefKey,
     backImageURL = backImageURL,
     frontImageURL = frontImageURL,

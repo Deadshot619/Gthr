@@ -7,6 +7,7 @@ import com.gthr.gthrcollect.utils.extensions.toRecentSaleDate
 import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.helper.getConditionFromRaw
+import com.gthr.gthrcollect.utils.helper.getCondition
 import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
 
 fun CollectionInfoModel.toCollectionInfoDomainModel(collectionId: String = "") =
@@ -35,7 +36,8 @@ fun CollectionItemModel.toCollectionItemDomainModel()=CollectionItemDomainModel(
     frontImageURL = frontImageURL,
     backImageURL= backImageURL,
     condition = condition?.toConditionDomainModel(),
-    language = language?.toLanguageDomainModel()
+    language = language?.toLanguageDomainModel(),
+    objectID = objectID
 )
 
 fun LanguageModel.toLanguageDomainModel() = LanguageDomainModel(

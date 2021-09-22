@@ -111,7 +111,6 @@ class AskFlowRepository {
     fun insertCollection(collectionInfoId : String, mCollectionItemModel : CollectionItemModel) = flow<State<String>>{
         emit(State.loading())
         val push = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionInfoId).child(FirebaseRealtimeDatabase.COLLECTION_LIST).push()
-        mCollectionItemModel.id = push.key!!
         push.setValue(mCollectionItemModel).await()
         emit(State.success(push.key!!))
     }.catch {
@@ -136,7 +135,6 @@ class AskFlowRepository {
     fun insertAsk(askItemModel: AskItemModel) = flow<State<String>> {
         emit(State.loading())
         val push = mFirebaseRD.child(FirebaseRealtimeDatabase.ASK_ITEM_MODEL).push()
-        askItemModel.itemRefKey = push.key!!
         GthrLogger.d("sdcbsjdb","ASkItemId ${push.key}")
         push.setValue(askItemModel).await()
         emit(State.success(push.key!!))
@@ -185,7 +183,6 @@ class AskFlowRepository {
     fun insertBid(bidItemModel : BidItemModel) = flow<State<String>> {
         emit(State.loading())
         val push = mFirebaseRD.child(FirebaseRealtimeDatabase.BID_ITEM_MODEL).push()
-        bidItemModel.itemRefKey = push.key!!
         GthrLogger.d("sdcbsjdb","bidItemId ${push.key}")
         push.setValue(bidItemModel).await()
         emit(State.success(push.key!!))

@@ -397,8 +397,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                         productType = productType,
                         edition = selectedEdition.value?.peekContent(),frontImageURL = null,
                         backImageURL = null,askRefKey = null,
-                        id = null,itemRefKey = null,language = selectedLanguage.value?.peekContent(),
-                        condition = selectedCondition.value?.peekContent()
+                        id = null,itemRefKey = productDisplayModel?.refKey,language = selectedLanguage.value?.peekContent(),
+                        condition = selectedCondition.value?.peekContent(),
+                        objectID = productDisplayModel?.objectID
                     )
                 }
                 ProductType.FUNKO,ProductType.SEALED_POKEMON,ProductType.SEALED_YUGIOH,ProductType.SEALED_MTG -> {
@@ -407,8 +408,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                         productType = productType,
                         edition = null,frontImageURL = null,
                         backImageURL = null,askRefKey = null,
-                        id = null,itemRefKey = null,language = null,
-                        condition = null
+                        id = null,itemRefKey = productDisplayModel?.refKey,language = null,
+                        condition = null,
+                        objectID = productDisplayModel?.objectID
                     )
                 }
                 null -> null
@@ -468,7 +470,7 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
            val data = when(productType){
                 ProductType.MAGIC_THE_GATHERING,ProductType.YUGIOH,ProductType.POKEMON -> {
                     AskItemDomainModel(
-                        refKey = "",duration = "",itemRefKey = "",
+                        refKey = "",duration = "",itemRefKey = productDisplayModel?.refKey!!,
                         creatorUID = GthrCollect.prefs?.signedInUser?.uid!!,
                         askPrice = askPrice.value.toString(),
                         totalPayout = totalPayoutRate.toString(),
@@ -485,7 +487,7 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                 }
                 ProductType.FUNKO,ProductType.SEALED_POKEMON,ProductType.SEALED_YUGIOH,ProductType.SEALED_MTG -> {
                     AskItemDomainModel(
-                        refKey = "",duration = "",itemRefKey = "",
+                        refKey = "",duration = "",itemRefKey = productDisplayModel?.refKey!!,
                         creatorUID = GthrCollect.prefs?.signedInUser?.uid!!,
                         askPrice = askPrice.value.toString(),
                         totalPayout = totalPayoutRate.toString(),
@@ -495,7 +497,7 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                         edition = null, condition = null, language = null,
                         returnName = mAddress?.firstName, returnAddressLine1 = mAddress?.addressLine1, returnAddressLine2 = mAddress?.addressLine2,
                         returnCity = mAddress?.city, returnState = mAddress?.state, returnZipCode = mAddress?.postalCode,
-                        returnCountry = mAddress?.country, frontImageURL = null, backImageURL = null
+                        returnCountry = mAddress?.country, frontImageURL = null, backImageURL = null,
                     )
                 }
                else -> null
@@ -536,7 +538,7 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                 itemObjectID =  productDisplayModel?.objectID!!,
                 productType = productType,
                 productCategory = getProductCategory(productType!!),
-                itemRefKey = null,
+                itemRefKey = productDisplayModel?.refKey,
                 totalCost = buyListPrice.value.toString()
             )
             repository.insertBid(data.toRealtimeDatabaseModel()).collect {

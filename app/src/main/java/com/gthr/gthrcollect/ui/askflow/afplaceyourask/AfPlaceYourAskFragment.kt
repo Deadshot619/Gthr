@@ -76,7 +76,6 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
 
     private fun setUpObserve() {
 
-
         mViewModel.insertCollectionRDB.observe(viewLifecycleOwner){
             it.contentIfNotHandled.let {
                 when (it) {
@@ -266,6 +265,65 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 }
             }
         })
+
+        //Buylist observers
+
+        mViewModel.insertBidRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        mViewModel.setBidId(it.data)
+                        mViewModel.insertBuy()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.insertBuyRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        mViewModel.setBuyKey(it.data)
+                        if(mViewModel.productDisplayModel?.highestBidCost!!<mViewModel.buyListPrice.value!!&&mViewModel.mBidId!=mViewModel.productDisplayModel?.highestBidID)
+                            mViewModel.updateProductForBid()
+                        else
+                            (activity as AskFlowActivity)?.finish()
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.updateProductForBidRDB.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                          findNavController().navigate(AfPlaceYourAskFragmentDirections.actionAfPlaceYourAskFragmentToAfBuyListDetailsFragment())
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
     }
 
     private fun setUpOnClickListeners() {
@@ -293,7 +351,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         mBtnNext.setOnClickListener {
             when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
                 AskFlowType.BUY -> {
-                    findNavController().navigate(AfPlaceYourAskFragmentDirections.actionAfPlaceYourAskFragmentToAfBuyListDetailsFragment())
+                    mViewModel.insertBid()
                 }
                 AskFlowType.BUY_DIRECTLY_FROM_SOMEONE -> {
                     startActivity(

@@ -6,7 +6,7 @@ import com.gthr.gthrcollect.utils.enums.ProductType
 
 data class CollectionInfoDomainModel(
     val about: String?,
-    val buyList: HashMap<String, String>?,
+    val buyList: HashMap<String,String>?,
     val collectionDisplayName: String,
     val collectionRawName: String,
     val favoriteCollectionList: List<String>?,
@@ -24,6 +24,7 @@ data class CollectionItemDomainModel(
     var itemRefKey: String?,
     var marketCost: Double,
     var productType: ProductType?,
+    var objectID: String?,
     var edition: EditionType?,
     var askRefKey: String?,
     var frontImageURL: String?,

@@ -53,8 +53,7 @@ class SearchRepository {
 
         GthrLogger.d("ProductsMayank", data.toString())
 
-        val productData =
-            fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_PRODUCT, data).await()
+        val productData = fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_PRODUCT, data).await()
         val productList = mutableListOf<ProductDisplayModel>()
 
         productData.forEachIndexed { index, it ->

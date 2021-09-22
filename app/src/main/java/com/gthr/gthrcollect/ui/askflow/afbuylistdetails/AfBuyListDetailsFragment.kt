@@ -54,7 +54,7 @@ class AfBuyListDetailsFragment : BaseFragment<AskFlowViewModel, AfBuylistDetails
     private fun setUpClickListeners() {
         mViewBinding.run {
             mBtnNext.setOnClickListener {
-                mViewModel.insertBid()
+                activity?.finish()
             }
         }
     }
@@ -65,61 +65,7 @@ class AfBuyListDetailsFragment : BaseFragment<AskFlowViewModel, AfBuylistDetails
             mTvTotalBuyListValue.text = String.format(getString(R.string.rate_common), it)
         }
 
-        mViewModel.insertBidRDB.observe(viewLifecycleOwner){
-            it.contentIfNotHandled.let {
-                when (it) {
-                    is State.Loading -> {
-                        (activity as AskFlowActivity)?.showProgressBar()
-                    }
-                    is State.Success -> {
-                        mViewModel.setBidId(it.data)
-                        mViewModel.insertBuy()
-                    }
-                    is State.Failed -> {
-                        (activity as AskFlowActivity)?.showProgressBar(false)
-                        showToast(it.message)
-                    }
-                }
-            }
-        }
 
-        mViewModel.insertBuyRDB.observe(viewLifecycleOwner){
-            it.contentIfNotHandled.let {
-                when (it) {
-                    is State.Loading -> {
-                        (activity as AskFlowActivity)?.showProgressBar()
-                    }
-                    is State.Success -> {
-                        mViewModel.setBuyKey(it.data)
-                        if(mViewModel.productDisplayModel?.highestBidCost!!<mViewModel.buyListPrice.value!!&&mViewModel.mBidId!=mViewModel.productDisplayModel?.highestBidID)
-                            mViewModel.updateProductForBid()
-                        else
-                            (activity as AskFlowActivity)?.finish()
-                    }
-                    is State.Failed -> {
-                        (activity as AskFlowActivity)?.showProgressBar(false)
-                        showToast(it.message)
-                    }
-                }
-            }
-        }
-
-        mViewModel.updateProductForBidRDB.observe(viewLifecycleOwner){
-            it.contentIfNotHandled.let {
-                when (it) {
-                    is State.Loading -> {
-                        (activity as AskFlowActivity)?.showProgressBar()
-                    }
-                    is State.Success -> {
-                        (activity as AskFlowActivity)?.finish()
-                    }
-                    is State.Failed -> {
-                        (activity as AskFlowActivity)?.showProgressBar(false)
-                        showToast(it.message)
-                    }
-                }
-            }
-        }
 
     }
 }

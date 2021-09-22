@@ -17,19 +17,26 @@ import com.gthr.gthrcollect.data.repository.ProfileRepository
 import com.gthr.gthrcollect.databinding.MyProfileBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
+import com.gthr.gthrcollect.model.domain.ProductDisplayModel
+import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editprofile.EditProfileActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
+import com.gthr.gthrcollect.ui.homebottomnav.search.SearchFragment
+import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.ui.profile.ProfileViewModel
 import com.gthr.gthrcollect.utils.customviews.*
+import com.gthr.gthrcollect.utils.enums.AskFlowType
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.enums.ProfileNavigationType
 import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 
 class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
@@ -71,7 +78,11 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     private lateinit var mToys: CustomCollectionTypeView
     private lateinit var mBuyList: CustomCollectionTypeView
     private lateinit var mCcbCollection: CustomCollectionButton
+    private lateinit var mCccvSize : CustomCollectionChartsView
 
+    private lateinit var mSearchBar : CustomSearchView
+
+    var mSearchTypingJob: Job? = null
     private var imageURl: String = ""
 
     //List of Collection filter views
@@ -88,7 +99,77 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         setUpClickListeners()
         //   setUpRecyclerView()
         setUpObservers()
+
+        mSearchBar.setTextChangeListener {
+            mSearchTypingJob?.cancel()
+            mSearchTypingJob = MainScope().launch {
+                ticker(SEARCH_DELAY).receive()  //Add some delay before an api call
+                searchProduct()
+            }
+        }
     }
+
+    private fun searchProduct() {
+        val productList = mutableListOf<ProductDisplayModel>()
+        when{
+            mAll.mIsActive -> {
+                for (productDisplayModel in mViewModel.mAllCollectionProductList) {
+                    if (productDisplayModel?.name!=null&&productDisplayModel?.name?.contains(mSearchBar.text.toString(),true)!!)
+                        productList.add(productDisplayModel)
+                    else if(productDisplayModel?.productNumber!=null&&productDisplayModel?.productNumber?.contains(mSearchBar.text.toString(),true)!!)
+                        productList.add(productDisplayModel)
+                    else if(productDisplayModel?.rarity!=null&&productDisplayModel?.rarity?.contains(mSearchBar.text.toString(),true)!!)
+                        productList.add(productDisplayModel)
+                    else if(productDisplayModel?.description!=null&&productDisplayModel?.description?.contains(mSearchBar.text.toString(),true)!!)
+                        productList.add(productDisplayModel)
+                }
+            }
+            mCards.mIsActive -> {
+                for (productDisplayModel in mViewModel.mAllCollectionProductList) {
+                    if(productDisplayModel.productType==ProductType.POKEMON||
+                        productDisplayModel.productType==ProductType.MAGIC_THE_GATHERING||
+                        productDisplayModel.productType==ProductType.YUGIOH){
+                        if (productDisplayModel?.name!=null&&productDisplayModel?.name?.contains(mSearchBar.text.toString(),true)!!)
+                            productList.add(productDisplayModel)
+                        else if(productDisplayModel?.productNumber!=null&&productDisplayModel?.productNumber?.contains(mSearchBar.text.toString(),true)!!)
+                            productList.add(productDisplayModel)
+                        else if(productDisplayModel?.rarity!=null&&productDisplayModel?.rarity?.contains(mSearchBar.text.toString(),true)!!)
+                            productList.add(productDisplayModel)
+                        else if(productDisplayModel?.description!=null&&productDisplayModel?.description?.contains(mSearchBar.text.toString(),true)!!)
+                            productList.add(productDisplayModel)
+                    }
+                }
+            }
+            mToys.mIsActive -> {
+                for (productDisplayModel in mViewModel.mAllCollectionProductList) {
+                    if(productDisplayModel.productType==ProductType.FUNKO){
+                        if (productDisplayModel?.name!=null&&productDisplayModel?.name?.contains(mSearchBar.text.toString(),true)!!)
+                            productList.add(productDisplayModel)
+                        else if(productDisplayModel?.productNumber!=null&&productDisplayModel?.productNumber?.contains(mSearchBar.text.toString(),true)!!)
+                            productList.add(productDisplayModel)
+                        else if(productDisplayModel?.rarity!=null&&productDisplayModel?.rarity?.contains(mSearchBar.text.toString(),true)!!)
+                            productList.add(productDisplayModel)
+                        else if(productDisplayModel?.description!=null&&productDisplayModel?.description?.contains(mSearchBar.text.toString(),true)!!)
+                            productList.add(productDisplayModel)
+                    }
+                }
+            }
+            mBuyList.mIsActive -> {
+                for(productDisplayModel in mViewModel.mAllBidProductList) {
+                    if (productDisplayModel?.name!=null&&productDisplayModel?.name?.contains(mSearchBar.text.toString(),true)!!)
+                        productList.add(productDisplayModel)
+                    else if(productDisplayModel?.productNumber!=null&&productDisplayModel?.productNumber?.contains(mSearchBar.text.toString(),true)!!)
+                        productList.add(productDisplayModel)
+                    else if(productDisplayModel?.rarity!=null&&productDisplayModel?.rarity?.contains(mSearchBar.text.toString(),true)!!)
+                        productList.add(productDisplayModel)
+                    else if(productDisplayModel?.description!=null&&productDisplayModel?.description?.contains(mSearchBar.text.toString(),true)!!)
+                        productList.add(productDisplayModel)
+                }
+            }
+        }
+        mViewModel.setDisplayCollectionProducts(productList)
+    }
+
 
     private fun initViews() {
         mViewBinding.run {
@@ -110,6 +191,8 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             mProfilePic = profileLayout.ivProfilePic
             mDisplayName = profileLayout.tvUserName
             mCcbCollection = ccbCollection
+            mSearchBar = csvSearch
+            mCccvSize = cccvSize
             initProgressBar(layoutProgress)
             setViewsForOtherUser()
             setUpRecyclerView()
@@ -128,7 +211,9 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
 
         }
 
-        mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) { }
+        mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) {
+            startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
+        }
     }
 
     private fun setUpObservers() {
@@ -159,6 +244,12 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                     is State.Success -> {
                         showProgressBar(false)
                         setData(it.data)
+                        if(it.data.collectionList!=null&&it.data.collectionList.size>0){
+                            mCccvSize.setValue(it.data.collectionList.size.toString())
+                            mViewModel.getCollectionProduct(it.data.collectionList)
+                        }
+                        else
+                            mCccvSize.setValue("0")
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -167,6 +258,56 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 }
             }
         }
+        mViewModel.mAllCollectionProduct.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        GthrLogger.i("sdkcnsdknc","product :  ${it.data}")
+                        GthrLogger.i("sdkcnsdknc","product size :  ${it.data.size}")
+                        if(it.data!=null&& it.data.isNotEmpty()){
+                            mViewModel.setAllCollectionProductList(it.data)
+                            mViewModel.setDisplayCollectionProducts(it.data)
+                        }
+                        mViewModel.fetchBidProducts(otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString())
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+        mViewModel.mAllBidProduct.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        GthrLogger.i("sdkcnsdknc","product :  ${it.data}")
+                        GthrLogger.i("sdkcnsdknc","product size :  ${it.data.size}")
+                        if(it.data!=null&& it.data.isNotEmpty()){
+                            mViewModel.setAllBidProduct(it.data)
+                        }
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.mDisplayCollectionProduct.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                GthrLogger.i("djscndsc","List $it")
+                GthrLogger.i("sdkcnsdknc","List ${it.size}")
+                mAdapter.submitList(it.map { it.copy() })
+            }
+        }
+
+
 
         mViewModel.followUser.observe(viewLifecycleOwner, {
             it.contentIfNotHandled?.let {
@@ -308,13 +449,22 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             }
             when {
                 mAll.mIsActive || mCards.mIsActive || mToys.mIsActive -> {
-                    mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) { }
+                    mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) {
+                        startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
+                    }
                     mRvMain.adapter = mAdapter
                 }
                 mBuyList.mIsActive -> {
-                    mAdapter = CollectionsAdapter(CustomProductCell.State.WANT) { }
+                    mAdapter = CollectionsAdapter(CustomProductCell.State.WANT) {
+                        startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
+                    }
                     mRvMain.adapter = mAdapter
                 }
+            }
+            mSearchTypingJob?.cancel()
+            mSearchTypingJob = MainScope().launch {
+                ticker(SEARCH_DELAY).receive()  //Add some delay before an api call
+                searchProduct()
             }
         }
     }
@@ -343,5 +493,8 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
 
     companion object {
         private const val REQUEST_CODE_EDIT_PROFILE = 69
+        private const val SEARCH_DELAY = 1000L
     }
+
 }
+
