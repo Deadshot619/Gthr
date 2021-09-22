@@ -4,6 +4,7 @@ import com.gthr.gthrcollect.model.domain.ForSaleItemDomainModel
 import com.gthr.gthrcollect.model.domain.SearchProductDomainModel
 import com.gthr.gthrcollect.model.network.cloudfunction.ForSaleItemModel
 import com.gthr.gthrcollect.model.network.cloudfunction.SearchProductModel
+import com.gthr.gthrcollect.utils.getProductCategoryFromRaw
 import com.gthr.gthrcollect.utils.getProductType
 
 fun SearchProductModel.toSearchProductDomainModel() =
@@ -15,38 +16,38 @@ fun SearchProductModel.toSearchProductDomainModel() =
 
     )
 fun ForSaleItemModel.toDomainModel()=ForSaleItemDomainModel(
-      creatorProfileURL=creatorProfileURL,
-  productProductName=productProductName,
-  edition=edition,
-  productFirebaseRef=productFirebaseRef,
-  language=language,
-  collectionFirebaseRef=collectionFirebaseRef,
-  productCategory=productCategory,
-  collectionId=collectionId,
-  createdAt=createdAt,
-  collectionUserRefKey=collectionUserRefKey,
-  itemObjectID=itemObjectID,
-  itemRefKey=itemRefKey,
-  price=price,
-  productId=productId,
-  askRefKey=askRefKey,
-  productProductNumber=productProductNumber,
-  id=id,
+  creatorProfileURL = creatorProfileURL,
+  productProductName = productProductName,
+  edition = edition,
+  productFirebaseRef = productFirebaseRef,
+  language =/*language?.toLanguageDomainModel()*/null,
+  collectionFirebaseRef = collectionFirebaseRef,
+  productCategory = getProductCategoryFromRaw(productCategory.toString()),
+  collectionId = collectionId,
+  createdAt = createdAt,
+  collectionUserRefKey = collectionUserRefKey,
+  itemObjectID = itemObjectID,
+  itemRefKey = itemRefKey,
+  price = price,
+  productId = productId,
+  askRefKey = askRefKey,
+  productProductNumber = productProductNumber,
+  id = id,
   productGroup=productGroup,
   backImageURL=backImageURL,
   productType=getProductType(productType.toString()),
-  updatedAt=updatedAt,
-  productFirImageURL=productFirImageURL,
-  productRefId=productRefId,
-  collectionRefId=collectionRefId,
-  productNumberOfFavorites=productNumberOfFavorites,
-  collectionCollectionDisplayName=collectionCollectionDisplayName,
-  productRarity=productRarity,
-  collectionProfileImageURL=collectionProfileImageURL,
-  productProdObjectID=productProdObjectID,
-  creatorUID=creatorUID,
-  condition=condition,
-  frontImageURL=frontImageURL,
-  firebaseRef=firebaseRef,
-  collectionCollectionRawName=collectionCollectionRawName
+  updatedAt = updatedAt,
+  productFirImageURL = productFirImageURL,
+  productRefId = productRefId,
+  collectionRefId = collectionRefId,
+  productNumberOfFavorites = productNumberOfFavorites,
+  collectionCollectionDisplayName = collectionCollectionDisplayName,
+  productRarity = productRarity,
+  collectionProfileImageURL = collectionProfileImageURL,
+  productProdObjectID = productProdObjectID,
+  creatorUID = creatorUID,
+  condition =/*condition?.toConditionDomainModel()*/null,
+  frontImageURL = frontImageURL,
+  firebaseRef = firebaseRef,
+  collectionCollectionRawName = collectionCollectionRawName
 )

@@ -414,7 +414,7 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-            mUpForSaleAdapter = AskAdapter(CustomProductCell.State.NORMAL) {}
+            mUpForSaleAdapter = AskAdapter(CustomProductCell.State.FOR_SALE) {}
 
 
             rvUpForSell.adapter = mUpForSaleAdapter

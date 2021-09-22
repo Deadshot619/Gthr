@@ -1,6 +1,7 @@
 package com.gthr.gthrcollect.model.domain
 
 import android.os.Parcelable
+import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import kotlinx.parcelize.Parcelize
 
@@ -10,9 +11,9 @@ data class ForSaleItemDomainModel(
 	val productProductName: String? = null,
 	val edition: String? = null,
 	val productFirebaseRef: String? = null,
-	val language: String? = null,
+	val language: LanguageDomainModel? = null,
 	val collectionFirebaseRef: String? = null,
-	val productCategory: String? = null,
+	val productCategory: ProductCategory? = null,
 	val collectionId: String? = null,
 	val createdAt: String? = null,
 	val collectionUserRefKey: String? = null,
@@ -36,7 +37,7 @@ data class ForSaleItemDomainModel(
 	val collectionProfileImageURL: String? = null,
 	val productProdObjectID: String? = null,
 	val creatorUID: String? = null,
-	val condition: String? = null,
+	val condition: ConditionDomainModel? = null,
 	val frontImageURL: String? = null,
 	val firebaseRef: String? = null,
 	val collectionCollectionRawName: String? = null

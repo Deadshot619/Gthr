@@ -16,3 +16,6 @@ fun getProductCategory(productType: ProductType): ProductCategory? {
     }
     return null
 }
+
+fun getProductCategoryFromRaw(rawString: String): ProductCategory? =
+    ListProductCategories.find { it.title.equals(rawString, ignoreCase = true) }

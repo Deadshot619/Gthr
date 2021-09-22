@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
-import com.gthr.gthrcollect.databinding.ItemLoadMoreBinding
 import com.gthr.gthrcollect.databinding.ItemTestProductBinding
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
@@ -27,7 +26,6 @@ class AskAdapter(val state: CustomProductCell.State, val callback : (data: Produ
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         val binding= ItemTestProductBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
@@ -35,11 +33,7 @@ class AskAdapter(val state: CustomProductCell.State, val callback : (data: Produ
         binding.root.layoutParams.width = (((binding.root.context.getScreenWidth()) - (2*binding.root.context.resources.getDimensionPixelOffset(
             R.dimen.dp_14))) / 2) /// THIS LINE WILL DIVIDE OUR VIEW INTO NUMBERS OF PARTS
         return FavSoldViewHolder(binding)
-
     }
-
-
-
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(getItem(position).viewType== AdapterViewType.VIEW_TYPE_ITEM)
@@ -60,8 +54,4 @@ class AskAdapter(val state: CustomProductCell.State, val callback : (data: Produ
     override fun getItemViewType(position: Int): Int {
         return getItem(position).viewType.value
     }
-
-    inner class ItemLoadMoreViewHolder(val binding: ItemLoadMoreBinding) : RecyclerView.ViewHolder(binding.root)
-
-
 }

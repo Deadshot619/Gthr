@@ -1,7 +1,6 @@
 package com.gthr.gthrcollect.model.domain
 
 import android.os.Parcelable
-import com.gthr.gthrcollect.model.network.cloudfunction.ForSaleItemModel
 import com.gthr.gthrcollect.utils.enums.AdapterViewType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
@@ -143,15 +142,19 @@ data class ProductDisplayModel(
     constructor(model: ForSaleItemDomainModel) : this(
         objectID = model.itemObjectID,
         productType = model.productType,
-        productCategory = getProductCategory(getProductType(model.productType?.title.toString())!!),
+        productCategory = if (model.productType == null) null else getProductCategory(
+            getProductType(
+                model.productType.title
+            )!!
+        ),
         refKey = model.askRefKey,
         firImageURL = model.productFirImageURL,
         name = model.productProductName,
         description = model.productGroup,
         lowestAskCost = model.price,
-        highestBidCost =0,
+        highestBidCost = 0,
         lowestAskID = "",
-        highestBidID ="",
+        highestBidID = "",
         productNumber = model.productProductNumber.toString(),
         numberOfFavorites = model.productNumberOfFavorites,
         tier = "",

@@ -129,12 +129,6 @@ class ProductDetailsViewModel(private val mProductDetailsRepository : ProductDet
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        searchAskJob?.cancel()
-
-    }
-
     private val _isFavorite = MutableLiveData<Event<State<Boolean>>>()
     val isFavorite: LiveData<Event<State<Boolean>>>
         get() = _isFavorite
@@ -178,5 +172,6 @@ class ProductDetailsViewModel(private val mProductDetailsRepository : ProductDet
     override fun onCleared() {
         super.onCleared()
         favoriteJob?.cancel()
+        searchAskJob?.cancel()
     }
 }

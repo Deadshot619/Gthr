@@ -47,7 +47,7 @@ class SearchRepository {
             CloudFunctions.LIMIT to (limit ?: 60),
             CloudFunctions.PAGE to (page ?: 0),
             CloudFunctions.IS_ASCENDING to (isAscending ?: null),
-            CloudFunctions.SORT_BY to (sortBy ?: "lowestAskCost")
+            CloudFunctions.SORT_BY to (sortBy ?: FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
         )
 
         GthrLogger.d("ProductsMayank", data.toString())
@@ -237,36 +237,35 @@ class SearchRepository {
         // Emit loading state
         emit(State.loading())
 
-        GthrLogger.e("productCategory", "${productCategory}")
-
         val data = hashMapOf(
             CloudFunctions.LIMIT to (limit ?: 60),
             CloudFunctions.SEARCK_KEY to (searchTerm ?: ""),
             CloudFunctions.PAGE to (page ?: 0),
-            CloudFunctions.IS_ASCENDING to (isAscending ?: 0),
-            CloudFunctions.SORT_BY to (sortBy ?: "price"),
+            CloudFunctions.IS_ASCENDING to (isAscending ?: 1),
+            CloudFunctions.SORT_BY to (sortBy),
             CloudFunctions.PRODUCT_CATEGORY to (productCategory ?: ""),
             CloudFunctions.PRODUCT_TYPE to (productType ?: ""),
             CloudFunctions.OBJECT_ID to (objectId ?: "")
         )
 
-        GthrLogger.d("DataSearchAsk", data.toString())
+        GthrLogger.d("searchAskQuery", data.toString())
         val askData =
             fetchData<List<HashMap<String, *>>>(CloudFunctions.SEARCH_ASK, data).await()
         val searchCollectionList = mutableListOf<ProductDisplayModel>()
 
-        GthrLogger.e("askData", "${askData.toString()}}")
+        GthrLogger.d("searchAskData", "${askData.toString()}}")
 
         askData.forEachIndexed { index, it ->
             try {
                 //  val gson = Gson()
                 val jsonElement: JsonElement = gson.toJsonElement(it)
-                val saleItem: ForSaleItemModel = gson.fromJsonElement(jsonElement)!!
+                val saleItem: ForSaleItemModel? = gson.fromJsonElement(jsonElement)
 
-                searchCollectionList.add(ProductDisplayModel(saleItem.toDomainModel()))
-
+                saleItem?.let {
+                    searchCollectionList.add(ProductDisplayModel(it.toDomainModel()))
+                }
             } catch (ex: Exception) {
-                print(ex.message)
+                GthrLogger.e("searchAsk", ex.message.toString())
             }
         }
 
@@ -275,7 +274,7 @@ class SearchRepository {
     }.catch {
         // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))
-        GthrLogger.d("askData", "${it.message}}")
+        GthrLogger.e("searchAsk", "${it.message}}")
     }.flowOn(Dispatchers.IO)
 
 }
