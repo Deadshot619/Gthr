@@ -104,11 +104,17 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         setUpUpForSell()
         setUpProductType()
 
-        mViewModel.fetchUpForSale(null,10,0,"price",1,null,objectId = mProductDisplayModel.objectID)
+        mViewModel.fetchUpForSale(
+            null,
+            20,
+            0,
+            "price",
+            1,
+            null,
+            objectId = mProductDisplayModel.objectID
+        )
 
         setUpObserver()
-
-
     }
 
     private fun setUpObserver() {
@@ -225,11 +231,8 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         showToast(it.message)
                     }
                     is State.Success -> {
-                        mUpForSaleAdapter.submitList(it.data)
-
+                        mUpForSaleAdapter.submitList(it.data.take(10))
                         showProgressBar(false)
-
-                        GthrLogger.e("observedata", "data: ${it.data}")
                     }
                 }
             }
@@ -414,8 +417,15 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-            mUpForSaleAdapter = AskAdapter(CustomProductCell.State.FOR_SALE) {}
-
+            mUpForSaleAdapter = AskAdapter(CustomProductCell.State.FOR_SALE) {
+                startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
+                        it
+                    )
+                )
+            }
 
             rvUpForSell.adapter = mUpForSaleAdapter
         }
