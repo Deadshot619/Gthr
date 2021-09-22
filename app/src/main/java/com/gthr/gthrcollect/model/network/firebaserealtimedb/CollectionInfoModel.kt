@@ -1,11 +1,8 @@
 package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
-import com.algolia.search.serialize.KeyFrom
 import com.google.firebase.database.PropertyName
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.enums.ConditionType
-import com.gthr.gthrcollect.utils.enums.EditionType
-import com.gthr.gthrcollect.utils.enums.ProductType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,7 +12,7 @@ data class CollectionInfoModel(
     var about: String? = "",
     @get:PropertyName(FirebaseRealtimeDatabase.BUY_LIST)
     @set:PropertyName(FirebaseRealtimeDatabase.BUY_LIST)
-    var buyList: List<String>? = listOf(),
+    var buyList: HashMap<String, String>? = hashMapOf(),
     @get:PropertyName(FirebaseRealtimeDatabase.COLLECTION_DISPLAY_NAME)
     @set:PropertyName(FirebaseRealtimeDatabase.COLLECTION_DISPLAY_NAME)
     var collectionDisplayName: String = "",
