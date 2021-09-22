@@ -17,5 +17,18 @@ fun getProductCategory(productType: ProductType): ProductCategory? {
     return null
 }
 
+fun getProductTypeFromObjectId(objectId: String): ProductType {
+    return when{
+        //Since all sealed models are under 1 sealedModel, we can return any Sealed Type
+        objectId.contains("sealedPokemon", ignoreCase = true) -> ProductType.SEALED_POKEMON
+        objectId.contains("sealedYugioh", ignoreCase = true) -> ProductType.SEALED_YUGIOH
+        objectId.contains("sealedMTG", ignoreCase = true) -> ProductType.SEALED_MTG
+        objectId.contains(ProductType.POKEMON.title, ignoreCase = true) -> ProductType.POKEMON
+        objectId.contains(ProductType.MAGIC_THE_GATHERING.title, ignoreCase = true) -> ProductType.MAGIC_THE_GATHERING
+        objectId.contains(ProductType.YUGIOH.title, ignoreCase = true) -> ProductType.YUGIOH
+        else -> ProductType.FUNKO
+    }
+}
+
 fun getProductCategoryFromRaw(rawString: String): ProductCategory? =
     ListProductCategories.find { it.title.equals(rawString, ignoreCase = true) }

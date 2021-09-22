@@ -300,7 +300,7 @@ class ProductDetailsRepository {
             .child(FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
         var value: Int = link.get().await().getValue(Int::class.java) ?: 0
         value += 1
-        updateFavoritesAlgolia(objectId, value)
+   //     updateFavoritesAlgolia(objectId, value)
         link.setValue(value).await()
 
         emit(State.success(true))
@@ -353,7 +353,7 @@ class ProductDetailsRepository {
         var value: Int = link.get().await().getValue(Int::class.java) ?: 0
         if (value > 0)
             value -= 1
-        updateFavoritesAlgolia(objectId, value)
+  //      updateFavoritesAlgolia(objectId, value)
         link.setValue(value).await()
 
         emit(State.success(true))
