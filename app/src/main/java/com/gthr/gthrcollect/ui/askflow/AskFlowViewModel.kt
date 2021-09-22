@@ -341,6 +341,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     var mAddress : ShippingAddressDomainModel? = null
         private set
 
+    var mIsPayoutAuth : Boolean = false
+        private set
+
     var mBidId = ""
         private set
 
@@ -375,6 +378,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         mAddress = address
     }
 
+    fun setPayoutAuth(auth : Boolean){
+        mIsPayoutAuth = auth
+    }
 
 
     //Variable to indicate whether Collection data has been added in Firebase
@@ -563,6 +569,19 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
             GthrLogger.i("shdbchjsdb", "productDisplayModel?.refKey: ${productDisplayModel?.refKey}")
             repository.updateProductForBid(buyListPrice.value?.toInt()!!,mBidId,productType!!,productDisplayModel?.refKey!!,productDisplayModel?.objectID!!).collect {
                 _updateProductForBidRDB.value = Event(it)
+            }
+        }
+    }
+
+    //Variable to indicate whether Collection data has been updated in Firebase
+    private val _stripeAccId = MutableLiveData<Event<State<Boolean>>>()
+    val stripeAccId: LiveData<Event<State<Boolean>>>
+        get() = _stripeAccId
+
+    fun checkStripeAccId(userId:String? = null){
+        viewModelScope.launch {
+            repository.authStripeAccount(userId).collect {
+                _stripeAccId.value = Event(it)
             }
         }
     }

@@ -188,4 +188,8 @@ object FirebaseRealtimeDatabase {
     const val LANGUAGE = "Language"
     const val PRICE = "price"
 
+    /*Stripe Account*/
+    const val STRIPE_ACCOUNT="stripeAccount"
+    const val STRIPE_ACCOUNT_ID="stripeAccountID"
+
 }

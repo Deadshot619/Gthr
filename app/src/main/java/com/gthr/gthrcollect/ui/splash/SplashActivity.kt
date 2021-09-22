@@ -1,27 +1,18 @@
 package com.gthr.gthrcollect.ui.splash
 
-import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
-import com.algolia.search.client.ClientSearch
-import com.algolia.search.model.*
-import com.algolia.search.model.indexing.Partial
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.databinding.ActivitySplashBinding
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.channels.ticker
-import kotlinx.coroutines.launch
-
-import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
-
-import com.gthr.gthrcollect.GthrCollect
-import com.gthr.gthrcollect.utils.constants.AlgoliaConstants
 import com.gthr.gthrcollect.utils.constants.DynamicLinkConstants
 import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
 import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.logger.GthrLogger
-
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.channels.ticker
+import kotlinx.coroutines.launch
 
 class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
 

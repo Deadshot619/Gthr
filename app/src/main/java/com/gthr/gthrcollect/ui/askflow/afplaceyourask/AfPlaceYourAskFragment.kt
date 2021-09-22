@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfPlaceYourAskFragmentBinding
@@ -64,6 +65,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
     //Buylist
     private lateinit var mTvBuyListValue: AppCompatTextView
     private lateinit var mTvTotalBuyListValue: TextView
+    private lateinit var mPayout: TextView
 
     override fun onBinding() {
         setHasOptionsMenu(false)
@@ -208,6 +210,31 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
         }
 
+        mViewModel.stripeAccId.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        if (it.data){
+                            mViewModel.setPayoutAuth(true)
+                            mViewModel.insertCollection()
+                        }else{
+                            startActivityForResult(StripeAuth.getInstance(requireContext()), STRIPE_AUTH)
+                        }
+
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+
         mViewModel.askPrice.observe(viewLifecycleOwner) {
             mTvRateValue.text = String.format(getString(R.string.rate_common), it)
         }
@@ -281,7 +308,13 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 }
                 else -> {
                     if(mViewModel.mAddress!=null)
-                        mViewModel.insertCollection()
+                        if (mViewModel.mIsPayoutAuth){
+                            mViewModel.insertCollection()
+                        }else{
+                        //    mViewModel.checkStripeAccId(GthrCollect.prefs?.collectionInfoModel?.userRefKey)
+                            showToast(getString(R.string.stripe_acc_creating_msg))
+                        }
+
                     else
                         showToast("Please select address")
                 }
@@ -300,6 +333,10 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         mAddressBtn.setOnClickListener {
             startActivityForResult(SettingsActivity.getInstance(requireContext(), SettingFlowType.SHIPPING_ADDRESS),ADDRESS_REQUEST_CODE)
         }
+
+        mPayout.setOnClickListener {
+            mViewModel.checkStripeAccId(GthrCollect.prefs?.collectionInfoModel?.userRefKey)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -310,6 +347,15 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     val address = data.getParcelableExtra<ShippingAddressDomainModel>(KEY_ADDRESS)!!
                     mViewModel.setAddress(address)
                     Log.i("dsfbvjudrs", "onActivityResult: "+address)
+                }
+
+                STRIPE_AUTH -> if (resultCode == Activity.RESULT_OK) {
+                  val auth = data.getIntExtra(STRIPE_AUTH_KEY,-0)
+                    Log.i("STRIPE_AUTH", "onActivityResult: "+auth)
+                    if (auth==1){
+                        mViewModel.setPayoutAuth(true)
+                        showToast(getString(R.string.stripe_account_create_success))
+                    }
                 }
             }
         }
@@ -345,6 +391,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
 
             mTvBuyListValue = tvBuyValue
             mTvTotalBuyListValue = tvBuyTotalValue
+            mPayout = tvPayout
         }
 
         mTvTotalValue.text = String.format(
@@ -393,9 +440,12 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
     fun String.getAddedRate(): String = "+$this"
     fun String.getSubtractedRate(): String = "-$this"
 
+
     companion object{
         const val ADDRESS_REQUEST_CODE = 123
         const val KEY_ADDRESS = "address"
+        const val STRIPE_AUTH = 100
+        const val STRIPE_AUTH_KEY = "AUTH"
 
 
         fun getReturnIntent(shippingAddressDomainModel : ShippingAddressDomainModel) =  Intent().apply {
@@ -403,4 +453,5 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         }
 
     }
+
 }

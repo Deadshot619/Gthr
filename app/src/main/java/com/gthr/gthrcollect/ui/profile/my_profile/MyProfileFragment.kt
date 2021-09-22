@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
@@ -216,6 +215,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
 
         mFollowers.setOnClickListener {
             goToProfilePage(ProfileNavigationType.FOLLOWERS, otherUserId)
+
         }
         mFollowing.setOnClickListener {
             if (!isOtherUser())

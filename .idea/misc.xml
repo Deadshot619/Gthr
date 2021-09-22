@@ -28,13 +28,15 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/receipts_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/recent_sell_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/up_for_sell_fragment.xml" value="0.23125" />
-        <entry key="..\:/gthrAndroid/app/src/main/res/layout/activity_product_detail.xml" value="0.20416666666666666" />
+        <entry key="..\:/gthrAndroid/app/src/main/res/layout/activity_ask_flow.xml" value="0.20416666666666666" />
+        <entry key="..\:/gthrAndroid/app/src/main/res/layout/af_place_your_ask_fragment.xml" value="0.18" />
+        <entry key="..\:/gthrAndroid/app/src/main/res/layout/follow_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/layout_progress_bar.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/market_fragment.xml" value="0.20416666666666666" />
-        <entry key="..\:/gthrAndroid/app/src/main/res/layout/product_detail_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/search_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/strip.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/strip_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/gthrAndroid/app/src/main/res/layout/web_view_layout.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

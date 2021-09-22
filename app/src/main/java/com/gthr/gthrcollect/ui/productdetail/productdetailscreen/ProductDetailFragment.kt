@@ -296,8 +296,10 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                             EditAccountInfoFlow.GOV_ID
                         ), REQUEST_CODE_ID_VERIFICATION_SELL
                     )
-            else
+            else{
                 startActivity(HomeBottomNavActivity.getInstance(requireContext()))
+            }
+
         }
     }
 

@@ -502,6 +502,9 @@
     <string name="text_type_buylist_price_here_buy_flow">Type Buylist Price Here</string>
     <string name="text_desh_product_detail">-</string>
 
+    // Stripe Account Auth
+    <string name="stripe_account_create_success">Stripe Account created successfully</string>
+    <string name="stripe_acc_creating_msg">Please click on \'Payout\' and create Stripe Account before proceeding</string>
 
 
 </resources>

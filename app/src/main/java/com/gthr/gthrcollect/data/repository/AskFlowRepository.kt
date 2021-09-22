@@ -241,4 +241,22 @@ class AskFlowRepository {
         scope.await()
     }
 
+    //  "acct_1IIPTp2a5NtXmrBn"
+    fun authStripeAccount(userId : String?=null) = flow<State<Boolean>>{
+        emit(State.loading())
+      val dataSnapshot =  mFirebaseRD.child(FirebaseRealtimeDatabase.STRIPE_ACCOUNT).child(userId!!).child(FirebaseRealtimeDatabase.STRIPE_ACCOUNT_ID).get().await()
+
+        GthrLogger.e("dataSnapshot","${dataSnapshot.key}: "+dataSnapshot.value.toString())
+        if (dataSnapshot.value.toString().isNullOrEmpty()){
+            emit(State.success(false))
+        }
+        else{
+            emit(State.success(true))
+        }
+
+    }.catch {
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+
 }
