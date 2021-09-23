@@ -420,13 +420,13 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
             mUpForSaleAdapter = AskAdapter(CustomProductCell.State.FOR_SALE) {
-                startActivity(
+                /*startActivity(
                     AskFlowActivity.getInstance(
                         requireContext(),
                         AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
                         it
                     )
-                )
+                )*/
             }
 
             rvUpForSell.adapter = mUpForSaleAdapter

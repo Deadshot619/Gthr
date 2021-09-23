@@ -9,14 +9,12 @@ import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.UpForSellFragmentBinding
 import com.gthr.gthrcollect.model.State
-import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModel
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailsViewModelFactory
 import com.gthr.gthrcollect.ui.productdetail.adapter.UpForSellAdapter
 import com.gthr.gthrcollect.ui.productdetail.recentsell.RecentSellFragmentArgs
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
-import com.gthr.gthrcollect.utils.enums.AskFlowType
 
 class UpForSellFragment : BaseFragment<ProductDetailsViewModel,UpForSellFragmentBinding>() {
 
@@ -46,13 +44,13 @@ class UpForSellFragment : BaseFragment<ProductDetailsViewModel,UpForSellFragment
         rvUpForSell.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
             mUpForSellAdapter = UpForSellAdapter(CustomProductCell.State.FOR_SALE) {
-                startActivity(
+                /*startActivity(
                     AskFlowActivity.getInstance(
                         requireContext(),
                         AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
                         it
                     )
-                )
+                )*/
             }
             adapter = mUpForSellAdapter
         }

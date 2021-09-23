@@ -17,7 +17,6 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.SearchFragmentBinding
 import com.gthr.gthrcollect.model.State
-import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.SearchCollectionAdapter
@@ -297,14 +296,15 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
         mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL) {
             when {
-                mCctForSale.mIsActive -> startActivity(
+                mCctForSale.mIsActive -> {
+                }/*startActivity(
                     AskFlowActivity.getInstance(
                         requireContext(),
                         AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
                         it
                     )
-                )
-                else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
+                )*/
+                else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!, it.productType!!))
             }
         }
 
@@ -969,14 +969,15 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 this.mTvTitle.text = getString(R.string.text_most_fav)
                 mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL) {
                     when {
-                        mCctForSale.mIsActive -> startActivity(
+                        mCctForSale.mIsActive -> {
+                        }/*startActivity(
                             AskFlowActivity.getInstance(
                                 requireContext(),
                                 AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
                                 it
                             )
-                        )
-                        else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
+                        )*/
+                        else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!, it.productType!!))
                     }
                 }
 
@@ -998,14 +999,15 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 this.mTvTitle.text = getString(R.string.text_most_fav)
                 mProductAdapter = ProductAdapter(CustomProductCell.State.FOR_SALE) {
                     when {
-                        mCctForSale.mIsActive -> startActivity(
+                        mCctForSale.mIsActive -> {
+                        }/*startActivity(
                             AskFlowActivity.getInstance(
                                 requireContext(),
                                 AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
                                 it
                             )
-                        )
-                        else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
+                        )*/
+                        else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!, it.productType!!))
                     }
                 }
 
