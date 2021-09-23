@@ -30,6 +30,8 @@ class CustomSearchView @JvmOverloads constructor(
         this.setPadding(padding, paddingVertical, padding, paddingVertical)
         this.setHintTextColor(getResolvedColor(R.color.hint_color))
         this.compoundDrawablePadding = paddingVertical
+        this.maxLines = 1
+        this.isSingleLine = true
 
         setTextChangeListener {}
         onCancelListener()

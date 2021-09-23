@@ -2,6 +2,7 @@ package com.gthr.gthrcollect.ui.profile.my_profile
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.view.KeyEvent
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -99,7 +100,25 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         setUpClickListeners()
         //   setUpRecyclerView()
         setUpObservers()
+        setTextChangeListener()
+        setKeyBoardListener()
+    }
 
+    private fun setKeyBoardListener() {
+        mSearchBar.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    if (!mSearchBar.text.toString().trim().isNullOrEmpty()) {
+                        searchProduct()
+                    }
+                    return true
+                }
+                return false
+            }
+        })
+    }
+
+    private fun setTextChangeListener() {
         mSearchBar.setTextChangeListener {
             mSearchTypingJob?.cancel()
             mSearchTypingJob = MainScope().launch {

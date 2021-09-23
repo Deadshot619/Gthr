@@ -261,7 +261,7 @@ class ProfileRepository {
 
     fun fetchFavProductsList(collectionId: String) =
         flow<State<List<ProductDisplayModel>>> {
-
+            GthrLogger.e("ProductList", "id: ${collectionId}")
             emit(State.loading())
 
             val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
