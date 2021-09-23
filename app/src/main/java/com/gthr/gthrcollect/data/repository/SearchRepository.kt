@@ -1,5 +1,6 @@
 package com.gthr.gthrcollect.data.repository
 
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.gson.JsonElement
@@ -13,7 +14,7 @@ import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.constants.CloudFunctions
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.enums.ProductType
-import com.gthr.gthrcollect.utils.extensions.fromJsonElement
+import com.gthr.gthrcollect.utils.extensions.fromJsonString
 import com.gthr.gthrcollect.utils.extensions.gson
 import com.gthr.gthrcollect.utils.extensions.toJsonElement
 import com.gthr.gthrcollect.utils.getProductType
@@ -148,24 +149,20 @@ class SearchRepository {
         val await = ref.orderByChild(FirebaseRealtimeDatabase.OBJECT_ID).equalTo(id).get().await()
 
         if (await.childrenCount == 1L) {
-            val snapShot = await.children.iterator().next()
+            val snapShot: DataSnapshot = await.children.first()
             val productDetailsNetworkModel = snapShot.getValue(networkModelType)
             val productDetailsDomainModel = when (type) {
-                ProductType.MAGIC_THE_GATHERING -> (productDetailsNetworkModel as MTGModel).toMTGDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.YUGIOH -> (productDetailsNetworkModel as YugiohModel).toYugiohDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.POKEMON -> (productDetailsNetworkModel as PokemonModel).toPokemonDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.FUNKO -> (productDetailsNetworkModel as FunkoModel).toFunkoDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> (productDetailsNetworkModel as SealedModel).toSealedDomainModel(
-                    snapShot.key ?: ""
-                )
+                ProductType.MAGIC_THE_GATHERING -> (productDetailsNetworkModel as MTGModel).toMTGDomainModel(snapShot.key
+                        ?: "")
+                ProductType.YUGIOH -> (productDetailsNetworkModel as YugiohModel).toYugiohDomainModel(snapShot.key
+                        ?: "")
+                ProductType.POKEMON -> (productDetailsNetworkModel as PokemonModel).toPokemonDomainModel(snapShot.key
+                        ?: "")
+                ProductType.FUNKO -> (productDetailsNetworkModel as FunkoModel).toFunkoDomainModel(snapShot.key
+                        ?: "")
+                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG ->
+                    (productDetailsNetworkModel as SealedModel).toSealedDomainModel(snapShot.key
+                            ?: "")
             }
             return productDetailsDomainModel as T
         }
@@ -257,9 +254,10 @@ class SearchRepository {
 
         askData.forEachIndexed { index, it ->
             try {
-                //  val gson = Gson()
                 val jsonElement: JsonElement = gson.toJsonElement(it)
-                val saleItem: ForSaleItemModel? = gson.fromJsonElement(jsonElement)
+                val ss = jsonElement.toString().replace("\\", "").replace("\"{", "{").replace("}\"", "}")
+                GthrLogger.d("searchAskString", "${ss}}")
+                val saleItem: ForSaleItemModel? = gson.fromJsonString(ss)
 
                 saleItem?.let {
                     searchCollectionList.add(ProductDisplayModel(it.toDomainModel()))

@@ -1,12 +1,10 @@
 package com.gthr.gthrcollect.model.mapper
 
-import com.google.firebase.firestore.IgnoreExtraProperties
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.getProductType
-import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
 
 fun UserInfoDomainModel.toRealtimeDatabaseModel() = CollectionInfoModel(
     collectionDisplayName = displayName,
@@ -41,10 +39,10 @@ fun LanguageDomainModel.toRealtimeDatabaseModel() = LanguageModel(
 )
 
 fun ConditionDomainModel.toRealtimeDatabaseModel() = ConditionModel(
-    key = key,
-    displayName = displayName,
-    type = type,
-    abbreviatedName = abbreviatedName
+        key = key,
+        displayName = displayName,
+        type = type.title,
+        abbreviatedName = abbreviatedName
 )
 
 fun AskItemDomainModel.toRealtimeDatabaseModel() = AskItemModel(

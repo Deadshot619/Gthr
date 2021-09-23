@@ -10,43 +10,43 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ProductDisplayModel(
-    var objectID: String?,
-    var productType: ProductType?,
-    var productCategory: ProductCategory?,
-    var refKey: String?,
-    var firImageURL: String?,
-    var name: String?,
-    var description: String?,
-    var lowestAskCost: Int?,
-    var highestBidCost: Int?,
-    var lowestAskID: String?,
-    var highestBidID: String?,
-    var productNumber: String?,
-    var numberOfFavorites: Int?,
-    var tier: String?,
-    var rarity: String?,
-    val viewType : AdapterViewType = AdapterViewType.VIEW_TYPE_ITEM,
-    val forsaleItemNodel: ForSaleItemDomainModel?=null
+        var objectID: String?,
+        var productType: ProductType?,
+        var productCategory: ProductCategory?,
+        var refKey: String?,
+        var firImageURL: String?,
+        var name: String?,
+        var description: String?,
+        var lowestAskCost: Double?,
+        var highestBidCost: Int?,
+        var lowestAskID: String?,
+        var highestBidID: String?,
+        var productNumber: String?,
+        var numberOfFavorites: Int?,
+        var tier: String?,
+        var rarity: String?,
+        val viewType: AdapterViewType = AdapterViewType.VIEW_TYPE_ITEM,
+        val forsaleItemNodel: ForSaleItemDomainModel? = null
 ) : Parcelable {
     //TODO 01/08/21 : Modify firImageUrl added
 
-    constructor(viewType : AdapterViewType) : this(
-        objectID = "",
-        productType = ProductType.YUGIOH,
-        productCategory = ProductCategory.TOYS,
-        refKey = "",
-        firImageURL = "",
-        name = "",
-        description = "",
-        lowestAskCost = -1,
-        highestBidCost = -1,
-        lowestAskID = "",
-        highestBidID = "",
-        productNumber = "".toString(),
-        numberOfFavorites = -1,
-        tier = "".toString(),
-        rarity = ProductType.FUNKO.title.capitalize(),
-        viewType = viewType
+    constructor(viewType: AdapterViewType) : this(
+            objectID = "",
+            productType = ProductType.YUGIOH,
+            productCategory = ProductCategory.TOYS,
+            refKey = "",
+            firImageURL = "",
+            name = "",
+            description = "",
+            lowestAskCost = -1.0,
+            highestBidCost = -1,
+            lowestAskID = "",
+            highestBidID = "",
+            productNumber = "",
+            numberOfFavorites = -1,
+            tier = "",
+            rarity = ProductType.FUNKO.title.capitalize(),
+            viewType = viewType
     )
 
     constructor(model: FunkoDomainModel) : this(

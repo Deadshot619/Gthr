@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.Group
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.model.domain.ForSaleItemDomainModel
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
+import com.gthr.gthrcollect.utils.enums.ConditionType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.*
@@ -129,16 +130,16 @@ class CustomProductCell @JvmOverloads constructor(
            ProductCategory.CARDS -> {
                setType(Type.CARDS)
                setProductName(model.productProductName)
-               setProductNumber(model.productProductNumber.toString())
-               setEdition(model.edition.toString())
-               setLanguage(model.language?.abbreviatedName.toString())
-               setConditionTitle(model.condition?.displayName.toString())
-               setConditionValue(model.condition?.abbreviatedName.toString())
+               setProductNumber(model.productProductNumber ?: "-")
+               setEdition(model.edition ?: "-")
+               setLanguage(model.language?.abbreviatedName ?: "-")
+               setConditionTitle(model.condition?.type?.title ?: "-")
+               setConditionValue(model.condition?.abbreviatedName ?: "-")
            }
            ProductType.FUNKO, ProductCategory.TOYS -> {
                setType(Type.FUNKO)
                setProductName(model.productProductName)
-               setProductNumber(model.productProductNumber.toString())
+               setProductNumber(model.productProductNumber ?: "-")
            }
            ProductType.SEALED_YUGIOH,
            ProductType.SEALED_POKEMON,
@@ -146,11 +147,11 @@ class CustomProductCell @JvmOverloads constructor(
            ProductCategory.SEALED -> {
                setType(Type.SEALED)
                setProductName(model.productProductName)
-               setProductNumber(model.productGroup.toString())
+               setProductNumber(model.productGroup ?: "-")
            }
         }
-        setProductRarity(model.productRarity.toString())
-        setPrice(model.price.toString())
+       setProductRarity(model.productRarity ?: "-")
+       setPrice(model.price.toString())
         setImage(model.productFirImageURL.toString())
     }
 
@@ -242,7 +243,10 @@ class CustomProductCell @JvmOverloads constructor(
     }
 
     fun setConditionTitle(value: String) {
-        mTvConditionTitle.text = value
+        mTvConditionTitle.text = if (value.equals(ConditionType.UG.title, ignoreCase = true))
+            context.getString(R.string.raw)
+        else
+            value
     }
 
     fun setConditionValue(value: String) {

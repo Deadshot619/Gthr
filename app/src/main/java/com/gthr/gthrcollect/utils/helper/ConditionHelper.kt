@@ -462,3 +462,11 @@ fun getConditionFromDisplayName(displayName: String): ConditionDomainModel {
             return getCondition(i)
     return getCondition(-1)
 }
+
+fun getConditionFromRaw(raw: String): ConditionType = when {
+    raw.equals(ConditionType.UG.title, true) -> ConditionType.UG
+    raw.equals(ConditionType.PSA.title, true) -> ConditionType.PSA
+    raw.equals(ConditionType.BGS.title, true) -> ConditionType.BGS
+    raw.equals(ConditionType.CGC.title, true) -> ConditionType.CGC
+    else -> ConditionType.NEW
+}

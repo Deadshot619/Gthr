@@ -43,7 +43,7 @@ data class MTGModel(
     var lang: String? = "",
     @get:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
     @set:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    var lowestAskCost: Int? = 0,
+    var lowestAskCost: Double? = 0.0,
     @get:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     @set:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     var lowestAskID: String? = "",

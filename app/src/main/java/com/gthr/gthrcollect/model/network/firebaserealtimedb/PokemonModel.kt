@@ -3,8 +3,6 @@ package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
 import com.google.firebase.database.PropertyName
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
 data class PokemonModel(
     @get:PropertyName(FirebaseRealtimeDatabase.FIR_IMAGE_URL)
@@ -43,7 +41,7 @@ data class PokemonModel(
     var japaneseNumber: Int? = 0,
     @get:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
     @set:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_COST)
-    var lowestAskCost: Int? = 0,
+    var lowestAskCost: Double? = 0.0,
     @get:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     @set:PropertyName(FirebaseRealtimeDatabase.LOWEST_ASK_ID)
     var lowestAskID: String? = "",

@@ -2,7 +2,6 @@ package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
 import com.google.firebase.database.PropertyName
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
-import com.gthr.gthrcollect.utils.enums.ConditionType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -91,21 +90,21 @@ data class CollectionItemModel(
 
 @Serializable
 data class ConditionModel(
-    @get:PropertyName(FirebaseRealtimeDatabase.KEY)
-    @set:PropertyName(FirebaseRealtimeDatabase.KEY)
-    var key: Int ?=-1,
+        @get:PropertyName(FirebaseRealtimeDatabase.KEY)
+        @set:PropertyName(FirebaseRealtimeDatabase.KEY)
+        var key: Int? = -1,
 
-    @get:PropertyName(FirebaseRealtimeDatabase.DISPLAY_NAME)
-    @set:PropertyName(FirebaseRealtimeDatabase.DISPLAY_NAME)
-    var displayName: String ?="",
+        @get:PropertyName(FirebaseRealtimeDatabase.DISPLAY_NAME)
+        @set:PropertyName(FirebaseRealtimeDatabase.DISPLAY_NAME)
+        var displayName: String? = "",
 
-    @get:PropertyName(FirebaseRealtimeDatabase.TYPE)
-    @set:PropertyName(FirebaseRealtimeDatabase.TYPE)
-    var type: ConditionType? = null ,
+        @get:PropertyName(FirebaseRealtimeDatabase.TYPE)
+        @set:PropertyName(FirebaseRealtimeDatabase.TYPE)
+        var type: String? = null,
 
-    @get:PropertyName(FirebaseRealtimeDatabase.ABBREVIATED_NAME)
-    @set:PropertyName(FirebaseRealtimeDatabase.ABBREVIATED_NAME)
-    var abbreviatedName: String ? = ""
+        @get:PropertyName(FirebaseRealtimeDatabase.ABBREVIATED_NAME)
+        @set:PropertyName(FirebaseRealtimeDatabase.ABBREVIATED_NAME)
+        var abbreviatedName: String? = ""
 )
 
 @Serializable
