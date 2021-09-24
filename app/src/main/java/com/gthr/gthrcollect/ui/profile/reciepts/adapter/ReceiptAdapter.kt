@@ -15,7 +15,7 @@ class ReceiptAdapter(val callback : ReceiptListener) : ListAdapter<ReceiptDomain
 
     companion object DiffCallback : DiffUtil.ItemCallback<ReceiptDomainModel>() {
         override fun areItemsTheSame(oldItem: ReceiptDomainModel, newItem: ReceiptDomainModel): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.saleID == newItem.saleID
         }
         override fun areContentsTheSame(oldItem: ReceiptDomainModel, newItem: ReceiptDomainModel): Boolean {
             return oldItem == newItem
