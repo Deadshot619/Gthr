@@ -16,6 +16,7 @@ import com.gthr.gthrcollect.utils.enums.EditionType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
+import com.gthr.gthrcollect.utils.extensions.getUserUID
 import com.gthr.gthrcollect.utils.extensions.isValidPrice
 import com.gthr.gthrcollect.utils.extensions.toTwoDecimal
 import com.gthr.gthrcollect.utils.getProductCategory
@@ -84,7 +85,6 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     }
 
 
-
     /* Selected Language, Edition, Condition Title & Value */
     private val _selectedLanguage = MutableLiveData<Event<LanguageDomainModel>>()
     val selectedLanguage: LiveData<Event<LanguageDomainModel>>
@@ -129,13 +129,15 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         setSelectedConditionTitle(ConditionType.UG)  //Default selection UG i.e. Raw
         val addressList = GthrCollect.prefs?.userInfoModel?.addressList
         addressList?.let {
-            for(address in addressList){
-                if(address.isSelected){
+            for (address in addressList) {
+                if (address.isSelected) {
                     mAddress = address
                     break
                 }
             }
         }
+
+        checkUserStripeAccId(GthrCollect.prefs?.getUserUID())
     }
 
     fun setProductType(productType: ProductType) {
@@ -334,12 +336,12 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         private set
 
     var mAskId = ""
-       private set
-
-    var mAddress : ShippingAddressDomainModel? = null
         private set
 
-    var mIsPayoutAuth : Boolean = false
+    var mAddress: ShippingAddressDomainModel? = null
+        private set
+
+    var mIsPayoutAuth: Boolean = false
         private set
 
     var mBidId = ""
@@ -348,35 +350,35 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     var mBuyKey = ""
         private set
 
-    fun setBidId(id : String){
+    fun setBidId(id: String) {
         mBidId = id
     }
 
-    fun setBuyKey(key : String){
+    fun setBuyKey(key: String) {
         mBuyKey = key
     }
 
-    fun setFrontImageDownloadUrl(url : String){
+    fun setFrontImageDownloadUrl(url: String) {
         mFrontImageDownloadUrl = url
     }
 
-    fun setBackImageDownloadUrl(url : String){
+    fun setBackImageDownloadUrl(url: String) {
         mBackImageDownloadUrl = url
     }
 
-    fun setCollectionKey(key : String){
+    fun setCollectionKey(key: String) {
         mCollectionKey = key
     }
 
-    fun setAskId(key : String){
+    fun setAskId(key: String) {
         mAskId = key
     }
 
-    fun setAddress(address : ShippingAddressDomainModel){
+    fun setAddress(address: ShippingAddressDomainModel) {
         mAddress = address
     }
 
-    fun setPayoutAuth(auth : Boolean){
+    fun setPayoutAuth(auth: Boolean) {
         mIsPayoutAuth = auth
     }
 
@@ -386,34 +388,41 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val insertCollectionRDB: LiveData<Event<State<String>>>
         get() = _insertCollectionRDB
 
-    fun insertCollection(){
+    fun insertCollection() {
         viewModelScope.launch {
-            val data : CollectionItemDomainModel? = when(productType){
-                ProductType.MAGIC_THE_GATHERING,ProductType.YUGIOH,ProductType.POKEMON -> {
+            val data: CollectionItemDomainModel? = when (productType) {
+                ProductType.MAGIC_THE_GATHERING, ProductType.YUGIOH, ProductType.POKEMON -> {
                     CollectionItemDomainModel(
                         marketCost = 0.0,
                         productType = productType,
-                        edition = selectedEdition.value?.peekContent(),frontImageURL = null,
-                        backImageURL = null,askRefKey = null,
-                        id = null,itemRefKey = productDisplayModel?.refKey,language = selectedLanguage.value?.peekContent(),
+                        edition = selectedEdition.value?.peekContent(),
+                        frontImageURL = null,
+                        backImageURL = null,
+                        askRefKey = null,
+                        id = null,
+                        itemRefKey = productDisplayModel?.refKey,
+                        language = selectedLanguage.value?.peekContent(),
                         condition = selectedCondition.value?.peekContent(),
                         objectID = productDisplayModel?.objectID
                     )
                 }
-                ProductType.FUNKO,ProductType.SEALED_POKEMON,ProductType.SEALED_YUGIOH,ProductType.SEALED_MTG -> {
+                ProductType.FUNKO, ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
                     CollectionItemDomainModel(
                         marketCost = 0.0,
                         productType = productType,
-                        edition = null,frontImageURL = null,
-                        backImageURL = null,askRefKey = null,
-                        id = null,itemRefKey = productDisplayModel?.refKey,language = null,
+                        edition = null, frontImageURL = null,
+                        backImageURL = null, askRefKey = null,
+                        id = null, itemRefKey = productDisplayModel?.refKey, language = null,
                         condition = null,
                         objectID = productDisplayModel?.objectID
                     )
                 }
                 null -> null
             }
-            repository.insertCollection(GthrCollect.prefs?.getUserCollectionId()!!,data?.toRealtimeDatabaseModel()!!).collect {
+            repository.insertCollection(
+                GthrCollect.prefs?.getUserCollectionId()!!,
+                data?.toRealtimeDatabaseModel()!!
+            ).collect {
                 _insertCollectionRDB.value = Event(it)
             }
         }
@@ -424,9 +433,15 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val updateCollectionRDB: LiveData<Event<State<Boolean>>>
         get() = _updateCollectionRDB
 
-    fun updateCollection(){
+    fun updateCollection() {
         viewModelScope.launch {
-            repository.updateCollection(GthrCollect.prefs?.getUserCollectionId()!!,mCollectionKey,mFrontImageDownloadUrl,mBackImageDownloadUrl,mAskId).collect {
+            repository.updateCollection(
+                GthrCollect.prefs?.getUserCollectionId()!!,
+                mCollectionKey,
+                mFrontImageDownloadUrl,
+                mBackImageDownloadUrl,
+                mAskId
+            ).collect {
                 _updateCollectionRDB.value = Event(it)
             }
         }
@@ -439,7 +454,12 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
 
     fun uploadFrontImage() {
         viewModelScope.launch {
-            repository.uploadCollectionImage(frontImageUrl.value!!,mCollectionKey,FirebaseStorage.FRONT_IMAGE, GthrCollect.prefs!!.signedInUser!!.uid).collect {
+            repository.uploadCollectionImage(
+                frontImageUrl.value!!,
+                mCollectionKey,
+                FirebaseStorage.FRONT_IMAGE,
+                GthrCollect.prefs!!.signedInUser!!.uid
+            ).collect {
                 _frontImageUpload.value = Event(it)
             }
         }
@@ -451,8 +471,13 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         get() = _backImageUpload
 
     fun uploadBackImage() {
-       viewModelScope.launch {
-            repository.uploadCollectionImage(backImageUrl.value!!,mCollectionKey,FirebaseStorage.BACK_IMAGE,GthrCollect.prefs!!.signedInUser!!.uid).collect {
+        viewModelScope.launch {
+            repository.uploadCollectionImage(
+                backImageUrl.value!!,
+                mCollectionKey,
+                FirebaseStorage.BACK_IMAGE,
+                GthrCollect.prefs!!.signedInUser!!.uid
+            ).collect {
                 _backImageUpload.value = Event(it)
             }
         }
@@ -463,12 +488,14 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val insertAskRDB: LiveData<Event<State<String>>>
         get() = _insertAskRDB
 
-    fun insertAsk(){
+    fun insertAsk() {
         viewModelScope.launch {
-           val data = when(productType){
-                ProductType.MAGIC_THE_GATHERING,ProductType.YUGIOH,ProductType.POKEMON -> {
+            val data = when (productType) {
+                ProductType.MAGIC_THE_GATHERING, ProductType.YUGIOH, ProductType.POKEMON -> {
                     AskItemDomainModel(
-                        refKey = "",duration = "",itemRefKey = productDisplayModel?.refKey!!,
+                        refKey = "",
+                        duration = "",
+                        itemRefKey = productDisplayModel?.refKey!!,
                         creatorUID = GthrCollect.prefs?.signedInUser?.uid!!,
                         askPrice = askPrice.value.toString(),
                         totalPayout = totalPayoutRate.toString(),
@@ -478,28 +505,44 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                         edition = selectedEdition.value?.peekContent(),
                         condition = selectedCondition.value?.peekContent(),
                         language = selectedLanguage.value?.peekContent(),
-                        returnName = mAddress?.firstName, returnAddressLine1 = mAddress?.addressLine1, returnAddressLine2 = mAddress?.addressLine2,
-                        returnCity = mAddress?.city, returnState = mAddress?.state, returnZipCode = mAddress?.postalCode,
-                        returnCountry = mAddress?.country, frontImageURL = null, backImageURL = null
+                        returnName = mAddress?.firstName,
+                        returnAddressLine1 = mAddress?.addressLine1,
+                        returnAddressLine2 = mAddress?.addressLine2,
+                        returnCity = mAddress?.city,
+                        returnState = mAddress?.state,
+                        returnZipCode = mAddress?.postalCode,
+                        returnCountry = mAddress?.country,
+                        frontImageURL = null,
+                        backImageURL = null
                     )
                 }
-                ProductType.FUNKO,ProductType.SEALED_POKEMON,ProductType.SEALED_YUGIOH,ProductType.SEALED_MTG -> {
+                ProductType.FUNKO, ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
                     AskItemDomainModel(
-                        refKey = "",duration = "",itemRefKey = productDisplayModel?.refKey!!,
+                        refKey = "",
+                        duration = "",
+                        itemRefKey = productDisplayModel?.refKey!!,
                         creatorUID = GthrCollect.prefs?.signedInUser?.uid!!,
                         askPrice = askPrice.value.toString(),
                         totalPayout = totalPayoutRate.toString(),
                         itemObjectID = productDisplayModel?.objectID!!,
                         productType = productType,
                         productCategory = getProductCategory(productType!!),
-                        edition = null, condition = null, language = null,
-                        returnName = mAddress?.firstName, returnAddressLine1 = mAddress?.addressLine1, returnAddressLine2 = mAddress?.addressLine2,
-                        returnCity = mAddress?.city, returnState = mAddress?.state, returnZipCode = mAddress?.postalCode,
-                        returnCountry = mAddress?.country, frontImageURL = null, backImageURL = null,
+                        edition = null,
+                        condition = null,
+                        language = null,
+                        returnName = mAddress?.firstName,
+                        returnAddressLine1 = mAddress?.addressLine1,
+                        returnAddressLine2 = mAddress?.addressLine2,
+                        returnCity = mAddress?.city,
+                        returnState = mAddress?.state,
+                        returnZipCode = mAddress?.postalCode,
+                        returnCountry = mAddress?.country,
+                        frontImageURL = null,
+                        backImageURL = null,
                     )
                 }
-               else -> null
-           }
+                else -> null
+            }
             repository.insertAsk(data?.toRealtimeDatabaseModel()!!).collect {
                 _insertAskRDB.value = Event(it)
             }
@@ -511,11 +554,20 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val updateProductForAskRDB: LiveData<Event<State<Boolean>>>
         get() = _updateProductForAskRDB
 
-    fun updateProductForAsk(){
+    fun updateProductForAsk() {
         viewModelScope.launch {
             GthrLogger.i("shdbchjsdb", "productType:  $productType}")
-            GthrLogger.i("shdbchjsdb", "productDisplayModel?.refKey: ${productDisplayModel?.refKey}")
-            repository.updateProductForAsk(askPrice.value!!.toInt(),mAskId,productType!!,productDisplayModel?.refKey!!,productDisplayModel?.objectID!!).collect {
+            GthrLogger.i(
+                "shdbchjsdb",
+                "productDisplayModel?.refKey: ${productDisplayModel?.refKey}"
+            )
+            repository.updateProductForAsk(
+                askPrice.value!!.toInt(),
+                mAskId,
+                productType!!,
+                productDisplayModel?.refKey!!,
+                productDisplayModel?.objectID!!
+            ).collect {
                 _updateProductForAskRDB.value = Event(it)
             }
         }
@@ -528,12 +580,12 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val insertBidRDB: LiveData<Event<State<String>>>
         get() = _insertBidRDB
 
-    fun insertBid(){
+    fun insertBid() {
         viewModelScope.launch {
             val data = BidItemDomainModel(
                 bidPrice = buyListPrice.value.toString(),
                 creatorUID = GthrCollect.prefs?.signedInUser?.uid!!,
-                itemObjectID =  productDisplayModel?.objectID!!,
+                itemObjectID = productDisplayModel?.objectID!!,
                 productType = productType,
                 productCategory = getProductCategory(productType!!),
                 itemRefKey = productDisplayModel?.refKey,
@@ -550,9 +602,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val insertBuyRDB: LiveData<Event<State<String>>>
         get() = _insertBuyRDB
 
-    fun insertBuy(){
+    fun insertBuy() {
         viewModelScope.launch {
-            repository.insertBuy(GthrCollect.prefs?.getUserCollectionId()!!,mBidId).collect {
+            repository.insertBuy(GthrCollect.prefs?.getUserCollectionId()!!, mBidId).collect {
                 _insertBuyRDB.value = Event(it)
             }
         }
@@ -563,11 +615,20 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val updateProductForBidRDB: LiveData<Event<State<Boolean>>>
         get() = _updateProductForBidRDB
 
-    fun updateProductForBid(){
+    fun updateProductForBid() {
         viewModelScope.launch {
             GthrLogger.i("shdbchjsdb", "productType:  $productType}")
-            GthrLogger.i("shdbchjsdb", "productDisplayModel?.refKey: ${productDisplayModel?.refKey}")
-            repository.updateProductForBid(buyListPrice.value?.toInt()!!,mBidId,productType!!,productDisplayModel?.refKey!!,productDisplayModel?.objectID!!).collect {
+            GthrLogger.i(
+                "shdbchjsdb",
+                "productDisplayModel?.refKey: ${productDisplayModel?.refKey}"
+            )
+            repository.updateProductForBid(
+                buyListPrice.value?.toInt()!!,
+                mBidId,
+                productType!!,
+                productDisplayModel?.refKey!!,
+                productDisplayModel?.objectID!!
+            ).collect {
                 _updateProductForBidRDB.value = Event(it)
             }
         }
@@ -578,10 +639,49 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val stripeAccId: LiveData<Event<State<Boolean>>>
         get() = _stripeAccId
 
-    fun checkStripeAccId(userId:String? = null){
+    fun checkStripeAccId(userId: String? = null) {
         viewModelScope.launch {
             repository.authStripeAccount(userId).collect {
                 _stripeAccId.value = Event(it)
+            }
+        }
+    }
+
+      //Check User Stripe Account id Status
+      private val _stripeAccStatus = MutableLiveData<Event<State<Boolean>>>()
+      val stripeAccStatus: LiveData<Event<State<Boolean>>>
+          get() = _stripeAccStatus
+      fun checkUserStripeAccId(userId:String? = null){
+          viewModelScope.launch {
+              repository.authStripeAccount(userId).collect {
+                  _stripeAccStatus.value = Event(it)
+
+              }
+          }
+      }
+
+    //Variable to get Updated Payout Link of Stripe
+    private val _payoutLink = MutableLiveData<Event<State<String>>>()
+    val payoutLink: LiveData<Event<State<String>>>
+        get() = _payoutLink
+
+    fun getPayoutLink() {
+        viewModelScope.launch {
+            repository.getStripePayoutLink().collect {
+                _payoutLink.value = Event(it)
+            }
+        }
+    }
+
+    //Variable to get Updated Payout Link of Stripe
+    private val _accountDetails = MutableLiveData<Event<State<String>>>()
+    val accountDetails: LiveData<Event<State<String>>>
+        get() = _accountDetails
+
+    fun createStripeAccount(code: String) {
+        viewModelScope.launch {
+            repository.CreateStripeAccount(code).collect {
+                _accountDetails.value = Event(it)
             }
         }
     }

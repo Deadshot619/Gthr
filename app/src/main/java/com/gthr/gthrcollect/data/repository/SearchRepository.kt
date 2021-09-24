@@ -2,6 +2,8 @@ package com.gthr.gthrcollect.data.repository
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ktx.database
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.gson.JsonElement
 import com.gthr.gthrcollect.GthrCollect
@@ -50,9 +52,6 @@ class SearchRepository {
             CloudFunctions.IS_ASCENDING to (isAscending ?: null),
             CloudFunctions.SORT_BY to (sortBy ?: FirebaseRealtimeDatabase.NUMBER_OF_FAVORITES)
         )
-
-        GthrLogger.d("ProductsMayank", data.toString())
-
         val productData = fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_PRODUCT, data).await()
         val productList = mutableListOf<ProductDisplayModel>()
 
@@ -172,6 +171,9 @@ class SearchRepository {
         flow<State<List<SearchCollection>>> {
             // Emit loading state
             emit(State.loading())
+
+           /* val ref= Functio.reference
+            GthrLogger.e("mFirebaseRD", ref.toString())*/
 
             val data = hashMapOf(
                 CloudFunctions.USERID to (GthrCollect.prefs?.collectionInfoModel?.userRefKey ?: ""),

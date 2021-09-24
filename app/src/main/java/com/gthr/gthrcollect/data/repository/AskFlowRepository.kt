@@ -7,14 +7,19 @@ import com.algolia.search.model.indexing.Partial
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.gthr.gthrcollect.GthrCollect
+import com.gthr.gthrcollect.data.remote.fetchData
+import com.gthr.gthrcollect.data.remote.fetchDataWithoutParameter
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.ShippingInfoDomainModel
 import com.gthr.gthrcollect.model.mapper.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.constants.AlgoliaConstants
+import com.gthr.gthrcollect.utils.constants.CloudFunctions
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import io.ktor.util.*
 import kotlinx.coroutines.CoroutineScope
@@ -241,19 +246,79 @@ class AskFlowRepository {
     //  "acct_1IIPTp2a5NtXmrBn"
     fun authStripeAccount(userId : String?=null) = flow<State<Boolean>>{
         emit(State.loading())
-      val dataSnapshot =  mFirebaseRD.child(FirebaseRealtimeDatabase.STRIPE_ACCOUNT).child(userId!!).child(FirebaseRealtimeDatabase.STRIPE_ACCOUNT_ID).get().await()
+        val dataSnapshot =  mFirebaseRD.child(FirebaseRealtimeDatabase.STRIPE_ACCOUNT).child(userId!!).child(FirebaseRealtimeDatabase.STRIPE_ACCOUNT_ID).get().await()
 
-        GthrLogger.e("dataSnapshot","${dataSnapshot.key}: "+dataSnapshot.value.toString())
-        if (dataSnapshot.value.toString().isNullOrEmpty()){
+        GthrLogger.e("keyValue",  dataSnapshot.toString())
+        GthrLogger.e("keyValue",  dataSnapshot.key.toString())
+        GthrLogger.e("keyValue",  dataSnapshot.value.toString())
+
+        if (dataSnapshot.value== null){
             emit(State.success(false))
         }
         else{
             emit(State.success(true))
         }
 
+        GthrLogger.e("dataSnapshot","${dataSnapshot.key}: "+dataSnapshot.value.toString())
+
+
     }.catch {
         emit(State.failed(it.message.toString()))
+
     }.flowOn(Dispatchers.IO)
 
+    fun getStripePayoutLink() =
+        flow<State<String>> {
+            // Emit loading state
+            emit(State.loading())
+
+            val payoutLink = fetchDataWithoutParameter<HashMap<String,*>>(CloudFunctions.UPDATED_PAYOUT_LINK).await()
+
+            val url=payoutLink[CloudFunctions.NEW_PAYOUT_URL]
+
+            GthrLogger.e("payoutLink","${url}")
+
+            emit(State.success(url.toString()))
+
+        }.catch {
+            // If exception is thrown, emit failed state along with message.
+            emit(State.failed(it.message.toString()))
+            GthrLogger.d("payoutLink", "${it.message}}")
+        }.flowOn(Dispatchers.IO)
+
+    fun CreateStripeAccount(code:String) =
+        flow<State<String>> {
+            // Emit loading state
+            emit(State.loading())
+
+            val data = hashMapOf(
+                CloudFunctions.UID to GthrCollect.prefs?.getUserCollectionId(),
+                CloudFunctions.CODE to code,
+                CloudFunctions.STATE to "sv_53124"
+            )
+
+        //    val uid="&uid"
+        //    val state="sv_53124"
+        //    val finalUrl="?${CloudFunctions.CODE}=${code}&${CloudFunctions.STATE}=${state}${uid}=${GthrCollect.prefs?.getUserCollectionId()}"
+
+
+            GthrLogger.e("finalUrl",code)
+
+          //  https://us-central1-dlc-db-staging.cloudfunctions.net/createStripeAccount?code=ac_KI3undnNs4y1ifYVDq4vZB3Xyy75uKJZ&state=sv_53124&uid=-MfbQvrB1q0meIjvH2aO
+            val endPoint=""
+
+            val accountDeatils = fetchDataWithoutParameter<HashMap<String,*>>(code).await()
+
+
+            GthrLogger.e("accountDeatils","${accountDeatils}")
+
+            emit(State.success(accountDeatils.toString()))
+
+        }.catch {
+            // If exception is thrown, emit failed state along with message.
+            emit(State.failed(it.message.toString()))
+            GthrLogger.d("payoutLink", "${it.message}}")
+        }.flowOn(Dispatchers.IO)
 
 }
+

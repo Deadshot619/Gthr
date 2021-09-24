@@ -16,6 +16,7 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfBuyingDirectlyPlaceFragmentBinding
 import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
 import com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
@@ -25,7 +26,9 @@ import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-import com.gthr.gthrcollect.utils.enums.*
+import com.gthr.gthrcollect.utils.enums.AskFlowType
+import com.gthr.gthrcollect.utils.enums.ReceiptType
+import com.gthr.gthrcollect.utils.enums.WebViewType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.isValidPrice
 import com.gthr.gthrcollect.utils.extensions.showToast
@@ -136,8 +139,8 @@ class AfFragmentBuy : BaseFragment<AskFlowViewModel, AfBuyingDirectlyPlaceFragme
                 ReceiptDetailActivity.getInstance(
                     requireContext(),
                     ReceiptType.PURCHASED,
-                    ProductCategory.CARDS,
-                    CustomDeliveryButton.Type.ORDERED
+                    ReceiptDomainModel(),
+                    CustomDeliveryButton.OrderStatus.ORDERED
                 )
             )
             activity?.finish()

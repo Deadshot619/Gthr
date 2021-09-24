@@ -4,6 +4,7 @@ import androidx.activity.viewModels
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.databinding.ActivitySplashBinding
+import com.gthr.gthrcollect.ui.askflow.afplaceyourask.StripeAuth
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.utils.constants.DynamicLinkConstants
@@ -77,6 +78,7 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
 
     private fun goToHomeScreen() {
         startActivity(HomeBottomNavActivity.getInstance(this))
+     //   startActivity(StripeAuth.getInstance(this))
         finish()
     }
 

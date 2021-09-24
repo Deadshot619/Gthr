@@ -31,10 +31,8 @@ import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ReceiptType
 import com.gthr.gthrcollect.utils.enums.SettingFlowType
 import com.gthr.gthrcollect.utils.enums.WebViewType
-import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.isValidPrice
-import com.gthr.gthrcollect.utils.extensions.showToast
-import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.extensions.*
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFragmentBinding>() {
 
@@ -214,15 +212,55 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     }
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
-                        if (it.data) {
-                            mViewModel.setPayoutAuth(true)
-                            mViewModel.insertCollection()
+                        mViewModel.setPayoutAuth(it.data)
+                        if (it.data){
+                            mViewModel.getPayoutLink()
                         } else {
                             startActivityForResult(
-                                StripeAuth.getInstance(requireContext()),
+                                StripeAuth.getInstance(requireContext(),stripeAccCreatingURL),
                                 STRIPE_AUTH
                             )
                         }
+
+                    }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.stripeAccStatus.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        mViewModel.setPayoutAuth(it.data)
+                                           }
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+
+        mViewModel.payoutLink.observe(viewLifecycleOwner){
+            it.contentIfNotHandled.let {
+                when (it) {
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        startActivityForResult(StripeAuth.getInstance(requireContext(),it.data), STRIPE_PAYOUT)
+
+                        GthrLogger.e("payoutLink",it.data)
 
                     }
                     is State.Failed -> {
@@ -390,7 +428,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         }
 
         mPayout.setOnClickListener {
-            mViewModel.checkStripeAccId(GthrCollect.prefs?.collectionInfoModel?.userRefKey)
+            mViewModel.checkStripeAccId(GthrCollect.prefs?.getUserUID())
         }
     }
 
@@ -406,8 +444,10 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
 
                 STRIPE_AUTH -> if (resultCode == Activity.RESULT_OK) {
                     val auth = data.getIntExtra(STRIPE_AUTH_KEY, -0)
+                  val code=   data.getStringExtra(STRIPE_AUTH_CODE)
                     Log.i("STRIPE_AUTH", "onActivityResult: " + auth)
                     if (auth == 1) {
+                    //    mViewModel.createStripeAccount(code!!)
                         mViewModel.setPayoutAuth(true)
                         showToast(getString(R.string.stripe_account_create_success))
                     }
@@ -524,9 +564,11 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         const val ADDRESS_REQUEST_CODE = 123
         const val KEY_ADDRESS = "address"
         const val STRIPE_AUTH = 100
+        const val STRIPE_PAYOUT = 101
         const val STRIPE_AUTH_KEY = "AUTH"
-
-
+        const val STRIPE_AUTH_CODE = "AUTH_CODE"
+        const val STRIPE_URL = "url"
+        const val stripeAccCreatingURL= "https://connect.stripe.com/express/oauth/authorize?client_id=ca_H0t1jArVq47Fpzm3txMvm0v8lVszMewb&state=sv_53124&redirect_uri=https://gthrcollect.page.link/redirect"
         fun getReturnIntent(shippingAddressDomainModel: ShippingAddressDomainModel) =
             Intent().apply {
                 putExtra(KEY_ADDRESS, shippingAddressDomainModel)

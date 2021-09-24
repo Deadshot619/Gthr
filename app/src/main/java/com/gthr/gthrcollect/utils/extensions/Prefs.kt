@@ -21,6 +21,8 @@ fun Prefs.updateCollectionInfoModelData(collectionInfoDomainModel: CollectionInf
 
 fun Prefs.getUserCollectionId(): String? = userInfoModel?.collectionId
 
+fun Prefs.getUserUID(): String? = collectionInfoModel?.userRefKey
+
 fun Prefs.isUserLoggedIn(): Boolean {
     signedInUser?.let {
         return@isUserLoggedIn !it.email.isNullOrEmpty() && it.uid.isNotEmpty()
