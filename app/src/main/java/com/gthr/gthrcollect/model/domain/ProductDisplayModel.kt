@@ -145,14 +145,10 @@ data class ProductDisplayModel(
         isForSale = isForSale
     )
 
-    constructor(model: ForSaleItemDomainModel) : this(
+    constructor(model: ForSaleItemDomainModel,isForSale : Boolean = false) : this(
         objectID = model.itemObjectID,
         productType = model.productType,
-        productCategory = if (model.productType == null) null else getProductCategory(
-            getProductType(
-                model.productType.title
-            )!!
-        ),
+        productCategory = if (model.productType == null) null else getProductCategory(getProductType(model.productType?.title!!)!!),
         refKey = model.askRefKey,
         firImageURL = model.productFirImageURL,
         name = model.productProductName,
@@ -165,7 +161,8 @@ data class ProductDisplayModel(
         numberOfFavorites = model.productNumberOfFavorites,
         tier = "",
         rarity = model.productRarity?.capitalize(),
-        forsaleItemNodel = model
+        forsaleItemNodel = model,
+        isForSale = isForSale
     )
 
 }

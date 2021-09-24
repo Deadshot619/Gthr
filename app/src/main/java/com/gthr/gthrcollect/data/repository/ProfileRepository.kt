@@ -12,9 +12,6 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.mapper.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
-import com.gthr.gthrcollect.model.domain.*
-import com.gthr.gthrcollect.model.mapper.*
-import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.constants.CloudFunctions
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.constants.FirebaseStorage
@@ -28,8 +25,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
-import com.gthr.gthrcollect.utils.getProductCategory
-import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.getProductTypeFromObjectId
 
 class ProfileRepository {
@@ -37,8 +32,7 @@ class ProfileRepository {
     private val mFirebaseRD = Firebase.database.reference
     private val mStorageRef = Firebase.storage.reference
 
-    fun fetchUserProfileData(collectionId: String) =
-        flow<State<CollectionInfoDomainModel>> {
+    fun fetchUserProfileData(collectionId: String) = flow<State<CollectionInfoDomainModel>> {
             emit(State.loading())
             val collectionInfo = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
                 .child(collectionId).get().await().getValue(CollectionInfoModel::class.java)
@@ -55,8 +49,7 @@ class ProfileRepository {
             emit(State.failed(it.message.toString()))
         }.flowOn(Dispatchers.IO)
 
-    fun insertCollectionInfoInRD(collectionInfoModel: CollectionInfoModel) =
-        flow<State<String>> {
+    fun insertCollectionInfoInRD(collectionInfoModel: CollectionInfoModel) = flow<State<String>> {
             emit(State.loading())
 
             val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
@@ -93,8 +86,7 @@ class ProfileRepository {
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
-    fun fetchMyFollowing(collectionId: String) =
-        flow<State<List<CollectionInfoDomainModel>>> {
+    fun fetchMyFollowing(collectionId: String) = flow<State<List<CollectionInfoDomainModel>>> {
             emit(State.loading())
 
             val followingData = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
@@ -129,8 +121,7 @@ class ProfileRepository {
 
         }.flowOn(Dispatchers.IO)
 
-    fun fetchMyFollowersList(collectionId: String) =
-        flow<State<List<CollectionInfoDomainModel>>> {
+    fun fetchMyFollowersList(collectionId: String) = flow<State<List<CollectionInfoDomainModel>>> {
 
             emit(State.loading())
 
@@ -169,8 +160,7 @@ class ProfileRepository {
 
         }.flowOn(Dispatchers.IO)
 
-    fun followToUser(collectionId: String) =
-        flow<State<String>> {
+    fun followToUser(collectionId: String) = flow<State<String>> {
             emit(State.loading())
 
             val myCollectionId = GthrCollect.prefs?.getUserCollectionId().toString()
@@ -215,8 +205,7 @@ class ProfileRepository {
             GthrLogger.d("Faileeed", it.message.toString())
         }.flowOn(Dispatchers.IO)
 
-    fun unFollowToUser(collectionId: String) =
-        flow<State<String>> {
+    fun unFollowToUser(collectionId: String) = flow<State<String>> {
             emit(State.loading())
 
             // Adding another user to my  followersList
@@ -259,8 +248,7 @@ class ProfileRepository {
             GthrLogger.d("Faileeed", it.message.toString())
         }.flowOn(Dispatchers.IO)
 
-    fun fetchFavProductsList(collectionId: String) =
-        flow<State<List<ProductDisplayModel>>> {
+    fun fetchFavProductsList(collectionId: String) = flow<State<List<ProductDisplayModel>>> {
             GthrLogger.e("ProductList", "id: ${collectionId}")
             emit(State.loading())
 
@@ -287,7 +275,7 @@ class ProfileRepository {
 
                     when (productType) {
                         ProductType.MAGIC_THE_GATHERING -> {
-                            val data = getProductDetailsByObjectId2<MTGDomainModel>(
+                            val data = getProductDetailsByObjectId<MTGDomainModel>(
                                 objectID, productType
                             )
                             data?.let {
@@ -296,7 +284,7 @@ class ProfileRepository {
                             }
                         }
                         ProductType.YUGIOH -> {
-                            val data = getProductDetailsByObjectId2<YugiohDomainModel>(
+                            val data = getProductDetailsByObjectId<YugiohDomainModel>(
                                 objectID!!,
                                 productType
                             )
@@ -306,7 +294,7 @@ class ProfileRepository {
                             }
                         }
                         ProductType.POKEMON -> {
-                            val data = getProductDetailsByObjectId2<PokemonDomainModel>(
+                            val data = getProductDetailsByObjectId<PokemonDomainModel>(
                                 objectID!!,
                                 productType
                             )
@@ -316,7 +304,7 @@ class ProfileRepository {
                             }
                         }
                         ProductType.FUNKO -> {
-                            val data = getProductDetailsByObjectId2<FunkoDomainModel>(
+                            val data = getProductDetailsByObjectId<FunkoDomainModel>(
                                 objectID!!,
                                 productType
                             )
@@ -326,7 +314,7 @@ class ProfileRepository {
                             }
                         }
                         ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
-                            val data = getProductDetailsByObjectId2<SealedDomainModel>(
+                            val data = getProductDetailsByObjectId<SealedDomainModel>(
                                 objectID!!,
                                 productType
                             )
@@ -349,181 +337,6 @@ class ProfileRepository {
             GthrLogger.e("favproducts", it.message.toString())
 
         }.flowOn(Dispatchers.IO)
-
-    suspend fun <T> getProductDetailsByObjectId2(id: String, type: ProductType): T? {
-        var ref = mFirebaseRD
-        val networkModelType = when (type) {
-            ProductType.MAGIC_THE_GATHERING -> {
-                ref = ref.child(FirebaseRealtimeDatabase.MTG_MODEL)
-                MTGModel::class.java
-            }
-            ProductType.YUGIOH -> {
-                ref = ref.child(FirebaseRealtimeDatabase.YUGIOH_MODEL)
-                YugiohModel::class.java
-            }
-            ProductType.POKEMON -> {
-                ref = ref.child(FirebaseRealtimeDatabase.POKEMON_MODEL)
-                PokemonModel::class.java
-            }
-            ProductType.FUNKO -> {
-                ref = ref.child(FirebaseRealtimeDatabase.FUNKO_MODEL)
-                FunkoModel::class.java
-            }
-            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
-                ref = ref.child(FirebaseRealtimeDatabase.SEALED_MODEL)
-                SealedModel::class.java
-            }
-        }
-        val await = ref.orderByChild(FirebaseRealtimeDatabase.OBJECT_ID).equalTo(id).get().await()
-
-        if (await.childrenCount == 1L) {
-            val snapShot = await.children.iterator().next()
-            val productDetailsNetworkModel = snapShot.getValue(networkModelType)
-            val productDetailsDomainModel = when (type) {
-                ProductType.MAGIC_THE_GATHERING -> (productDetailsNetworkModel as MTGModel).toMTGDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.YUGIOH -> (productDetailsNetworkModel as YugiohModel).toYugiohDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.POKEMON -> (productDetailsNetworkModel as PokemonModel).toPokemonDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.FUNKO -> (productDetailsNetworkModel as FunkoModel).toFunkoDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> (productDetailsNetworkModel as SealedModel).toSealedDomainModel(
-                    snapShot.key ?: ""
-                )
-            }
-            return productDetailsDomainModel as T
-        }
-        return null
-    }
-
-
-
-    fun getCollectionProduct(map : Map<String, CollectionItemModel>) = flow<State<List<ProductDisplayModel>>> {
-        val productList = mutableListOf<ProductDisplayModel>()
-        map.keys.forEach {
-            emit(State.loading())
-            val data = map[it]
-            val productType = data?.productType
-            val objectID = data?.objectID
-            val isForSale = data?.askRefKey!=null&&data?.askRefKey?.isNotEmpty()!!
-
-            GthrLogger.i("jdshcjfds","isForSale "+(data?.askRefKey))
-            GthrLogger.i("jdshcjfds","isForSale "+(data?.askRefKey!=null&&data?.askRefKey?.isNotEmpty()!!))
-
-            when (getProductType(productType!!)) {
-                ProductType.MAGIC_THE_GATHERING -> {
-                    val data = getProductDetailsByObjectId<MTGDomainModel>(
-                        objectID!!,
-                        getProductType(productType,)!!
-                    )
-                    data?.let {
-                        val prodDisplay = ProductDisplayModel(data,isForSale)
-                        productList.add(prodDisplay)
-                    }
-                }
-                ProductType.YUGIOH -> {
-                    val data = getProductDetailsByObjectId<YugiohDomainModel>(
-                        objectID!!,
-                        getProductType(productType)!!
-                    )
-                    data?.let {
-                        val prodDisplay= ProductDisplayModel(data,isForSale)
-                        productList.add(prodDisplay)
-                    }
-                }
-                ProductType.POKEMON ->{
-                    val data = getProductDetailsByObjectId<PokemonDomainModel>(
-                        objectID!!,
-                        getProductType(productType)!!
-                    )
-                    data?.let {
-                        val prodDisplay= ProductDisplayModel(data,isForSale)
-                        productList.add(prodDisplay)
-                    }
-                }
-                ProductType.FUNKO -> {
-                    val data = getProductDetailsByObjectId<FunkoDomainModel>(
-                        objectID!!,
-                        getProductType(productType)!!
-                    )
-                    data?.let {
-                        val prodDisplay = ProductDisplayModel(data,isForSale)
-                        productList.add(prodDisplay)
-                    }
-                }
-                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
-                    val data = getProductDetailsByObjectId<SealedDomainModel>(
-                        objectID!!,
-                        getProductType(productType)!!
-                    )
-                    data?.let {
-                        val prodDisplay = ProductDisplayModel(data,isForSale)
-                        productList.add(prodDisplay)
-                    }
-                }
-            }
-        }
-        emit(State.success(productList))
-    }.catch {
-        // If exception is thrown, emit failed state along with message.
-        emit(State.failed(it.message.toString()))
-    }.flowOn(Dispatchers.IO)
-
-    suspend fun <T> getProductDetailsByObjectId(id: String, type: ProductType): T? {
-        var ref = mFirebaseRD
-        val networkModelType = when (type) {
-            ProductType.MAGIC_THE_GATHERING -> {
-                ref = ref.child(FirebaseRealtimeDatabase.MTG_MODEL)
-                MTGModel::class.java
-            }
-            ProductType.YUGIOH -> {
-                ref = ref.child(FirebaseRealtimeDatabase.YUGIOH_MODEL)
-                YugiohModel::class.java
-            }
-            ProductType.POKEMON -> {
-                ref = ref.child(FirebaseRealtimeDatabase.POKEMON_MODEL)
-                PokemonModel::class.java
-            }
-            ProductType.FUNKO -> {
-                ref = ref.child(FirebaseRealtimeDatabase.FUNKO_MODEL)
-                FunkoModel::class.java
-            }
-            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
-                ref = ref.child(FirebaseRealtimeDatabase.SEALED_MODEL)
-                SealedModel::class.java
-            }
-        }
-        val await = ref.orderByChild(FirebaseRealtimeDatabase.OBJECT_ID).equalTo(id).get().await()
-
-        if (await.childrenCount == 1L) {
-            val snapShot = await.children.iterator().next()
-            val productDetailsNetworkModel = snapShot.getValue(networkModelType)
-            val productDetailsDomainModel = when (type) {
-                ProductType.MAGIC_THE_GATHERING -> (productDetailsNetworkModel as MTGModel).toMTGDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.YUGIOH -> (productDetailsNetworkModel as YugiohModel).toYugiohDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.POKEMON -> (productDetailsNetworkModel as PokemonModel).toPokemonDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.FUNKO -> (productDetailsNetworkModel as FunkoModel).toFunkoDomainModel(
-                    snapShot.key ?: ""
-                )
-                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> (productDetailsNetworkModel as SealedModel).toSealedDomainModel(
-                    snapShot.key ?: ""
-                )
-            }
-            return productDetailsDomainModel as T
-        }
-        return null
-    }
 
     fun fetchBidProducts(collectionId : String) = flow<State<List<ProductDisplayModel>>> {
         // Emit loading state
@@ -602,5 +415,143 @@ class ProfileRepository {
         // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
+
+    private suspend fun <T> getProductDetailsByObjectId(id: String, type: ProductType): T? {
+        var ref = mFirebaseRD
+        val networkModelType = when (type) {
+            ProductType.MAGIC_THE_GATHERING -> {
+                ref = ref.child(FirebaseRealtimeDatabase.MTG_MODEL)
+                MTGModel::class.java
+            }
+            ProductType.YUGIOH -> {
+                ref = ref.child(FirebaseRealtimeDatabase.YUGIOH_MODEL)
+                YugiohModel::class.java
+            }
+            ProductType.POKEMON -> {
+                ref = ref.child(FirebaseRealtimeDatabase.POKEMON_MODEL)
+                PokemonModel::class.java
+            }
+            ProductType.FUNKO -> {
+                ref = ref.child(FirebaseRealtimeDatabase.FUNKO_MODEL)
+                FunkoModel::class.java
+            }
+            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
+                ref = ref.child(FirebaseRealtimeDatabase.SEALED_MODEL)
+                SealedModel::class.java
+            }
+        }
+        val await = ref.orderByChild(FirebaseRealtimeDatabase.OBJECT_ID).equalTo(id).get().await()
+
+        if (await.childrenCount == 1L) {
+            val snapShot = await.children.iterator().next()
+            val productDetailsNetworkModel = snapShot.getValue(networkModelType)
+            val productDetailsDomainModel = when (type) {
+                ProductType.MAGIC_THE_GATHERING -> (productDetailsNetworkModel as MTGModel).toMTGDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.YUGIOH -> (productDetailsNetworkModel as YugiohModel).toYugiohDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.POKEMON -> (productDetailsNetworkModel as PokemonModel).toPokemonDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.FUNKO -> (productDetailsNetworkModel as FunkoModel).toFunkoDomainModel(
+                    snapShot.key ?: ""
+                )
+                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> (productDetailsNetworkModel as SealedModel).toSealedDomainModel(
+                    snapShot.key ?: ""
+                )
+            }
+            return productDetailsDomainModel as T
+        }
+        return null
+    }
+
+    fun getCollectionProduct(map : Map<String, CollectionItemModel>) = flow<State<List<ProductDisplayModel>>> {
+        val productList = mutableListOf<ProductDisplayModel>()
+        map.keys.forEach {
+            emit(State.loading())
+            val collectionItemModel = map[it]
+            val productType = collectionItemModel?.productType
+            val objectID = collectionItemModel?.objectID
+            val isForSale = collectionItemModel?.askRefKey!=null&&collectionItemModel?.askRefKey?.isNotEmpty()!!
+
+            val price = if(isForSale) getPriceFromAsk(collectionItemModel?.askRefKey!!) else 0.0
+
+            when (getProductType(productType!!)) {
+                ProductType.MAGIC_THE_GATHERING -> {
+                    val data = getProductDetailsByObjectId<MTGDomainModel>(
+                        objectID!!,
+                        getProductType(productType)!!
+                    )
+
+                    data?.let {
+                        val forSaleItem = ForSaleItemDomainModel(data,collectionItemModel.toCollectionItemDomainModel(),price)
+                        val prodDisplay = ProductDisplayModel(forSaleItem,isForSale)
+                        productList.add(prodDisplay)
+                    }
+                }
+                ProductType.YUGIOH -> {
+                    val data = getProductDetailsByObjectId<YugiohDomainModel>(
+                        objectID!!,
+                        getProductType(productType)!!
+                    )
+                    data?.let {
+                        val forSaleItem = ForSaleItemDomainModel(data,collectionItemModel.toCollectionItemDomainModel(),price)
+                        val prodDisplay = ProductDisplayModel(forSaleItem,isForSale)
+                        productList.add(prodDisplay)
+                    }
+                }
+                ProductType.POKEMON ->{
+                    val data = getProductDetailsByObjectId<PokemonDomainModel>(
+                        objectID!!,
+                        getProductType(productType)!!
+                    )
+                    data?.let {
+                        val forSaleItem = ForSaleItemDomainModel(data,collectionItemModel.toCollectionItemDomainModel(),price)
+                        val prodDisplay = ProductDisplayModel(forSaleItem,isForSale)
+                        productList.add(prodDisplay)
+                    }
+                }
+                ProductType.FUNKO -> {
+                    val data = getProductDetailsByObjectId<FunkoDomainModel>(
+                        objectID!!,
+                        getProductType(productType)!!
+                    )
+                    data?.let {
+                        val forSaleItem = ForSaleItemDomainModel(data,collectionItemModel.toCollectionItemDomainModel(),price)
+                        val prodDisplay = ProductDisplayModel(forSaleItem,isForSale)
+                        productList.add(prodDisplay)
+                    }
+                }
+                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
+                    val data = getProductDetailsByObjectId<SealedDomainModel>(
+                        objectID!!,
+                        getProductType(productType)!!
+                    )
+
+                    data?.let {
+                        GthrLogger.i("hjbfvjf","hello  ${it.objectID!!}    ${it.productType!!}")
+                        val forSaleItem = ForSaleItemDomainModel(data,collectionItemModel.toCollectionItemDomainModel(),price)
+                        val prodDisplay = ProductDisplayModel(forSaleItem,isForSale)
+                        productList.add(prodDisplay)
+                    }
+                }
+            }
+        }
+        emit(State.success(productList))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    private suspend fun getPriceFromAsk(askRefKey: String) : Double {
+        val await = mFirebaseRD.child(FirebaseRealtimeDatabase.ASK_ITEM_MODEL).child(askRefKey)
+            .child(FirebaseRealtimeDatabase.ASK_PRICE)
+            .get().await()
+
+        return if(await.exists()) await.value.toString().toDouble() else 0.0
+    }
+
 
 }

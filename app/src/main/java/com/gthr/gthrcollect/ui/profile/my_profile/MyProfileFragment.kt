@@ -231,6 +231,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         }
 
         mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) {
+            GthrLogger.i("hjbfvjf","${it.objectID!!}    ${it.productType!!}")
             startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
         }
     }
