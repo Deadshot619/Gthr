@@ -3,6 +3,7 @@ package com.gthr.gthrcollect.model.mapper
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.extensions.toDate
 import com.gthr.gthrcollect.utils.extensions.toRecentSaleDate
 import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.getProductType
@@ -307,6 +308,6 @@ fun SaleHistoryModel.toSaleHistoryDomainModel() = SaleHistoryDomainModel(
     edition = edition,
     language = language,
     condition = condition,
-//    saleDate = saleDate,
+    saleDate = saleDate?.toDate(),
     firURLImage = firURLImage,
 )

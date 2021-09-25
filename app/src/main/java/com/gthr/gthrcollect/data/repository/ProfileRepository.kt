@@ -1,7 +1,6 @@
 package com.gthr.gthrcollect.data.repository
 
 import android.net.Uri
-import android.util.Log
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -338,6 +337,95 @@ class ProfileRepository {
 
         }.flowOn(Dispatchers.IO)
 
+    fun fetchSoldProductsList(collectionId: String) = flow<State<List<ItemDisplayDomainModel>>> {
+        GthrLogger.e("ProductList", "id: ${collectionId}")
+        emit(State.loading())
+
+        val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(collectionId)
+            .child(FirebaseRealtimeDatabase.SELL_LIST).get().await()
+
+        val productList = mutableListOf<ItemDisplayDomainModel>()
+
+
+        if (data.hasChildren()) {
+            val ProductList = data.value as List<String>
+            GthrLogger.e("ProductList", "ProductList: ${ProductList}")
+
+            ProductList.forEach { saleHistoryModelRef ->
+
+                val await = mFirebaseRD.child(FirebaseRealtimeDatabase.SALE_HISTORY_MODEL).child(saleHistoryModelRef).get().await()
+                val saleHistoryModel = await.getValue(SaleHistoryModel::class.java)?.toSaleHistoryDomainModel()
+//                val saleHistoryModel = getSaleHistoryModel(saleHistoryModelRef)
+                val objectID = saleHistoryModel?.objectID!!
+                val productType = getProductTypeFromObjectId(objectID!!)
+
+                GthrLogger.e(
+                    "pType", productType.toString() + "_" + productType.title + " " + collectionId
+                )
+
+                when (productType) {
+                    ProductType.MAGIC_THE_GATHERING -> {
+                        val data = getProductDetailsByObjectId<MTGDomainModel>(
+                            objectID, productType
+                        )
+                        data?.let {
+                            val prodDisplay = ProductDisplayModel(data)
+                            productList.add(ItemDisplayDomainModel(saleHistoryModel,prodDisplay))
+                        }
+                    }
+                    ProductType.YUGIOH -> {
+                        val data = getProductDetailsByObjectId<YugiohDomainModel>(
+                            objectID!!,
+                            productType
+                        )
+                        data?.let {
+                            val prodDisplay = ProductDisplayModel(data)
+                            productList.add(ItemDisplayDomainModel(saleHistoryModel,prodDisplay))
+                        }
+                    }
+                    ProductType.POKEMON -> {
+                        val data = getProductDetailsByObjectId<PokemonDomainModel>(
+                            objectID!!,
+                            productType
+                        )
+                        data?.let {
+                            val prodDisplay = ProductDisplayModel(data)
+                            productList.add(ItemDisplayDomainModel(saleHistoryModel,prodDisplay))
+                        }
+                    }
+                    ProductType.FUNKO -> {
+                        val data = getProductDetailsByObjectId<FunkoDomainModel>(
+                            objectID!!,
+                            productType
+                        )
+                        data?.let {
+                            val prodDisplay = ProductDisplayModel(data)
+                            productList.add(ItemDisplayDomainModel(saleHistoryModel,prodDisplay))
+                        }
+                    }
+                    ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
+                        val data = getProductDetailsByObjectId<SealedDomainModel>(
+                            objectID!!,
+                            productType
+                        )
+                        data?.let {
+                            val prodDisplay = ProductDisplayModel(data)
+                            productList.add(ItemDisplayDomainModel(saleHistoryModel,prodDisplay))
+                        }
+                    }
+                }
+            }
+        }
+        GthrLogger.e("productList", productList.toString())
+        emit(State.Success(productList))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        GthrLogger.e("favproducts", it.message.toString())
+        print(it.cause?.message)
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
     fun fetchBidProducts(collectionId : String) = flow<State<List<ProductDisplayModel>>> {
         // Emit loading state
         emit(State.loading())
@@ -467,6 +555,7 @@ class ProfileRepository {
         return null
     }
 
+
     fun getCollectionProduct(map : Map<String, CollectionItemModel>) = flow<State<List<ProductDisplayModel>>> {
         val productList = mutableListOf<ProductDisplayModel>()
         map.keys.forEach {
@@ -553,5 +642,9 @@ class ProfileRepository {
         return if(await.exists()) await.value.toString().toDouble() else 0.0
     }
 
+    private suspend fun getSaleHistoryModel(saleHistoryRefKey: String) : SaleHistoryDomainModel? {
+        val await = mFirebaseRD.child(FirebaseRealtimeDatabase.SALE_HISTORY_MODEL).child(saleHistoryRefKey).get().await()
+        return await.getValue(SaleHistoryModel::class.java)?.toSaleHistoryDomainModel()
+    }
 
 }

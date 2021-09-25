@@ -6,6 +6,7 @@ import com.gthr.gthrcollect.utils.constants.CalendarConstants.RECENT_SALE_DATE_D
 import com.gthr.gthrcollect.utils.constants.CalendarConstants.RECENT_SALE_DATE_NETWORK_FORMAT
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.*
 
 fun String.toMobileNumber() : String{
     val splitPhoneNumber = this.split("-")
@@ -40,6 +41,16 @@ fun String.toRecentSaleDate() : String? {
     try {
         val getAbbreviate = input.parse(this)    // parse input
         return output.format(getAbbreviate)    // format output
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    return null
+}
+
+fun String.toDate() : Date? {
+    val input = SimpleDateFormat(RECENT_SALE_DATE_NETWORK_FORMAT)
+    try {
+        return input.parse(this)     // format output
     } catch (e: ParseException) {
         e.printStackTrace()
     }

@@ -6,15 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
-import com.gthr.gthrcollect.databinding.ItemLoadMoreBinding
 import com.gthr.gthrcollect.databinding.ItemTestProductBinding
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
-import com.gthr.gthrcollect.utils.enums.AdapterViewType
 import com.gthr.gthrcollect.utils.extensions.getScreenWidth
 
-class FavuriteProductAdapter(val state: CustomProductCell.State, val callback : (data: ProductDisplayModel) -> Unit) :
-    ListAdapter<ProductDisplayModel, RecyclerView.ViewHolder>(DiffCallback) {
+class FavProductAdapter(val callback : (data: ProductDisplayModel) -> Unit) :
+    ListAdapter<ProductDisplayModel, FavProductAdapter.FavSoldViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<ProductDisplayModel>() {
         override fun areItemsTheSame(oldItem: ProductDisplayModel, newItem: ProductDisplayModel): Boolean {
@@ -26,7 +24,7 @@ class FavuriteProductAdapter(val state: CustomProductCell.State, val callback : 
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavSoldViewHolder {
 
         val binding= ItemTestProductBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
@@ -37,26 +35,17 @@ class FavuriteProductAdapter(val state: CustomProductCell.State, val callback : 
         return FavSoldViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(getItem(position).viewType== AdapterViewType.VIEW_TYPE_ITEM)
-            (holder as FavSoldViewHolder).bind(getItem(position))
+    override fun onBindViewHolder(holder: FavSoldViewHolder, position: Int) {
+        holder.bind(getItem(position))
+        holder.binding.item.setState(CustomProductCell.State.FAVORITE)
     }
 
-    inner class FavSoldViewHolder(var binding: ItemTestProductBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class FavSoldViewHolder(var binding: ItemTestProductBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data:ProductDisplayModel) {
             binding.root.setOnClickListener {
                 callback(data)
             }
-            binding.item.setState(state)
             binding.item.setValue(data)
         }
     }
-
-    override fun getItemViewType(position: Int): Int {
-        return getItem(position).viewType.value
-    }
-
-    inner class ItemLoadMoreViewHolder(val binding: ItemLoadMoreBinding) : RecyclerView.ViewHolder(binding.root)
-
 }

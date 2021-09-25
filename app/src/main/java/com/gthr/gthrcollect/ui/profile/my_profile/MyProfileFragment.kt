@@ -231,7 +231,6 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         }
 
         mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) {
-            GthrLogger.i("hjbfvjf","${it.objectID!!}    ${it.productType!!}")
             startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
         }
     }
@@ -383,7 +382,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 goToProfilePage(ProfileNavigationType.FOLLOWING)
         }
         mSold.setOnClickListener {
-            goToProfilePage(ProfileNavigationType.SOLD)
+            goToProfilePage(ProfileNavigationType.SOLD,otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString())
         }
         mFavourites.setOnClickListener {
             goToProfilePage(ProfileNavigationType.FAVOURITES)
@@ -433,6 +432,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             else
                 data.favoriteCollectionList?.size.toString()
         )
+        mSold.setCount(data.sellList?.size.toString())
         imageURl = data.profileImage
         mProfilePic.setProfileImage(imageURl)
 

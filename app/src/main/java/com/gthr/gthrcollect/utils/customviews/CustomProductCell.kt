@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.model.domain.ForSaleItemDomainModel
+import com.gthr.gthrcollect.model.domain.ItemDisplayDomainModel
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.utils.enums.ConditionType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
@@ -90,6 +91,38 @@ class CustomProductCell @JvmOverloads constructor(
                 mGroupCondition.visible()
             }
         }
+    }
+    fun setValue(model: ItemDisplayDomainModel){
+        when (model.productType ?: model.productCategory) {
+            ProductType.MAGIC_THE_GATHERING,
+            ProductType.POKEMON,
+            ProductType.YUGIOH,
+            ProductCategory.CARDS -> {
+                setType(Type.CARDS)
+                setProductName(model.description)
+                setProductNumber(model.productNumber ?: "-")
+                setEdition(model.editionType?.title ?: "-")
+                setLanguage(model.language?.abbreviatedName ?: "-")
+                setConditionTitle(model.condition?.type?.title ?: "-")
+                setConditionValue(model.condition?.abbreviatedName ?: "-")
+            }
+            ProductType.FUNKO, ProductCategory.TOYS -> {
+                setType(Type.FUNKO)
+                setProductName(model.name)
+                setProductNumber(model.productNumber ?: "-")
+            }
+            ProductType.SEALED_YUGIOH,
+            ProductType.SEALED_POKEMON,
+            ProductType.SEALED_MTG,
+            ProductCategory.SEALED -> {
+                setType(Type.SEALED)
+                setProductName(model.name)
+                setProductNumber(model.description ?: "-")
+            }
+        }
+        setProductRarity(model.rarity ?: "-")
+        setPrice(model.price.toString())
+        setImage(model.firImageURL.toString())
     }
 
    fun setValue(productDisplayModel: ProductDisplayModel){

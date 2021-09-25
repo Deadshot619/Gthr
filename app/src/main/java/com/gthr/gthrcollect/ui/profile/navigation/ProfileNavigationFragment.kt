@@ -31,7 +31,7 @@ class ProfileNavigationFragment: BaseFragment<ProfileViewModel, ProfileNavigatio
                 findNavController().navigate(ProfileNavigationFragmentDirections.actionProfileNavigationFragmentToFollowFragment2(profileNavigationType,mOtherUserCollectionId))
             }
             ProfileNavigationType.FAVOURITES, ProfileNavigationType.SOLD -> {
-                findNavController().navigate(ProfileNavigationFragmentDirections.actionProfileNavigationFragmentToFavSoldFragment(profileNavigationType))
+                findNavController().navigate(ProfileNavigationFragmentDirections.actionProfileNavigationFragmentToFavSoldFragment(mOtherUserCollectionId,profileNavigationType))
             }
             ProfileNavigationType.PROFILE -> {
                 findNavController().navigate(ProfileNavigationFragmentDirections.actionProfileNavigationFragmentToMyProfileFragment(mOtherUserCollectionId))

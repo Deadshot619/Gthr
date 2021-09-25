@@ -53,6 +53,10 @@
         android:name="com.gthr.gthrcollect.ui.profile.favsold.FavSoldFragment"
         android:label="FavSoldFragment" >
         <argument
+            android:name="otherUserId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
             android:name="type"
             app:argType="com.gthr.gthrcollect.utils.enums.ProfileNavigationType" />
     </fragment>
