@@ -686,6 +686,42 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         }
     }
 
+    //Variable to indicate whether Collection data has been updated in Firebase
+    private val _mDisplayName = MutableLiveData<Event<State<String>>>()
+    val mDisplayName: LiveData<Event<State<String>>>
+        get() = _mDisplayName
+
+    fun getUserDisplayName(collectionID : String){
+        viewModelScope.launch {
+            repository.getUserDisplayName(collectionID).collect {
+                _mDisplayName.value = Event(it)
+            }
+        }
+    }
+
+    //Variable to indicate whether user image has been updated in Firebase
+    private val _mUserImage = MutableLiveData<Event<State<String>>>()
+    val mUserImage: LiveData<Event<State<String>>>
+        get() = _mUserImage
+
+    fun getUserImage(collectionID : String){
+        viewModelScope.launch {
+            repository.getUserImage(collectionID).collect {
+                _mUserImage.value = Event(it)
+            }
+        }
+    }
+
+
+
+    private val _mBuyingDirFromSomeOneProPrice = MutableLiveData<Double>()
+    val mBuyingDirFromSomeOneProPrice: LiveData<Double>
+        get() = _mBuyingDirFromSomeOneProPrice
+
+    fun setBuyingDirFromSomeOneProPrice(price : Double){
+        _mBuyingDirFromSomeOneProPrice.value = price
+    }
+
     override fun onCleared() {
         super.onCleared()
         shippingTierJob?.cancel()

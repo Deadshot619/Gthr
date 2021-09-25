@@ -133,8 +133,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/collection_image_bg"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@drawable/pikapika" />
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_product_error" />
 
                 </com.google.android.material.card.MaterialCardView>
 

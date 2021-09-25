@@ -261,6 +261,7 @@ class SearchRepository {
                 val saleItem: ForSaleItemModel? = gson.fromJsonString(ss)
 
                 saleItem?.let {
+                    GthrLogger.e("sdhbsd", "index $index ${it.productType}")
                     searchCollectionList.add(ProductDisplayModel(it.toDomainModel()))
                 }
             } catch (ex: Exception) {

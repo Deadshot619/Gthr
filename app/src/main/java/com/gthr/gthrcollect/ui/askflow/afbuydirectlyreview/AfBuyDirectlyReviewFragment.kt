@@ -76,6 +76,12 @@ class AfBuyDirectlyReviewFragment :
     }
 
     private fun setUpObservers() {
+
+        mViewModel.mBuyingDirFromSomeOneProPrice.observe(this){
+            mTvPrice.text = String.format(getString(R.string.rate_common), it)
+            mTvTotalValue.text = String.format(getString(R.string.rate_common), it)
+        }
+
         mViewModel.shippingTierInfo.observe(viewLifecycleOwner, {
             it.contentIfNotHandled?.let {
                 when (it) {

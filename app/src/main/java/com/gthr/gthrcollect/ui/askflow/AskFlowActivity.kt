@@ -3,6 +3,7 @@ package com.gthr.gthrcollect.ui.askflow
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -28,7 +29,9 @@ import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.invisible
 import com.gthr.gthrcollect.utils.extensions.setImage
+import com.gthr.gthrcollect.utils.extensions.setProductImage
 import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 import de.hdodenhof.circleimageview.CircleImageView
 
 class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>() {
@@ -56,8 +59,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
     override fun onBinding() {
         mAskFlowType = intent?.getSerializableExtra(KEY_ASK_FLOW_TYPE) as AskFlowType
-        mProductDisplayModel =
-            intent.getParcelableExtra<ProductDisplayModel>(KEY_PRODUCT_DISPLAY_MODEL)!!
+        mProductDisplayModel = intent.getParcelableExtra<ProductDisplayModel>(KEY_PRODUCT_DISPLAY_MODEL)!!
         mProductType = mProductDisplayModel.productType!!
         mProductCategory = mProductDisplayModel.productCategory!!
 
@@ -70,8 +72,22 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         setUpNavigationAndActionBar()
         setUpClickListeners()
         setUpObservers()
+        setData()
+    }
 
-        mViewModel.getProductDetails(mProductDisplayModel.refKey!!, mProductType)
+    private fun setData() {
+        if(mAskFlowType!=AskFlowType.BUY_DIRECTLY_FROM_SOMEONE)
+            mViewModel.getProductDetails(mProductDisplayModel.refKey!!, mProductType)
+        else{
+            GthrLogger.i("sdhbsd","${mProductDisplayModel.forsaleItemNodel}")
+            mProductDisplayModel.forsaleItemNodel?.backImageURL?.let {
+                mCvBackImage.visible()
+                mIvBackImage.setProductImage(it)
+            }
+            mViewModel.setBuyingDirFromSomeOneProPrice(mProductDisplayModel.forsaleItemNodel?.price!!)
+            mViewModel.getUserImage(mProductDisplayModel.forsaleItemNodel?.collectionFirebaseRef!!)
+            mProductItem.setValue(mProductDisplayModel)
+        }
     }
 
     private fun initViews() {
@@ -106,6 +122,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     }
 
     private fun setUpObservers() {
+
         /* Front & Back Image */
         mViewModel.frontImageUrl.observe(this, {
             if (it != null)
@@ -119,6 +136,41 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             } else
                 mCvBackImage.invisible()
         })
+
+        mViewModel.mDisplayName.observe(this){
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mTvUserName.text = it.data
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                    }
+                }
+            }
+        }
+
+        mViewModel.mUserImage.observe(this){
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mIvUserProfile.setProductImage(it.data)
+                        mViewModel.getUserDisplayName(mProductDisplayModel.forsaleItemNodel?.collectionFirebaseRef!!)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                    }
+                }
+            }
+        }
 
         /* Product Details */
         mViewModel.yugiohProductDetails.observe(this, {
