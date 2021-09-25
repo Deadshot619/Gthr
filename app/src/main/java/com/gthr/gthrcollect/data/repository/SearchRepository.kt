@@ -123,7 +123,7 @@ class SearchRepository {
 
     suspend fun <T> getProductDetailsByObjectId2(id: String, type: ProductType): T? {
         var ref = mFirebaseRD
-        val networkModelType = when (type) {
+        val networkModelType: Class<out Any> = when (type) {
             ProductType.MAGIC_THE_GATHERING -> {
                 ref = ref.child(FirebaseRealtimeDatabase.MTG_MODEL)
                 MTGModel::class.java

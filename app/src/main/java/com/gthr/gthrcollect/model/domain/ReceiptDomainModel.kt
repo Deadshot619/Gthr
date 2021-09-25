@@ -1,13 +1,19 @@
 package com.gthr.gthrcollect.model.domain
 
 import android.os.Parcelable
+import com.gthr.gthrcollect.utils.enums.ProductType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ReceiptDomainModel(
+    //temporary created & will be used to send data from ask flow
+    var imageUrl: String? = null,
+    var totalAskPrice: Double? = null,
+    var shippingReimbursement: Double? = null,
+
     var refKey: String? = null,
     var itemRefKey: String? = null,
-    var productType: String? = null,
+    var productType: ProductType? = null,
     var objectID: String? = null,
     var buyerCharge: String? = null,
     var sellerPayout: String? = null,
@@ -38,6 +44,6 @@ data class ReceiptDomainModel(
     var sellerShippingZipCode: String? = null,
     var sellerShippingCountry: String? = null,
     var edition: String? = null,
-    var lang: String? = null,
+    var lang: Int? = null,
     var condition: String? = null,
 ) : Parcelable

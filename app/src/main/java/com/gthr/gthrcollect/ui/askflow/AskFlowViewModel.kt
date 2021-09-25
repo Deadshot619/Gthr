@@ -69,12 +69,10 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                 ?: 0.00)
 
     val sellingFee: Double
-        get() = (((askPrice.value?.toDouble()
-            ?: 0.00) * PERCENT_SELLING_FEE) / 100.00).toTwoDecimal()
+        get() = askPrice.value.getSellingFee()
 
     val paymentProcessing: Double
-        get() = (((askPrice.value?.toDouble()
-            ?: 0.00) * PERCENT_PAYMENT_PROCESSING) / 100.00).toTwoDecimal()
+        get() = askPrice.value.getPaymentProcessing()
 
     private fun addRates(vararg rate: Double?): Double {
         var total = 0.00

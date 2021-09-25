@@ -16,6 +16,7 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfPlaceYourAskFragmentBinding
 import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
 import com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
@@ -26,7 +27,10 @@ import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-import com.gthr.gthrcollect.utils.enums.*
+import com.gthr.gthrcollect.utils.enums.AskFlowType
+import com.gthr.gthrcollect.utils.enums.ReceiptType
+import com.gthr.gthrcollect.utils.enums.SettingFlowType
+import com.gthr.gthrcollect.utils.enums.WebViewType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.isValidPrice
 import com.gthr.gthrcollect.utils.extensions.showToast
@@ -34,9 +38,10 @@ import com.gthr.gthrcollect.utils.extensions.visible
 
 class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFragmentBinding>() {
 
-    override val mViewModel: AskFlowViewModel by activityViewModels{
+    override val mViewModel: AskFlowViewModel by activityViewModels {
         AskFlowViewModelFactory(AskFlowRepository())
     }
+
     override fun getViewBinding() = AfPlaceYourAskFragmentBinding.inflate(layoutInflater)
 
 
@@ -76,7 +81,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
 
     private fun setUpObserve() {
 
-        mViewModel.insertCollectionRDB.observe(viewLifecycleOwner){
+        mViewModel.insertCollectionRDB.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -95,7 +100,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
         }
 
-        mViewModel.frontImageUpload.observe(viewLifecycleOwner){
+        mViewModel.frontImageUpload.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -114,7 +119,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
         }
 
-        mViewModel.backImageUpload.observe(viewLifecycleOwner){
+        mViewModel.backImageUpload.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -132,7 +137,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 }
             }
         }
-        mViewModel.insertAskRDB.observe(viewLifecycleOwner){
+        mViewModel.insertAskRDB.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -151,7 +156,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
         }
 
-        mViewModel.updateCollectionRDB.observe(viewLifecycleOwner){
+        mViewModel.updateCollectionRDB.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -159,18 +164,14 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     }
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
-                        if(mViewModel.productDisplayModel?.lowestAskCost!!>mViewModel.askPrice.value!!&&
-                            mViewModel.productDisplayModel?.lowestAskID!=mViewModel.mAskId){
+                        if (mViewModel.productDisplayModel?.lowestAskCost!! > mViewModel.askPrice.value!! &&
+                            mViewModel.productDisplayModel?.lowestAskID != mViewModel.mAskId
+                        ) {
                             mViewModel.updateProductForAsk()
-                        }
-                        else{
-                            startActivity(
-                                ReceiptDetailActivity.getInstance(
-                                    requireContext(),
-                                    ReceiptType.SOLD,
-                                    ProductCategory.CARDS,
-                                    CustomDeliveryButton.Type.ASK_PLACED
-                                )
+                        } else {
+                            goToReceiptPage(
+                                ReceiptType.ASK_PLACED,
+                                CustomDeliveryButton.OrderStatus.ASK_PLACED
                             )
                             (activity as AskFlowActivity)?.finish()
                         }
@@ -183,7 +184,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
         }
 
-        mViewModel.updateProductForAskRDB.observe(viewLifecycleOwner){
+        mViewModel.updateProductForAskRDB.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -191,15 +192,11 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     }
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
-                        startActivity(
-                            ReceiptDetailActivity.getInstance(
-                                requireContext(),
-                                ReceiptType.SOLD,
-                                ProductCategory.CARDS,
-                                CustomDeliveryButton.Type.ASK_PLACED
-                            )
+                        goToReceiptPage(
+                            ReceiptType.ASK_PLACED,
+                            CustomDeliveryButton.OrderStatus.ASK_PLACED
                         )
-                        (activity as AskFlowActivity)?.finish()
+                        activity?.finish()
                     }
                     is State.Failed -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
@@ -209,7 +206,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
         }
 
-        mViewModel.stripeAccId.observe(viewLifecycleOwner){
+        mViewModel.stripeAccId.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -217,11 +214,14 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     }
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
-                        if (it.data){
+                        if (it.data) {
                             mViewModel.setPayoutAuth(true)
                             mViewModel.insertCollection()
-                        }else{
-                            startActivityForResult(StripeAuth.getInstance(requireContext()), STRIPE_AUTH)
+                        } else {
+                            startActivityForResult(
+                                StripeAuth.getInstance(requireContext()),
+                                STRIPE_AUTH
+                            )
                         }
 
                     }
@@ -268,7 +268,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
 
         //Buylist observers
 
-        mViewModel.insertBidRDB.observe(viewLifecycleOwner){
+        mViewModel.insertBidRDB.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -286,7 +286,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
         }
 
-        mViewModel.insertBuyRDB.observe(viewLifecycleOwner){
+        mViewModel.insertBuyRDB.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -294,7 +294,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     }
                     is State.Success -> {
                         mViewModel.setBuyKey(it.data)
-                        if(mViewModel.productDisplayModel?.highestBidCost!!<mViewModel.buyListPrice.value!!&&mViewModel.mBidId!=mViewModel.productDisplayModel?.highestBidID)
+                        if (mViewModel.productDisplayModel?.highestBidCost!! < mViewModel.buyListPrice.value!! && mViewModel.mBidId != mViewModel.productDisplayModel?.highestBidID)
                             mViewModel.updateProductForBid()
                         else
                             (activity as AskFlowActivity)?.finish()
@@ -307,7 +307,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
         }
 
-        mViewModel.updateProductForBidRDB.observe(viewLifecycleOwner){
+        mViewModel.updateProductForBidRDB.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -315,7 +315,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     }
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
-                          findNavController().navigate(AfPlaceYourAskFragmentDirections.actionAfPlaceYourAskFragmentToAfBuyListDetailsFragment())
+                        findNavController().navigate(AfPlaceYourAskFragmentDirections.actionAfPlaceYourAskFragmentToAfBuyListDetailsFragment())
                     }
                     is State.Failed -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
@@ -354,25 +354,17 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     mViewModel.insertBid()
                 }
                 AskFlowType.BUY_DIRECTLY_FROM_SOMEONE -> {
-                    startActivity(
-                        ReceiptDetailActivity.getInstance(
-                            requireContext(),
-                            ReceiptType.PURCHASED,
-                            ProductCategory.CARDS,
-                            CustomDeliveryButton.Type.ORDERED
-                        )
-                    )
+                    goToReceiptPage(ReceiptType.PURCHASED, CustomDeliveryButton.OrderStatus.ORDERED)
                     activity?.finish()
                 }
                 else -> {
-                    if(mViewModel.mAddress!=null)
-                        if (mViewModel.mIsPayoutAuth){
+                    if (mViewModel.mAddress != null)
+                        if (mViewModel.mIsPayoutAuth) {
                             mViewModel.insertCollection()
-                        }else{
-                        //    mViewModel.checkStripeAccId(GthrCollect.prefs?.collectionInfoModel?.userRefKey)
+                        } else {
+                            //    mViewModel.checkStripeAccId(GthrCollect.prefs?.collectionInfoModel?.userRefKey)
                             showToast(getString(R.string.stripe_acc_creating_msg))
                         }
-
                     else
                         showToast("Please select address")
                 }
@@ -389,7 +381,12 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         }
 
         mAddressBtn.setOnClickListener {
-            startActivityForResult(SettingsActivity.getInstance(requireContext(), SettingFlowType.SHIPPING_ADDRESS),ADDRESS_REQUEST_CODE)
+            startActivityForResult(
+                SettingsActivity.getInstance(
+                    requireContext(),
+                    SettingFlowType.SHIPPING_ADDRESS
+                ), ADDRESS_REQUEST_CODE
+            )
         }
 
         mPayout.setOnClickListener {
@@ -404,13 +401,13 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 ADDRESS_REQUEST_CODE -> if (resultCode == Activity.RESULT_OK) {
                     val address = data.getParcelableExtra<ShippingAddressDomainModel>(KEY_ADDRESS)!!
                     mViewModel.setAddress(address)
-                    Log.i("dsfbvjudrs", "onActivityResult: "+address)
+                    Log.i("dsfbvjudrs", "onActivityResult: " + address)
                 }
 
                 STRIPE_AUTH -> if (resultCode == Activity.RESULT_OK) {
-                  val auth = data.getIntExtra(STRIPE_AUTH_KEY,-0)
-                    Log.i("STRIPE_AUTH", "onActivityResult: "+auth)
-                    if (auth==1){
+                    val auth = data.getIntExtra(STRIPE_AUTH_KEY, -0)
+                    Log.i("STRIPE_AUTH", "onActivityResult: " + auth)
+                    if (auth == 1) {
                         mViewModel.setPayoutAuth(true)
                         showToast(getString(R.string.stripe_account_create_success))
                     }
@@ -495,20 +492,45 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         }
     }
 
+    private fun goToReceiptPage(
+        receiptType: ReceiptType,
+        orderStatus: CustomDeliveryButton.OrderStatus
+    ) {
+        startActivity(
+            ReceiptDetailActivity.getInstance(
+                requireContext(),
+                receiptType,
+                ReceiptDomainModel(
+                    totalAskPrice = mViewModel.askPrice.value,
+                    shippingReimbursement = mViewModel.shippingProcessing,
+                    objectID = mViewModel.productDisplayModel?.objectID,
+                    productType = mViewModel.productType,
+                    lang = mViewModel.selectedLanguage.value?.peekContent()?.key,
+                    condition = mViewModel.selectedCondition.value?.peekContent()?.displayName,
+                    edition = mViewModel.selectedEdition.value?.peekContent()?.title,
+                    refKey = mViewModel.productDisplayModel?.refKey,
+                    imageUrl = mViewModel.mFrontImageDownloadUrl
+                ),
+                orderStatus
+            )
+        )
+    }
+
+
     fun String.getAddedRate(): String = "+$this"
     fun String.getSubtractedRate(): String = "-$this"
 
-
-    companion object{
+    companion object {
         const val ADDRESS_REQUEST_CODE = 123
         const val KEY_ADDRESS = "address"
         const val STRIPE_AUTH = 100
         const val STRIPE_AUTH_KEY = "AUTH"
 
 
-        fun getReturnIntent(shippingAddressDomainModel : ShippingAddressDomainModel) =  Intent().apply {
-            putExtra(KEY_ADDRESS,shippingAddressDomainModel)
-        }
+        fun getReturnIntent(shippingAddressDomainModel: ShippingAddressDomainModel) =
+            Intent().apply {
+                putExtra(KEY_ADDRESS, shippingAddressDomainModel)
+            }
 
     }
 

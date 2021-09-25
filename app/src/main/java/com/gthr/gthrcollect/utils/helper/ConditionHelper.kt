@@ -454,11 +454,11 @@ fun Context.getConditionTitle(conditionType: ConditionType) : String{
 }
 
 fun getConditionFromDisplayName(displayName: String): ConditionDomainModel {
-    if (displayName.isEmpty() || displayName == getCondition(-1).displayName)
+    if (displayName.isEmpty() || displayName.equals(getCondition(-1).displayName, true))
         return getCondition(-1)
 
     for (i in 0..64)
-        if (getCondition(i).displayName == displayName)
+        if (getCondition(i).displayName.equals(displayName, ignoreCase = true))
             return getCondition(i)
     return getCondition(-1)
 }

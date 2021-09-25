@@ -367,6 +367,8 @@
     <string name="text_not_legal_product_detail">Not LEGAL</string>
 
     <!--Sold Detail-->
+    <string name="text_ask_summary">Ask Summary</string>
+    <string name="text_payout">Payout</string>
     <string name="text_sold_details">Sold Details</string>
     <string name="text_sold_summary">Sold Summary</string>
     <string name="text_selling_fee">Selling fee (%s%%)</string>

@@ -6,14 +6,11 @@ import androidx.fragment.app.activityViewModels
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfBuylistDetailsFragmentBinding
-import com.gthr.gthrcollect.model.State
-import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.constants.CalendarConstants
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-import com.gthr.gthrcollect.utils.extensions.showToast
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -64,8 +61,5 @@ class AfBuyListDetailsFragment : BaseFragment<AskFlowViewModel, AfBuylistDetails
             mTvBuyListValue.text = String.format(getString(R.string.rate_common), it)
             mTvTotalBuyListValue.text = String.format(getString(R.string.rate_common), it)
         }
-
-
-
     }
 }

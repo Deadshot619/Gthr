@@ -19,12 +19,12 @@ class CustomDeliveryButton  @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : AppCompatButton(context, attrs, defStyleAttr)  {
 
-    var mCurrentType : Type = Type.PRICE
+    var mCurrentType: OrderStatus = OrderStatus.PRICE
 
     init{
 
         val attrs = getContext().obtainStyledAttributes(attrs, R.styleable.CustomDeliveryButton)
-        val state = Type.values()[attrs.getInt(R.styleable.CustomDeliveryButton_cdb_type, 0)]
+        val state = OrderStatus.values()[attrs.getInt(R.styleable.CustomDeliveryButton_cdb_type, 0)]
 
         this.textAlignment = View.TEXT_ALIGNMENT_CENTER
         val paddingStart = resources.getDimensionPixelOffset(R.dimen.padding_small)
@@ -45,26 +45,26 @@ class CustomDeliveryButton  @JvmOverloads constructor(
 
 
     @SuppressLint("UseCompatTextViewDrawableApis")
-    fun setType(type: Type) {
+    fun setType(type: OrderStatus) {
         mCurrentType = type
-        when(type){
-            Type.PRICE -> {
+        when (type) {
+            OrderStatus.PRICE -> {
                 this.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
                 this.background = getImageDrawable(R.drawable.bg_btn_price_blue)
                 this.setTextColor(getResolvedColor(R.color.white))
                 this.typeface = ResourcesCompat.getFont(context, R.font.lato_bold)
             }
-            Type.PENDING -> {
+            OrderStatus.PENDING -> {
                 this.text = context.getString(R.string.text_pending)
                 val drawable = getImageDrawable(R.drawable.ic_pending)
                 this.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable!!, null)
                 this.background = getImageDrawable(R.drawable.bg_btn_delivery_yellow)
                 this.setTextColor(getResolvedColor(R.color.white))
             }
-            Type.DELIVERED, Type.ASK_PLACED, Type.ORDERED -> {
+            OrderStatus.DELIVERED, OrderStatus.ASK_PLACED, OrderStatus.ORDERED -> {
                 this.text = when (type) {
-                    Type.DELIVERED -> context.getString(R.string.text_delivered)
-                    Type.ASK_PLACED -> context.getString(R.string.text_ask_placed)
+                    OrderStatus.DELIVERED -> context.getString(R.string.text_delivered)
+                    OrderStatus.ASK_PLACED -> context.getString(R.string.text_ask_placed)
                     else -> context.getString(R.string.text_ordered)
                 }
                 val drawable = getImageDrawable(R.drawable.ic_delivered)
@@ -72,7 +72,7 @@ class CustomDeliveryButton  @JvmOverloads constructor(
                 this.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable!!, null)
                 this.setTextColor(getResolvedColor(R.color.blue))
             }
-            Type.TRANSIT -> {
+            OrderStatus.TRANSIT -> {
                 this.text = context.getString(R.string.text_transit)
                 val drawable = getImageDrawable(R.drawable.ic_transit)
                 this.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable!!, null)
@@ -83,7 +83,7 @@ class CustomDeliveryButton  @JvmOverloads constructor(
     }
 
 
-    enum class Type {
+    enum class OrderStatus {
         PRICE, PENDING, TRANSIT, DELIVERED, ASK_PLACED, ORDERED
     }
 

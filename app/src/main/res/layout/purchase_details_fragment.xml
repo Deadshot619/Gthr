@@ -85,53 +85,53 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_small"
+                            android:fontFamily="@font/lato_bold"
                             android:text="@string/text_purchase_detail_seller"
                             android:textColor="@color/light_blue"
                             android:textSize="@dimen/text_size_semi_small"
-                            android:fontFamily="@font/lato_bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
-                            app:layout_constraintEnd_toStartOf="@+id/iv_profile"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_user_profile_pic"
+                            app:layout_constraintEnd_toStartOf="@id/iv_user_profile_pic"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/iv_profile"
+                            app:layout_constraintTop_toTopOf="@id/iv_user_profile_pic"
                             app:layout_constraintVertical_bias="0.97" />
 
                         <!--Seller Name-->
                         <TextView
-                            android:id="@+id/tv_name"
+                            android:id="@+id/tv_user_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_normal"
                             android:fontFamily="@font/lato"
                             android:text="Funko Master Flex"
                             android:textColor="@color/black"
-                            app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
                             android:textSize="@dimen/text_size_semi_small"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_user_profile_pic"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/iv_profile"
+                            app:layout_constraintTop_toTopOf="@id/iv_user_profile_pic"
                             app:layout_constraintVertical_bias="1.0" />
 
                         <!--Seller profile pic-->
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/iv_profile"
+                            android:id="@+id/iv_user_profile_pic"
                             android:layout_width="@dimen/size_profile_purchase_detail"
                             android:layout_height="@dimen/size_profile_purchase_detail"
                             android:layout_marginTop="@dimen/margin_medium"
                             android:layout_marginEnd="@dimen/padding_extra_small"
                             android:src="@drawable/prifile_picture"
-                            app:layout_constraintEnd_toStartOf="@+id/tv_name"
+                            app:layout_constraintEnd_toStartOf="@id/tv_user_name"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <View
                             android:id="@+id/line"
                             android:layout_width="0dp"
                             android:layout_height="1dp"
-                            android:layout_marginEnd="@dimen/margin_normal"
                             android:layout_marginTop="@dimen/margin_mini"
+                            android:layout_marginEnd="@dimen/margin_normal"
                             android:background="@color/disable"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/tv_seller"
-                            app:layout_constraintTop_toBottomOf="@+id/iv_profile" />
+                            app:layout_constraintTop_toBottomOf="@+id/iv_user_profile_pic" />
 
                         <TextView
                             android:id="@+id/tv_title"
@@ -139,8 +139,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_mini"
                             android:layout_marginEnd="@dimen/margin_normal"
-                            android:text="Black Lotus"
                             android:fontFamily="@font/lato_bold"
+                            android:text="Black Lotus"
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_size_normal"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -151,11 +151,11 @@
                         <!--Set-->
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/ll_set"
+                            style="@style/PurchaseDetailCardInfoBlueStyle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_normal"
                             android:layout_marginTop="@dimen/margin_extra_small"
-                            style="@style/PurchaseDetailCardInfoBlueStyle"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -165,21 +165,21 @@
                             <!--Set & License-->
                             <TextView
                                 android:id="@+id/tv_set"
+                                style="@style/ProductBlueTextTitle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/margin_small"
                                 android:layout_weight="1.5"
-                                style="@style/ProductBlueTextTitle"
                                 android:text="@string/text_product_set" />
 
                             <TextView
                                 android:id="@+id/tv_set_value"
+                                style="@style/ProductBlueTextValue"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/margin_normal"
                                 android:layout_weight="7"
-                                android:text="Collector's Edition"
-                                style="@style/ProductBlueTextValue" />
+                                android:text="Collector's Edition" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -197,10 +197,10 @@
 
                             <!--Number-->
                             <androidx.appcompat.widget.LinearLayoutCompat
+                                style="@style/PurchaseDetailCardInfoBlueStyle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                style="@style/PurchaseDetailCardInfoBlueStyle"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -208,35 +208,35 @@
                                 app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
                                 <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/ProductBlueTextTitle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/margin_small"
                                     android:text="@string/text_hash"
-                                    style="@style/ProductBlueTextTitle"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/line_glob"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
                                     android:id="@+id/tv_number_value"
+                                    style="@style/ProductBlueTextValue"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/margin_extra_small"
                                     android:layout_weight="7"
                                     android:ellipsize="end"
-                                    android:maxLines="1"
                                     android:gravity="center"
-                                    android:text="-"
-                                    style="@style/ProductBlueTextValue" />
+                                    android:maxLines="1"
+                                    android:text="-" />
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
                             <!--Rarity-->
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:id="@+id/ll_rarity"
+                                style="@style/PurchaseDetailCardInfoBlueStyle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/margin_mini"
-                                style="@style/PurchaseDetailCardInfoBlueStyle"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
@@ -245,24 +245,24 @@
                                 app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
                                 <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/ProductBlueTextTitle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/margin_small"
                                     android:text="@string/text_product_rarity"
-                                    style="@style/ProductBlueTextTitle"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/line_glob"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
                                     android:id="@+id/tv_rarity_value"
+                                    style="@style/ProductBlueTextValue"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/margin_normal"
                                     android:layout_weight="7"
-                                    android:text="-"
                                     android:gravity="center"
-                                    style="@style/ProductBlueTextValue" />
+                                    android:text="-" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -271,10 +271,10 @@
                         <!--Set-->
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/ll_condition"
+                            style="@style/PurchaseDetailCardInfoBlueStyle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_normal"
-                            style="@style/PurchaseDetailCardInfoBlueStyle"
                             android:layout_marginTop="@dimen/margin_mini"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
@@ -285,28 +285,28 @@
                             <!--Set & License-->
                             <TextView
                                 android:id="@+id/tv_condition"
+                                style="@style/ProductBlueTextTitle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/margin_small"
                                 android:layout_weight="1"
-                                android:text="@string/text_product_conditon"
-                                style="@style/ProductBlueTextTitle" />
+                                android:text="@string/text_product_conditon" />
 
                             <TextView
                                 android:id="@+id/tv_condition_value"
+                                style="@style/ProductBlueTextValue"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="@dimen/margin_normal"
                                 android:layout_weight="7"
-                                android:text="New"
-                                style="@style/ProductBlueTextValue" />
+                                android:text="New" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-                        <!--Language, PSA-->
+                        <!--Language, Condition, Edition -->
                         <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/ll_details"
+                            android:id="@+id/ll_lang_ed_cond"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/margin_normal"
@@ -319,10 +319,10 @@
 
                             <!--Language-->
                             <androidx.appcompat.widget.LinearLayoutCompat
+                                style="@style/PurchaseDetailCardInfoBlueStyle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                style="@style/PurchaseDetailCardInfoBlueStyle"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -338,25 +338,25 @@
 
                                 <TextView
                                     android:id="@+id/tv_lang_value"
+                                    style="@style/ProductBlueTextValue"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/margin_extra_small"
                                     android:layout_weight="7"
                                     android:ellipsize="end"
                                     android:maxLines="1"
-                                    android:textAlignment="center"
                                     android:text="Chinese (T)"
-                                    style="@style/ProductBlueTextValue" />
+                                    android:textAlignment="center" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
                             <!--PSA-->
                             <androidx.appcompat.widget.LinearLayoutCompat
+                                style="@style/PurchaseDetailCardInfoBlueStyle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="@dimen/margin_extra_small"
                                 android:layout_weight="1"
-                                style="@style/PurchaseDetailCardInfoBlueStyle"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -364,32 +364,32 @@
                                 app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
                                 <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tv_psa"
+                                    android:id="@+id/tv_card_condition_title"
+                                    style="@style/ProductBlueTextTitle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/margin_extra_small"
                                     android:text="@string/text_product_psa"
-                                    style="@style/ProductBlueTextTitle"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/line_glob"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
-                                    android:id="@+id/tv_psa_value"
+                                    android:id="@+id/tv_card_condition_value"
+                                    style="@style/ProductBlueTextValue"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/margin_normal"
                                     android:layout_weight="7"
-                                    android:textAlignment="center"
                                     android:text="10"
-                                    style="@style/ProductBlueTextValue" />
+                                    android:textAlignment="center" />
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
                             <androidx.appcompat.widget.LinearLayoutCompat
+                                style="@style/PurchaseDetailCardInfoBlueStyle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                style="@style/PurchaseDetailCardInfoBlueStyle"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -397,13 +397,13 @@
                                 app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
                                 <TextView
-                                    android:id="@+id/tv_card_type"
+                                    android:id="@+id/tv_edition"
+                                    style="@style/ProductBlueTextValue"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/margin_normal"
                                     android:layout_weight="7"
                                     android:gravity="center"
-                                    style="@style/ProductBlueTextValue"
                                     android:text="Non-Foil" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -416,7 +416,7 @@
                             android:layout_height="0dp"
                             android:layout_marginTop="@dimen/margin_extra_small"
                             android:layout_marginEnd="@dimen/margin_normal"
-                            android:scaleType="fitXY"
+                            android:scaleType="fitCenter"
                             app:layout_constraintBottom_toBottomOf="@id/ll_total"
                             app:layout_constraintDimensionRatio="W,1:1.5"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -428,8 +428,8 @@
                             android:id="@+id/iv_expand_image"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ic_expand"
                             android:layout_margin="@dimen/margin_extra_small"
+                            android:src="@drawable/ic_expand"
                             app:layout_constraintBottom_toBottomOf="@+id/iv_product_image"
                             app:layout_constraintEnd_toEndOf="@+id/iv_product_image" />
 
@@ -443,10 +443,10 @@
                             android:text="@string/text_purchase_summary"
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_size_medium"
-                            app:layout_constraintEnd_toStartOf="@+id/iv_product_image"
+                            app:layout_constraintEnd_toStartOf="@id/iv_product_image"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="@id/tv_title"
-                            app:layout_constraintTop_toBottomOf="@+id/ll_details" />
+                            app:layout_constraintTop_toBottomOf="@id/ll_lang_ed_cond" />
 
                         <!--Row 1-->
 
@@ -473,8 +473,8 @@
                             android:layout_marginEnd="@dimen/margin_large"
                             android:fontFamily="@font/lato"
                             android:text="$22.00"
-                            android:textSize="@dimen/text_size_semi_small"
                             android:textColor="@color/text_color_black"
+                            android:textSize="@dimen/text_size_semi_small"
                             app:layout_constraintBottom_toBottomOf="@+id/tv_summary_r1c1"
                             app:layout_constraintEnd_toStartOf="@+id/iv_product_image"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -490,9 +490,9 @@
                             android:layout_marginTop="@dimen/margin_light"
                             android:layout_marginEnd="@dimen/margin_normal"
                             android:fontFamily="@font/lato"
-                            android:textSize="@dimen/text_size_semi_small"
                             android:text="@string/text_purchase_shipping"
                             android:textColor="@color/text_color_black"
+                            android:textSize="@dimen/text_size_semi_small"
                             app:layout_constraintEnd_toStartOf="@+id/tv_summary_r2c2"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -506,8 +506,8 @@
                             android:layout_marginEnd="@dimen/margin_large"
                             android:fontFamily="@font/lato"
                             android:text="+ $22.00"
-                            android:textSize="@dimen/text_size_semi_small"
                             android:textColor="@color/text_color_black"
+                            android:textSize="@dimen/text_size_semi_small"
                             app:layout_constraintBottom_toBottomOf="@+id/tv_summary_r2c1"
                             app:layout_constraintEnd_toStartOf="@+id/iv_product_image"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -610,10 +610,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="@dimen/margin_extra_small"
-                                android:textSize="@dimen/text_size_medium"
                                 android:fontFamily="@font/lato_bold"
                                 android:text="$25.81"
-                                android:textColor="@color/light_blue" />
+                                android:textColor="@color/light_blue"
+                                android:textSize="@dimen/text_size_medium" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -626,8 +626,8 @@
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_normal"
                     android:fontFamily="@font/lato"
-                    android:textColor="@color/text_color_black"
                     android:text="@string/text_purchase_detail_order_summary"
+                    android:textColor="@color/text_color_black"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
@@ -655,11 +655,11 @@
                     android:layout_width="@dimen/width_button_receipt"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_light"
-                    tools:text="Delivered"
                     app:cdb_type="DELIVERED"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_order_status"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintTop_toTopOf="@+id/tv_order_status" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_order_status"
+                    tools:text="Delivered" />
 
 
                 <TextView
@@ -720,12 +720,13 @@
                     app:layout_constraintWidth_percent="0.5">
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_payment_logo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/visa_logo" />
 
                     <TextView
-                        android:id="@+id/card_number"
+                        android:id="@+id/tv_payment_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_normal"
@@ -765,7 +766,7 @@
                     app:layout_constraintEnd_toStartOf="@id/ll_address"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_ship_to" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_ship_to" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/ll_address"
@@ -777,7 +778,7 @@
                     android:orientation="vertical"
                     android:paddingVertical="@dimen/padding_extra_small"
                     app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-                    app:layout_constraintTop_toTopOf="@+id/tv_ship_to"
+                    app:layout_constraintTop_toTopOf="@id/tv_ship_to"
                     app:layout_constraintWidth_percent="0.5">
 
                     <TextView
@@ -856,6 +857,20 @@
 
 
                 <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+                    android:id="@+id/btn_confirm_received"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_mini"
+                    android:layout_marginTop="@dimen/margin_extra_large"
+                    android:layout_marginBottom="@dimen/margin_normal"
+                    android:text="@string/text_btn_purchase_detail_confirm_received"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toEndOf="@id/guideline_middle"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_order"
+                    app:secondary_button_state="BLUE_GRADIENT" />
+
+                <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
                     android:id="@+id/btn_report_issue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -867,21 +882,17 @@
                     app:layout_constraintTop_toTopOf="@id/btn_confirm_received"
                     app:secondary_button_state="BLUE_GRADIENT" />
 
-                <com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-                    android:id="@+id/btn_confirm_received"
-                    android:layout_width="0dp"
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group_ask_flow"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_mini"
-                    android:layout_marginTop="@dimen/margin_extra_large"
-                    android:layout_marginBottom="@dimen/margin_normal"
-                    android:text="@string/text_btn_purchase_detail_confirm_received"
-                    app:secondary_button_state="BLUE_GRADIENT"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                    app:layout_constraintStart_toEndOf="@id/guideline_middle"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_order" />
+                    app:constraint_referenced_ids="tv_order, tv_order_id, tv_track_package, tv_ship_to, ll_address" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+        <!--Progress Bar-->
+        <include
+            android:id="@+id/layout_progress"
+            layout="@layout/layout_progress_bar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

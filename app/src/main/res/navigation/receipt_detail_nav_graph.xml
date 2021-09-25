@@ -11,11 +11,10 @@
             android:name="receiptType"
             app:argType="com.gthr.gthrcollect.utils.enums.ReceiptType" />
         <argument
-            android:name="productCategory"
-            app:argType="com.gthr.gthrcollect.utils.enums.ProductCategory" />
+            android:name="receiptDomainModel"
+            app:argType="com.gthr.gthrcollect.model.domain.ReceiptDomainModel" />
         <argument
             android:name="buttonType"
-            android:defaultValue="DELIVERED"
-            app:argType="com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton$Type" />
+            app:argType="com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton$OrderStatus" />
     </fragment>
 </navigation>

@@ -11,15 +11,19 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.ReceiptRepository
 import com.gthr.gthrcollect.databinding.ActivityReceiptDetailBinding
+import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.receiptdetail.purchasedetails.PurchaseDetailsFragmentArgs
 import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
-import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ReceiptType
 
 class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityReceiptDetailBinding>() {
-    override val mViewModel: ReceiptDetailViewModel by viewModels()
+    override val mViewModel: ReceiptDetailViewModel by viewModels {
+        ReceiptDetailViewModelFactory(ReceiptRepository())
+    }
+
     override fun getViewBinding() = ActivityReceiptDetailBinding.inflate(layoutInflater)
 
     private lateinit var mNavController: NavController
@@ -27,14 +31,17 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
     private lateinit var mToolbar: Toolbar
 
     private lateinit var mReceiptType: ReceiptType
-    private lateinit var mProductCategory: ProductCategory
-    private lateinit var mButtonType: CustomDeliveryButton.Type
+    private lateinit var mReceiptModel: ReceiptDomainModel
+    private lateinit var mButtonType: CustomDeliveryButton.OrderStatus
 
     override fun onBinding() {
         mReceiptType = intent.getSerializableExtra(KEY_RECEIPT_TYPE) as ReceiptType
-        mProductCategory = intent.getSerializableExtra(KEY_PRODUCT_CATEGORY) as ProductCategory
-        mButtonType = intent.getSerializableExtra(KEY_BUTTON_TYPE) as CustomDeliveryButton.Type
+        mReceiptModel = intent.getParcelableExtra<ReceiptDomainModel>(KEY_RECEIPT_MODEL)!!
+        mButtonType =
+            intent.getSerializableExtra(KEY_BUTTON_TYPE) as CustomDeliveryButton.OrderStatus
 
+        mViewModel.setReceiptModel(mReceiptModel)
+        mViewModel.getProductDetailData(mReceiptModel.productType!!, mReceiptModel.refKey!!)
         initViews()
         setUpNavGraph()
         setSupportActionBar(mToolbar)
@@ -53,7 +60,7 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
                 R.navigation.receipt_detail_nav_graph,
                 PurchaseDetailsFragmentArgs(
                     receiptType = mReceiptType,
-                    mProductCategory,
+                    mReceiptModel,
                     mButtonType
                 ).toBundle()
             )
@@ -76,7 +83,7 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
                     if (mReceiptType == ReceiptType.PURCHASED)
                         setToolbarTitle(getString(R.string.text_purchase_detail))
                     else if (mReceiptType == ReceiptType.SOLD)
-                        if (mButtonType == CustomDeliveryButton.Type.ASK_PLACED)
+                        if (mButtonType == CustomDeliveryButton.OrderStatus.ASK_PLACED)
                             setToolbarTitle(getString(R.string.text_ask_details))
                         else
                             setToolbarTitle(getString(R.string.text_sold_details))
@@ -101,18 +108,18 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
 
     companion object {
         private const val KEY_RECEIPT_TYPE = "key_receipt_type"
-        private const val KEY_PRODUCT_CATEGORY = "key_product_category"
+        private const val KEY_RECEIPT_MODEL = "key_receipt_model"
         private const val KEY_BUTTON_TYPE = "key_button_type"
 
         fun getInstance(
             context: Context,
             receiptType: ReceiptType,
-            productCategory: ProductCategory,
-            buttonType: CustomDeliveryButton.Type = CustomDeliveryButton.Type.DELIVERED
+            receiptDomainModel: ReceiptDomainModel,
+            buttonType: CustomDeliveryButton.OrderStatus = CustomDeliveryButton.OrderStatus.DELIVERED
         ) =
             Intent(context, ReceiptDetailActivity::class.java).apply {
                 putExtra(KEY_RECEIPT_TYPE, receiptType)
-                putExtra(KEY_PRODUCT_CATEGORY, productCategory)
+                putExtra(KEY_RECEIPT_MODEL, receiptDomainModel)
                 putExtra(KEY_BUTTON_TYPE, buttonType)
             }
     }

@@ -9,7 +9,8 @@ import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.profile.reciepts.adapter.ReceiptAdapter
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-import com.gthr.gthrcollect.utils.enums.ProductCategory
+import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.enums.ReceiptType
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -49,12 +50,30 @@ class ReceiptsFragment : BaseFragment<ReceiptsViewModel, ReceiptsFragmentBinding
     private fun setUpRecyclerView() {
         mAdapter = ReceiptAdapter (object : ReceiptAdapter.ReceiptListener{
             override fun onClick(receiptDomainModel: ReceiptDomainModel?, pos: Int) {
-                if (pos%2==0)
+                if (pos % 3 == 0)
                     startActivity(
                         ReceiptDetailActivity.getInstance(
                             this@ReceiptsFragment.requireContext(),
                             ReceiptType.PURCHASED,
-                            ProductCategory.CARDS
+                            ReceiptDomainModel(productType = ProductType.FUNKO)
+                        )
+                    )
+                else if (pos % 3 == 1)
+                    startActivity(
+                        ReceiptDetailActivity.getInstance(
+                            requireContext(),
+                            ReceiptType.ASK_PLACED,
+                            ReceiptDomainModel(
+                                totalAskPrice = 500.0,
+                                objectID = "pokemon000020662",
+                                productType = ProductType.POKEMON,
+                                lang = 0,
+                                condition = "CGC 9",
+                                edition = "Holo Unlimited",
+                                refKey = "-MiTOfdj0XCDttwhYf-Q",
+                                imageUrl = "https://firebasestorage.googleapis.com:443/v0/b/dlc-db-staging.appspot.com/o/general%2FProduct%20Images%2FHonedge.SWSH05.105.37622.thumb.png?alt=media&token=ccacfcbd-9c1f-4f98-ad61-43c1ac7be88a"
+                            ),
+                            CustomDeliveryButton.OrderStatus.ASK_PLACED
                         )
                     )
                 else
@@ -62,7 +81,7 @@ class ReceiptsFragment : BaseFragment<ReceiptsViewModel, ReceiptsFragmentBinding
                         ReceiptDetailActivity.getInstance(
                             this@ReceiptsFragment.requireContext(),
                             ReceiptType.SOLD,
-                            ProductCategory.CARDS
+                            ReceiptDomainModel(productType = ProductType.POKEMON)
                         )
                     )
             }
