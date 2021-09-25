@@ -1,5 +1,6 @@
 package com.gthr.gthrcollect.ui.homebottomnav.search
 
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -17,6 +18,7 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.SearchFragmentBinding
 import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.ProductAdapter
 import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.SearchCollectionAdapter
@@ -295,15 +297,18 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
 
         mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL) {
+            Log.i("sdjkcndskj", "setUpRecyclerView: ")
             when {
                 mCctForSale.mIsActive -> {
-                }/*startActivity(
-                    AskFlowActivity.getInstance(
-                        requireContext(),
-                        AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
-                        it
+                    Log.i("sdjkcndskj", "setUpRecyclerView: 2")
+                    startActivity(
+                        AskFlowActivity.getInstance(
+                            requireContext(),
+                            AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
+                            it
+                        )
                     )
-                )*/
+                }
                 else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!, it.productType!!))
             }
         }
@@ -970,13 +975,14 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL) {
                     when {
                         mCctForSale.mIsActive -> {
-                        }/*startActivity(
-                            AskFlowActivity.getInstance(
-                                requireContext(),
-                                AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
-                                it
+                            startActivity(
+                                AskFlowActivity.getInstance(
+                                    requireContext(),
+                                    AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
+                                    it
+                                )
                             )
-                        )*/
+                        }
                         else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!, it.productType!!))
                     }
                 }
@@ -1000,13 +1006,14 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 mProductAdapter = ProductAdapter(CustomProductCell.State.FOR_SALE) {
                     when {
                         mCctForSale.mIsActive -> {
-                        }/*startActivity(
-                            AskFlowActivity.getInstance(
-                                requireContext(),
-                                AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
-                                it
+                            startActivity(
+                                AskFlowActivity.getInstance(
+                                    requireContext(),
+                                    AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
+                                    it
+                                )
                             )
-                        )*/
+                        }
                         else -> startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!, it.productType!!))
                     }
                 }

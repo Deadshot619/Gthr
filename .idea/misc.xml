@@ -28,7 +28,8 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/activity_profile.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/activity_settings.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_add_pic_fragment.xml" value="0.23125" />
-        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buy_directly_review_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buy_directly_review_fragment.xml" value="0.45768025078369906" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buy_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buylist_details_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_card_condition_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_card_edition_fragment.xml" value="0.23125" />
@@ -39,6 +40,7 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/ea_otp_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/fav_sold_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/follow_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/fragment_af_buy.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/item_recent_sele.xml" value="0.49149922720247297" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/item_recent_sele_herder.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_custom_collection_charts.xml" value="0.23125" />

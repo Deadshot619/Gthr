@@ -104,5 +104,12 @@
         <action
             android:id="@+id/action_afBuyDirectlyReviewFragment_to_afPlaceYourAskFragment"
             app:destination="@id/afPlaceYourAskFragment" />
+        <action
+            android:id="@+id/action_afBuyDirectlyReviewFragment_to_afFragmentBuy"
+            app:destination="@id/afFragmentBuy" />
     </fragment>
+    <fragment
+        android:id="@+id/afFragmentBuy"
+        android:name="com.gthr.gthrcollect.ui.askflow.afbuyingdirectlyplace.AfFragmentBuy"
+        android:label="AfFragmentBuy" />
 </navigation>
