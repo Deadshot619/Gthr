@@ -49,9 +49,12 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
             AskFlowType.COLLECT ->
                 if (isProductSealedOrToys())
                     findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfWantToSellFragment())
-            AskFlowType.SELL ->
-                if (isProductSealedOrToys())
+            AskFlowType.SELL -> {
+                if (mViewModel.isEdit)
+                    findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfReviewYourAskFragment())
+                else if (isProductSealedOrToys())
                     findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfAddPicFragment())
+            }
             AskFlowType.BUY ->
                 if (isProductSealedOrToys())
                     findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfReviewYourAskFragment())

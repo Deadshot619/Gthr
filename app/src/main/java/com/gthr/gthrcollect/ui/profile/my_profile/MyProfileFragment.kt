@@ -23,7 +23,6 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editprofile.EditProfileActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
-import com.gthr.gthrcollect.ui.homebottomnav.search.SearchFragment
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
@@ -390,7 +389,24 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         }
 
         mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) {
-            startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
+            if (it.isForSale == true)
+                startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.SELL,
+                        it,
+                        true
+                    )
+                )
+            else
+                startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.COLLECT,
+                        it,
+                        true
+                    )
+                )
         }
     }
 
@@ -496,7 +512,24 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             when {
                 mAll.mIsActive || mCards.mIsActive || mToys.mIsActive -> {
                     mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) {
-                        startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
+                        if (it.isForSale == true)
+                            startActivity(
+                                AskFlowActivity.getInstance(
+                                    requireContext(),
+                                    AskFlowType.SELL,
+                                    it,
+                                    true
+                                )
+                            )
+                        else
+                            startActivity(
+                                AskFlowActivity.getInstance(
+                                    requireContext(),
+                                    AskFlowType.COLLECT,
+                                    it,
+                                    true
+                                )
+                            )
                     }
                     mRvMain.adapter = mAdapter
                 }

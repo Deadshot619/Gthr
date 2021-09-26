@@ -4,6 +4,7 @@ object CloudFunctions {
     const val FIREBASE_FUN_BASE_URL = "https://us-central1-dlc-db-staging.cloudfunctions.net/"
     const val SEARCH_PRODUCT = "searchProducts"
     const val SEARCH_BIDS = "searchBids"
+    const val FUN_DELETE_ASK = "onAskDelete"
 
     //  const val SEARCH_COLLECTION ="searchAlgolia"
     const val SEARCH_COLLECTION = "searchCollections"

@@ -155,17 +155,18 @@ class CustomProductCell @JvmOverloads constructor(
            setImage(productDisplayModel.firImageURL.toString())
        }
    }
-   private fun setValue(model: ForSaleItemDomainModel){
-       when (model.productType ?: model.productCategory) {
-           ProductType.MAGIC_THE_GATHERING,
-           ProductType.POKEMON,
-           ProductType.YUGIOH,
-           ProductCategory.CARDS -> {
-               setType(Type.CARDS)
-               setProductName(model.productProductName)
-               setProductNumber(model.productProductNumber ?: "-")
-               setEdition(model.edition ?: "-")
-               setLanguage(model.language?.abbreviatedName ?: "-")
+
+    fun setValue(model: ForSaleItemDomainModel) {
+        when (model.productType ?: model.productCategory) {
+            ProductType.MAGIC_THE_GATHERING,
+            ProductType.POKEMON,
+            ProductType.YUGIOH,
+            ProductCategory.CARDS -> {
+                setType(Type.CARDS)
+                setProductName(model.productProductName)
+                setProductNumber(model.productProductNumber ?: "-")
+                setEdition(model.edition ?: "-")
+                setLanguage(model.language?.abbreviatedName ?: "-")
                setConditionTitle(model.condition?.type?.title ?: "-")
                setConditionValue(model.condition?.abbreviatedName ?: "-")
            }

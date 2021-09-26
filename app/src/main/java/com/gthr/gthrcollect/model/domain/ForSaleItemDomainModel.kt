@@ -50,9 +50,10 @@ data class ForSaleItemDomainModel(
         language = collectionItem.language,
         condition = collectionItem.condition,
         edition = collectionItem.edition?.title,
-        productFirImageURL = if(collectionItem.frontImageURL.isNullOrEmpty())model.firImageURL else collectionItem.frontImageURL,
-        frontImageURL = if(collectionItem.frontImageURL.isNullOrEmpty())model.firImageURL else collectionItem.frontImageURL,
+        productFirImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
+        frontImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
         backImageURL = collectionItem.backImageURL,
+        askRefKey = collectionItem.askRefKey,
 
         productGroup = null,
         productProductNumber = null,
@@ -69,12 +70,13 @@ data class ForSaleItemDomainModel(
     constructor(model: PokemonDomainModel, collectionItem: CollectionItemDomainModel, price: Double) : this(
         price = price,
         itemObjectID = model.objectID,
-        productFirImageURL = if(collectionItem.frontImageURL.isNullOrEmpty())model.firImageURL else collectionItem.frontImageURL,
-        frontImageURL = if(collectionItem.frontImageURL.isNullOrEmpty())model.firImageURL else collectionItem.frontImageURL,
+        productFirImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
+        frontImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
         backImageURL = collectionItem.backImageURL,
         language = collectionItem.language,
         condition = collectionItem.condition,
         edition = collectionItem.edition?.title,
+        askRefKey = collectionItem.askRefKey,
 
         productGroup = null,
         productProductNumber = model.number,
@@ -90,12 +92,13 @@ data class ForSaleItemDomainModel(
     constructor(model: MTGDomainModel, collectionItem: CollectionItemDomainModel, price: Double) : this(
         price = price,
         itemObjectID = model.objectID,
-        productFirImageURL = if(collectionItem.frontImageURL.isNullOrEmpty())model.firImageURL else collectionItem.frontImageURL,
-        frontImageURL = if(collectionItem.frontImageURL.isNullOrEmpty())model.firImageURL else collectionItem.frontImageURL,
+        productFirImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
+        frontImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
         backImageURL = collectionItem.backImageURL,
         language = collectionItem.language,
         condition = collectionItem.condition,
         edition = collectionItem.edition?.title,
+        askRefKey = collectionItem.askRefKey,
 
 
         productGroup = null,
@@ -112,12 +115,13 @@ data class ForSaleItemDomainModel(
     constructor(model: YugiohDomainModel, collectionItem: CollectionItemDomainModel, price: Double) : this(
         price = price,
         itemObjectID = model.objectID,
-        productFirImageURL = if(collectionItem.frontImageURL.isNullOrEmpty())model.firImageURL else collectionItem.frontImageURL,
-        frontImageURL = if(collectionItem.frontImageURL.isNullOrEmpty())model.firImageURL else collectionItem.frontImageURL,
+        productFirImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
+        frontImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
         backImageURL = collectionItem.backImageURL,
         language = collectionItem.language,
         condition = collectionItem.condition,
         edition = collectionItem.edition?.title,
+        askRefKey = collectionItem.askRefKey,
 
 
         productGroup = null,
@@ -134,12 +138,13 @@ data class ForSaleItemDomainModel(
     constructor(model: FunkoDomainModel, collectionItem: CollectionItemDomainModel, price: Double) : this(
         price = price,
         itemObjectID = model.objectID,
-        productFirImageURL = if(collectionItem.frontImageURL.isNullOrEmpty())model.firImageURL else collectionItem.frontImageURL,
-        frontImageURL = if(collectionItem.frontImageURL.isNullOrEmpty())model.firImageURL else collectionItem.frontImageURL,
+        productFirImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
+        frontImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
         backImageURL = collectionItem.backImageURL,
         language = collectionItem.language,
         condition = collectionItem.condition,
         edition = collectionItem.edition?.title,
+        askRefKey = collectionItem.askRefKey,
 
 
         productGroup = null,

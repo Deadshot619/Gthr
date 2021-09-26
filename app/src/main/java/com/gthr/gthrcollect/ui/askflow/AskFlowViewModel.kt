@@ -29,12 +29,21 @@ import kotlinx.coroutines.launch
 class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewModel() {
 
     var shippingTierJob: Job? = null
+    var stripeJob: Job? = null
 
     var productType: ProductType? = null
         private set
 
     var productDisplayModel: ProductDisplayModel? = null
         private set
+
+    //Variable to indicate whether this AskFlow is for editing or not
+    var isEdit: Boolean = false
+        private set
+
+    fun setIsEdit(value: Boolean) {
+        isEdit = value
+    }
 
     private val _isSell = MutableLiveData<Boolean>()
     val isSell: LiveData<Boolean>
@@ -668,18 +677,19 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         }
     }
 
-      //Check User Stripe Account id Status
-      private val _stripeAccStatus = MutableLiveData<Event<State<Boolean>>>()
-      val stripeAccStatus: LiveData<Event<State<Boolean>>>
-          get() = _stripeAccStatus
-      fun checkUserStripeAccId(userId:String? = null){
-          viewModelScope.launch {
-              repository.authStripeAccount(userId).collect {
-                  _stripeAccStatus.value = Event(it)
+    //Check User Stripe Account id Status
+    private val _stripeAccStatus = MutableLiveData<Event<State<Boolean>>>()
+    val stripeAccStatus: LiveData<Event<State<Boolean>>>
+        get() = _stripeAccStatus
 
-              }
-          }
-      }
+    private fun checkUserStripeAccId(userId: String? = null) {
+        stripeJob?.cancel()
+        stripeJob = viewModelScope.launch {
+            repository.authStripeAccount(userId).collect {
+                _stripeAccStatus.value = Event(it)
+            }
+        }
+    }
 
     //Variable to get Updated Payout Link of Stripe
     private val _payoutLink = MutableLiveData<Event<State<String>>>()
@@ -733,19 +743,31 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         }
     }
 
-
-
     private val _mBuyingDirFromSomeOneProPrice = MutableLiveData<Double>()
     val mBuyingDirFromSomeOneProPrice: LiveData<Double>
         get() = _mBuyingDirFromSomeOneProPrice
 
-    fun setBuyingDirFromSomeOneProPrice(price : Double){
+    fun setBuyingDirFromSomeOneProPrice(price: Double) {
         _mBuyingDirFromSomeOneProPrice.value = price
+    }
+
+    private val _deleteAsk = MutableLiveData<Event<State<Boolean>>>()
+    val deleteAsk: LiveData<Event<State<Boolean>>>
+        get() = _deleteAsk
+
+    fun deleteAsk(askRefKey: String) {
+        viewModelScope.launch {
+            repository.deleteAsk(GthrCollect.prefs?.getUserCollectionId().toString(), askRefKey)
+                .collect {
+                    _deleteAsk.value = Event(it)
+                }
+        }
     }
 
     override fun onCleared() {
         super.onCleared()
         shippingTierJob?.cancel()
+        stripeJob?.cancel()
     }
 
     companion object {

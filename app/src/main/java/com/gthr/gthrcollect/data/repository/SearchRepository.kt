@@ -2,8 +2,6 @@ package com.gthr.gthrcollect.data.repository
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ktx.database
-import com.google.firebase.functions.FirebaseFunctions
-import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.gson.JsonElement
 import com.gthr.gthrcollect.GthrCollect
@@ -151,16 +149,16 @@ class SearchRepository {
             val productDetailsNetworkModel = snapShot.getValue(networkModelType)
             val productDetailsDomainModel = when (type) {
                 ProductType.MAGIC_THE_GATHERING -> (productDetailsNetworkModel as MTGModel).toMTGDomainModel(snapShot.key
-                        ?: "")
+                    ?: "")
                 ProductType.YUGIOH -> (productDetailsNetworkModel as YugiohModel).toYugiohDomainModel(snapShot.key
-                        ?: "")
+                    ?: "")
                 ProductType.POKEMON -> (productDetailsNetworkModel as PokemonModel).toPokemonDomainModel(snapShot.key
-                        ?: "")
+                    ?: "")
                 ProductType.FUNKO -> (productDetailsNetworkModel as FunkoModel).toFunkoDomainModel(snapShot.key
-                        ?: "")
+                    ?: "")
                 ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG ->
                     (productDetailsNetworkModel as SealedModel).toSealedDomainModel(snapShot.key
-                            ?: "")
+                        ?: "")
             }
             return productDetailsDomainModel as T
         }
@@ -172,8 +170,8 @@ class SearchRepository {
             // Emit loading state
             emit(State.loading())
 
-           /* val ref= Functio.reference
-            GthrLogger.e("mFirebaseRD", ref.toString())*/
+            /* val ref= Functio.reference
+             GthrLogger.e("mFirebaseRD", ref.toString())*/
 
             val data = hashMapOf(
                 CloudFunctions.USERID to (GthrCollect.prefs?.collectionInfoModel?.userRefKey ?: ""),

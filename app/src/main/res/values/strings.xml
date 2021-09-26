@@ -489,6 +489,7 @@
     <string name="text_place_your_ask">Place your Ask</string>
 
     <string name="menu_info">Info</string>
+    <string name="menu_delete">Delete</string>
     <string name="back_label">Back</string>
     <string name="front_lalel">Front</string>
     <string name="text_total_excludes_tax_shipping_buy_flow"><![CDATA[Total (Excludes Tax & Shipping)]]></string>

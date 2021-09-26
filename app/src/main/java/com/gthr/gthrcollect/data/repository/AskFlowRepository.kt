@@ -340,7 +340,7 @@ class AskFlowRepository {
             val accountDeatils = fetchDataWithoutParameter<HashMap<String,*>>(code).await()
 
 
-            GthrLogger.e("accountDeatils","${accountDeatils}")
+            GthrLogger.e("accountDeatils", "${accountDeatils}")
 
             emit(State.success(accountDeatils.toString()))
 
@@ -349,6 +349,61 @@ class AskFlowRepository {
             emit(State.failed(it.message.toString()))
             GthrLogger.d("payoutLink", "${it.message}}")
         }.flowOn(Dispatchers.IO)
+
+    fun deleteAsk(collectionId: String, askRefKey: String) = flow<State<Boolean>> {
+        emit(State.loading())
+
+        val deleteAskFromAskModel =
+            mFirebaseRD.child(FirebaseRealtimeDatabase.ASK_ITEM_MODEL).child(askRefKey)
+                .removeValue().await()
+        val collectionListLink =
+            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionId)
+                .child(FirebaseRealtimeDatabase.COLLECTION_LIST)
+        val collectListRefKey =
+            collectionListLink.orderByChild(askRefKey).limitToFirst(1).get().await().key
+        val deleteAskFromCollectionList =
+            collectionListLink.child(collectListRefKey.toString()).removeValue().await()
+
+        emit(State.success(true))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+        GthrLogger.e("deleteAsk", "${it.message}}")
+    }.flowOn(Dispatchers.IO)
+
+    fun deleteCollectionItem(collectionId: String, askRefKey: String) = flow<State<Boolean>> {
+        emit(State.loading())
+
+        val collectionListLink =
+            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionId)
+                .child(FirebaseRealtimeDatabase.COLLECTION_LIST)
+        val collectListRefKey =
+            collectionListLink.orderByChild(askRefKey).limitToFirst(1).get().await().key
+        val deleteAskFromCollectionList =
+            collectionListLink.child(collectListRefKey.toString()).removeValue().await()
+
+        emit(State.success(true))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+        GthrLogger.e("deleteAsk", "${it.message}}")
+    }.flowOn(Dispatchers.IO)
+
+    fun deleteBidItemModel(bidRefKey: String) = flow<State<Boolean>> {
+        emit(State.loading())
+
+/*
+        val collectionListLink = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionId).child(FirebaseRealtimeDatabase.COLLECTION_LIST)
+        val collectListRefKey = collectionListLink.orderByChild(askRefKey).limitToFirst(1).get().await().key
+        val deleteAskFromCollectionList = collectionListLink.child(collectListRefKey.toString()).removeValue().await()
+*/
+
+        emit(State.success(true))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+        GthrLogger.e("deleteAsk", "${it.message}}")
+    }.flowOn(Dispatchers.IO)
 
 }
 

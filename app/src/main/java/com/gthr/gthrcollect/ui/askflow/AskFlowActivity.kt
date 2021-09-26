@@ -3,6 +3,8 @@ package com.gthr.gthrcollect.ui.askflow
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -13,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.ActivityAskFlowBinding
@@ -26,10 +29,7 @@ import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ConditionType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
-import com.gthr.gthrcollect.utils.extensions.invisible
-import com.gthr.gthrcollect.utils.extensions.setImage
-import com.gthr.gthrcollect.utils.extensions.setProductImage
-import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -44,6 +44,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var mToolbar: Toolbar
+    private var mMenu: Menu? = null
 
     private lateinit var mAskFlowType: AskFlowType
     private lateinit var mProductDisplayModel: ProductDisplayModel
@@ -58,12 +59,14 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
     override fun onBinding() {
         mAskFlowType = intent?.getSerializableExtra(KEY_ASK_FLOW_TYPE) as AskFlowType
-        mProductDisplayModel = intent.getParcelableExtra<ProductDisplayModel>(KEY_PRODUCT_DISPLAY_MODEL)!!
+        mProductDisplayModel =
+            intent.getParcelableExtra<ProductDisplayModel>(KEY_PRODUCT_DISPLAY_MODEL)!!
         mProductType = mProductDisplayModel.productType!!
         mProductCategory = mProductDisplayModel.productCategory!!
 
         mViewModel.setProductType(mProductType)
         mViewModel.setProductDisplayModel(mProductDisplayModel)
+        mViewModel.setIsEdit(intent.getBooleanExtra(KEY_IS_EDIT, false))
 
         initViews()
         setSupportActionBar(mToolbar)
@@ -75,13 +78,20 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     }
 
     private fun setData() {
-        if(mAskFlowType!=AskFlowType.BUY_DIRECTLY_FROM_SOMEONE)
-            mViewModel.getProductDetails(mProductDisplayModel.refKey!!, mProductType)
-        else{
-            GthrLogger.i("sdhbsd","${mProductDisplayModel.forsaleItemNodel}")
+        if (mAskFlowType != AskFlowType.BUY_DIRECTLY_FROM_SOMEONE)
+            if (mViewModel.isEdit) {
+                mProductItem.setValue(mProductDisplayModel)
+                mProductDisplayModel.forsaleItemNodel?.backImageURL?.let {
+                    if (it.isEmpty()) return
+                    mCvBackImage.visible()
+                    mIvBackImage.setProductImage(it)
+                }
+            } else
+                mViewModel.getProductDetails(mProductDisplayModel.refKey!!, mProductType)
+        else {
+            GthrLogger.i("sdhbsd", "${mProductDisplayModel.forsaleItemNodel}")
             mProductDisplayModel.forsaleItemNodel?.backImageURL?.let {
-                mCvBackImage.visible()
-                mIvBackImage.setProductImage(it)
+                mViewModel.setBackImageDownloadUrl(it)
             }
             mViewModel.setBuyingDirFromSomeOneProPrice(mProductDisplayModel.forsaleItemNodel?.price!!)
             mViewModel.getUserImage(mProductDisplayModel.forsaleItemNodel?.collectionFirebaseRef!!)
@@ -137,7 +147,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                 mCvBackImage.invisible()
         })
 
-        mViewModel.mDisplayName.observe(this){
+        mViewModel.mDisplayName.observe(this) {
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> {
@@ -154,7 +164,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             }
         }
 
-        mViewModel.mUserImage.observe(this){
+        mViewModel.mUserImage.observe(this) {
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> {
@@ -289,6 +299,24 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                 mProductItem.setConditionValue(it.abbreviatedName)
             }
         })
+
+        mViewModel.deleteAsk.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Loading -> {
+                        showProgressBar(true)
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        showToast(it.data.toString())
+                    }
+                }
+            }
+        })
     }
 
     private fun setUpClickListeners() {
@@ -302,9 +330,17 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         }
 
         mCvBackImage.setOnClickListener {
-            mViewModel.backImageUrl.value?.let {
-                startActivity(FullProductImage.getInstance(this, it))
-            }
+            if (mViewModel.isEdit)
+                startActivity(
+                    FullProductImage.getInstance(
+                        this,
+                        mViewModel.productDisplayModel?.forsaleItemNodel?.backImageURL.toString()
+                    )
+                )
+            else
+                mViewModel.backImageUrl.value?.let {
+                    startActivity(FullProductImage.getInstance(this, it))
+                }
         }
     }
 
@@ -332,6 +368,14 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             when (nd.id) {
                 R.id.afBuyListDetailsFragment -> {
                     setToolbarTitle(getString(R.string.text_buylist_details))
+                }
+                R.id.afPlaceYourAskFragment -> {
+                    if (mViewModel.isEdit)
+                        mMenu?.findItem(R.id.menu_delete)?.isVisible = false
+                }
+                else -> {
+                    if (mViewModel.isEdit)
+                        mMenu?.findItem(R.id.menu_delete)?.isVisible = true
                 }
             }
         }
@@ -373,6 +417,8 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
     private fun setInitialData(productDisplayModel: ProductDisplayModel) {
         mProductItem.run {
             setValue(productDisplayModel)
+
+            if (mViewModel.isEdit) return
             setPrice("-")
 
             if (mProductCategory == ProductCategory.CARDS) {
@@ -385,19 +431,48 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        mMenu = menu
+        if (mViewModel.isEdit)
+            menuInflater.inflate(R.menu.ask_flow_edit_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_delete) {
+            showToast(mViewModel.productDisplayModel?.forsaleItemNodel?.askRefKey.toString())
+            if (AskFlowType.SELL == mAskFlowType) {
+                MaterialAlertDialogBuilder(this).setTitle("Delete")
+                    .setMessage("Are you sure you want to delete this Ask?")
+                    .setPositiveButton("Yes") { dialog, _ ->
+                        mViewModel.deleteAsk(mViewModel.productDisplayModel?.forsaleItemNodel?.askRefKey.toString())
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("No") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     internal fun getAskFlowType(): AskFlowType = mAskFlowType
 
     companion object {
         private const val KEY_ASK_FLOW_TYPE = "key_ask_flow_type"
         private const val KEY_PRODUCT_DISPLAY_MODEL = "key_product_display_model"
+        private const val KEY_IS_EDIT = "key_is_edit"
 
         fun getInstance(
             context: Context,
             askFlowType: AskFlowType,
-            productDisplayModel: ProductDisplayModel?
+            productDisplayModel: ProductDisplayModel?,
+            isEdit: Boolean = false
         ) = Intent(context, AskFlowActivity::class.java).apply {
             putExtra(KEY_ASK_FLOW_TYPE, askFlowType)
             putExtra(KEY_PRODUCT_DISPLAY_MODEL, productDisplayModel)
+            putExtra(KEY_IS_EDIT, isEdit)
         }
     }
 }

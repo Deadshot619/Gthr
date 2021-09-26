@@ -1,7 +1,6 @@
 package com.gthr.gthrcollect.data.remote
 
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
@@ -25,7 +24,6 @@ fun <T> fetchData(funName: String, parameter: HashMap<*, *>): Task<T> {
 fun <T> fetchDataWithoutParameter(funName: String): Task<T> {
     // Create the arguments to the callable function.
     val functions: FirebaseFunctions = Firebase.functions
-    Firebase.auth.currentUser
 
     return functions
         .getHttpsCallable(funName)
