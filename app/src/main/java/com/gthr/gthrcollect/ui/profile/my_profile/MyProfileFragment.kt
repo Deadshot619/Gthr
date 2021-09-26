@@ -79,7 +79,10 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     private lateinit var mToys: CustomCollectionTypeView
     private lateinit var mBuyList: CustomCollectionTypeView
     private lateinit var mCcbCollection: CustomCollectionButton
+
     private lateinit var mCccvSize : CustomCollectionChartsView
+    private lateinit var mCccvMarketValue : CustomCollectionChartsView
+    private lateinit var mCccvAveragePrice : CustomCollectionChartsView
 
     private lateinit var mSearchBar : CustomSearchView
 
@@ -102,6 +105,161 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         setUpObservers()
         setTextChangeListener()
         setKeyBoardListener()
+    }
+
+    private fun setUpObservers() {
+        mViewModel.mTotalSellPrice.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        var price = 0.0
+                        it.data.forEach{
+                            price += it
+                        }
+                        val averagePrice = if(price==0.0) 0.0 else (price/it.data.size)
+                        mCccvMarketValue.setValue(String.format(getString(R.string.rate_common),price))
+                        mCccvAveragePrice.setValue(String.format(getString(R.string.rate_common),averagePrice))
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+        mViewModel.mProductDynamicLink.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        val intent = Intent()
+                        // val msg = "Click and install this application $shortLink Refer code : mayankbaba"
+                        intent.action = Intent.ACTION_SEND
+                        intent.putExtra(Intent.EXTRA_TEXT, it.data)
+                        intent.type = "text/plain"
+                        startActivity(intent)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+        mViewModel.userCollectionInfo.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        setData(it.data)
+                        if(it.data.collectionList!=null&&it.data.collectionList.size>0){
+                            mCccvSize.setValue(it.data.collectionList.size.toString())
+                            mViewModel.getCollectionProduct(it.data.collectionList)
+                        }
+                        else
+                            mCccvSize.setValue("0")
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+        mViewModel.mAllCollectionProduct.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        GthrLogger.i("sdkcnsdknc","product :  ${it.data}")
+                        GthrLogger.i("sdkcnsdknc","product size :  ${it.data.size}")
+                        if(it.data!=null&& it.data.isNotEmpty()){
+                            mViewModel.setAllCollectionProductList(it.data)
+                            mViewModel.setDisplayCollectionProducts(it.data)
+                        }
+                        mViewModel.fetchBidProducts(otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString())
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+        mViewModel.mAllBidProduct.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mViewModel.getTotalSellPriceList(GthrCollect.prefs?.getUserCollectionId().toString())
+                        GthrLogger.i("sdkcnsdknc","product :  ${it.data}")
+                        GthrLogger.i("sdkcnsdknc","product size :  ${it.data.size}")
+                        if(it.data!=null&& it.data.isNotEmpty()){
+                            mViewModel.setAllBidProduct(it.data)
+                        }
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.mDisplayCollectionProduct.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                GthrLogger.i("djscndsc","List $it")
+                GthrLogger.i("sdkcnsdknc","List ${it.size}")
+                mAdapter.submitList(it.map { it.copy() })
+            }
+        }
+
+
+
+        mViewModel.followUser.observe(viewLifecycleOwner, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        showToast(it.data)
+                        mBtnFollow.setFollowing()
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        })
+
+        mViewModel.unFollowUser.observe(viewLifecycleOwner, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        showToast(it.data)
+                        mBtnFollow.setFollow()
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        })
+
     }
 
     private fun setKeyBoardListener() {
@@ -189,7 +347,6 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         mViewModel.setDisplayCollectionProducts(productList)
     }
 
-
     private fun initViews() {
         mViewBinding.run {
             mMlMain = mlMain
@@ -211,7 +368,9 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             mDisplayName = profileLayout.tvUserName
             mCcbCollection = ccbCollection
             mSearchBar = csvSearch
+            mCccvMarketValue = cccvMarketValue
             mCccvSize = cccvSize
+            mCccvAveragePrice = cccvAveragePrice
             initProgressBar(layoutProgress)
             setViewsForOtherUser()
             setUpRecyclerView()
@@ -233,139 +392,6 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) {
             startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
         }
-    }
-
-    private fun setUpObservers() {
-        mViewModel.mProductDynamicLink.observe(viewLifecycleOwner) { it ->
-            it.contentIfNotHandled?.let {
-                when (it) {
-                    is State.Loading -> showProgressBar()
-                    is State.Success -> {
-                        showProgressBar(false)
-                        val intent = Intent()
-                        // val msg = "Click and install this application $shortLink Refer code : mayankbaba"
-                        intent.action = Intent.ACTION_SEND
-                        intent.putExtra(Intent.EXTRA_TEXT, it.data)
-                        intent.type = "text/plain"
-                        startActivity(intent)
-                    }
-                    is State.Failed -> {
-                        showProgressBar(false)
-                        showToast(it.message)
-                    }
-                }
-            }
-        }
-        mViewModel.userCollectionInfo.observe(viewLifecycleOwner) { it ->
-            it.contentIfNotHandled?.let {
-                when (it) {
-                    is State.Loading -> showProgressBar()
-                    is State.Success -> {
-                        showProgressBar(false)
-                        setData(it.data)
-                        if(it.data.collectionList!=null&&it.data.collectionList.size>0){
-                            mCccvSize.setValue(it.data.collectionList.size.toString())
-                            mViewModel.getCollectionProduct(it.data.collectionList)
-                        }
-                        else
-                            mCccvSize.setValue("0")
-                    }
-                    is State.Failed -> {
-                        showProgressBar(false)
-                        showToast(it.message)
-                    }
-                }
-            }
-        }
-        mViewModel.mAllCollectionProduct.observe(viewLifecycleOwner) { it ->
-            it.contentIfNotHandled?.let {
-                when (it) {
-                    is State.Loading -> showProgressBar()
-                    is State.Success -> {
-                        showProgressBar(false)
-                        GthrLogger.i("sdkcnsdknc","product :  ${it.data}")
-                        GthrLogger.i("sdkcnsdknc","product size :  ${it.data.size}")
-                        if(it.data!=null&& it.data.isNotEmpty()){
-                            mViewModel.setAllCollectionProductList(it.data)
-                            mViewModel.setDisplayCollectionProducts(it.data)
-                        }
-                        mViewModel.fetchBidProducts(otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString())
-                    }
-                    is State.Failed -> {
-                        showProgressBar(false)
-                        showToast(it.message)
-                    }
-                }
-            }
-        }
-        mViewModel.mAllBidProduct.observe(viewLifecycleOwner) { it ->
-            it.contentIfNotHandled?.let {
-                when (it) {
-                    is State.Loading -> showProgressBar()
-                    is State.Success -> {
-                        showProgressBar(false)
-                        GthrLogger.i("sdkcnsdknc","product :  ${it.data}")
-                        GthrLogger.i("sdkcnsdknc","product size :  ${it.data.size}")
-                        if(it.data!=null&& it.data.isNotEmpty()){
-                            mViewModel.setAllBidProduct(it.data)
-                        }
-                    }
-                    is State.Failed -> {
-                        showProgressBar(false)
-                        showToast(it.message)
-                    }
-                }
-            }
-        }
-
-        mViewModel.mDisplayCollectionProduct.observe(viewLifecycleOwner) { it ->
-            it.contentIfNotHandled?.let {
-                GthrLogger.i("djscndsc","List $it")
-                GthrLogger.i("sdkcnsdknc","List ${it.size}")
-                mAdapter.submitList(it.map { it.copy() })
-            }
-        }
-
-
-
-        mViewModel.followUser.observe(viewLifecycleOwner, {
-            it.contentIfNotHandled?.let {
-                when (it) {
-                    is State.Loading -> {
-                        showProgressBar()
-                    }
-                    is State.Success -> {
-                        showProgressBar(false)
-                        showToast(it.data)
-                        mBtnFollow.setFollowing()
-                    }
-                    is State.Failed -> {
-                        showProgressBar(false)
-                        showToast(it.message)
-                    }
-                }
-            }
-        })
-
-        mViewModel.unFollowUser.observe(viewLifecycleOwner, {
-            it.contentIfNotHandled?.let {
-                when (it) {
-                    is State.Loading -> {
-                        showProgressBar()
-                    }
-                    is State.Success -> {
-                        showProgressBar(false)
-                        showToast(it.data)
-                        mBtnFollow.setFollow()
-                    }
-                    is State.Failed -> {
-                        showProgressBar(false)
-                        showToast(it.message)
-                    }
-                }
-            }
-        })
-
     }
 
     private fun setUpClickListeners() {

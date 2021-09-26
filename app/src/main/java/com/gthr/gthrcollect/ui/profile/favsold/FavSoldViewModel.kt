@@ -68,14 +68,10 @@ class FavSoldViewModel(private val repository: ProfileRepository) : BaseViewMode
         _mSoldProduct.value = Event(State.loading())
         viewModelScope.launch {
             repository.fetchSoldProductsList(collectionId).collect {
-                try{
-                    _mSoldProduct.value = Event(it)
-                }
-                catch(e : Exception){
-                    GthrLogger.i("dcbhjd","derror : ${e.message}")
-                }
-
+                _mSoldProduct.value = Event(it)
             }
         }
     }
+
+
 }

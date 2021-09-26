@@ -32,37 +32,37 @@ class ProfileRepository {
     private val mStorageRef = Firebase.storage.reference
 
     fun fetchUserProfileData(collectionId: String) = flow<State<CollectionInfoDomainModel>> {
-            emit(State.loading())
-            val collectionInfo = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(collectionId).get().await().getValue(CollectionInfoModel::class.java)
+        emit(State.loading())
+        val collectionInfo = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(collectionId).get().await().getValue(CollectionInfoModel::class.java)
 
-            //If the user is Logged in user, then save the data
-            if (collectionId == GthrCollect.prefs?.getUserCollectionId())
-                collectionInfo?.let {
-                    GthrCollect.prefs?.updateCollectionInfoModelData(it.toCollectionInfoDomainModel())
-                }
+        //If the user is Logged in user, then save the data
+        if (collectionId == GthrCollect.prefs?.getUserCollectionId())
+            collectionInfo?.let {
+                GthrCollect.prefs?.updateCollectionInfoModelData(it.toCollectionInfoDomainModel())
+            }
 
-            emit(State.Success(collectionInfo!!.toCollectionInfoDomainModel()))
-        }.catch {
-            // If exception is thrown, emit failed state along with message.
-            emit(State.failed(it.message.toString()))
-        }.flowOn(Dispatchers.IO)
+        emit(State.Success(collectionInfo!!.toCollectionInfoDomainModel()))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
 
     fun insertCollectionInfoInRD(collectionInfoModel: CollectionInfoModel) = flow<State<String>> {
-            emit(State.loading())
+        emit(State.loading())
 
-            val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(GthrCollect.prefs?.userInfoModel?.collectionId.toString())
-                .child(FirebaseRealtimeDatabase.ABOUT)
-            data.setValue(collectionInfoModel.about).await()
+        val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(GthrCollect.prefs?.userInfoModel?.collectionId.toString())
+            .child(FirebaseRealtimeDatabase.ABOUT)
+        data.setValue(collectionInfoModel.about).await()
 
-            emit(State.success(data.key.toString()))
+        emit(State.success(data.key.toString()))
 
-        }.catch {
-            // If exception is thrown, emit failed state along with message.
-            emit(State.failed(it.message.toString()))
-            GthrLogger.d("Faileeed", it.message.toString())
-        }.flowOn(Dispatchers.IO)
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+        GthrLogger.d("Faileeed", it.message.toString())
+    }.flowOn(Dispatchers.IO)
 
     fun uploadProfilePic(uri: Uri) = flow<State<Boolean>> {
         emit(State.loading())
@@ -86,256 +86,256 @@ class ProfileRepository {
     }.flowOn(Dispatchers.IO)
 
     fun fetchMyFollowing(collectionId: String) = flow<State<List<CollectionInfoDomainModel>>> {
-            emit(State.loading())
+        emit(State.loading())
 
-            val followingData = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(collectionId)
-                .child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST).get().await()
+        val followingData = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(collectionId)
+            .child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST).get().await()
 
-            val arrayList = mutableListOf<CollectionInfoDomainModel>()
+        val arrayList = mutableListOf<CollectionInfoDomainModel>()
 
-            if (followingData.hasChildren()) {
-                val followingList = followingData.value as List<String>
+        if (followingData.hasChildren()) {
+            val followingList = followingData.value as List<String>
 
-                //Retrieve Following Users data with respect to its collection id
-                followingList.forEach { collectionId ->
-                    val collectionInfo: CollectionInfoDomainModel? =
-                        mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                            .child(collectionId).get().await()
-                            .getValue(
-                                CollectionInfoModel::class.java
-                            )?.toCollectionInfoDomainModel(collectionId)
+            //Retrieve Following Users data with respect to its collection id
+            followingList.forEach { collectionId ->
+                val collectionInfo: CollectionInfoDomainModel? =
+                    mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                        .child(collectionId).get().await()
+                        .getValue(
+                            CollectionInfoModel::class.java
+                        )?.toCollectionInfoDomainModel(collectionId)
 
-                    if (collectionInfo != null) {
-                        arrayList.add(collectionInfo)
-                    }
+                if (collectionInfo != null) {
+                    arrayList.add(collectionInfo)
                 }
             }
+        }
 
-            emit(State.Success(arrayList))
-        }.catch {
-            // If exception is thrown, emit failed state along with message.
-            emit(State.failed(it.message.toString()))
-            GthrLogger.e("Followers", it.message.toString())
+        emit(State.Success(arrayList))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+        GthrLogger.e("Followers", it.message.toString())
 
-        }.flowOn(Dispatchers.IO)
+    }.flowOn(Dispatchers.IO)
 
     fun fetchMyFollowersList(collectionId: String) = flow<State<List<CollectionInfoDomainModel>>> {
 
-            emit(State.loading())
+        emit(State.loading())
 
-            val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(collectionId)
-                .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST).get().await()
+        val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(collectionId)
+            .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST).get().await()
 
-            val arrayList = mutableListOf<CollectionInfoDomainModel>()
+        val arrayList = mutableListOf<CollectionInfoDomainModel>()
 
-            if (data.hasChildren()) {
-                val followingList = data.value as List<String>
+        if (data.hasChildren()) {
+            val followingList = data.value as List<String>
 
-                followingList.forEach { collectionId ->
+            followingList.forEach { collectionId ->
 
-                    val collectionInfo: CollectionInfoDomainModel? =
-                        mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                            .child(collectionId).get().await()
-                            .getValue(
-                                CollectionInfoModel::class.java
-                            )?.toCollectionInfoDomainModel(collectionId)
+                val collectionInfo: CollectionInfoDomainModel? =
+                    mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                        .child(collectionId).get().await()
+                        .getValue(
+                            CollectionInfoModel::class.java
+                        )?.toCollectionInfoDomainModel(collectionId)
 
-                    GthrLogger.e("MyFollowers", collectionId.toString())
+                GthrLogger.e("MyFollowers", collectionId.toString())
 
-                    if (collectionInfo != null) {
-                        arrayList.add(collectionInfo)
-                    }
+                if (collectionInfo != null) {
+                    arrayList.add(collectionInfo)
                 }
             }
-            emit(State.Success(arrayList))
+        }
+        emit(State.Success(arrayList))
 
-        }.catch {
-            // If exception is thrown, emit failed state along with message.
-            emit(State.failed(it.message.toString()))
-            print(it.cause?.message)
-            GthrLogger.e("MyFollowers", it.message.toString())
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+        print(it.cause?.message)
+        GthrLogger.e("MyFollowers", it.message.toString())
 
-        }.flowOn(Dispatchers.IO)
+    }.flowOn(Dispatchers.IO)
 
     fun followToUser(collectionId: String) = flow<State<String>> {
-            emit(State.loading())
+        emit(State.loading())
 
-            val myCollectionId = GthrCollect.prefs?.getUserCollectionId().toString()
-            val otherUserFollowerLink =
-                mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                    .child(collectionId)
-                    .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST)
-            val ourUserFollowingLink =
-                mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                    .child(myCollectionId)
-                    .child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST)
+        val myCollectionId = GthrCollect.prefs?.getUserCollectionId().toString()
+        val otherUserFollowerLink =
+            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(collectionId)
+                .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST)
+        val ourUserFollowingLink =
+            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+                .child(myCollectionId)
+                .child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST)
 
-            // Retrieve follower list of other user
-            val otherUserFollowerList = otherUserFollowerLink.get().await()
-            //Create an empty follower list
-            val fList = mutableListOf<String>()
-            //Check if other user has a list, then add our collection Id to it
-            if (otherUserFollowerList.hasChildren()) {
-                fList.addAll(otherUserFollowerList.value as ArrayList<String>)
-            }
-            fList.add(myCollectionId)
-            //Update other user's follower List
-            otherUserFollowerLink.setValue(fList).await()
+        // Retrieve follower list of other user
+        val otherUserFollowerList = otherUserFollowerLink.get().await()
+        //Create an empty follower list
+        val fList = mutableListOf<String>()
+        //Check if other user has a list, then add our collection Id to it
+        if (otherUserFollowerList.hasChildren()) {
+            fList.addAll(otherUserFollowerList.value as ArrayList<String>)
+        }
+        fList.add(myCollectionId)
+        //Update other user's follower List
+        otherUserFollowerLink.setValue(fList).await()
 
-            // Create an empty following list
-            val foList = mutableListOf<String>()
-            //Retrieve following list of our user
-            val ourFollowingList = ourUserFollowingLink.get().await()
-            //Check if our user has a list, then add other user's collection Id to it
-            if (ourFollowingList.hasChildren()) {
-                foList.addAll(ourFollowingList.value as ArrayList<String>)
-            }
-            foList.add(collectionId)
-            // updating our following List
-            ourUserFollowingLink.setValue(foList).await()
+        // Create an empty following list
+        val foList = mutableListOf<String>()
+        //Retrieve following list of our user
+        val ourFollowingList = ourUserFollowingLink.get().await()
+        //Check if our user has a list, then add other user's collection Id to it
+        if (ourFollowingList.hasChildren()) {
+            foList.addAll(ourFollowingList.value as ArrayList<String>)
+        }
+        foList.add(collectionId)
+        // updating our following List
+        ourUserFollowingLink.setValue(foList).await()
 
-            emit(State.success("Followed"))
+        emit(State.success("Followed"))
 
-        }.catch {
-            // If exception is thrown, emit failed state along with message.
-            emit(State.failed(it.message.toString()))
-            GthrLogger.d("Faileeed", it.message.toString())
-        }.flowOn(Dispatchers.IO)
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+        GthrLogger.d("Faileeed", it.message.toString())
+    }.flowOn(Dispatchers.IO)
 
     fun unFollowToUser(collectionId: String) = flow<State<String>> {
-            emit(State.loading())
+        emit(State.loading())
 
-            // Adding another user to my  followersList
-            val fList = mutableListOf<String>()
-            val myCollectionId = GthrCollect.prefs?.getUserCollectionId().toString()
+        // Adding another user to my  followersList
+        val fList = mutableListOf<String>()
+        val myCollectionId = GthrCollect.prefs?.getUserCollectionId().toString()
 
-            // Retriving Follower's list
-            val getList = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(collectionId)
-                .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST).get().await().value
-            fList.addAll(getList as ArrayList<String>)
-            fList.remove(myCollectionId)
+        // Retriving Follower's list
+        val getList = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(collectionId)
+            .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST).get().await().value
+        fList.addAll(getList as ArrayList<String>)
+        fList.remove(myCollectionId)
 
-            // updating the List
-            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(collectionId)
-                .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST).setValue(fList).await()
+        // updating the List
+        mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(collectionId)
+            .child(FirebaseRealtimeDatabase.FOLLOWERS_LIST).setValue(fList).await()
 
-            // Adding Me to  another user's to favoriteCollectionList
-            val foList = mutableListOf<String>()
+        // Adding Me to  another user's to favoriteCollectionList
+        val foList = mutableListOf<String>()
 
-            // Retriving Following list
-            val favList = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(myCollectionId)
-                .child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST).get().await().value
+        // Retriving Following list
+        val favList = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(myCollectionId)
+            .child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST).get().await().value
 
-            foList.addAll(favList as ArrayList<String>)
-            foList.remove(collectionId)
+        foList.addAll(favList as ArrayList<String>)
+        foList.remove(collectionId)
 
-            // updating the List
-            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(myCollectionId).child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST)
-                .setValue(foList).await()
+        // updating the List
+        mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(myCollectionId).child(FirebaseRealtimeDatabase.FAVORITE_COLLECTION_LIST)
+            .setValue(foList).await()
 
-            emit(State.success("Un-Followed"))
+        emit(State.success("Un-Followed"))
 
-        }.catch {
-            // If exception is thrown, emit failed state along with message.
-            emit(State.failed(it.message.toString()))
-            GthrLogger.d("Faileeed", it.message.toString())
-        }.flowOn(Dispatchers.IO)
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+        GthrLogger.d("Faileeed", it.message.toString())
+    }.flowOn(Dispatchers.IO)
 
     fun fetchFavProductsList(collectionId: String) = flow<State<List<ProductDisplayModel>>> {
-            GthrLogger.e("ProductList", "id: ${collectionId}")
-            emit(State.loading())
+        GthrLogger.e("ProductList", "id: ${collectionId}")
+        emit(State.loading())
 
-            val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
-                .child(collectionId)
-                .child(FirebaseRealtimeDatabase.FAVORITE_PRODUCT_LIST).get().await()
+        val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(collectionId)
+            .child(FirebaseRealtimeDatabase.FAVORITE_PRODUCT_LIST).get().await()
 
-            val productList = mutableListOf<ProductDisplayModel>()
+        val productList = mutableListOf<ProductDisplayModel>()
 
 
-            if (data.hasChildren()) {
-                val ProductList = data.value as List<String>
+        if (data.hasChildren()) {
+            val ProductList = data.value as List<String>
 
-                GthrLogger.e("ProductList", "ProductList: ${ProductList}")
+            GthrLogger.e("ProductList", "ProductList: ${ProductList}")
 
-                ProductList.forEach { objectID ->
+            ProductList.forEach { objectID ->
 
-                    val productType = getProductTypeFromObjectId(objectID)
+                val productType = getProductTypeFromObjectId(objectID)
 
-                    GthrLogger.e(
-                        "pType",
-                        productType.toString() + "_" + productType.title + " " + collectionId
-                    )
+                GthrLogger.e(
+                    "pType",
+                    productType.toString() + "_" + productType.title + " " + collectionId
+                )
 
-                    when (productType) {
-                        ProductType.MAGIC_THE_GATHERING -> {
-                            val data = getProductDetailsByObjectId<MTGDomainModel>(
-                                objectID, productType
-                            )
-                            data?.let {
-                                val prodDisplay = ProductDisplayModel(data)
-                                productList.add(prodDisplay)
-                            }
+                when (productType) {
+                    ProductType.MAGIC_THE_GATHERING -> {
+                        val data = getProductDetailsByObjectId<MTGDomainModel>(
+                            objectID, productType
+                        )
+                        data?.let {
+                            val prodDisplay = ProductDisplayModel(data)
+                            productList.add(prodDisplay)
                         }
-                        ProductType.YUGIOH -> {
-                            val data = getProductDetailsByObjectId<YugiohDomainModel>(
-                                objectID!!,
-                                productType
-                            )
-                            data?.let {
-                                val prodDisplay = ProductDisplayModel(data)
-                                productList.add(prodDisplay)
-                            }
+                    }
+                    ProductType.YUGIOH -> {
+                        val data = getProductDetailsByObjectId<YugiohDomainModel>(
+                            objectID!!,
+                            productType
+                        )
+                        data?.let {
+                            val prodDisplay = ProductDisplayModel(data)
+                            productList.add(prodDisplay)
                         }
-                        ProductType.POKEMON -> {
-                            val data = getProductDetailsByObjectId<PokemonDomainModel>(
-                                objectID!!,
-                                productType
-                            )
-                            data?.let {
-                                val prodDisplay = ProductDisplayModel(data)
-                                productList.add(prodDisplay)
-                            }
+                    }
+                    ProductType.POKEMON -> {
+                        val data = getProductDetailsByObjectId<PokemonDomainModel>(
+                            objectID!!,
+                            productType
+                        )
+                        data?.let {
+                            val prodDisplay = ProductDisplayModel(data)
+                            productList.add(prodDisplay)
                         }
-                        ProductType.FUNKO -> {
-                            val data = getProductDetailsByObjectId<FunkoDomainModel>(
-                                objectID!!,
-                                productType
-                            )
-                            data?.let {
-                                val prodDisplay = ProductDisplayModel(data)
-                                productList.add(prodDisplay)
-                            }
+                    }
+                    ProductType.FUNKO -> {
+                        val data = getProductDetailsByObjectId<FunkoDomainModel>(
+                            objectID!!,
+                            productType
+                        )
+                        data?.let {
+                            val prodDisplay = ProductDisplayModel(data)
+                            productList.add(prodDisplay)
                         }
-                        ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
-                            val data = getProductDetailsByObjectId<SealedDomainModel>(
-                                objectID!!,
-                                productType
-                            )
-                            data?.let {
-                                val prodDisplay = ProductDisplayModel(data)
-                                productList.add(prodDisplay)
-                            }
+                    }
+                    ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
+                        val data = getProductDetailsByObjectId<SealedDomainModel>(
+                            objectID!!,
+                            productType
+                        )
+                        data?.let {
+                            val prodDisplay = ProductDisplayModel(data)
+                            productList.add(prodDisplay)
                         }
                     }
                 }
             }
-            GthrLogger.e("productList", productList.toString())
+        }
+        GthrLogger.e("productList", productList.toString())
 
-            emit(State.Success(productList))
+        emit(State.Success(productList))
 
-        }.catch {
-            // If exception is thrown, emit failed state along with message.
-            emit(State.failed(it.message.toString()))
-            print(it.cause?.message)
-            GthrLogger.e("favproducts", it.message.toString())
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+        print(it.cause?.message)
+        GthrLogger.e("favproducts", it.message.toString())
 
-        }.flowOn(Dispatchers.IO)
+    }.flowOn(Dispatchers.IO)
 
     fun fetchSoldProductsList(collectionId: String) = flow<State<List<ItemDisplayDomainModel>>> {
         GthrLogger.e("ProductList", "id: ${collectionId}")
@@ -354,8 +354,10 @@ class ProfileRepository {
 
             ProductList.forEach { saleHistoryModelRef ->
 
-                val await = mFirebaseRD.child(FirebaseRealtimeDatabase.SALE_HISTORY_MODEL).child(saleHistoryModelRef).get().await()
-                val saleHistoryModel = await.getValue(SaleHistoryModel::class.java)?.toSaleHistoryDomainModel()
+                val await = mFirebaseRD.child(FirebaseRealtimeDatabase.SALE_HISTORY_MODEL)
+                    .child(saleHistoryModelRef).get().await()
+                val saleHistoryModel =
+                    await.getValue(SaleHistoryModel::class.java)?.toSaleHistoryDomainModel()
 //                val saleHistoryModel = getSaleHistoryModel(saleHistoryModelRef)
                 val objectID = saleHistoryModel?.objectID!!
                 val productType = getProductTypeFromObjectId(objectID!!)
@@ -371,7 +373,7 @@ class ProfileRepository {
                         )
                         data?.let {
                             val prodDisplay = ProductDisplayModel(data)
-                            productList.add(ItemDisplayDomainModel(saleHistoryModel,prodDisplay))
+                            productList.add(ItemDisplayDomainModel(saleHistoryModel, prodDisplay))
                         }
                     }
                     ProductType.YUGIOH -> {
@@ -381,7 +383,7 @@ class ProfileRepository {
                         )
                         data?.let {
                             val prodDisplay = ProductDisplayModel(data)
-                            productList.add(ItemDisplayDomainModel(saleHistoryModel,prodDisplay))
+                            productList.add(ItemDisplayDomainModel(saleHistoryModel, prodDisplay))
                         }
                     }
                     ProductType.POKEMON -> {
@@ -391,7 +393,7 @@ class ProfileRepository {
                         )
                         data?.let {
                             val prodDisplay = ProductDisplayModel(data)
-                            productList.add(ItemDisplayDomainModel(saleHistoryModel,prodDisplay))
+                            productList.add(ItemDisplayDomainModel(saleHistoryModel, prodDisplay))
                         }
                     }
                     ProductType.FUNKO -> {
@@ -401,7 +403,7 @@ class ProfileRepository {
                         )
                         data?.let {
                             val prodDisplay = ProductDisplayModel(data)
-                            productList.add(ItemDisplayDomainModel(saleHistoryModel,prodDisplay))
+                            productList.add(ItemDisplayDomainModel(saleHistoryModel, prodDisplay))
                         }
                     }
                     ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
@@ -411,7 +413,7 @@ class ProfileRepository {
                         )
                         data?.let {
                             val prodDisplay = ProductDisplayModel(data)
-                            productList.add(ItemDisplayDomainModel(saleHistoryModel,prodDisplay))
+                            productList.add(ItemDisplayDomainModel(saleHistoryModel, prodDisplay))
                         }
                     }
                 }
@@ -426,7 +428,7 @@ class ProfileRepository {
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
-    fun fetchBidProducts(collectionId : String) = flow<State<List<ProductDisplayModel>>> {
+    fun fetchBidProducts(collectionId: String) = flow<State<List<ProductDisplayModel>>> {
         // Emit loading state
         emit(State.loading())
 
@@ -436,7 +438,8 @@ class ProfileRepository {
 
         GthrLogger.d("mayank", data.toString())
 
-        val productData = fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_BIDS, data).await()
+        val productData =
+            fetchData<List<HashMap<String, String>>>(CloudFunctions.SEARCH_BIDS, data).await()
         val productList = mutableListOf<ProductDisplayModel>()
 
         productData.forEachIndexed { index, it ->
@@ -460,17 +463,17 @@ class ProfileRepository {
                         getProductType(productType)!!
                     )
                     data?.let {
-                        val prodDisplay= ProductDisplayModel(data)
+                        val prodDisplay = ProductDisplayModel(data)
                         productList.add(prodDisplay)
                     }
                 }
-                ProductType.POKEMON ->{
+                ProductType.POKEMON -> {
                     val data = getProductDetailsByObjectId<PokemonDomainModel>(
                         objectID!!,
                         getProductType(productType)!!
                     )
                     data?.let {
-                        val prodDisplay= ProductDisplayModel(data)
+                        val prodDisplay = ProductDisplayModel(data)
                         productList.add(prodDisplay)
                     }
                 }
@@ -556,95 +559,147 @@ class ProfileRepository {
     }
 
 
-    fun getCollectionProduct(map : Map<String, CollectionItemModel>) = flow<State<List<ProductDisplayModel>>> {
-        val productList = mutableListOf<ProductDisplayModel>()
-        map.keys.forEach {
-            emit(State.loading())
-            val collectionItemModel = map[it]
-            val productType = collectionItemModel?.productType
-            val objectID = collectionItemModel?.objectID
-            val isForSale = collectionItemModel?.askRefKey!=null&&collectionItemModel?.askRefKey?.isNotEmpty()!!
+    fun getCollectionProduct(map: Map<String, CollectionItemModel>) =
+        flow<State<List<ProductDisplayModel>>> {
+            val productList = mutableListOf<ProductDisplayModel>()
+            map.keys.forEach {
+                emit(State.loading())
+                val collectionItemModel = map[it]
+                val productType = collectionItemModel?.productType
+                val objectID = collectionItemModel?.objectID
+                val isForSale =
+                    collectionItemModel?.askRefKey != null && collectionItemModel?.askRefKey?.isNotEmpty()!!
 
-            val price = if(isForSale) getPriceFromAsk(collectionItemModel?.askRefKey!!) else 0.0
+                val price =
+                    if (isForSale) getPriceFromAsk(collectionItemModel?.askRefKey!!) else 0.0
 
-            when (getProductType(productType!!)) {
-                ProductType.MAGIC_THE_GATHERING -> {
-                    val data = getProductDetailsByObjectId<MTGDomainModel>(
-                        objectID!!,
-                        getProductType(productType)!!
-                    )
+                when (getProductType(productType!!)) {
+                    ProductType.MAGIC_THE_GATHERING -> {
+                        val data = getProductDetailsByObjectId<MTGDomainModel>(
+                            objectID!!,
+                            getProductType(productType)!!
+                        )
 
-                    data?.let {
-                        val forSaleItem = ForSaleItemDomainModel(data,collectionItemModel.toCollectionItemDomainModel(),price)
-                        val prodDisplay = ProductDisplayModel(forSaleItem,isForSale)
-                        productList.add(prodDisplay)
+                        data?.let {
+                            val forSaleItem = ForSaleItemDomainModel(
+                                data,
+                                collectionItemModel.toCollectionItemDomainModel(),
+                                price
+                            )
+                            val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
+                            productList.add(prodDisplay)
+                        }
                     }
-                }
-                ProductType.YUGIOH -> {
-                    val data = getProductDetailsByObjectId<YugiohDomainModel>(
-                        objectID!!,
-                        getProductType(productType)!!
-                    )
-                    data?.let {
-                        val forSaleItem = ForSaleItemDomainModel(data,collectionItemModel.toCollectionItemDomainModel(),price)
-                        val prodDisplay = ProductDisplayModel(forSaleItem,isForSale)
-                        productList.add(prodDisplay)
+                    ProductType.YUGIOH -> {
+                        val data = getProductDetailsByObjectId<YugiohDomainModel>(
+                            objectID!!,
+                            getProductType(productType)!!
+                        )
+                        data?.let {
+                            val forSaleItem = ForSaleItemDomainModel(
+                                data,
+                                collectionItemModel.toCollectionItemDomainModel(),
+                                price
+                            )
+                            val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
+                            productList.add(prodDisplay)
+                        }
                     }
-                }
-                ProductType.POKEMON ->{
-                    val data = getProductDetailsByObjectId<PokemonDomainModel>(
-                        objectID!!,
-                        getProductType(productType)!!
-                    )
-                    data?.let {
-                        val forSaleItem = ForSaleItemDomainModel(data,collectionItemModel.toCollectionItemDomainModel(),price)
-                        val prodDisplay = ProductDisplayModel(forSaleItem,isForSale)
-                        productList.add(prodDisplay)
+                    ProductType.POKEMON -> {
+                        val data = getProductDetailsByObjectId<PokemonDomainModel>(
+                            objectID!!,
+                            getProductType(productType)!!
+                        )
+                        data?.let {
+                            val forSaleItem = ForSaleItemDomainModel(
+                                data,
+                                collectionItemModel.toCollectionItemDomainModel(),
+                                price
+                            )
+                            val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
+                            productList.add(prodDisplay)
+                        }
                     }
-                }
-                ProductType.FUNKO -> {
-                    val data = getProductDetailsByObjectId<FunkoDomainModel>(
-                        objectID!!,
-                        getProductType(productType)!!
-                    )
-                    data?.let {
-                        val forSaleItem = ForSaleItemDomainModel(data,collectionItemModel.toCollectionItemDomainModel(),price)
-                        val prodDisplay = ProductDisplayModel(forSaleItem,isForSale)
-                        productList.add(prodDisplay)
+                    ProductType.FUNKO -> {
+                        val data = getProductDetailsByObjectId<FunkoDomainModel>(
+                            objectID!!,
+                            getProductType(productType)!!
+                        )
+                        data?.let {
+                            val forSaleItem = ForSaleItemDomainModel(
+                                data,
+                                collectionItemModel.toCollectionItemDomainModel(),
+                                price
+                            )
+                            val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
+                            productList.add(prodDisplay)
+                        }
                     }
-                }
-                ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
-                    val data = getProductDetailsByObjectId<SealedDomainModel>(
-                        objectID!!,
-                        getProductType(productType)!!
-                    )
+                    ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
+                        val data = getProductDetailsByObjectId<SealedDomainModel>(
+                            objectID!!,
+                            getProductType(productType)!!
+                        )
 
-                    data?.let {
-                        GthrLogger.i("hjbfvjf","hello  ${it.objectID!!}    ${it.productType!!}")
-                        val forSaleItem = ForSaleItemDomainModel(data,collectionItemModel.toCollectionItemDomainModel(),price)
-                        val prodDisplay = ProductDisplayModel(forSaleItem,isForSale)
-                        productList.add(prodDisplay)
+                        data?.let {
+                            GthrLogger.i(
+                                "hjbfvjf",
+                                "hello  ${it.objectID!!}    ${it.productType!!}"
+                            )
+                            val forSaleItem = ForSaleItemDomainModel(
+                                data,
+                                collectionItemModel.toCollectionItemDomainModel(),
+                                price
+                            )
+                            val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
+                            productList.add(prodDisplay)
+                        }
                     }
                 }
             }
+            emit(State.success(productList))
+        }.catch {
+            // If exception is thrown, emit failed state along with message.
+            emit(State.failed(it.message.toString()))
+        }.flowOn(Dispatchers.IO)
+
+    private suspend fun getPriceFromAsk(askRefKey: String): Double {
+        val await = mFirebaseRD.child(FirebaseRealtimeDatabase.ASK_ITEM_MODEL).child(askRefKey)
+            .child(FirebaseRealtimeDatabase.ASK_PRICE)
+            .get().await()
+
+        return if (await.exists()) await.value.toString().toDouble() else 0.0
+    }
+
+    private suspend fun getSaleHistoryModel(saleHistoryRefKey: String): SaleHistoryDomainModel? {
+        val await =
+            mFirebaseRD.child(FirebaseRealtimeDatabase.SALE_HISTORY_MODEL).child(saleHistoryRefKey)
+                .get().await()
+        return await.getValue(SaleHistoryModel::class.java)?.toSaleHistoryDomainModel()
+    }
+
+
+    fun getTotalSellPriceList(collectionID: String) = flow<State<List<Double>>> {
+        GthrLogger.e("ProductList", "id: ${collectionID}")
+        emit(State.loading())
+        val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionID).child(FirebaseRealtimeDatabase.SELL_LIST).get().await()
+        val priceList = mutableListOf<Double>()
+        if (data.hasChildren()) {
+            val ProductList = data.value as List<String>
+            GthrLogger.e("ProductList", "ProductList: ${ProductList}")
+            ProductList.forEach { saleHistoryModelRef ->
+                val await = mFirebaseRD.child(FirebaseRealtimeDatabase.SALE_HISTORY_MODEL).child(saleHistoryModelRef).child(FirebaseRealtimeDatabase.PRICE).get().await()
+                if(await.exists()){
+                    val price = await.getValue(Double::class.java)
+                    priceList.add(price!!)
+                }
+            }
         }
-        emit(State.success(productList))
+        emit(State.success(priceList))
     }.catch {
         // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
-    private suspend fun getPriceFromAsk(askRefKey: String) : Double {
-        val await = mFirebaseRD.child(FirebaseRealtimeDatabase.ASK_ITEM_MODEL).child(askRefKey)
-            .child(FirebaseRealtimeDatabase.ASK_PRICE)
-            .get().await()
-
-        return if(await.exists()) await.value.toString().toDouble() else 0.0
-    }
-
-    private suspend fun getSaleHistoryModel(saleHistoryRefKey: String) : SaleHistoryDomainModel? {
-        val await = mFirebaseRD.child(FirebaseRealtimeDatabase.SALE_HISTORY_MODEL).child(saleHistoryRefKey).get().await()
-        return await.getValue(SaleHistoryModel::class.java)?.toSaleHistoryDomainModel()
-    }
 
 }

@@ -1,6 +1,5 @@
 package com.gthr.gthrcollect.ui.profile
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -9,13 +8,10 @@ import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.model.Event
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
-import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
-import com.gthr.gthrcollect.model.mapper.toRealtimeDatabaseModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
 import com.gthr.gthrcollect.data.repository.ProfileRepository
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.CollectionItemModel
-import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -63,6 +59,10 @@ class ProfileViewModel(private val mProfileRepository: ProfileRepository, privat
     private val _mDisplayCollectionProduct = MutableLiveData<Event<List<ProductDisplayModel>>>()
     val mDisplayCollectionProduct: MutableLiveData<Event<List<ProductDisplayModel>>>
         get() = _mDisplayCollectionProduct
+
+    private val _mTotalSellPrice = MutableLiveData<Event<State<List<Double>>>>()
+    val mTotalSellPrice: MutableLiveData<Event<State<List<Double>>>>
+        get() = _mTotalSellPrice
 
     var mAllCollectionProductList = listOf<ProductDisplayModel>()
         private set
@@ -149,6 +149,15 @@ class ProfileViewModel(private val mProfileRepository: ProfileRepository, privat
             }
         }
     }
+
+    fun getTotalSellPriceList(collectionId : String){
+        viewModelScope.launch {
+            mProfileRepository.getTotalSellPriceList(collectionId).collect {
+                _mTotalSellPrice.value = Event(it)
+            }
+        }
+    }
+
 
     override fun onCleared() {
         super.onCleared()
