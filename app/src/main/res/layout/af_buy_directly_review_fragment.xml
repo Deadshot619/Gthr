@@ -191,7 +191,8 @@
                     android:text="@string/text_add_ask_flow"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
-                    android:visibility="visible"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_sales_tax" />
 
@@ -204,7 +205,8 @@
                     android:text="@string/text_promo_code_ask_flow"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_semi_small"
-                    android:visibility="visible"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_add_promo_code"
                     app:layout_constraintEnd_toStartOf="@+id/tv_add_promo_code"
                     app:layout_constraintHorizontal_bias="0.0"

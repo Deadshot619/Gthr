@@ -3,7 +3,6 @@ package com.gthr.gthrcollect.ui.askflow
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -86,6 +85,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             }
             mViewModel.setBuyingDirFromSomeOneProPrice(mProductDisplayModel.forsaleItemNodel?.price!!)
             mViewModel.getUserImage(mProductDisplayModel.forsaleItemNodel?.collectionFirebaseRef!!)
+            mViewModel.getUserDisplayName(mProductDisplayModel.forsaleItemNodel?.collectionFirebaseRef!!)
             mProductItem.setValue(mProductDisplayModel)
         }
     }

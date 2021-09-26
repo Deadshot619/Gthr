@@ -1,6 +1,5 @@
 package com.gthr.gthrcollect.ui.homebottomnav.search
 
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -297,10 +296,8 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
 
         mProductAdapter = ProductAdapter(CustomProductCell.State.NORMAL) {
-            Log.i("sdjkcndskj", "setUpRecyclerView: ")
             when {
                 mCctForSale.mIsActive -> {
-                    Log.i("sdjkcndskj", "setUpRecyclerView: 2")
                     startActivity(
                         AskFlowActivity.getInstance(
                             requireContext(),
@@ -1006,6 +1003,10 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
                 mProductAdapter = ProductAdapter(CustomProductCell.State.FOR_SALE) {
                     when {
                         mCctForSale.mIsActive -> {
+                            if (it.productType == null) {
+                                showToast("No ProductType")
+                                return@ProductAdapter
+                            }
                             startActivity(
                                 AskFlowActivity.getInstance(
                                     requireContext(),

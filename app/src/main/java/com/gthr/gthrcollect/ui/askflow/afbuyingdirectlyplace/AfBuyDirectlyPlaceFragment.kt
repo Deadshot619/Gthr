@@ -3,7 +3,6 @@ package com.gthr.gthrcollect.ui.askflow.afbuyingdirectlyplace
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -16,18 +15,12 @@ import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.AskFlowRepository
 import com.gthr.gthrcollect.databinding.AfBuyingDirectlyPlaceFragmentBinding
 import com.gthr.gthrcollect.model.State
-import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
 import com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel
-import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
-import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
-import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-import com.gthr.gthrcollect.utils.enums.AskFlowType
-import com.gthr.gthrcollect.utils.enums.ReceiptType
 import com.gthr.gthrcollect.utils.enums.WebViewType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.isValidPrice
@@ -74,8 +67,7 @@ class AfBuyDirectlyPlaceFragment :
     }
 
     private fun setUpObserve() {
-
-        mViewModel.askPrice.observe(viewLifecycleOwner) {
+        mViewModel.mBuyingDirFromSomeOneProPrice.observe(this) {
             mTvRateValue.text = String.format(getString(R.string.rate_common), it)
         }
 
@@ -87,16 +79,8 @@ class AfBuyDirectlyPlaceFragment :
                     is State.Loading -> {
                     }
                     is State.Success -> {
-                        when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
-                            AskFlowType.SELL, AskFlowType.COLLECT -> {
-                                mTvRow3Value.text =
-                                    it.data.frontEndShippingProcessing.isValidPrice().getAddedRate()
-                            }
-                            AskFlowType.BUY_DIRECTLY_FROM_SOMEONE -> {
-                                mTvRow1Value.text =
-                                    it.data.frontEndShippingProcessing.isValidPrice().getAddedRate()
-                            }
-                        }
+                        mTvRow1Value.text =
+                            it.data.frontEndShippingProcessing.isValidPrice().getAddedRate()
                     }
                 }
             }
@@ -126,14 +110,14 @@ class AfBuyDirectlyPlaceFragment :
         }
 
         mBtnNext.setOnClickListener {
-            startActivity(
+            /*startActivity(
                 ReceiptDetailActivity.getInstance(
                     requireContext(),
                     ReceiptType.PURCHASED,
                     ReceiptDomainModel(),
                     CustomDeliveryButton.OrderStatus.ORDERED
                 )
-            )
+            )*/
             activity?.finish()
         }
 
@@ -161,7 +145,6 @@ class AfBuyDirectlyPlaceFragment :
             when (requestCode) {
                 STRIPE_AUTH -> if (resultCode == Activity.RESULT_OK) {
                     val auth = data.getIntExtra(STRIPE_AUTH_KEY,-0)
-                    Log.i("STRIPE_AUTH", "onActivityResult: "+auth)
                     if (auth==1){
                         mViewModel.setPayoutAuth(true)
                         showToast(getString(R.string.stripe_account_create_success))
@@ -204,17 +187,15 @@ class AfBuyDirectlyPlaceFragment :
 
         mTvTotalValue.text = String.format(
             getString(R.string.text_price_value),
-            mViewModel.totalPayoutRate.toString().isValidPrice()
+            mViewModel.totalPaymentRate.toString().isValidPrice()
         )
 
         mGroup.visible()
         mGroupBuy.gone()
         mTvRate.text = getString(R.string.text_price)
-        mTvRateValue.text = "$55.00"
         mTvRow1.text = getString(R.string.text_purchase_shipping)
-        mTvRow1Value.text = "+0.0"
         mTvRow2.text = getString(R.string.text_sales_tax)
-        mTvRow2Value.text = "+0.0"
+        mTvRow2Value.text = getString(R.string.rate_positive, mViewModel.salesTax)
         mTvRow3.gone()
         mTvRow3Value.gone()
         mBtnNext.text = getString(R.string.text_accept)

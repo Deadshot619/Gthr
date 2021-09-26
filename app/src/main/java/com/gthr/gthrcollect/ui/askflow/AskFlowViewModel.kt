@@ -48,11 +48,15 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val buyListPrice: LiveData<Double>
         get() = _buyListPrice
 
+    private val _tierForBuyDirectly = MutableLiveData<Event<State<String?>>>()
+    val tierForBuyDirectly: LiveData<Event<State<String?>>>
+        get() = _tierForBuyDirectly
+
     private val _shippingTierInfo = MutableLiveData<Event<State<ShippingInfoDomainModel>>>()
     val shippingTierInfo: LiveData<Event<State<ShippingInfoDomainModel>>>
         get() = _shippingTierInfo
 
-    val totalPayoutRate: Double
+    val totalPayoutRate: Double //Used in AskFlow
         get() = addRates(
             //Price
             askPrice.value?.toDouble(),
@@ -60,6 +64,13 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
             +shippingProcessing,
             -sellingFee,
             -paymentProcessing
+        )
+
+    val totalPaymentRate: Double    //Used in Buy Directly from someone
+        get() = addRates(
+            mBuyingDirFromSomeOneProPrice.value?.toDouble(),
+            shippingProcessing,
+            salesTax
         )
 
     val shippingProcessing: Double
@@ -74,6 +85,8 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
 
     val paymentProcessing: Double
         get() = askPrice.value.getPaymentProcessing()
+
+    val salesTax: Double = SALES_TAX_VALUE
 
     private fun addRates(vararg rate: Double?): Double {
         var total = 0.00
@@ -253,6 +266,14 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                 ).collect {
                     _sealedProductDetails.value = Event(it)
                 }
+            }
+        }
+    }
+
+    fun getTierByRef(productType: ProductType, refKey: String) {
+        viewModelScope.launch {
+            repository.fetchTier(productType, refKey).collect {
+                _tierForBuyDirectly.value = Event(it)
             }
         }
     }
@@ -728,7 +749,6 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     }
 
     companion object {
-        private const val PERCENT_SELLING_FEE = 8.5f
-        private const val PERCENT_PAYMENT_PROCESSING = 2.9f
+        private const val SALES_TAX_VALUE = 0.55
     }
 }

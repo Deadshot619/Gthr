@@ -8,7 +8,6 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.gthr.gthrcollect.GthrCollect
-import com.gthr.gthrcollect.data.remote.fetchData
 import com.gthr.gthrcollect.data.remote.fetchDataWithoutParameter
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.ShippingInfoDomainModel
@@ -20,8 +19,8 @@ import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
+import com.gthr.gthrcollect.utils.helper.getFbRtModelNameFromProduct
 import com.gthr.gthrcollect.utils.logger.GthrLogger
-import io.ktor.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -81,6 +80,20 @@ class AskFlowRepository {
             )
         }
         emit(State.Success(productDetailsDomainModel as T))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    fun fetchTier(productType: ProductType, refKey: String) = flow<State<String?>> {
+        emit(State.loading())
+
+        val modelName = getFbRtModelNameFromProduct(productType)
+        val tier =
+            mFirebaseRD.child(modelName).child(refKey).child(FirebaseRealtimeDatabase.TIER).get()
+                .await().getValue(Any::class.java)
+
+        emit(State.Success(tier?.toString()))
     }.catch {
         // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))

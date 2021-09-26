@@ -148,8 +148,12 @@ data class ProductDisplayModel(
     constructor(model: ForSaleItemDomainModel,isForSale : Boolean = false) : this(
         objectID = model.itemObjectID,
         productType = model.productType,
-        productCategory = if (model.productType == null) null else getProductCategory(getProductType(model.productType?.title!!)!!),
-        refKey = model.askRefKey,
+        productCategory = if (model.productType == null) null else getProductCategory(
+            getProductType(
+                model.productType?.title!!
+            )!!
+        ),
+        refKey = model.itemRefKey,
         firImageURL = model.productFirImageURL,
         name = model.productProductName,
         description = model.productGroup,

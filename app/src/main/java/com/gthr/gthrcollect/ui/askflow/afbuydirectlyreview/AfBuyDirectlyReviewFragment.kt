@@ -58,28 +58,59 @@ class AfBuyDirectlyReviewFragment :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_info)
-            startActivity(ProductDetailActivity.getInstance(this.requireContext(), null,null))
+            startActivity(
+                ProductDetailActivity.getInstance(
+                    this.requireContext(),
+                    mViewModel.productDisplayModel?.objectID,
+                    mViewModel.productType
+                )
+            )
         return super.onOptionsItemSelected(item)
     }
 
     private fun setUpClickListeners() {
         mViewBinding.run {
             mBtnNext.setOnClickListener {
-                getPriceValue()?.let {
-                    val tier = getTier(mViewModel.productDisplayModel!!, it.toDouble()).toString()
-                    mViewModel.getShippingTierInfo(tier)
+                mViewModel.mBuyingDirFromSomeOneProPrice.value?.let {
+                    val tier = getTier(mViewModel.productDisplayModel!!, it).toString()
+                    if (tier.isEmpty())
+                        mViewModel.getTierByRef(
+                            mViewModel.productType!!,
+                            mViewModel.productDisplayModel?.refKey!!
+                        )
+                    else
+                        mViewModel.getShippingTierInfo(tier)
                 }
-                findNavController().navigate(AfBuyDirectlyReviewFragmentDirections.actionAfBuyDirectlyReviewFragmentToAfBuyDirectlyPlaceFragment())
             }
         }
     }
 
     private fun setUpObservers() {
-
-        mViewModel.mBuyingDirFromSomeOneProPrice.observe(this){
+        mViewModel.mBuyingDirFromSomeOneProPrice.observe(this) {
             mTvPrice.text = String.format(getString(R.string.rate_common), it)
             mTvTotalValue.text = String.format(getString(R.string.rate_common), it)
         }
+
+        mViewModel.tierForBuyDirectly.observe(viewLifecycleOwner, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Failed -> {
+                        (activity as AskFlowActivity).showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Loading -> {
+                        (activity as AskFlowActivity).showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity).showProgressBar(false)
+                        if (!it.data.isNullOrEmpty())
+                            mViewModel.getShippingTierInfo(it.data)
+                        else
+                            showToast("Error getting Tier data")
+                    }
+                }
+            }
+        })
 
         mViewModel.shippingTierInfo.observe(viewLifecycleOwner, {
             it.contentIfNotHandled?.let {
@@ -103,7 +134,7 @@ class AfBuyDirectlyReviewFragment :
     private fun getPriceValue(): Double? = mTvPrice.text.toString().toDoubleOrNull()
 
     private fun goToNextPage() {
-        mViewModel.setAskPrice(getPriceValue()!!)
+//        mViewModel.setAskPrice(getPriceValue()!!)
         findNavController().navigate(AfBuyDirectlyReviewFragmentDirections.actionAfBuyDirectlyReviewFragmentToAfBuyDirectlyPlaceFragment())
     }
 }

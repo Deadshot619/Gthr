@@ -104,7 +104,7 @@
                     android:ellipsize="end"
                     android:paddingVertical="@dimen/padding_vertical_search_collection_cell"
                     android:paddingStart="@dimen/padding_start_search_collection_cell"
-                    android:text="Mayank"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_small"
                     android:visibility="gone"
