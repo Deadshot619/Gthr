@@ -49,10 +49,10 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/appCompatImageView"
+                android:id="@+id/iv_product"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
                 app:layout_constraintDimensionRatio="W,1:1.5"
                 app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -71,7 +71,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/cdb_price"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+                app:layout_constraintStart_toEndOf="@+id/iv_product"
                 app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
             <com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
@@ -85,7 +85,7 @@
                 app:layout_constraintTop_toTopOf="@id/tv_title" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_edition"
+                android:id="@+id/tv_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_extra_small"
@@ -119,10 +119,10 @@
                 android:text="MVP1-ENS56"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_small"
-                app:layout_constraintEnd_toEndOf="@id/tv_edition"
+                app:layout_constraintEnd_toEndOf="@id/tv_description"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@id/tv_edition"
-                app:layout_constraintTop_toBottomOf="@id/tv_edition" />
+                app:layout_constraintStart_toStartOf="@id/tv_description"
+                app:layout_constraintTop_toBottomOf="@id/tv_description" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_row1_colum2"
@@ -140,7 +140,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_edition_no" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_Bottom"
+                android:id="@+id/cl_customization"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_bottom_layout_receipt"
@@ -151,11 +151,11 @@
                 android:padding="@dimen/padding_extra_small"
                 app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-                app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+                app:layout_constraintStart_toEndOf="@+id/iv_product"
                 app:layout_constraintTop_toBottomOf="@id/tv_row1_colum2">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_glob"
+                    android:id="@+id/iv_language"
                     android:layout_width="@dimen/size_glob"
                     android:layout_height="@dimen/size_glob"
                     android:src="@drawable/ic_glob"
@@ -164,7 +164,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_glob"
+                    android:id="@+id/tv_language"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small_custom_product"
@@ -172,7 +172,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_extra_small"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/iv_glob"
+                    app:layout_constraintStart_toEndOf="@+id/iv_language"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <View
@@ -181,12 +181,12 @@
                     android:layout_height="0dp"
                     android:layout_marginStart="@dimen/margin_small"
                     android:background="@color/product_line_gray"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_glob"
-                    app:layout_constraintStart_toEndOf="@+id/tv_glob"
-                    app:layout_constraintTop_toTopOf="@+id/tv_glob" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_language"
+                    app:layout_constraintStart_toEndOf="@+id/tv_language"
+                    app:layout_constraintTop_toTopOf="@+id/tv_language" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_psa"
+                    android:id="@+id/tv_condition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_extra_small"
@@ -199,7 +199,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_psa_value"
+                    android:id="@+id/tv_condition_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small_custom_product"
@@ -207,7 +207,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_extra_small"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_psa"
+                    app:layout_constraintStart_toEndOf="@+id/tv_condition"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <View
@@ -216,9 +216,9 @@
                     android:layout_height="0dp"
                     android:layout_marginStart="@dimen/margin_small"
                     android:background="@color/product_line_gray"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_psa_value"
-                    app:layout_constraintStart_toEndOf="@+id/tv_psa_value"
-                    app:layout_constraintTop_toTopOf="@+id/tv_psa_value" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_condition_value"
+                    app:layout_constraintStart_toEndOf="@+id/tv_condition_value"
+                    app:layout_constraintTop_toTopOf="@+id/tv_condition_value" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_Edition"
@@ -234,7 +234,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_foil"
+                    android:id="@+id/tv_edition_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small_custom_product"
@@ -254,9 +254,32 @@
                     android:id="@+id/group_psa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="line_psa,tv_Edition,tv_glob,iv_glob,line_glob,tv_psa_value,line_psa,tv_psa" />
+                    app:constraint_referenced_ids="line_psa,tv_Edition,tv_language,iv_language,line_glob,tv_condition_value,line_psa,tv_condition" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_customization"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_recent_sale"
+                android:layout_weight="2"
+                android:fontFamily="@font/lato"
+                android:gravity="right"
+                android:paddingVertical="@dimen/padding_recent_sale"
+                android:text="New"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_extra_small"
+                android:layout_marginStart="@dimen/margin_bottom_layout_receipt"
+                android:layout_marginTop="@dimen/margin_extra_small"
+                android:background="@drawable/bg_recipt_bottom"
+                android:padding="@dimen/padding_extra_small"
+                app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+                app:layout_constraintStart_toEndOf="@+id/iv_product"
+                app:layout_constraintTop_toBottomOf="@id/tv_row1_colum2"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

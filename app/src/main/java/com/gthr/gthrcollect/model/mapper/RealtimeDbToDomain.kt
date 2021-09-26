@@ -261,8 +261,8 @@ fun ShippingInfoModel.toDomainModel() = ShippingInfoDomainModel(
     refKey = refKey,
 )
 
-fun ReceiptModel.toReceiptDomainModel() = ReceiptDomainModel(
-    refKey = refKey,
+fun ReceiptModel.toReceiptDomainModel(key: String? = null) = ReceiptDomainModel(
+    refKey = key,
     itemRefKey = itemRefKey,
     productType = getProductType(productType.toString()),
     objectID = objectID,
@@ -295,7 +295,7 @@ fun ReceiptModel.toReceiptDomainModel() = ReceiptDomainModel(
     sellerShippingZipCode = sellerShippingZipCode,
     sellerShippingCountry = sellerShippingCountry,
     edition = edition,
-    lang = lang,
+    lang = lang?.toInt(),
     condition = condition,
 )
 

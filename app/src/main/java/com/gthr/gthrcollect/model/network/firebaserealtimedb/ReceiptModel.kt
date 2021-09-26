@@ -106,7 +106,7 @@ data class ReceiptModel(
     var edition: String? = null,
     @get:PropertyName("lang")
     @set:PropertyName("lang")
-    var lang: Int? = null,
+    var lang: String? = null,
     @get:PropertyName("condition")
     @set:PropertyName("condition")
     var condition: String? = null,

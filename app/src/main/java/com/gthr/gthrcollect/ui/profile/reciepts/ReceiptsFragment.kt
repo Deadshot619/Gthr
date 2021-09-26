@@ -3,7 +3,12 @@ package com.gthr.gthrcollect.ui.profile.reciepts
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gthr.gthrcollect.GthrCollect
+import com.gthr.gthrcollect.R
+import com.gthr.gthrcollect.data.repository.ReceiptRepository
 import com.gthr.gthrcollect.databinding.ReceiptsFragmentBinding
+import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.ReceiptDisplayModel
 import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.profile.reciepts.adapter.ReceiptAdapter
@@ -12,13 +17,21 @@ import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.enums.ReceiptType
+import com.gthr.gthrcollect.utils.extensions.getUserUID
+import com.gthr.gthrcollect.utils.extensions.showToast
+import com.gthr.gthrcollect.utils.extensions.toDate
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class ReceiptsFragment : BaseFragment<ReceiptsViewModel, ReceiptsFragmentBinding>() {
 
-    override val mViewModel: ReceiptsViewModel by viewModels()
+    override val mViewModel: ReceiptsViewModel by viewModels{
+        ReceiptViewModelFactory(
+            ReceiptRepository()
+        )
+    }
     override fun getViewBinding() = ReceiptsFragmentBinding.inflate(layoutInflater)
 
     private var mainJob: Job? = null
@@ -37,6 +50,57 @@ class ReceiptsFragment : BaseFragment<ReceiptsViewModel, ReceiptsFragmentBinding
         initViews()
         setUpOnClickListener()
         setUpRecyclerView()
+        setUpObservers()
+        mViewModel.fetchSaleReceipts(GthrCollect.prefs?.getUserUID()!!)
+    }
+
+    private fun setUpObservers() {
+
+        mViewModel.mDisplayReceiptList.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                val list = it.sortedByDescending { return@sortedByDescending it.receiptDomainModel?.date?.toDate()?.time }
+                mAdapter.submitList(list.map { it.copy() })
+                GthrLogger.i("jdbcjsd","final list $list")
+            }
+        }
+
+        mViewModel.mSaleReceipt.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mViewModel.setSaleReceiptList(it.data)
+                        mViewModel.fetchBuyReceipts(GthrCollect.prefs?.getUserUID()!!)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
+        mViewModel.mBuyReceipt.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mViewModel.setBuyReceiptList(it.data)
+                        val list = mutableListOf<ReceiptDisplayModel>()
+                        list.addAll(mViewModel.mBuyReceiptList)
+                        list.addAll(mViewModel.mSaleReceiptList)
+                        mViewModel.setDisplayReceiptList(list)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+
     }
 
     private fun setUpOnClickListener() {
@@ -49,7 +113,7 @@ class ReceiptsFragment : BaseFragment<ReceiptsViewModel, ReceiptsFragmentBinding
 
     private fun setUpRecyclerView() {
         mAdapter = ReceiptAdapter (object : ReceiptAdapter.ReceiptListener{
-            override fun onClick(receiptDomainModel: ReceiptDomainModel?, pos: Int) {
+            override fun onClick(receiptDomainModel: ReceiptDisplayModel?, pos: Int) {
                 if (pos % 3 == 0)
                     startActivity(
                         ReceiptDetailActivity.getInstance(
@@ -100,6 +164,7 @@ class ReceiptsFragment : BaseFragment<ReceiptsViewModel, ReceiptsFragmentBinding
             mCctPurchased = cctPurchased
             mCctSold = cctSold
             mCctvList = listOf(mCctAll, mCctPurchased, mCctSold)
+            initProgressBar(layoutProgress)
         }
     }
 
@@ -111,6 +176,24 @@ class ReceiptsFragment : BaseFragment<ReceiptsViewModel, ReceiptsFragmentBinding
         mainJob = MainScope().launch {
             mCctvList.forEach {
                 it.setActive(it == this@selectView)
+            }
+            when {
+                mCctAll.mIsActive -> {
+                    val list = mutableListOf<ReceiptDisplayModel>()
+                    list.addAll(mViewModel.mBuyReceiptList)
+                    list.addAll(mViewModel.mSaleReceiptList)
+                    mViewModel.setDisplayReceiptList(list)
+                }
+                mCctSold.mIsActive -> {
+                    val list = mutableListOf<ReceiptDisplayModel>()
+                    list.addAll(mViewModel.mSaleReceiptList)
+                    mViewModel.setDisplayReceiptList(list)
+                }
+                mCctPurchased.mIsActive -> {
+                    val list = mutableListOf<ReceiptDisplayModel>()
+                    list.addAll(mViewModel.mBuyReceiptList)
+                    mViewModel.setDisplayReceiptList(list)
+                }
             }
         }
     }
