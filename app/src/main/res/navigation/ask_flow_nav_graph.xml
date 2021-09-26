@@ -102,14 +102,11 @@
         android:name="com.gthr.gthrcollect.ui.askflow.afbuydirectlyreview.AfBuyDirectlyReviewFragment"
         android:label="AfBuyDirectlyReviewFragment">
         <action
-            android:id="@+id/action_afBuyDirectlyReviewFragment_to_afPlaceYourAskFragment"
-            app:destination="@id/afPlaceYourAskFragment" />
-        <action
-            android:id="@+id/action_afBuyDirectlyReviewFragment_to_afFragmentBuy"
-            app:destination="@id/afFragmentBuy" />
+            android:id="@+id/action_afBuyDirectlyReviewFragment_to_afBuyDirectlyPlaceFragment"
+            app:destination="@id/afBuyDirectlyPlaceFragment" />
     </fragment>
     <fragment
-        android:id="@+id/afFragmentBuy"
-        android:name="com.gthr.gthrcollect.ui.askflow.afbuyingdirectlyplace.AfFragmentBuy"
-        android:label="AfFragmentBuy" />
+        android:id="@+id/afBuyDirectlyPlaceFragment"
+        android:name="com.gthr.gthrcollect.ui.askflow.afbuyingdirectlyplace.AfBuyDirectlyPlaceFragment"
+        android:label="AfBuyDirectlyPlaceFragment" />
 </navigation>

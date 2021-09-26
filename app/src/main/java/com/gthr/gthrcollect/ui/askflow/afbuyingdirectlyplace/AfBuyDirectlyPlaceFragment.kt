@@ -34,14 +34,16 @@ import com.gthr.gthrcollect.utils.extensions.isValidPrice
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.extensions.visible
 
-class AfFragmentBuy : BaseFragment<AskFlowViewModel, AfBuyingDirectlyPlaceFragmentBinding>() {
+class AfBuyDirectlyPlaceFragment :
+    BaseFragment<AskFlowViewModel, AfBuyingDirectlyPlaceFragmentBinding>() {
 
-    override val mViewModel: AskFlowViewModel by activityViewModels{
+    override val mViewModel: AskFlowViewModel by activityViewModels {
         AskFlowViewModelFactory(AskFlowRepository())
     }
+
     override fun getViewBinding() = AfBuyingDirectlyPlaceFragmentBinding.inflate(layoutInflater)
 
-        private lateinit var mBtnNext: CustomSecondaryButton
+    private lateinit var mBtnNext: CustomSecondaryButton
     private var isTnCCheked = false
 
     private lateinit var mIvTermsAndConditions: AppCompatImageView
@@ -62,10 +64,6 @@ class AfFragmentBuy : BaseFragment<AskFlowViewModel, AfBuyingDirectlyPlaceFragme
     private lateinit var mTvTotalTitle: TextView
     private lateinit var mTvTotalValue: TextView
     private lateinit var mAddressBtn: TextView
-
-    //Buylist
-    private lateinit var mTvBuyListValue: AppCompatTextView
-    private lateinit var mTvTotalBuyListValue: TextView
     private lateinit var mPayout: TextView
 
     override fun onBinding() {
@@ -79,11 +77,6 @@ class AfFragmentBuy : BaseFragment<AskFlowViewModel, AfBuyingDirectlyPlaceFragme
 
         mViewModel.askPrice.observe(viewLifecycleOwner) {
             mTvRateValue.text = String.format(getString(R.string.rate_common), it)
-        }
-
-        mViewModel.buyListPrice.observe(viewLifecycleOwner) {
-            mTvBuyListValue.text = String.format(getString(R.string.rate_common), it)
-            mTvTotalBuyListValue.text = String.format(getString(R.string.rate_common), it)
         }
 
         mViewModel.shippingTierInfo.observe(viewLifecycleOwner, {
@@ -108,8 +101,6 @@ class AfFragmentBuy : BaseFragment<AskFlowViewModel, AfBuyingDirectlyPlaceFragme
                 }
             }
         })
-
-
     }
 
     private fun setUpOnClickListeners() {
@@ -208,8 +199,6 @@ class AfFragmentBuy : BaseFragment<AskFlowViewModel, AfBuyingDirectlyPlaceFragme
             mTvTotalTitle = tvTotal
             mTvTotalValue = tvTotalValue
 
-            mTvBuyListValue = tvBuyValue
-            mTvTotalBuyListValue = tvBuyTotalValue
             mPayout = tvPayout
         }
 
@@ -242,13 +231,8 @@ class AfFragmentBuy : BaseFragment<AskFlowViewModel, AfBuyingDirectlyPlaceFragme
         const val STRIPE_AUTH = 100
         const val STRIPE_AUTH_KEY = "AUTH"
 
-
         fun getReturnIntent(shippingAddressDomainModel : ShippingAddressDomainModel) =  Intent().apply {
             putExtra(KEY_ADDRESS,shippingAddressDomainModel)
         }
-
     }
-
-
-
 }

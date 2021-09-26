@@ -11,7 +11,6 @@ import com.gthr.gthrcollect.databinding.AfBuyDirectlyReviewFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
-import com.gthr.gthrcollect.ui.askflow.afcardcondition.AfCardConditionFragmentDirections
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
@@ -70,7 +69,7 @@ class AfBuyDirectlyReviewFragment :
                     val tier = getTier(mViewModel.productDisplayModel!!, it.toDouble()).toString()
                     mViewModel.getShippingTierInfo(tier)
                 }
-                findNavController().navigate(AfBuyDirectlyReviewFragmentDirections.actionAfBuyDirectlyReviewFragmentToAfFragmentBuy())
+                findNavController().navigate(AfBuyDirectlyReviewFragmentDirections.actionAfBuyDirectlyReviewFragmentToAfBuyDirectlyPlaceFragment())
             }
         }
     }
@@ -105,6 +104,6 @@ class AfBuyDirectlyReviewFragment :
 
     private fun goToNextPage() {
         mViewModel.setAskPrice(getPriceValue()!!)
-        findNavController().navigate(AfBuyDirectlyReviewFragmentDirections.actionAfBuyDirectlyReviewFragmentToAfPlaceYourAskFragment())
+        findNavController().navigate(AfBuyDirectlyReviewFragmentDirections.actionAfBuyDirectlyReviewFragmentToAfBuyDirectlyPlaceFragment())
     }
 }
