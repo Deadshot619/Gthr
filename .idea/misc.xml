@@ -3,13 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/drawable/ic_circular_info.xml" value="0.21754385964912282" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/drawable/ic_delete.xml" value="0.21754385964912282" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/activity_ask_flow.xml" value="0.20833333333333334" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/activity_edit_account_info.xml" value="0.13712737127371274" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/activity_receipt_detail.xml" value="0.20394736842105263" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_buy_directly_review_fragment.xml" value="0.20833333333333334" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_buying_directly_place_fragment.xml" value="0.13596491228070176" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_buylist_details_fragment.xml" value="0.17543859649122806" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_place_your_ask_fragment.xml" value="0.4" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_review_your_ask_fragment.xml" value="0.4" />
@@ -18,22 +14,17 @@
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/image_preview.xml" value="0.14479166666666668" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/layout_custom_product_cell.xml" value="0.17543859649122806" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/layout_ea_section_selection.xml" value="0.264" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/layout_progress_bar.xml" value="0.18596491228070175" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/market_fragment.xml" value="0.16798245614035087" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/my_profile.xml" value="0.2012987012987013" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/purchase_details_fragment.xml" value="0.4" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/receipts_fragment.xml" value="0.20394736842105263" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/menu/ask_flow_edit_menu.xml" value="0.20394736842105263" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/menu/ask_flow_menu.xml" value="0.2012987012987013" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_btn_price_blue.xml" value="0.24739583333333334" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_btn_secondary_blue.xml" value="0.24739583333333334" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_custum_legality_blue.xml" value="0.24739583333333334" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_custum_legality_white.xml" value="0.24739583333333334" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/activity_ask_flow.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/activity_product_detail.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/activity_profile.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/activity_settings.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_add_pic_fragment.xml" value="0.23125" />
-        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buy_directly_review_fragment.xml" value="0.45768025078369906" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buy_directly_review_fragment.xml" value="0.4" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buy_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buylist_details_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_card_condition_fragment.xml" value="0.23125" />
@@ -46,6 +37,7 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/fav_sold_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/follow_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/fragment_af_buy.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/item_receipt.xml" value="0.6" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/item_recent_sele.xml" value="0.49149922720247297" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/item_recent_sele_herder.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/layout_custom_collection_charts.xml" value="0.23125" />
@@ -58,6 +50,7 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/my_profile.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/password_reset.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/product_detail_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/purchase_details_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/receipts_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/recent_sell_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/search_fragment.xml" value="0.23125" />

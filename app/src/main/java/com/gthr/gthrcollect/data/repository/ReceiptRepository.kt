@@ -1,12 +1,14 @@
 package com.gthr.gthrcollect.data.repository
 
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.mapper.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
+import com.gthr.gthrcollect.utils.constants.Firestore
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.helper.getDomainModelFromNetworkModel
 import com.gthr.gthrcollect.utils.helper.getFbRtModelNameFromProduct
@@ -19,15 +21,17 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
 
 class ReceiptRepository {
-    private val mFirebaseRD = Firebase.database.reference
 
-    fun fetchProductDetail(productType: ProductType, objectRefKey: String) = flow<State<ProductDisplayModel?>> {
+    private val mFirebaseRD = Firebase.database.reference
+    private val mFirestore = Firebase.firestore
+
+    fun fetchProductDetail(productType: ProductType, objectID: String) = flow<State<ProductDisplayModel?>> {
             // Emit loading state
             emit(State.loading())
 
             val fbRtModelName = getFbRtModelNameFromProduct(productType)
             val modelType = getModelTypeFromProduct(productType)
-            val snapShot = mFirebaseRD.child(fbRtModelName).child(objectRefKey).get().await()
+            val snapShot = mFirebaseRD.child(fbRtModelName).orderByChild(FirebaseRealtimeDatabase.OBJECT_ID).equalTo(objectID).get().await().children.first()
             val networkData = snapShot.getValue(modelType)
 
             try {
@@ -158,6 +162,8 @@ class ReceiptRepository {
                             }
                             else -> null
                         }
+                        GthrLogger.i("sdcsdnc","productDisplayModel ${productDisplayModel?.productType}")
+                        GthrLogger.i("sdcsdnc","productDisplayModel ${productDisplayModel?.refKey}")
                         GthrLogger.i("jdbcjsd","receiptDomainModel $receiptDomainModel")
                         GthrLogger.i("jdbcjsd","productDisplayModel $productDisplayModel")
                         GthrLogger.i("jdbcjsd","saleHistoryDomainModel $saleHistoryDomainModel")
@@ -230,4 +236,17 @@ class ReceiptRepository {
         }
         return null
     }
+
+    fun getCollectionInfo(userID : String) =
+        flow<State<CollectionInfoDomainModel>> {
+            emit(State.loading())
+            val data = mFirestore.collection(Firestore.COLLECTION_USER_INFO).document(userID).get().await()
+            val collectionId = data.data?.get(Firestore.COLLECTION_ID).toString()
+            val collectionInfo = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionId).get().await().getValue(CollectionInfoModel::class.java)
+            emit(State.Success(collectionInfo?.toCollectionInfoDomainModel()!!))
+        }.catch {
+            // If exception is thrown, emit failed state along with message.
+            emit(State.failed(it.message.toString()))
+        }.flowOn(Dispatchers.IO)
+
 }

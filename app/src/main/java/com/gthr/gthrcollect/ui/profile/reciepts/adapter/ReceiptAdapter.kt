@@ -39,6 +39,10 @@ class ReceiptAdapter(val callback : ReceiptListener) : ListAdapter<ReceiptDispla
         fun bind(callback: ReceiptListener, pos: Int) {
             val item = getItem(layoutPosition)
 
+            binding.root.setOnClickListener {
+                callback.onClick(item, pos)
+            }
+
             binding.tvTitle.text = item.productDisplayModel.name
             binding.tvDescription.text = item.productDisplayModel.description
             binding.tvEditionNo.text = item.productDisplayModel.productNumber
@@ -79,10 +83,6 @@ class ReceiptAdapter(val callback : ReceiptListener) : ListAdapter<ReceiptDispla
                     binding.clCustomization.gone()
                     binding.tvCustomization.visible()
                 }
-            }
-
-            binding.root.setOnClickListener {
-                callback.onClick(null, pos)
             }
         }
     }

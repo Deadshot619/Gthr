@@ -76,6 +76,10 @@ class PurchaseDetailsFragment :
     private lateinit var mTvSummaryR4C2: TextView
     private lateinit var mTvTotalTitle: TextView
     private lateinit var mTvTotalValue: TextView
+    private lateinit var mTvAddressPersonName: TextView
+    private lateinit var mTvAddressLine1: TextView
+    private lateinit var mTvAddressLine2: TextView
+    private lateinit var mTvCityPostalCode: TextView
 
     private lateinit var mTvPaymentTitle: TextView
     private lateinit var mTvPaymentId: TextView
@@ -131,6 +135,11 @@ class PurchaseDetailsFragment :
 
     private fun initViews() {
         mViewBinding.run {
+            mTvAddressPersonName = tvLine1
+            mTvAddressLine1 = tvLine2
+            mTvAddressLine2 = tvLine3
+            mTvCityPostalCode = tvLine4
+
             mBtnReportIssue = btnReportIssue
             mBtnConfirmReceived = btnConfirmReceived
             mCdbOrderStatus = cdbOrderStatus
@@ -199,7 +208,7 @@ class PurchaseDetailsFragment :
             }
         }
         mProductImage.setOnClickListener {
-            startActivity(FullProductImage.getInstance(requireContext(), mReceiptModel.imageUrl))
+            startActivity(FullProductImage.getInstance(requireContext(), mViewModel.productImageUrl))
         }
     }
 
@@ -211,11 +220,18 @@ class PurchaseDetailsFragment :
                 mTvSummaryR1C2.text = "$22.00"
                 mTvSummaryR2C1.text = getString(R.string.text_purchase_shipping)
                 mTvSummaryR2C2.text = "+ \$2.95"
-                mTvSummaryR3C1.text =
-                    String.format(getString(R.string.text_purchase_sales_tax), "7.5")
-                mTvSummaryR3C2.text = "+ \$0.86"
+
+                mTvSummaryR3C1.invisible()
+                mTvSummaryR3C2.invisible()
                 mTvSummaryR4C1.gone()
                 mTvSummaryR4C2.gone()
+                mTvTotalValue.text = String.format(getString(R.string.rate_common),mReceiptModel.buyerCharge.toString().toDouble())
+                mTvOrderedDate.text = mReceiptModel.date?.toReceiptDate()
+
+                mTvAddressPersonName.text = mReceiptModel.buyerShippingName
+                mTvAddressLine1.text = mReceiptModel.buyerShippingAddressLine1
+                mTvAddressLine2.text = mReceiptModel.buyerShippingAddressLine2
+                mTvCityPostalCode.text = mReceiptModel.buyerShippingCity+", "+mReceiptModel.buyerShippingZipCode
 
                 if (mOrderStatus == CustomDeliveryButton.OrderStatus.ORDERED) {
                     mCdbOrderStatus.setType(CustomDeliveryButton.OrderStatus.ORDERED)
@@ -236,11 +252,18 @@ class PurchaseDetailsFragment :
                 mTvSummaryR1C2.text = "$22.00"
                 mTvSummaryR2C1.text = String.format(getString(R.string.text_selling_fee), "8.5")
                 mTvSummaryR2C2.text = "- \$5.23"
-                mTvSummaryR3C1.text =
-                    String.format(getString(R.string.text_payment_processing), "2.9")
+                mTvSummaryR3C1.text = String.format(getString(R.string.text_payment_processing), "2.9")
                 mTvSummaryR3C2.text = "- \$1.60"
                 mTvSummaryR4C1.text = getString(R.string.text_shipping_reimbursement)
                 mTvSummaryR4C2.text = "+ \$0.55"
+
+                mTvTotalValue.text = String.format(getString(R.string.rate_common),mReceiptModel.sellerPayout.toString().toDouble())
+                mTvOrderedDate.text = mReceiptModel.date?.toReceiptDate()
+
+                mTvAddressPersonName.text = mReceiptModel.buyerShippingName
+                mTvAddressLine1.text = mReceiptModel.buyerShippingAddressLine1
+                mTvAddressLine2.text = mReceiptModel.buyerShippingAddressLine2
+                mTvCityPostalCode.text = mReceiptModel.buyerShippingCity+", "+mReceiptModel.buyerShippingZipCode
 
                 if (mOrderStatus == CustomDeliveryButton.OrderStatus.ASK_PLACED) {
                     mCdbOrderStatus.setType(CustomDeliveryButton.OrderStatus.ASK_PLACED)
@@ -258,13 +281,11 @@ class PurchaseDetailsFragment :
                 mGroupAskFlow.gone()
 
                 mTvUserName.text = GthrCollect.prefs?.collectionInfoModel?.collectionDisplayName
-                mViewModel.setProductImage(GthrCollect.prefs?.collectionInfoModel?.profileImage.toString())
                 mIvUserProfilePic.setProfileImage(GthrCollect.prefs?.collectionInfoModel?.profileImage.toString())
 
                 mTvSummaryTitle.text = getString(R.string.text_ask_summary)
                 mTvSummaryR1C1.text = getString(R.string.text_sale_price)
-                mTvSummaryR1C2.text =
-                    String.format(getString(R.string.rate_common), mReceiptModel.totalAskPrice)
+                mTvSummaryR1C2.text = String.format(getString(R.string.rate_common), mReceiptModel.totalAskPrice)
                 mTvSummaryR2C1.text = getString(R.string.text_selling_fee_8_5_ask_flow)
                 mTvSummaryR2C2.text = String.format(
                     getString(R.string.rate_negative),
@@ -288,6 +309,7 @@ class PurchaseDetailsFragment :
                         (mReceiptModel.shippingReimbursement ?: 0.0)
                 mTvTotalValue.text = String.format(getString(R.string.rate_common), totalPayout)
 
+                mViewModel.setProductImage(mReceiptModel.imageUrl.toString())
                 mProductImage.setImage(mReceiptModel.imageUrl.toString())
                 mTvPaymentTitle.text = getString(R.string.text_payout)
                 mTvPaymentId.text = GthrCollect.prefs?.userInfoModel?.emailId.toString()
@@ -341,6 +363,27 @@ class PurchaseDetailsFragment :
     }
 
     private fun setUpObservers() {
+
+        mViewModel.mCollectionInfoDomainModel.observe(viewLifecycleOwner){
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Failed -> {
+                        showProgressBar(false)
+                    }
+                    is State.Loading -> {
+                        showProgressBar()
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        mTvUserName.text = it.data.collectionDisplayName
+                        it.data.profileImage?.let {
+                            mIvUserProfilePic.setProfileImage(it)
+                        }
+                    }
+                }
+            }
+        }
+
         mViewModel.productDetailModel.observe(viewLifecycleOwner, {
             it.contentIfNotHandled?.let {
                 when (it) {
@@ -352,7 +395,13 @@ class PurchaseDetailsFragment :
                     }
                     is State.Success -> {
                         showProgressBar(false)
+                        mViewModel.getCollectionInfo(mReceiptModel.sellerUID!!)
+
                         it.data?.let {
+                            it.firImageURL?.let {
+                                mProductImage.setProductImage(it)
+                                mViewModel.setProductImage(it)
+                            }
                             mTvProductName.text = it.name
                             when (it.productType) {
                                 ProductType.MAGIC_THE_GATHERING,

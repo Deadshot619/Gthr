@@ -37,11 +37,10 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
     override fun onBinding() {
         mReceiptType = intent.getSerializableExtra(KEY_RECEIPT_TYPE) as ReceiptType
         mReceiptModel = intent.getParcelableExtra<ReceiptDomainModel>(KEY_RECEIPT_MODEL)!!
-        mButtonType =
-            intent.getSerializableExtra(KEY_BUTTON_TYPE) as CustomDeliveryButton.OrderStatus
+        mButtonType = intent.getSerializableExtra(KEY_BUTTON_TYPE) as CustomDeliveryButton.OrderStatus
 
         mViewModel.setReceiptModel(mReceiptModel)
-        mViewModel.getProductDetailData(mReceiptModel.productType!!, mReceiptModel.refKey!!)
+        mViewModel.getProductDetailData(mReceiptModel.productType!!, mReceiptModel.objectID!!)
         initViews()
         setUpNavGraph()
         setSupportActionBar(mToolbar)

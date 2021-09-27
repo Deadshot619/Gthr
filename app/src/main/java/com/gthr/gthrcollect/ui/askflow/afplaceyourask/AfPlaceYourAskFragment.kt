@@ -548,7 +548,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     lang = mViewModel.selectedLanguage.value?.peekContent()?.key,
                     condition = mViewModel.selectedCondition.value?.peekContent()?.displayName,
                     edition = mViewModel.selectedEdition.value?.peekContent()?.title,
-                    refKey = mViewModel.productDisplayModel?.refKey,
+                    itemRefKey = mViewModel.productDisplayModel?.refKey,
                     imageUrl = mViewModel.mFrontImageDownloadUrl
                 ),
                 orderStatus
