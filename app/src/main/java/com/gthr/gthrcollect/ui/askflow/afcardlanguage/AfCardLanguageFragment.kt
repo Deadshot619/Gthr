@@ -47,7 +47,7 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
     private fun checkAskFlowData() {
         when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
             AskFlowType.COLLECT ->
-                if (isProductSealedOrToys())
+                if (isProductSealedOrToys() || mViewModel.isEdit)
                     findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfWantToSellFragment())
             AskFlowType.SELL -> {
                 if (mViewModel.isEdit)
@@ -56,7 +56,7 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
                     findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfAddPicFragment())
             }
             AskFlowType.BUY ->
-                if (isProductSealedOrToys())
+                if (isProductSealedOrToys() || mViewModel.isEdit)
                     findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfReviewYourAskFragment())
             AskFlowType.BUY_DIRECTLY_FROM_SOMEONE ->
                 findNavController().navigate(AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfBuyDirectlyReviewFragment())

@@ -5,26 +5,27 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.google.gson.JsonElement
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.data.remote.fetchData
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.mapper.*
+import com.gthr.gthrcollect.model.network.cloudfunction.SearchBidsModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.constants.CloudFunctions
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.enums.ProductType
-import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
-import com.gthr.gthrcollect.utils.extensions.updateCollectionInfoModelData
+import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.getProductType
+import com.gthr.gthrcollect.utils.getProductTypeFromObjectId
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
-import com.gthr.gthrcollect.utils.getProductTypeFromObjectId
 
 class ProfileRepository {
     private val mFirestore = Firebase.firestore
@@ -443,7 +444,21 @@ class ProfileRepository {
         val productList = mutableListOf<ProductDisplayModel>()
 
         productData.forEachIndexed { index, it ->
-            val objectID = productData[index][FirebaseRealtimeDatabase.ITEM_OBJECT_ID]
+            try {
+                val jsonElement: JsonElement = gson.toJsonElement(it)
+                val ss =
+                    jsonElement.toString().replace("\\", "").replace("\"{", "{").replace("}\"", "}")
+                GthrLogger.d("searchBidString", "${ss}}")
+                val searchBidModel: SearchBidsModel? = gson.fromJsonString(ss)
+
+                searchBidModel?.let {
+                    productList.add(ProductDisplayModel(it.toSearchBidsDomainModel()))
+                }
+            } catch (ex: Exception) {
+                GthrLogger.e("searchAsk", ex.message.toString())
+            }
+
+/*            val objectID = productData[index][FirebaseRealtimeDatabase.ITEM_OBJECT_ID]
             val productType = productData[index][FirebaseRealtimeDatabase.PRODUCT_TYPE]
 
             when (getProductType(productType!!)) {
@@ -497,7 +512,7 @@ class ProfileRepository {
                         productList.add(prodDisplay)
                     }
                 }
-            }
+            }*/
         }
 
         emit(State.success(productList))
@@ -562,9 +577,9 @@ class ProfileRepository {
     fun getCollectionProduct(map: Map<String, CollectionItemModel>) =
         flow<State<List<ProductDisplayModel>>> {
             val productList = mutableListOf<ProductDisplayModel>()
-            map.keys.forEach {
+            map.keys.forEach { key ->
                 emit(State.loading())
-                val collectionItemModel = map[it]
+                val collectionItemModel = map[key]
                 val productType = collectionItemModel?.productType
                 val objectID = collectionItemModel?.objectID
                 val isForSale =
@@ -584,7 +599,8 @@ class ProfileRepository {
                             val forSaleItem = ForSaleItemDomainModel(
                                 data,
                                 collectionItemModel.toCollectionItemDomainModel(),
-                                price
+                                price,
+                                key
                             )
                             val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
                             productList.add(prodDisplay)
@@ -599,7 +615,8 @@ class ProfileRepository {
                             val forSaleItem = ForSaleItemDomainModel(
                                 data,
                                 collectionItemModel.toCollectionItemDomainModel(),
-                                price
+                                price,
+                                key
                             )
                             val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
                             productList.add(prodDisplay)
@@ -614,7 +631,8 @@ class ProfileRepository {
                             val forSaleItem = ForSaleItemDomainModel(
                                 data,
                                 collectionItemModel.toCollectionItemDomainModel(),
-                                price
+                                price,
+                                key
                             )
                             val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
                             productList.add(prodDisplay)
@@ -629,7 +647,8 @@ class ProfileRepository {
                             val forSaleItem = ForSaleItemDomainModel(
                                 data,
                                 collectionItemModel.toCollectionItemDomainModel(),
-                                price
+                                price,
+                                key
                             )
                             val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
                             productList.add(prodDisplay)
@@ -649,7 +668,8 @@ class ProfileRepository {
                             val forSaleItem = ForSaleItemDomainModel(
                                 data,
                                 collectionItemModel.toCollectionItemDomainModel(),
-                                price
+                                price,
+                                key
                             )
                             val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
                             productList.add(prodDisplay)

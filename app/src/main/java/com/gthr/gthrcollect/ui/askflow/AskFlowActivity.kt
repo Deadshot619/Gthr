@@ -23,6 +23,7 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentArgs
 import com.gthr.gthrcollect.ui.base.BaseActivity
+import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.receiptdetail.purchasedetails.FullProductImage
 import com.gthr.gthrcollect.utils.customviews.CustomProductCell
 import com.gthr.gthrcollect.utils.enums.AskFlowType
@@ -300,6 +301,7 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             }
         })
 
+        //Delete
         mViewModel.deleteAsk.observe(this, {
             it.contentIfNotHandled?.let {
                 when (it) {
@@ -313,6 +315,41 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                     is State.Success -> {
                         showProgressBar(false)
                         showToast(it.data.toString())
+                        openHomePage()
+                    }
+                }
+            }
+        })
+        mViewModel.deleteCollection.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Loading -> {
+                        showProgressBar(true)
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        openHomePage()
+                    }
+                }
+            }
+        })
+        mViewModel.deleteBid.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Loading -> {
+                        showProgressBar(true)
+                    }
+                    is State.Success -> {
+                        showProgressBar(false)
+                        openHomePage()
                     }
                 }
             }
@@ -440,21 +477,55 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_delete) {
-            showToast(mViewModel.productDisplayModel?.forsaleItemNodel?.askRefKey.toString())
-            if (AskFlowType.SELL == mAskFlowType) {
-                MaterialAlertDialogBuilder(this).setTitle("Delete")
-                    .setMessage("Are you sure you want to delete this Ask?")
-                    .setPositiveButton("Yes") { dialog, _ ->
-                        mViewModel.deleteAsk(mViewModel.productDisplayModel?.forsaleItemNodel?.askRefKey.toString())
-                        dialog.dismiss()
-                    }
-                    .setNegativeButton("No") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
+            when {
+                AskFlowType.SELL == mAskFlowType -> {
+//                    showToast(mViewModel.productDisplayModel?.forsaleItemNodel?.askRefKey.toString())
+                    MaterialAlertDialogBuilder(this).setTitle("Delete")
+                        .setMessage("Are you sure you want to delete this Ask?")
+                        .setPositiveButton("Yes") { dialog, _ ->
+                            mViewModel.deleteAsk(mViewModel.productDisplayModel?.forsaleItemNodel?.askRefKey.toString())
+                            dialog.dismiss()
+                        }
+                        .setNegativeButton("No") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
+                }
+                AskFlowType.COLLECT == mAskFlowType -> {
+//                    showToast(mViewModel.productDisplayModel?.forsaleItemNodel?.collectionItemRefKey.toString())
+                    MaterialAlertDialogBuilder(this).setTitle("Delete")
+                        .setMessage("Are you sure you want to delete this Collection?")
+                        .setPositiveButton("Yes") { dialog, _ ->
+                            mViewModel.deleteCollection(mViewModel.productDisplayModel?.forsaleItemNodel?.collectionItemRefKey.toString())
+                            dialog.dismiss()
+                        }
+                        .setNegativeButton("No") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
+                }
+                AskFlowType.BUY == mAskFlowType -> {
+//                    showToast(mViewModel.productDisplayModel?.searchBidsDomainModel?.bidRefKey.toString())
+                    MaterialAlertDialogBuilder(this).setTitle("Delete")
+                        .setMessage("Are you sure you want to delete this Bid?")
+                        .setPositiveButton("Yes") { dialog, _ ->
+                            mViewModel.deleteBid(mViewModel.productDisplayModel?.searchBidsDomainModel?.bidRefKey.toString())
+                            dialog.dismiss()
+                        }
+                        .setNegativeButton("No") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
+                }
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun openHomePage() {
+        startActivity(HomeBottomNavActivity.getInstance(this).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        })
     }
 
     internal fun getAskFlowType(): AskFlowType = mAskFlowType

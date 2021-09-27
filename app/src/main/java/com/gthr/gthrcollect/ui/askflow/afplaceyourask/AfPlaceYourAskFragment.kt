@@ -362,6 +362,46 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 }
             }
         }
+
+
+        //Edit
+        mViewModel.editAsk.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        goToReceiptPage(
+                            ReceiptType.ASK_PLACED,
+                            CustomDeliveryButton.OrderStatus.ASK_PLACED
+                        )
+                    }
+                }
+            }
+        })
+        mViewModel.editBid.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Failed -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Loading -> {
+                        (activity as AskFlowActivity)?.showProgressBar()
+                    }
+                    is State.Success -> {
+                        (activity as AskFlowActivity)?.showProgressBar(false)
+                        findNavController().navigate(AfPlaceYourAskFragmentDirections.actionAfPlaceYourAskFragmentToAfBuyListDetailsFragment())
+                    }
+                }
+            }
+        })
     }
 
     private fun setUpOnClickListeners() {
@@ -389,7 +429,13 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         mBtnNext.setOnClickListener {
             when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
                 AskFlowType.BUY -> {
-                    mViewModel.insertBid()
+                    if (mViewModel.isEdit)
+                        mViewModel.editBid(
+                            mViewModel.productDisplayModel!!,
+                            mViewModel.buyListPrice.value!!
+                        )
+                    else
+                        mViewModel.insertBid()
                 }
                 AskFlowType.BUY_DIRECTLY_FROM_SOMEONE -> {
                     goToReceiptPage(ReceiptType.PURCHASED, CustomDeliveryButton.OrderStatus.ORDERED)
@@ -398,7 +444,13 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 else -> {
                     if (mViewModel.mAddress != null)
                         if (mViewModel.mIsPayoutAuth) {
-                            mViewModel.insertCollection()
+                            if (mViewModel.isEdit)
+                                mViewModel.editAsk(
+                                    mViewModel.productDisplayModel!!,
+                                    mViewModel.askPrice.value!!
+                                )
+                            else
+                                mViewModel.insertCollection()
                         } else {
                             //    mViewModel.checkStripeAccId(GthrCollect.prefs?.collectionInfoModel?.userRefKey)
                             showToast(getString(R.string.stripe_acc_creating_msg))
@@ -536,24 +588,40 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         receiptType: ReceiptType,
         orderStatus: CustomDeliveryButton.OrderStatus
     ) {
+        val receiptDomainModel = if (mViewModel.isEdit)
+            ReceiptDomainModel(
+                totalAskPrice = mViewModel.askPrice.value,
+                shippingReimbursement = mViewModel.shippingProcessing,
+                objectID = mViewModel.productDisplayModel?.objectID,
+                productType = mViewModel.productType,
+                lang = mViewModel.productDisplayModel?.forsaleItemNodel?.language?.key,
+                condition = mViewModel.productDisplayModel?.forsaleItemNodel?.condition?.displayName,
+                edition = mViewModel.productDisplayModel?.forsaleItemNodel?.edition,
+                itemRefKey = mViewModel.productDisplayModel?.refKey.toString(),
+                imageUrl = mViewModel.productDisplayModel?.forsaleItemNodel?.frontImageURL
+            )
+        else
+            ReceiptDomainModel(
+                totalAskPrice = mViewModel.askPrice.value,
+                shippingReimbursement = mViewModel.shippingProcessing,
+                objectID = mViewModel.productDisplayModel?.objectID,
+                productType = mViewModel.productType,
+                lang = mViewModel.selectedLanguage.value?.peekContent()?.key,
+                condition = mViewModel.selectedCondition.value?.peekContent()?.displayName,
+                edition = mViewModel.selectedEdition.value?.peekContent()?.title,
+                itemRefKey = mViewModel.productDisplayModel?.refKey,
+                imageUrl = mViewModel.mFrontImageDownloadUrl
+            )
+
         startActivity(
             ReceiptDetailActivity.getInstance(
                 requireContext(),
                 receiptType,
-                ReceiptDomainModel(
-                    totalAskPrice = mViewModel.askPrice.value,
-                    shippingReimbursement = mViewModel.shippingProcessing,
-                    objectID = mViewModel.productDisplayModel?.objectID,
-                    productType = mViewModel.productType,
-                    lang = mViewModel.selectedLanguage.value?.peekContent()?.key,
-                    condition = mViewModel.selectedCondition.value?.peekContent()?.displayName,
-                    edition = mViewModel.selectedEdition.value?.peekContent()?.title,
-                    itemRefKey = mViewModel.productDisplayModel?.refKey,
-                    imageUrl = mViewModel.mFrontImageDownloadUrl
-                ),
+                receiptDomainModel,
                 orderStatus
             )
         )
+        activity?.finish()
     }
 
 

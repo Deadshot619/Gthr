@@ -4,6 +4,7 @@ import android.net.Uri
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.model.*
 import com.algolia.search.model.indexing.Partial
+import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -153,16 +154,131 @@ class AskFlowRepository {
     fun insertAsk(askItemModel: AskItemModel) = flow<State<String>> {
         emit(State.loading())
         val push = mFirebaseRD.child(FirebaseRealtimeDatabase.ASK_ITEM_MODEL).push()
-        GthrLogger.d("sdcbsjdb","ASkItemId ${push.key}")
+        GthrLogger.d("sdcbsjdb", "ASkItemId ${push.key}")
         push.setValue(askItemModel).await()
         emit(State.success(push.key!!))
     }.catch {
         emit(State.failed(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
-    fun updateProductForAsk(lowestAskCost : Int, lowestAskID : String, productType: ProductType, refKey : String, objectID: String) = flow<State<Boolean>> {
+    fun editAsk(productType: ProductType, objectID: String, askRefKey: String, price: Double) =
+        flow<State<Boolean>> {
+            emit(State.loading())
+            val updateAskPrice =
+                mFirebaseRD.child(FirebaseRealtimeDatabase.ASK_ITEM_MODEL).child(askRefKey)
+                    .child(FirebaseRealtimeDatabase.ASK_PRICE).setValue(price).await()
+
+            val productFbModel = getFbRtModelNameFromProduct(productType)
+            val itemRefKey =
+                mFirebaseRD.child(productFbModel).orderByChild(FirebaseRealtimeDatabase.OBJECT_ID)
+                    .equalTo(objectID).get().await().children.first().key.toString()
+            val productModelLink = mFirebaseRD.child(productFbModel).child(itemRefKey)
+
+            val lowestAskCost =
+                productModelLink.child(FirebaseRealtimeDatabase.LOWEST_ASK_COST).get()
+                    .await()?.getValue(Double::class.java) ?: 0.0
+            val lowestAskID = productModelLink.child(FirebaseRealtimeDatabase.LOWEST_ASK_ID).get()
+                .await().getValue(String::class.java).toString()
+
+            if (price < lowestAskCost && lowestAskID != askRefKey) {
+                val map = mapOf(
+                    FirebaseRealtimeDatabase.LOWEST_ASK_COST to price,
+                    FirebaseRealtimeDatabase.LOWEST_ASK_ID to askRefKey
+                )
+                productModelLink.updateChildren(map).await()
+            } else if (lowestAskID == askRefKey && price > lowestAskCost) {
+                var tempLowestPrice = lowestAskCost
+                var tempLowestAskId = lowestAskID
+
+                //Find the lowestAskCost for same objectID & update its product model
+                mFirebaseRD.child(FirebaseRealtimeDatabase.ASK_ITEM_MODEL)
+                    .orderByChild(FirebaseRealtimeDatabase.OBJECT_ID)
+                    .equalTo(objectID).get().await().children.forEach { snap ->
+                        snap?.child(FirebaseRealtimeDatabase.ASK_PRICE)
+                            ?.getValue(Double::class.java)?.let {
+                            if (it < tempLowestPrice) {
+                                tempLowestPrice = it
+                                tempLowestAskId = snap.key.toString()
+                            }
+                        }
+                    }
+
+                val map = mapOf(
+                    FirebaseRealtimeDatabase.LOWEST_ASK_COST to tempLowestPrice,
+                    FirebaseRealtimeDatabase.LOWEST_ASK_ID to tempLowestAskId
+                )
+                productModelLink.updateChildren(map).await()
+            }
+
+            emit(State.success(true))
+        }.catch {
+            emit(State.failed(it.message.toString()))
+        }.flowOn(Dispatchers.IO)
+
+    fun editBid(productType: ProductType, objectID: String, bidRefKey: String, price: Double) =
+        flow<State<Boolean>> {
+            emit(State.loading())
+            val updateBidPrice =
+                mFirebaseRD.child(FirebaseRealtimeDatabase.BID_ITEM_MODEL).child(bidRefKey)
+                    .child(FirebaseRealtimeDatabase.BID_PRICE).setValue(price).await()
+
+            val productFbModel = getFbRtModelNameFromProduct(productType)
+            val itemRefKey =
+                mFirebaseRD.child(productFbModel).orderByChild(FirebaseRealtimeDatabase.OBJECT_ID)
+                    .equalTo(objectID).get().await().children.first().key.toString()
+            val productModelLink = mFirebaseRD.child(productFbModel).child(itemRefKey)
+
+            val highestBidCost =
+                productModelLink.child(FirebaseRealtimeDatabase.HIGHEST_BID_COST).get()
+                    .await()?.getValue(Double::class.java) ?: 0.0
+            val highestBidID = productModelLink.child(FirebaseRealtimeDatabase.HIGHEST_BID_ID).get()
+                .await().getValue(String::class.java).toString()
+
+            if (price > highestBidCost && highestBidID != bidRefKey) {
+                val map = mapOf(
+                    FirebaseRealtimeDatabase.HIGHEST_BID_COST to price,
+                    FirebaseRealtimeDatabase.HIGHEST_BID_ID to bidRefKey
+                )
+                productModelLink.updateChildren(map).await()
+            } else if (highestBidID == bidRefKey && price < highestBidCost) {
+                var tempHighestPrice = highestBidCost
+                var tempHighestBidId = highestBidID
+
+                //Find the lowestAskCost for same objectID & update its product model
+                mFirebaseRD.child(FirebaseRealtimeDatabase.BID_ITEM_MODEL)
+                    .orderByChild(FirebaseRealtimeDatabase.OBJECT_ID)
+                    .equalTo(objectID).get().await().children.forEach { snap ->
+                        snap?.child(FirebaseRealtimeDatabase.BID_PRICE)
+                            ?.getValue(Double::class.java)?.let {
+                            if (it > tempHighestPrice) {
+                                tempHighestPrice = it
+                                tempHighestBidId = snap.key.toString()
+                            }
+                        }
+                    }
+
+                val map = mapOf(
+                    FirebaseRealtimeDatabase.HIGHEST_BID_COST to tempHighestPrice,
+                    FirebaseRealtimeDatabase.HIGHEST_BID_ID to tempHighestBidId
+                )
+                productModelLink.updateChildren(map).await()
+            }
+
+            emit(State.success(true))
+        }.catch {
+            emit(State.failed(it.message.toString()))
+        }.flowOn(Dispatchers.IO)
+
+
+    fun updateProductForAsk(
+        lowestAskCost: Int,
+        lowestAskID: String,
+        productType: ProductType,
+        refKey: String,
+        objectID: String
+    ) = flow<State<Boolean>> {
         emit(State.loading())
-        updateToAlgoliaForAsk(objectID,lowestAskCost,lowestAskID)
+        updateToAlgoliaForAsk(objectID, lowestAskCost, lowestAskID)
         var ref = mFirebaseRD
         ref = when (productType) {
             ProductType.MAGIC_THE_GATHERING -> ref.child(FirebaseRealtimeDatabase.MTG_MODEL)
@@ -360,7 +476,9 @@ class AskFlowRepository {
             mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionId)
                 .child(FirebaseRealtimeDatabase.COLLECTION_LIST)
         val collectListRefKey =
-            collectionListLink.orderByChild(askRefKey).limitToFirst(1).get().await().key
+            collectionListLink.orderByChild(FirebaseRealtimeDatabase.ASK_REF_KEY).equalTo(askRefKey)
+                .get().await().children.first().key
+
         val deleteAskFromCollectionList =
             collectionListLink.child(collectListRefKey.toString()).removeValue().await()
 
@@ -371,32 +489,38 @@ class AskFlowRepository {
         GthrLogger.e("deleteAsk", "${it.message}}")
     }.flowOn(Dispatchers.IO)
 
-    fun deleteCollectionItem(collectionId: String, askRefKey: String) = flow<State<Boolean>> {
-        emit(State.loading())
+    fun deleteCollectionItem(collectionId: String, collectionRefKey: String) =
+        flow<State<Boolean>> {
+            emit(State.loading())
 
-        val collectionListLink =
             mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionId)
-                .child(FirebaseRealtimeDatabase.COLLECTION_LIST)
-        val collectListRefKey =
-            collectionListLink.orderByChild(askRefKey).limitToFirst(1).get().await().key
-        val deleteAskFromCollectionList =
-            collectionListLink.child(collectListRefKey.toString()).removeValue().await()
+                .child(FirebaseRealtimeDatabase.COLLECTION_LIST).child(collectionRefKey)
+                .removeValue().await()
 
-        emit(State.success(true))
-    }.catch {
-        // If exception is thrown, emit failed state along with message.
-        emit(State.failed(it.message.toString()))
-        GthrLogger.e("deleteAsk", "${it.message}}")
+            emit(State.success(true))
+        }.catch {
+            // If exception is thrown, emit failed state along with message.
+            emit(State.failed(it.message.toString()))
+            GthrLogger.e("deleteAsk", "${it.message}}")
     }.flowOn(Dispatchers.IO)
 
-    fun deleteBidItemModel(bidRefKey: String) = flow<State<Boolean>> {
+    fun deleteBidItemModel(collectionId: String, bidRefKey: String) = flow<State<Boolean>> {
         emit(State.loading())
 
-/*
-        val collectionListLink = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionId).child(FirebaseRealtimeDatabase.COLLECTION_LIST)
-        val collectListRefKey = collectionListLink.orderByChild(askRefKey).limitToFirst(1).get().await().key
-        val deleteAskFromCollectionList = collectionListLink.child(collectListRefKey.toString()).removeValue().await()
-*/
+        //Remove bitRefKey from BuyList in CollectionInfoModel
+        val buyListLink =
+            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionId)
+                .child(FirebaseRealtimeDatabase.BUY_LIST)
+        buyListLink.get().await()
+            .getValue(object : GenericTypeIndicator<HashMap<String, String>>() {})
+            ?.forEach { (key, value) ->
+                if (value == bidRefKey)
+                    buyListLink.child(key).removeValue().await()
+            }
+
+        //Remove respective bidItemModel
+        mFirebaseRD.child(FirebaseRealtimeDatabase.BID_ITEM_MODEL).child(bidRefKey).removeValue()
+            .await()
 
         emit(State.success(true))
     }.catch {

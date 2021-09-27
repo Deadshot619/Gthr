@@ -755,12 +755,77 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
     val deleteAsk: LiveData<Event<State<Boolean>>>
         get() = _deleteAsk
 
+    private val _deleteCollection = MutableLiveData<Event<State<Boolean>>>()
+    val deleteCollection: LiveData<Event<State<Boolean>>>
+        get() = _deleteCollection
+
+    private val _deleteBid = MutableLiveData<Event<State<Boolean>>>()
+    val deleteBid: LiveData<Event<State<Boolean>>>
+        get() = _deleteBid
+
     fun deleteAsk(askRefKey: String) {
         viewModelScope.launch {
             repository.deleteAsk(GthrCollect.prefs?.getUserCollectionId().toString(), askRefKey)
                 .collect {
                     _deleteAsk.value = Event(it)
                 }
+        }
+    }
+
+    fun deleteCollection(askRefKey: String) {
+        viewModelScope.launch {
+            repository.deleteCollectionItem(
+                GthrCollect.prefs?.getUserCollectionId().toString(),
+                askRefKey
+            )
+                .collect {
+                    _deleteCollection.value = Event(it)
+                }
+        }
+    }
+
+    fun deleteBid(bidRefKey: String) {
+        viewModelScope.launch {
+            repository.deleteBidItemModel(
+                GthrCollect.prefs?.getUserCollectionId().toString(),
+                bidRefKey
+            ).collect {
+                _deleteBid.value = Event(it)
+            }
+        }
+    }
+
+    private val _editAsk = MutableLiveData<Event<State<Boolean>>>()
+    val editAsk: LiveData<Event<State<Boolean>>>
+        get() = _editAsk
+
+    private val _editBid = MutableLiveData<Event<State<Boolean>>>()
+    val editBid: LiveData<Event<State<Boolean>>>
+        get() = _editBid
+
+    fun editAsk(productDisplayModel: ProductDisplayModel, price: Double) {
+        viewModelScope.launch {
+            repository.editAsk(
+                productType = productDisplayModel.productType!!,
+                objectID = productDisplayModel.forsaleItemNodel?.itemObjectID.toString(),
+                askRefKey = productDisplayModel.forsaleItemNodel?.askRefKey.toString(),
+                price = askPrice.value!!
+            ).collect {
+                _editAsk.value = Event(it)
+            }
+        }
+    }
+
+    fun editBid(productDisplayModel: ProductDisplayModel, price: Double) {
+        viewModelScope.launch {
+            repository.editBid(
+                productType = productDisplayModel.productType!!,
+                objectID = productDisplayModel.searchBidsDomainModel?.itemObjectID.toString(),
+                bidRefKey = productDisplayModel.searchBidsDomainModel?.bidRefKey.toString(),
+                price = buyListPrice.value!!
+            ).collect {
+                _editBid.value = Event(it)
+            }
         }
     }
 

@@ -1,8 +1,10 @@
 package com.gthr.gthrcollect.model.mapper
 
 import com.gthr.gthrcollect.model.domain.ForSaleItemDomainModel
+import com.gthr.gthrcollect.model.domain.SearchBidsDomainModel
 import com.gthr.gthrcollect.model.domain.SearchProductDomainModel
 import com.gthr.gthrcollect.model.network.cloudfunction.ForSaleItemModel
+import com.gthr.gthrcollect.model.network.cloudfunction.SearchBidsModel
 import com.gthr.gthrcollect.model.network.cloudfunction.SearchProductModel
 import com.gthr.gthrcollect.utils.getProductCategoryFromRaw
 import com.gthr.gthrcollect.utils.getProductType
@@ -50,4 +52,38 @@ fun ForSaleItemModel.toDomainModel()=ForSaleItemDomainModel(
         frontImageURL = frontImageURL,
         firebaseRef = firebaseRef,
         collectionCollectionRawName = collectionCollectionRawName
+)
+
+fun SearchBidsModel.toSearchBidsDomainModel() = SearchBidsDomainModel(
+    bidPrice = bidPrice,
+    bidRefKey = bidRefKey,
+    collectionRefId = collectionRefId,
+    collection_collectionDisplayName = collection_collectionDisplayName,
+    collection_collectionRawName = collection_collectionRawName,
+    collection_firebaseRef = collection_firebaseRef,
+    collection_id = collection_id,
+    collection_profileImageURL = collection_profileImageURL,
+    collection_userRefKey = collection_userRefKey,
+    condition = condition?.toConditionDomainModel(),
+    createdAt = createdAt,
+    creatorUID = creatorUID,
+    edition = edition,
+    firebaseRef = firebaseRef,
+    id = id,
+    itemObjectID = itemObjectID,
+    itemRefKey = itemRefKey,
+    language = language?.toLanguageDomainModel(),
+    productCategory = getProductCategoryFromRaw(productCategory.toString()),
+    productRefId = productRefId,
+    productType = getProductType(productType.toString()),
+    product_firImageURL = product_firImageURL,
+    product_firebaseRef = product_firebaseRef,
+    product_group = product_group,
+    product_id = product_id,
+    product_numberOfFavorites = product_numberOfFavorites,
+    product_prodObjectID = product_prodObjectID,
+    product_productName = product_productName,
+    product_productNumber = product_productNumber,
+    product_rarity = product_rarity,
+    updatedAt = updatedAt,
 )

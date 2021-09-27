@@ -23,6 +23,7 @@ data class ForSaleItemDomainModel(
     var price: Double? = null,
     var productId: String? = null,
     var askRefKey: String? = null,
+    var collectionItemRefKey: String? = null,
     var productProductNumber: String? = null,
     var id: Int? = null,
     var productGroup: String? = null,
@@ -44,7 +45,12 @@ data class ForSaleItemDomainModel(
     var collectionCollectionRawName: String? = null
 ) : Parcelable {
 
-    constructor(model: SealedDomainModel, collectionItem: CollectionItemDomainModel, price: Double) : this(
+    constructor(
+        model: SealedDomainModel,
+        collectionItem: CollectionItemDomainModel,
+        price: Double,
+        collectionItemRefKey: String
+    ) : this(
         price = price,
         itemObjectID = model.objectID,
         language = collectionItem.language,
@@ -54,6 +60,7 @@ data class ForSaleItemDomainModel(
         frontImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
         backImageURL = collectionItem.backImageURL,
         askRefKey = collectionItem.askRefKey,
+        collectionItemRefKey = collectionItemRefKey,
 
         productGroup = null,
         productProductNumber = null,
@@ -67,7 +74,12 @@ data class ForSaleItemDomainModel(
         productProdObjectID = model.objectID,
     )
 
-    constructor(model: PokemonDomainModel, collectionItem: CollectionItemDomainModel, price: Double) : this(
+    constructor(
+        model: PokemonDomainModel,
+        collectionItem: CollectionItemDomainModel,
+        price: Double,
+        collectionItemRefKey: String
+    ) : this(
         price = price,
         itemObjectID = model.objectID,
         productFirImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
@@ -77,6 +89,7 @@ data class ForSaleItemDomainModel(
         condition = collectionItem.condition,
         edition = collectionItem.edition?.title,
         askRefKey = collectionItem.askRefKey,
+        collectionItemRefKey = collectionItemRefKey,
 
         productGroup = null,
         productProductNumber = model.number,
@@ -89,7 +102,12 @@ data class ForSaleItemDomainModel(
         productProdObjectID = model.objectID,
     )
 
-    constructor(model: MTGDomainModel, collectionItem: CollectionItemDomainModel, price: Double) : this(
+    constructor(
+        model: MTGDomainModel,
+        collectionItem: CollectionItemDomainModel,
+        price: Double,
+        collectionItemRefKey: String
+    ) : this(
         price = price,
         itemObjectID = model.objectID,
         productFirImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
@@ -99,6 +117,7 @@ data class ForSaleItemDomainModel(
         condition = collectionItem.condition,
         edition = collectionItem.edition?.title,
         askRefKey = collectionItem.askRefKey,
+        collectionItemRefKey = collectionItemRefKey,
 
 
         productGroup = null,
@@ -112,7 +131,12 @@ data class ForSaleItemDomainModel(
         productProdObjectID = model.objectID,
     )
 
-    constructor(model: YugiohDomainModel, collectionItem: CollectionItemDomainModel, price: Double) : this(
+    constructor(
+        model: YugiohDomainModel,
+        collectionItem: CollectionItemDomainModel,
+        price: Double,
+        collectionItemRefKey: String
+    ) : this(
         price = price,
         itemObjectID = model.objectID,
         productFirImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
@@ -122,6 +146,7 @@ data class ForSaleItemDomainModel(
         condition = collectionItem.condition,
         edition = collectionItem.edition?.title,
         askRefKey = collectionItem.askRefKey,
+        collectionItemRefKey = collectionItemRefKey,
 
 
         productGroup = null,
@@ -135,7 +160,12 @@ data class ForSaleItemDomainModel(
         productProdObjectID = model.objectID,
     )
 
-    constructor(model: FunkoDomainModel, collectionItem: CollectionItemDomainModel, price: Double) : this(
+    constructor(
+        model: FunkoDomainModel,
+        collectionItem: CollectionItemDomainModel,
+        price: Double,
+        collectionItemRefKey: String
+    ) : this(
         price = price,
         itemObjectID = model.objectID,
         productFirImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
@@ -145,6 +175,7 @@ data class ForSaleItemDomainModel(
         condition = collectionItem.condition,
         edition = collectionItem.edition?.title,
         askRefKey = collectionItem.askRefKey,
+        collectionItemRefKey = collectionItemRefKey,
 
 
         productGroup = null,

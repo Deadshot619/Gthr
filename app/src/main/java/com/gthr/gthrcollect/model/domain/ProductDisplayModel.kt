@@ -10,24 +10,25 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ProductDisplayModel(
-        var objectID: String?,
-        var productType: ProductType?,
-        var productCategory: ProductCategory?,
-        var refKey: String?,
-        var firImageURL: String?,
-        var name: String?,
-        var description: String?,
-        var lowestAskCost: Double?,
-        var highestBidCost: Int?,
-        var lowestAskID: String?,
-        var highestBidID: String?,
-        var productNumber: String?,
-        var numberOfFavorites: Int?,
-        var tier: String?,
-        var rarity: String?,
-        val viewType: AdapterViewType = AdapterViewType.VIEW_TYPE_ITEM,
-        val forsaleItemNodel: ForSaleItemDomainModel? = null,
-    val isForSale : Boolean? = false
+    var objectID: String?,
+    var productType: ProductType?,
+    var productCategory: ProductCategory?,
+    var refKey: String?,
+    var firImageURL: String?,
+    var name: String?,
+    var description: String?,
+    var lowestAskCost: Double?,
+    var highestBidCost: Int?,
+    var lowestAskID: String?,
+    var highestBidID: String?,
+    var productNumber: String?,
+    var numberOfFavorites: Int?,
+    var tier: String?,
+    var rarity: String?,
+    val viewType: AdapterViewType = AdapterViewType.VIEW_TYPE_ITEM,
+    val forsaleItemNodel: ForSaleItemDomainModel? = null,
+    val searchBidsDomainModel: SearchBidsDomainModel? = null,
+    val isForSale: Boolean? = false
 ) : Parcelable {
     //TODO 01/08/21 : Modify firImageUrl added
 
@@ -169,4 +170,28 @@ data class ProductDisplayModel(
         isForSale = isForSale
     )
 
+    constructor(model: SearchBidsDomainModel, isForSale: Boolean = false) : this(
+        objectID = model.itemObjectID,
+        productType = model.productType,
+        productCategory = if (model.productType == null) null else getProductCategory(
+            getProductType(
+                model.productType?.title!!
+            )!!
+        ),
+        refKey = model.itemRefKey,
+        firImageURL = model.product_firImageURL,
+        name = model.product_productName,
+        description = model.product_group,
+        lowestAskCost = model.bidPrice,
+        highestBidCost = 0,
+        lowestAskID = "",
+        highestBidID = "",
+        productNumber = model.product_productNumber.toString(),
+        numberOfFavorites = model.product_numberOfFavorites,
+        tier = "",
+        rarity = model.product_rarity?.capitalize(),
+        forsaleItemNodel = null,
+        searchBidsDomainModel = model,
+        isForSale = isForSale
+    )
 }

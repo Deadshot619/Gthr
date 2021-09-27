@@ -23,7 +23,6 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editprofile.EditProfileActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
-import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.ui.profile.ProfileViewModel
@@ -535,7 +534,14 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 }
                 mBuyList.mIsActive -> {
                     mAdapter = CollectionsAdapter(CustomProductCell.State.WANT) {
-                        startActivity(ProductDetailActivity.getInstance(requireContext(), it.objectID!!,it.productType!!))
+                        startActivity(
+                            AskFlowActivity.getInstance(
+                                requireContext(),
+                                AskFlowType.BUY,
+                                it,
+                                true
+                            )
+                        )
                     }
                     mRvMain.adapter = mAdapter
                 }
