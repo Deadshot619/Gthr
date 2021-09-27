@@ -14,6 +14,7 @@ import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.setProductImage
 import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.helper.*
+import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class ReceiptAdapter(val callback : ReceiptListener) : ListAdapter<ReceiptDisplayModel, ReceiptAdapter.ReceiptViewHolder>(
     DiffCallback
@@ -66,6 +67,8 @@ class ReceiptAdapter(val callback : ReceiptListener) : ListAdapter<ReceiptDispla
                         ProductType.YUGIOH -> getYugiohSelectedEdition(item.receiptDomainModel.lang!!).title
                         else -> ""
                     }
+
+                    GthrLogger.i("dbjdbf","${item.receiptDomainModel.condition}")
 
                     val condition = getCondition(item.receiptDomainModel.condition?.toInt()!!)
                     mTvConditionValue.text = condition.abbreviatedName

@@ -122,46 +122,56 @@ class ReceiptRepository {
         val snapShot = mFirebaseRD.child(FirebaseRealtimeDatabase.RECIEPT_MODEL).orderByChild(orderBy).equalTo(userId).get().await()
         GthrLogger.i("jdbcjsd","snapShot $snapShot")
         val list = mutableListOf<ReceiptDisplayModel>()
+
         if(snapShot.hasChildren()){
             snapShot.children.forEach {
                 val receipt = it.getValue(ReceiptModel::class.java)
                 val receiptDomainModel = receipt?.toReceiptDomainModel(it.key!!)
-                val saleHistoryDomainModel = getSaleHistory(receipt?.saleID!!)
 
-                val objectID = receiptDomainModel?.objectID
-                val productType = receiptDomainModel?.productType
+                if(receipt?.saleID != null){
+                    val saleHistoryDomainModel = getSaleHistory(receipt?.saleID!!)
 
-                val productDisplayModel = when (productType) {
-                    ProductType.MAGIC_THE_GATHERING -> {
-                        val data = getProductDetailsByObjectId<MTGDomainModel>(objectID!!, productType)
-                        ProductDisplayModel(data!!)
+                    val objectID = receiptDomainModel?.objectID
+                    val productType = receiptDomainModel?.productType
+
+                    if(objectID!=null&&productType!=null){
+                        val productDisplayModel = when (productType) {
+                            ProductType.MAGIC_THE_GATHERING -> {
+                                val data = getProductDetailsByObjectId<MTGDomainModel>(objectID!!, productType)
+                                ProductDisplayModel(data!!)
+                            }
+                            ProductType.YUGIOH -> {
+                                val data = getProductDetailsByObjectId<YugiohDomainModel>(objectID!!, productType)
+                                ProductDisplayModel(data!!)
+                            }
+                            ProductType.POKEMON -> {
+                                val data = getProductDetailsByObjectId<PokemonDomainModel>(objectID!!, productType)
+                                ProductDisplayModel(data!!)
+                            }
+                            ProductType.FUNKO -> {
+                                val data = getProductDetailsByObjectId<FunkoDomainModel>(objectID!!, productType)
+                                ProductDisplayModel(data!!)
+                            }
+                            ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
+                                val data = getProductDetailsByObjectId<SealedDomainModel>(objectID!!, productType)
+                                ProductDisplayModel(data!!)
+                            }
+                            else -> null
+                        }
+                        GthrLogger.i("jdbcjsd","receiptDomainModel $receiptDomainModel")
+                        GthrLogger.i("jdbcjsd","productDisplayModel $productDisplayModel")
+                        GthrLogger.i("jdbcjsd","saleHistoryDomainModel $saleHistoryDomainModel")
+                        if(receiptDomainModel!=null&&productDisplayModel!=null&&saleHistoryDomainModel!=null){
+                            val receiptDisplayDomainModel = ReceiptDisplayModel(receiptDomainModel,productDisplayModel,saleHistoryDomainModel)
+                            GthrLogger.i("jdbcjsd","receiptDisplayDomainModel $receiptDisplayDomainModel")
+                            list.add(receiptDisplayDomainModel)
+                        }
+
                     }
-                    ProductType.YUGIOH -> {
-                        val data = getProductDetailsByObjectId<YugiohDomainModel>(objectID!!, productType)
-                        ProductDisplayModel(data!!)
-                    }
-                    ProductType.POKEMON -> {
-                        val data = getProductDetailsByObjectId<PokemonDomainModel>(objectID!!, productType)
-                        ProductDisplayModel(data!!)
-                    }
-                    ProductType.FUNKO -> {
-                        val data = getProductDetailsByObjectId<FunkoDomainModel>(objectID!!, productType)
-                        ProductDisplayModel(data!!)
-                    }
-                    ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
-                        val data = getProductDetailsByObjectId<SealedDomainModel>(objectID!!, productType)
-                        ProductDisplayModel(data!!)
-                    }
-                    else -> null
                 }
-                GthrLogger.i("jdbcjsd","receiptDomainModel $receiptDomainModel")
-                GthrLogger.i("jdbcjsd","productDisplayModel $productDisplayModel")
-                GthrLogger.i("jdbcjsd","saleHistoryDomainModel $saleHistoryDomainModel")
-                val receiptDisplayDomainModel = ReceiptDisplayModel(receiptDomainModel!!,productDisplayModel!!,saleHistoryDomainModel!!)
-                GthrLogger.i("jdbcjsd","receiptDisplayDomainModel $receiptDisplayDomainModel")
-                list.add(receiptDisplayDomainModel)
             }
         }
+
         return list
     }
 
