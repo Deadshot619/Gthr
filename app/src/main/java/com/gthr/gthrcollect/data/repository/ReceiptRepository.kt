@@ -243,10 +243,12 @@ class ReceiptRepository {
             val data = mFirestore.collection(Firestore.COLLECTION_USER_INFO).document(userID).get().await()
             val collectionId = data.data?.get(Firestore.COLLECTION_ID).toString()
             val collectionInfo = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionId).get().await().getValue(CollectionInfoModel::class.java)
-            emit(State.Success(collectionInfo?.toCollectionInfoDomainModel()!!))
+            emit(State.Success(collectionInfo?.toCollectionInfoDomainModel(collectionId)!!))
         }.catch {
             // If exception is thrown, emit failed state along with message.
             emit(State.failed(it.message.toString()))
         }.flowOn(Dispatchers.IO)
+
+
 
 }

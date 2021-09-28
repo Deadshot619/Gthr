@@ -15,16 +15,14 @@ import com.gthr.gthrcollect.databinding.PurchaseDetailsFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailViewModel
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailViewModelFactory
 import com.gthr.gthrcollect.utils.constants.CalendarConstants
 import com.gthr.gthrcollect.utils.constants.MailConstants
 import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-import com.gthr.gthrcollect.utils.enums.ConditionType
-import com.gthr.gthrcollect.utils.enums.ProductCategory
-import com.gthr.gthrcollect.utils.enums.ProductType
-import com.gthr.gthrcollect.utils.enums.ReceiptType
+import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.helper.*
@@ -187,6 +185,14 @@ class PurchaseDetailsFragment :
     }
 
     private fun initClickListeners() {
+
+        mTvUserName.setOnClickListener {
+            mViewModel.collectionInfoDomainModel?.let {
+                if(it.collectionId!=GthrCollect.prefs?.getUserCollectionId())
+                    startActivity(ProfileActivity.getInstance(requireContext(),ProfileNavigationType.PROFILE,it.collectionId))
+            }
+        }
+
         mBtnReportIssue.setOnClickListener {
             context?.sendMail(
                 emailTo = MailConstants.SUPPORT_MAIL_ID,
@@ -375,6 +381,7 @@ class PurchaseDetailsFragment :
                     }
                     is State.Success -> {
                         showProgressBar(false)
+                        mViewModel.setCollectionInfoDomainModel(it.data)
                         mTvUserName.text = it.data.collectionDisplayName
                         it.data.profileImage?.let {
                             mIvUserProfilePic.setProfileImage(it)

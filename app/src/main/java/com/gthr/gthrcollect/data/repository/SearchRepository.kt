@@ -180,7 +180,7 @@ class SearchRepository {
                 CloudFunctions.PAGE to (page ?: 0)
             )
 
-            GthrLogger.d("mayank", data.toString())
+            GthrLogger.d("scjhsjkdch", data.toString())
 
             val collectionData =
                 fetchData<List<HashMap<String, *>>>(CloudFunctions.SEARCH_COLLECTION, data).await()

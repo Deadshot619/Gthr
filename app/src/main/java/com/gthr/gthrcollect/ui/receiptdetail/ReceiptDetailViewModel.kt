@@ -47,6 +47,13 @@ class ReceiptDetailViewModel(private val repository: ReceiptRepository) : BaseVi
         }
     }
 
+    var collectionInfoDomainModel: CollectionInfoDomainModel? = null
+        private set
+
+    fun setCollectionInfoDomainModel(model: CollectionInfoDomainModel){
+        collectionInfoDomainModel = model
+    }
+
     private val _mCollectionInfoDomainModel = MutableLiveData<Event<State<CollectionInfoDomainModel>>>()
     val mCollectionInfoDomainModel: LiveData<Event<State<CollectionInfoDomainModel>>>
         get() = _mCollectionInfoDomainModel

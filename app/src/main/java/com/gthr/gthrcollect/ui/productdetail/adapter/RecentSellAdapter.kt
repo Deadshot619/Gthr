@@ -110,9 +110,9 @@ class RecentSellAdapter(val productType : ProductType) : ListAdapter<RecentSaleD
                         else -> ""
                     }
                     mTvEdition.text = when (productType) {
-                        ProductType.MAGIC_THE_GATHERING -> getSelectedMTGEdition(item.language).title
-                        ProductType.POKEMON -> getPokemonSelectedEdition(item.language).title
-                        ProductType.YUGIOH -> getYugiohSelectedEdition(item.language).title
+                        ProductType.MAGIC_THE_GATHERING -> getSelectedMTGEdition(item.edition).title
+                        ProductType.POKEMON -> getPokemonSelectedEdition(item.edition).title
+                        ProductType.YUGIOH -> getYugiohSelectedEdition(item.edition).title
                         else -> ""
                     }
 
