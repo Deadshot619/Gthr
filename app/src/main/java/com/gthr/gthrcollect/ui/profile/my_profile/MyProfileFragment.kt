@@ -103,6 +103,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         setUpObservers()
         setTextChangeListener()
         setKeyBoardListener()
+
     }
 
     private fun setUpObservers() {
