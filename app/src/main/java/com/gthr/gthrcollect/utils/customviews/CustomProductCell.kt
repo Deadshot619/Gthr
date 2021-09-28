@@ -58,7 +58,8 @@ class CustomProductCell @JvmOverloads constructor(
 
         val attrs = getContext().obtainStyledAttributes(attrs, R.styleable.CustomProductCell)
         mCurrentType = Type.values()[attrs.getInt(R.styleable.CustomProductCell_cpc_type, 0)]
-        mCurrentState = State.values()[attrs.getInt(R.styleable.CustomProductCell_cpc_card_state, 0)]
+        mCurrentState =
+            State.values()[attrs.getInt(R.styleable.CustomProductCell_cpc_card_state, 0)]
 
         setType(mCurrentType)
         setState(mCurrentState)
@@ -68,7 +69,7 @@ class CustomProductCell @JvmOverloads constructor(
 
     fun setType(type: Type) {
         mCurrentType = type
-        when(type){
+        when (type) {
             Type.FUNKO -> {
                 mTvRow1Collum1.text = context.getString(R.string.text_product_name)
                 mTvRow2Collum1.text = context.getString(R.string.text_hash_colon)
@@ -93,7 +94,8 @@ class CustomProductCell @JvmOverloads constructor(
             }
         }
     }
-    fun setValue(model: ItemDisplayDomainModel){
+
+    fun setValue(model: ItemDisplayDomainModel) {
         when (model.productType ?: model.productCategory) {
             ProductType.MAGIC_THE_GATHERING,
             ProductType.POKEMON,
@@ -126,40 +128,40 @@ class CustomProductCell @JvmOverloads constructor(
         setImage(model.firImageURL.toString())
     }
 
-   fun setValue(productDisplayModel: ProductDisplayModel) {
-       when {
-           productDisplayModel.forsaleItemNodel != null ->
-               setValue(productDisplayModel.forsaleItemNodel)
-           productDisplayModel.searchBidsDomainModel != null ->
-               setValue(productDisplayModel.searchBidsDomainModel)
-           else -> {
-               when (productDisplayModel.productType) {
-                   ProductType.MAGIC_THE_GATHERING,
-                   ProductType.POKEMON,
-                   ProductType.YUGIOH -> {
-                       setType(Type.CARDS)
-                       setProductName(productDisplayModel.description)
-                       setProductNumber(productDisplayModel.productNumber.toString())
-                   }
-                   ProductType.FUNKO -> {
-                       setType(Type.FUNKO)
-                       setProductName(productDisplayModel.name.toString())
-                       setProductNumber(productDisplayModel.productNumber.toString())
-                   }
-                   ProductType.SEALED_YUGIOH,
-                   ProductType.SEALED_POKEMON,
-                   ProductType.SEALED_MTG -> {
-                       setType(Type.SEALED)
-                       setProductName(productDisplayModel.name.toString())
-                       setProductNumber(productDisplayModel.description.toString())
-                   }
-               }
-               setProductRarity(productDisplayModel.rarity.toString())
-               setPrice(productDisplayModel.lowestAskCost.toString())
-               setImage(productDisplayModel.firImageURL.toString())
-           }
-       }
-   }
+    fun setValue(productDisplayModel: ProductDisplayModel) {
+        when {
+            productDisplayModel.forsaleItemNodel != null ->
+                setValue(productDisplayModel.forsaleItemNodel)
+            productDisplayModel.searchBidsDomainModel != null ->
+                setValue(productDisplayModel.searchBidsDomainModel)
+            else -> {
+                when (productDisplayModel.productType) {
+                    ProductType.MAGIC_THE_GATHERING,
+                    ProductType.POKEMON,
+                    ProductType.YUGIOH -> {
+                        setType(Type.CARDS)
+                        setProductName(productDisplayModel.description)
+                        setProductNumber(productDisplayModel.productNumber.toString())
+                    }
+                    ProductType.FUNKO -> {
+                        setType(Type.FUNKO)
+                        setProductName(productDisplayModel.name.toString())
+                        setProductNumber(productDisplayModel.productNumber.toString())
+                    }
+                    ProductType.SEALED_YUGIOH,
+                    ProductType.SEALED_POKEMON,
+                    ProductType.SEALED_MTG -> {
+                        setType(Type.SEALED)
+                        setProductName(productDisplayModel.name.toString())
+                        setProductNumber(productDisplayModel.description.toString())
+                    }
+                }
+                setProductRarity(productDisplayModel.rarity.toString())
+                setPrice(productDisplayModel.lowestAskCost.toString())
+                setImage(productDisplayModel.firImageURL.toString())
+            }
+        }
+    }
 
     fun setValue(model: ForSaleItemDomainModel) {
         when (model.productType ?: model.productCategory) {
@@ -172,26 +174,31 @@ class CustomProductCell @JvmOverloads constructor(
                 setProductNumber(model.productProductNumber ?: "-")
                 setEdition(model.edition ?: "-")
                 setLanguage(model.language?.abbreviatedName ?: "-")
-               setConditionTitle(model.condition?.type?.title ?: "-")
-               setConditionValue(model.condition?.abbreviatedName ?: "-")
-           }
-           ProductType.FUNKO, ProductCategory.TOYS -> {
-               setType(Type.FUNKO)
-               setProductName(model.productProductName)
-               setProductNumber(model.productProductNumber ?: "-")
-           }
-           ProductType.SEALED_YUGIOH,
-           ProductType.SEALED_POKEMON,
-           ProductType.SEALED_MTG,
-           ProductCategory.SEALED -> {
-               setType(Type.SEALED)
-               setProductName(model.productProductName)
-               setProductNumber(model.productGroup ?: "-")
-           }
+                setConditionTitle(model.condition?.type?.title ?: "-")
+                setConditionValue(model.condition?.abbreviatedName ?: "-")
+            }
+            ProductType.FUNKO, ProductCategory.TOYS -> {
+                setType(Type.FUNKO)
+                setProductName(model.productProductName)
+                setProductNumber(model.productProductNumber ?: "-")
+            }
+            ProductType.SEALED_YUGIOH,
+            ProductType.SEALED_POKEMON,
+            ProductType.SEALED_MTG,
+            ProductCategory.SEALED -> {
+                setType(Type.SEALED)
+                setProductName(model.productProductName)
+                setProductNumber(model.productGroup ?: "-")
+            }
         }
         setProductRarity(model.productRarity ?: "-")
         setPrice(model.price.toString())
-        setImage(model.frontImageURL.toString())
+        setImage(
+            if (model.frontImageURL.isNullOrEmpty())
+                model.productFirImageURL.toString()
+            else
+                model.frontImageURL.toString()
+        )
     }
 
     fun setValue(model: SearchBidsDomainModel) {
