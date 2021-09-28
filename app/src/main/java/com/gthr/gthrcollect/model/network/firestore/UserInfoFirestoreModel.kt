@@ -1,31 +1,31 @@
 package com.gthr.gthrcollect.model.network.firestore
 
+import com.google.firebase.firestore.PropertyName
 import com.gthr.gthrcollect.utils.constants.Firestore
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class UserInfoFirestoreModel(
-    @SerialName(Firestore.ADDRESS_LIST)
-    val addressList: List<AddressFirestoreModel> = listOf(),
-    @SerialName(Firestore.BIRTH_DATE)
-    val birthDate: String = "",
-    @SerialName(Firestore.COLLECTION_ID)
-    val collectionId: String = "",
-    @SerialName(Firestore.CREATION_DATE)
-    val creationDate: String = "",
-    @SerialName(Firestore.EMAIL)
-    val email: String = "",      //corresponds to the firebaseAuth email used in account creation, updating this should also update the firebase Auth email variable and vice versa
-    @SerialName(Firestore.IS_SELLER)
-    val isSeller: Boolean = true,       //(Legacy) defaults to true
-    @SerialName(Firestore.IS_VERIFIED)
-    val isVerified: Boolean = false,        //once id is verified it is set to true, default to false
-    @SerialName(Firestore.FIRST_NAME)
-    val firstName: String = "",
-    @SerialName(Firestore.LAST_NAME)
-    val lastName: String = "",
-    @SerialName(Firestore.PHONE_NUMBER)
-    val phoneNumber: String = "",        //includes country code and phone number
-    @SerialName(Firestore.U_ID)
-    val uid: String = ""        //corresponds to the firebase auth uid
+    @PropertyName(Firestore.ADDRESS_LIST)
+    var addressList: List<AddressFirestoreModel> = listOf(),
+    @PropertyName(Firestore.BIRTH_DATE)
+    var birthDate: String = "",
+    @PropertyName(Firestore.COLLECTION_ID)
+    var collectionID: String = "",
+    @PropertyName(Firestore.CREATION_DATE)
+    var creationDate: String = "",
+    @PropertyName(Firestore.EMAIL)
+    var email: String = "",      //corresponds to the firebaseAuth email used in account creation, updating this should also update the firebase Auth email variable and vice versa
+    @field:JvmField
+    @PropertyName(Firestore.IS_SELLER)
+    var isSeller: Boolean = true,       //(Legacy) defaults to true
+    @field:JvmField
+    @PropertyName(Firestore.IS_VERIFIED)
+    var isVerified: Boolean = false,        //once id is verified it is set to true, default to false
+    @PropertyName(Firestore.FIRST_NAME)
+    var firstName: String = "",
+    @PropertyName(Firestore.LAST_NAME)
+    var lastName: String = "",
+    @PropertyName(Firestore.PHONE_NUMBER)
+    var phoneNumber: String = "",        //includes country code and phone number
+    @PropertyName(Firestore.U_ID)
+    var uid: String = ""        //corresponds to the firebase auth uid
 )

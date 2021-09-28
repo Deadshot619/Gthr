@@ -99,7 +99,9 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
 
 
         for (index in mViewModel.countryList!!.indices) {
-            if (mViewModel.countryList!![index] == shippingAddressDomainModel.country) {
+            if (shippingAddressDomainModel.country == UNITED_STATES_OF_AMERICA_VALUE &&
+                mViewModel.countryList!![index] == UNITED_STATES_OF_AMERICA_KEY
+            ) {
                 mSpnCountry.mSpnMain.setSelection(index)
                 break
             }
@@ -254,7 +256,7 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
                         it.lastName = mEtLastName.mEtMain.text.toString().trim()
                         it.addressLine1 = mEtAdd1.mEtMain.text.toString().trim()
                         it.addressLine2 = mEtAdd2.mEtMain.text.toString().trim()
-                        it.country = mSpnCountry.mSpnMain.selectedItem.toString()
+                        it.country = getSelectedCountryItem()
                         it.state = mSpnState.mSpnMain.selectedItem.toString()
                         it.city = mEtCity.mEtMain.text.toString().trim()
                         it.postalCode = mEtPostalCode.mEtMain.text.toString().trim()
@@ -270,7 +272,7 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
                         lastName = mEtLastName.mEtMain.text.toString().trim(),
                         addressLine1 = mEtAdd1.mEtMain.text.toString().trim(),
                         addressLine2 = mEtAdd2.mEtMain.text.toString().trim(),
-                        country = mSpnCountry.mSpnMain.selectedItem.toString(),
+                        country = getSelectedCountryItem(),
                         state = mSpnState.mSpnMain.selectedItem.toString(),
                         city = mEtCity.mEtMain.text.toString().trim(),
                         postalCode = mEtPostalCode.mEtMain.text.toString().trim(),
@@ -320,5 +322,15 @@ class AddNewAddressFragment : BaseFragment<AddNewAddressViewModel, AddNewAddress
             isValidate = false
         }
         return isValidate
+    }
+
+    fun getSelectedCountryItem(): String {
+        return if (mSpnCountry.mSpnMain.selectedItem.toString() == UNITED_STATES_OF_AMERICA_KEY) UNITED_STATES_OF_AMERICA_VALUE else ""
+    }
+
+
+    companion object {
+        private const val UNITED_STATES_OF_AMERICA_KEY = "United States of America"
+        private const val UNITED_STATES_OF_AMERICA_VALUE = "US"
     }
 }

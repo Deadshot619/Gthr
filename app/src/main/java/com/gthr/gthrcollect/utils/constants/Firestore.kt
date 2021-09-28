@@ -1,7 +1,5 @@
 package com.gthr.gthrcollect.utils.constants
 
-import com.gthr.gthrcollect.model.network.firestore.AddressFirestoreModel
-
 object Firestore {
 
     /* Collections */
@@ -25,7 +23,7 @@ object Firestore {
 
     /* EditAccInfoFireStoreModel */
     const val ADDRESS_LIST = "addressList"
-    const val COLLECTION_ID = "collectionId"
+    const val COLLECTION_ID = "collectionID"
     const val CREATION_DATE = "creationDate"
     const val EMAIL = "email"      //corresponds to the firebaseAuth email used in account creation, updating this should also update the firebase Auth email variable and vice versa
     const val IS_SELLER = "isSeller"       //(Legacy) defaults to true

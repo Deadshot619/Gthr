@@ -15,7 +15,7 @@ fun UserInfoDomainModel.toFirestoreModel(collectionId: String) =
         birthDate = "$mm/$dd/$yyyy",
         uid = GthrCollect.prefs?.signedInUser!!.uid,
         creationDate = "",
-        collectionId = collectionId,
+        collectionID = collectionId,
         addressList = listOf(),
         isVerified = isVerified
     )
