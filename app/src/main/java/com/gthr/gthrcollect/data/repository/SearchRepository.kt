@@ -1,5 +1,6 @@
 package com.gthr.gthrcollect.data.repository
 
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -200,9 +201,14 @@ class SearchRepository {
                     var frontImage: String? = null
                     collectionData[index][FirebaseRealtimeDatabase.COLLECTION_LIST]?.let label@{
                         val collectionItemList = it as HashMap<String, HashMap<String, String>>
+
                         frontImage = collectionItemList.entries.iterator()
-                            .next().value[FirebaseRealtimeDatabase.FRONT_IMAGE_URL] ?: ""
+                                .next().value[FirebaseRealtimeDatabase.FRONT_IMAGE_URL] ?: ""
                     }
+
+                    GthrLogger.d("FRONT_IMAGE_URL","it-> ${it["userRefKey"]} ) $frontImage")
+
+
 
                     val data = SearchCollection(objectId, profileImage, userName, frontImage)
 
@@ -244,10 +250,11 @@ class SearchRepository {
             CloudFunctions.OBJECT_ID to (objectId ?: "")
         )
 
-        GthrLogger.d("searchAskQuery", data.toString())
+        Log.d("filterData", data.toString())
         val askData =
             fetchData<List<HashMap<String, *>>>(CloudFunctions.SEARCH_ASK, data).await()
         val searchCollectionList = mutableListOf<ProductDisplayModel>()
+        val priceList = mutableListOf<String>()
 
         GthrLogger.d("searchAskData", "${askData.toString()}}")
 
@@ -257,6 +264,10 @@ class SearchRepository {
                 val ss = jsonElement.toString().replace("\\", "").replace("\"{", "{").replace("}\"", "}")
                 GthrLogger.d("searchAskString", "${ss}}")
                 val saleItem: ForSaleItemModel? = gson.fromJsonString(ss)
+
+                println(saleItem?.price.toString()+" "+isAscending.toString())
+
+                GthrLogger.d("filterData",saleItem?.price.toString()+" "+isAscending)
 
                 saleItem?.let {
                     GthrLogger.e("sdhbsd", "index $index ${it.productType}")
