@@ -348,7 +348,7 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
                 if(isUserLoggedIn())
                     addRemoveFavourite()
                 else
-                    startActivity(HomeBottomNavActivity.getInstance(this))
+                    startActivity(HomeBottomNavActivity.getInstance(this, goToProfileSignUp = true))
             }
         }
         return super.onOptionsItemSelected(item)

@@ -7,7 +7,6 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.algolia.search.dsl.objectIDs
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivityHomeBottomNavBinding
@@ -33,12 +32,20 @@ class HomeBottomNavActivity : BaseActivity<HomeBottomNavViewModel, ActivityHomeB
             val objectID = intent.getStringExtra(KEY_OBJECT_ID)
             val mProductType = intent.getSerializableExtra(KEY_PRODUCT_TYPE) as ProductType
             startActivity(ProductDetailActivity.getInstance(this,objectID,mProductType))
-            mBottomNavView.menu.getItem(1).isChecked = true
             goToSearch(SearchType.PRODUCT,ProductSortFilter.NONE,ProductCategoryFilter.NONE)
         }
-        else if(intent.hasExtra(KEY_COLLECTION_ID)){
+        else if (intent.hasExtra(KEY_COLLECTION_ID)) {
             val collectionID = intent.getStringExtra(KEY_COLLECTION_ID)
-            startActivity(ProfileActivity.getInstance(this, ProfileNavigationType.PROFILE,collectionID!!))
+            startActivity(
+                ProfileActivity.getInstance(
+                    this,
+                    ProfileNavigationType.PROFILE,
+                    collectionID!!
+                )
+            )
+        } else if (intent.hasExtra(KEY_PROFILE_PAGE)) {
+            if (intent.getBooleanExtra(KEY_PROFILE_PAGE, false))
+                goToProfileSignUp()
         }
     }
 
@@ -48,14 +55,30 @@ class HomeBottomNavActivity : BaseActivity<HomeBottomNavViewModel, ActivityHomeB
         mBottomNavView = mViewBinding.bnvHome
     }
 
-    private fun initBottomView(){
+    private fun initBottomView() {
         mBottomNavView.setupWithNavController(mNavController)
-        mBottomNavView.menu.getItem(2).isChecked = true
+        mBottomNavView.menu.getItem(0).isChecked = true
     }
 
-    fun goToSearch(type : SearchType,sortFilter : ProductSortFilter,categoryFilter : ProductCategoryFilter){
-        findNavController(R.id.nav_host_fragment).navigate(R.id.searchFragment,
-            SearchFragmentArgs(type = type,sortFilter =sortFilter,categoryFilter = categoryFilter).toBundle())
+    fun goToSearch(
+        type: SearchType,
+        sortFilter: ProductSortFilter,
+        categoryFilter: ProductCategoryFilter
+    ) {
+        mBottomNavView.menu.getItem(1).isChecked = true
+        findNavController(R.id.nav_host_fragment).navigate(
+            R.id.searchFragment,
+            SearchFragmentArgs(
+                type = type,
+                sortFilter = sortFilter,
+                categoryFilter = categoryFilter
+            ).toBundle()
+        )
+    }
+
+    fun goToProfileSignUp() {
+        findNavController(R.id.nav_host_fragment).navigate(R.id.signInFragment)
+        mBottomNavView.menu.getItem(2).isChecked = true
     }
 
     companion object {
@@ -63,14 +86,23 @@ class HomeBottomNavActivity : BaseActivity<HomeBottomNavViewModel, ActivityHomeB
         private const val KEY_PRODUCT_TYPE = "key_product_type"
         private const val KEY_OBJECT_ID = "key_object_id"
         private const val KEY_COLLECTION_ID = "key_collection_id"
+        private const val KEY_PROFILE_PAGE = "key_profile_page"
 
         fun getInstance(context: Context) = Intent(context, HomeBottomNavActivity::class.java)
-        fun getInstance(context: Context,objectID : String,productType: ProductType) = Intent(context, HomeBottomNavActivity::class.java).apply {
-            putExtra(KEY_PRODUCT_TYPE, productType)
-            putExtra(KEY_OBJECT_ID, objectID)
-        }
-        fun getInstance(context: Context,collectionId : String) = Intent(context, HomeBottomNavActivity::class.java).apply {
-            putExtra(KEY_COLLECTION_ID, collectionId)
-        }
+        fun getInstance(context: Context, objectID: String, productType: ProductType) =
+            Intent(context, HomeBottomNavActivity::class.java).apply {
+                putExtra(KEY_PRODUCT_TYPE, productType)
+                putExtra(KEY_OBJECT_ID, objectID)
+            }
+
+        fun getInstance(context: Context, collectionId: String) =
+            Intent(context, HomeBottomNavActivity::class.java).apply {
+                putExtra(KEY_COLLECTION_ID, collectionId)
+            }
+
+        fun getInstance(context: Context, goToProfileSignUp: Boolean) =
+            Intent(context, HomeBottomNavActivity::class.java).apply {
+                putExtra(KEY_PROFILE_PAGE, goToProfileSignUp)
+            }
     }
 }

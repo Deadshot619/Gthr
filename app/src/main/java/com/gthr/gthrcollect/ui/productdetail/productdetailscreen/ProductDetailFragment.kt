@@ -265,7 +265,12 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         ), REQUEST_CODE_ID_VERIFICATION_BUY
                     )
             else
-                startActivity(HomeBottomNavActivity.getInstance(requireContext()))
+                startActivity(
+                    HomeBottomNavActivity.getInstance(
+                        requireContext(),
+                        goToProfileSignUp = true
+                    )
+                )
         }
         mBtnCollect.setOnClickListener {
             if (GthrCollect.prefs?.isUserLoggedIn()==true)
@@ -277,7 +282,12 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                     )
                 )
             else
-                startActivity(HomeBottomNavActivity.getInstance(requireContext()))
+                startActivity(
+                    HomeBottomNavActivity.getInstance(
+                        requireContext(),
+                        goToProfileSignUp = true
+                    )
+                )
         }
         mBtnSell.setOnClickListener {
             if (GthrCollect.prefs?.isUserLoggedIn() == true)
@@ -297,7 +307,12 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         ), REQUEST_CODE_ID_VERIFICATION_SELL
                     )
             else{
-                startActivity(HomeBottomNavActivity.getInstance(requireContext()))
+                startActivity(
+                    HomeBottomNavActivity.getInstance(
+                        requireContext(),
+                        goToProfileSignUp = true
+                    )
+                )
             }
 
         }

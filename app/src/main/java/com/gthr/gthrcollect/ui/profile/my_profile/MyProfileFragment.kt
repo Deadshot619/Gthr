@@ -449,7 +449,9 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 }
             }
             else{
-                startActivity(HomeBottomNavActivity.getInstance(requireContext()).apply {
+                startActivity(HomeBottomNavActivity.getInstance(
+                    requireContext(), goToProfileSignUp = true
+                ).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 })
                 activity?.finish()

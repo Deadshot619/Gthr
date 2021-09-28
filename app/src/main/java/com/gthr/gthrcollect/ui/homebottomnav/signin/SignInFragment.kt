@@ -1,5 +1,6 @@
 package com.gthr.gthrcollect.ui.homebottomnav.signin
 
+import android.content.Intent
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,7 +15,7 @@ import com.gthr.gthrcollect.databinding.SignInFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.forgotpassword.ForgotPasswordActivity
-import com.gthr.gthrcollect.ui.settings.SettingsActivity
+import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.utils.customviews.CustomAuthenticationButton
 import com.gthr.gthrcollect.utils.customviews.CustomEmailEditText
 import com.gthr.gthrcollect.utils.customviews.CustomPasswordEditText
@@ -113,7 +114,10 @@ class SignInFragment : BaseFragment<SignInViewModel, SignInFragmentBinding>() {
                         updateCollectionInfoModelData(it.data.second)
                         signedInUser = (mViewModel.userInfo.value as State.Success).data
                     }
-                    goToProfilePage()
+//                    goToProfilePage()
+                    startActivity(HomeBottomNavActivity.getInstance(requireContext()).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    })
                 }
                 is State.Failed -> {
                     showProgressBar(false)
