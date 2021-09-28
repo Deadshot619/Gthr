@@ -6,6 +6,7 @@ plugins {
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
     id("kotlinx-serialization")
+    id("com.google.firebase.crashlytics")
 }
 
 
@@ -133,6 +134,9 @@ dependencies {
 
     // FirebaseUI Storage only
     // implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
+
+    // Dependencies for the Crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
     // Algolia
     implementation "com.algolia:algoliasearch-client-kotlin:1.9.0"
