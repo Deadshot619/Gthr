@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_medium"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Dark Magician Girl"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_medium"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_user"
@@ -70,7 +70,7 @@
                     android:layout_height="0dp"
                     android:layout_margin="@dimen/margin_light"
                     android:src="@drawable/pikapika"
-                    android:scaleType="fitXY"
+                    android:scaleType="fitCenter"
                     app:layout_constraintDimensionRatio="H,1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +106,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/padding_custom_product"
                     android:paddingVertical="@dimen/padding_light"
-                    android:text="$100"
+                    android:text="-"
                     android:textColor="@color/text_color_dark_green"
                     android:textSize="@dimen/text_size_medium"
                     app:layout_constraintEnd_toEndOf="@+id/iv_product"
@@ -115,6 +115,8 @@
 
 
                 <TextView
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:id="@+id/tv_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -124,10 +126,12 @@
                     android:text="Dark Magician Girl"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_medium"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_share"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/iv_product" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_semi_large"
@@ -176,12 +180,14 @@
                         style="@style/ProductBlueTextTitle"/>
 
                     <TextView
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:id="@+id/tv_row1_colum2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:layout_weight="7"
-                        android:text="Collector's Edition"
+                        android:text="-"
                         style="@style/ProductBlueTextValue" />
 
 
@@ -253,7 +259,7 @@
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:layout_weight="7"
                         android:gravity="center"
-                        android:text="English"
+                        android:text="-"
                         style="@style/ProductBlueTextValue"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -273,7 +279,7 @@
                     app:layout_constraintTop_toTopOf="@+id/ll_language">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_psa"
+                        android:id="@+id/tv_condition"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_extra_small"
@@ -284,12 +290,13 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/tv_condition_value"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:layout_weight="7"
                         android:gravity="center"
-                        android:text="English"
+                        android:text="-"
                         style="@style/ProductBlueTextValue"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -309,12 +316,13 @@
                     app:layout_constraintTop_toTopOf="@+id/ll_language">
 
                     <TextView
+                        android:id="@+id/tv_edition_value"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
                         android:layout_weight="7"
                         android:gravity="center"
-                        android:text="English"
+                        android:text="-"
                         style="@style/ProductBlueTextValue"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -344,6 +352,7 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <TextView
+                        android:id="@+id/tv_sealed_set"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
@@ -381,6 +390,7 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <TextView
+                        android:id="@+id/tv_toy_license"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"
@@ -420,6 +430,7 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <TextView
+                        android:id="@+id/tv_toy_hash"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_extra_small"

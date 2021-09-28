@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.getProductCategory
+import com.gthr.gthrcollect.utils.getProductCategoryFromRaw
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -188,4 +189,33 @@ data class ForSaleItemDomainModel(
         productRarity = ProductType.FUNKO.title.capitalize(),
         productProdObjectID = model.objectID,
     )
+
+    constructor(
+        feedDomainModel: FeedDomainModel
+    ) : this(
+        itemRefKey = feedDomainModel.product_firebaseRef,
+        price = feedDomainModel.price?.toDouble(),
+        itemObjectID = feedDomainModel.product_prodObjectID,
+        productFirImageURL = feedDomainModel.product_firImageURL,
+        frontImageURL = feedDomainModel.frontImageURL,
+        backImageURL = feedDomainModel.backImageURL,
+        language = feedDomainModel.language,
+        condition = feedDomainModel.condition,
+        edition = feedDomainModel.edition,
+        askRefKey = feedDomainModel.askRefKey,
+        collectionFirebaseRef = feedDomainModel.collection_firebaseRef,
+        //collectionItemRefKey = collectionItemRefKey,
+
+
+       // productGroup = feedDomainModel.license,
+        productProductNumber = feedDomainModel.product_productNumber,
+        productProductName = feedDomainModel.product_productName,
+        productFirebaseRef = feedDomainModel.product_firebaseRef,
+        productCategory = feedDomainModel.productCategory,
+        productType = feedDomainModel.productType,
+        productNumberOfFavorites = feedDomainModel.product_numberOfFavorites,
+        productRarity = feedDomainModel.product_rarity,
+        productProdObjectID = feedDomainModel.product_prodObjectID,
+    )
+
 }

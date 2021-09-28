@@ -9,6 +9,8 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+fun String.removeSlash() = this.replace("\\", "").replace("\"{", "{").replace("}\"", "}")
+
 fun String.toMobileNumber() : String{
     val splitPhoneNumber = this.split("-")
     return if(splitPhoneNumber.size==2){

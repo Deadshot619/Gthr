@@ -6,6 +6,10 @@ object FirebaseRealtimeDatabase {
     const val COLLECTION_INFO_MODEL = "collectionInfoModel"
     const val SHIPPING_TIER = "shippingTier"
 
+    /*Feed*/
+    const val BID = "bid"
+    const val COLLECTION = "collection"
+    const val ASK = "ask"
 
     /*Product Details*/
     const val YUGIOH_MODEL = "yugiohModel"
@@ -15,9 +19,7 @@ object FirebaseRealtimeDatabase {
     const val FUNKO_MODEL = "funkoModel"
     const val SALE_HISTORY_MODEL = "saleHistoryModel"
 
-
     /*Common*/
-
     const val ITEM_OBJECT_ID = "itemObjectID"
     const val KEY = "key"
     const val TYPE = "type"

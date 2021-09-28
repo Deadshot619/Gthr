@@ -1,6 +1,7 @@
 package com.gthr.gthrcollect.utils.extensions
 
 import androidx.lifecycle.MutableLiveData
+import com.gthr.gthrcollect.model.domain.FeedDomainModel
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.model.domain.SearchCollection
 import com.gthr.gthrcollect.utils.enums.AdapterViewType
@@ -58,6 +59,33 @@ fun MutableLiveData<MutableList<ProductDisplayModel>>.addAllProductDisplayModel(
 }
 
 fun removeLoadingModelFromProductDisplayModel(oldValue: MutableList<ProductDisplayModel>) {
+    if(oldValue.size>0){
+        val last = oldValue.last()
+        if(last.viewType== AdapterViewType.VIEW_TYPE_LOADING)
+            oldValue.remove(last)
+    }
+}
+
+fun MutableLiveData<MutableList<FeedDomainModel>>.addFeedLoadMore() {
+    val oldValue = this.value ?: mutableListOf()
+    oldValue.add(FeedDomainModel(viewType = AdapterViewType.VIEW_TYPE_LOADING))
+    this.value = oldValue
+}
+
+fun MutableLiveData<MutableList<FeedDomainModel>>.removeFeedLoadMore() {
+    val oldValue = this.value ?: mutableListOf()
+    removeLoadingModelFromFeed(oldValue)
+    this.value = oldValue
+}
+
+fun MutableLiveData<MutableList<FeedDomainModel>>.addAllFeed(item: List<FeedDomainModel>) {
+    val oldValue = this.value ?: mutableListOf()
+    removeLoadingModelFromFeed(oldValue)
+    oldValue.addAll(item)
+    this.value = oldValue
+}
+
+fun removeLoadingModelFromFeed(oldValue: MutableList<FeedDomainModel>) {
     if(oldValue.size>0){
         val last = oldValue.last()
         if(last.viewType== AdapterViewType.VIEW_TYPE_LOADING)
