@@ -62,9 +62,9 @@ data class ForSaleItemDomainModel(
         askRefKey = collectionItem.askRefKey,
         collectionItemRefKey = collectionItemRefKey,
 
-        productGroup = null,
         productProductNumber = null,
 
+        productGroup = model.set,
         productProductName = model.name,
         productFirebaseRef = model.refKey,
         productCategory = getProductCategory(model.productType),
@@ -91,7 +91,7 @@ data class ForSaleItemDomainModel(
         askRefKey = collectionItem.askRefKey,
         collectionItemRefKey = collectionItemRefKey,
 
-        productGroup = null,
+        productGroup = model.set,
         productProductNumber = model.number,
         productProductName = model.name,
         productFirebaseRef = model.refKey,
@@ -120,7 +120,7 @@ data class ForSaleItemDomainModel(
         collectionItemRefKey = collectionItemRefKey,
 
 
-        productGroup = null,
+        productGroup = model.setName,
         productProductNumber = model.collectorNumber,
         productProductName = model.name,
         productFirebaseRef = model.refKey,
@@ -149,7 +149,7 @@ data class ForSaleItemDomainModel(
         collectionItemRefKey = collectionItemRefKey,
 
 
-        productGroup = null,
+        productGroup = model.set,
         productProductNumber = model.number,
         productProductName = model.name,
         productFirebaseRef = model.refKey,
@@ -178,7 +178,7 @@ data class ForSaleItemDomainModel(
         collectionItemRefKey = collectionItemRefKey,
 
 
-        productGroup = null,
+        productGroup = model.license,
         productProductNumber = model.itemNumber,
         productProductName = model.name,
         productFirebaseRef = model.refKey,

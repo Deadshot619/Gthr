@@ -168,7 +168,7 @@ class CustomProductCell @JvmOverloads constructor(
             ProductType.YUGIOH,
             ProductCategory.CARDS -> {
                 setType(Type.CARDS)
-                setProductName(model.productProductName)
+                setProductName(model.productGroup)
                 setProductNumber(model.productProductNumber ?: "-")
                 setEdition(model.edition ?: "-")
                 setLanguage(model.language?.abbreviatedName ?: "-")
@@ -191,7 +191,7 @@ class CustomProductCell @JvmOverloads constructor(
         }
         setProductRarity(model.productRarity ?: "-")
         setPrice(model.price.toString())
-        setImage(model.productFirImageURL.toString())
+        setImage(model.frontImageURL.toString())
     }
 
     fun setValue(model: SearchBidsDomainModel) {

@@ -362,7 +362,7 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         private set
 
     //Collection Item key use to store image in firebase Storage in collectionImage folder
-    var mCollectionKey = ""
+    var mCollectionItemKey = ""
         private set
 
     var mAskId = ""
@@ -396,8 +396,8 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         mBackImageDownloadUrl = url
     }
 
-    fun setCollectionKey(key: String) {
-        mCollectionKey = key
+    fun setCollectionItemKey(key: String) {
+        mCollectionItemKey = key
     }
 
     fun setAskId(key: String) {
@@ -467,7 +467,7 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         viewModelScope.launch {
             repository.updateCollection(
                 GthrCollect.prefs?.getUserCollectionId()!!,
-                mCollectionKey,
+                mCollectionItemKey,
                 mFrontImageDownloadUrl,
                 mBackImageDownloadUrl,
                 mAskId
@@ -486,7 +486,7 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         viewModelScope.launch {
             repository.uploadCollectionImage(
                 frontImageUrl.value!!,
-                mCollectionKey,
+                mCollectionItemKey,
                 FirebaseStorage.FRONT_IMAGE,
                 GthrCollect.prefs!!.signedInUser!!.uid
             ).collect {
@@ -504,7 +504,7 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         viewModelScope.launch {
             repository.uploadCollectionImage(
                 backImageUrl.value!!,
-                mCollectionKey,
+                mCollectionItemKey,
                 FirebaseStorage.BACK_IMAGE,
                 GthrCollect.prefs!!.signedInUser!!.uid
             ).collect {
@@ -520,17 +520,42 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
 
     fun insertAsk() {
         viewModelScope.launch {
-            val data = when (productType) {
-                ProductType.MAGIC_THE_GATHERING, ProductType.YUGIOH, ProductType.POKEMON -> {
-                    AskItemDomainModel(
-                        refKey = "",
-                        duration = "",
-                        itemRefKey = productDisplayModel?.refKey!!,
-                        creatorUID = GthrCollect.prefs?.signedInUser?.uid!!,
-                        askPrice = askPrice.value.toString(),
-                        totalPayout = totalPayoutRate.toString(),
-                        itemObjectID = productDisplayModel?.objectID!!,
-                        productType = productType,
+            val data = if (isEdit) {
+                AskItemDomainModel(
+                    refKey = "",
+                    duration = "",
+                    itemRefKey = productDisplayModel?.forsaleItemNodel?.productFirebaseRef!!,
+                    creatorUID = GthrCollect.prefs?.signedInUser?.uid!!,
+                    askPrice = askPrice.value.toString(),
+                    totalPayout = totalPayoutRate.toString(),
+                    itemObjectID = productDisplayModel?.objectID!!,
+                    productType = productType,
+                    productCategory = getProductCategory(productType!!),
+                    edition = getEditionTypeFromRowType(productDisplayModel?.forsaleItemNodel?.edition.toString()),
+                    condition = productDisplayModel?.forsaleItemNodel?.condition,
+                    language = productDisplayModel?.forsaleItemNodel?.language,
+                    returnName = mAddress?.firstName,
+                    returnAddressLine1 = mAddress?.addressLine1,
+                    returnAddressLine2 = mAddress?.addressLine2,
+                    returnCity = mAddress?.city,
+                    returnState = mAddress?.state,
+                    returnZipCode = mAddress?.postalCode,
+                    returnCountry = mAddress?.country,
+                    frontImageURL = null,
+                    backImageURL = null
+                )
+            } else
+                when (productType) {
+                    ProductType.MAGIC_THE_GATHERING, ProductType.YUGIOH, ProductType.POKEMON -> {
+                        AskItemDomainModel(
+                            refKey = "",
+                            duration = "",
+                            itemRefKey = productDisplayModel?.refKey!!,
+                            creatorUID = GthrCollect.prefs?.signedInUser?.uid!!,
+                            askPrice = askPrice.value.toString(),
+                            totalPayout = totalPayoutRate.toString(),
+                            itemObjectID = productDisplayModel?.objectID!!,
+                            productType = productType,
                         productCategory = getProductCategory(productType!!),
                         edition = selectedEdition.value?.peekContent(),
                         condition = selectedCondition.value?.peekContent(),
@@ -573,6 +598,7 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                 }
                 else -> null
             }
+
             repository.insertAsk(data?.toRealtimeDatabaseModel()!!).collect {
                 _insertAskRDB.value = Event(it)
             }
@@ -822,11 +848,15 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                 productType = productDisplayModel.productType!!,
                 objectID = productDisplayModel.searchBidsDomainModel?.itemObjectID.toString(),
                 bidRefKey = productDisplayModel.searchBidsDomainModel?.bidRefKey.toString(),
-                price = buyListPrice.value!!
+                price = price
             ).collect {
                 _editBid.value = Event(it)
             }
         }
+    }
+
+    fun editCollection(collectionItemRefKey: String) {
+
     }
 
     override fun onCleared() {

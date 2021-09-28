@@ -395,7 +395,8 @@ class PurchaseDetailsFragment :
                     }
                     is State.Success -> {
                         showProgressBar(false)
-                        mViewModel.getCollectionInfo(mReceiptModel.sellerUID!!)
+                        if (mReceiptType != ReceiptType.ASK_PLACED)
+                            mViewModel.getCollectionInfo(mReceiptModel.sellerUID!!)
 
                         it.data?.let {
                             it.firImageURL?.let {

@@ -297,7 +297,11 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
                 mIsNextBtnClicked = true
                 if (mViewModel.isSell.value != true){
                     if (mViewModel.frontImageUrl.value != null && mViewModel.backImageUrl.value != null){
-                        mViewModel.insertCollection()
+                        if (mViewModel.isEdit) {
+                            mViewModel.setCollectionItemKey(mViewModel.productDisplayModel?.forsaleItemNodel?.collectionItemRefKey.toString())
+                            mViewModel.uploadFrontImage()
+                        } else
+                            mViewModel.insertCollection()
                     }
                     else
                         showToast("Please add pictures!")
@@ -314,7 +318,9 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
             }
             mSkipBtn.setOnClickListener {
                 mIsNextBtnClicked = false
-                if (mViewModel.isSell.value != true){
+                if (mViewModel.isEdit) {
+                    activity?.finish()
+                } else if (mViewModel.isSell.value != true) {
                     mViewModel.insertCollection()
                 }
             }
@@ -330,7 +336,7 @@ class AfAddPicFragment : BaseFragment<AskFlowViewModel, AfAddPicFragmentBinding>
                     }
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
-                        mViewModel.setCollectionKey(it.data)
+                        mViewModel.setCollectionItemKey(it.data)
                         if(mIsNextBtnClicked)
                             mViewModel.uploadFrontImage()
                         else

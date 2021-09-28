@@ -87,7 +87,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     }
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
-                        mViewModel.setCollectionKey(it.data)
+                        mViewModel.setCollectionItemKey(it.data)
                         mViewModel.uploadFrontImage()
                     }
                     is State.Failed -> {
@@ -213,11 +213,11 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
                         mViewModel.setPayoutAuth(it.data)
-                        if (it.data){
+                        if (it.data) {
                             mViewModel.getPayoutLink()
                         } else {
                             startActivityForResult(
-                                StripeAuth.getInstance(requireContext(),stripeAccCreatingURL),
+                                StripeAuth.getInstance(requireContext(), stripeAccCreatingURL),
                                 STRIPE_AUTH
                             )
                         }
@@ -231,7 +231,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             }
         }
 
-        mViewModel.stripeAccStatus.observe(viewLifecycleOwner){
+        mViewModel.stripeAccStatus.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -240,7 +240,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
                         mViewModel.setPayoutAuth(it.data)
-                                           }
+                    }
                     is State.Failed -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
                         showToast(it.message)
@@ -250,7 +250,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         }
 
 
-        mViewModel.payoutLink.observe(viewLifecycleOwner){
+        mViewModel.payoutLink.observe(viewLifecycleOwner) {
             it.contentIfNotHandled.let {
                 when (it) {
                     is State.Loading -> {
@@ -258,9 +258,12 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     }
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
-                        startActivityForResult(StripeAuth.getInstance(requireContext(),it.data), STRIPE_PAYOUT)
+                        startActivityForResult(
+                            StripeAuth.getInstance(requireContext(), it.data),
+                            STRIPE_PAYOUT
+                        )
 
-                        GthrLogger.e("payoutLink",it.data)
+                        GthrLogger.e("payoutLink", it.data)
 
                     }
                     is State.Failed -> {
@@ -427,7 +430,8 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         }
 
         mBtnNext.setOnClickListener {
-            when ((requireActivity() as AskFlowActivity).getAskFlowType()) {
+            val askFlowType = (requireActivity() as AskFlowActivity).getAskFlowType()
+            when (askFlowType) {
                 AskFlowType.BUY -> {
                     if (mViewModel.isEdit)
                         mViewModel.editBid(
@@ -444,7 +448,10 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 else -> {
                     if (mViewModel.mAddress != null)
                         if (mViewModel.mIsPayoutAuth) {
-                            if (mViewModel.isEdit)
+                            if (askFlowType == AskFlowType.COLLECT && mViewModel.isEdit) {
+                                mViewModel.setCollectionItemKey(mViewModel.productDisplayModel?.forsaleItemNodel?.collectionItemRefKey.toString())
+                                mViewModel.uploadFrontImage()
+                            } else if (mViewModel.isEdit)
                                 mViewModel.editAsk(
                                     mViewModel.productDisplayModel!!,
                                     mViewModel.askPrice.value!!
@@ -496,10 +503,10 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
 
                 STRIPE_AUTH -> if (resultCode == Activity.RESULT_OK) {
                     val auth = data.getIntExtra(STRIPE_AUTH_KEY, -0)
-                  val code=   data.getStringExtra(STRIPE_AUTH_CODE)
+                    val code = data.getStringExtra(STRIPE_AUTH_CODE)
                     Log.i("STRIPE_AUTH", "onActivityResult: " + auth)
                     if (auth == 1) {
-                    //    mViewModel.createStripeAccount(code!!)
+                        //    mViewModel.createStripeAccount(code!!)
                         mViewModel.setPayoutAuth(true)
                         showToast(getString(R.string.stripe_account_create_success))
                     }
@@ -598,7 +605,10 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                 condition = mViewModel.productDisplayModel?.forsaleItemNodel?.condition?.displayName,
                 edition = mViewModel.productDisplayModel?.forsaleItemNodel?.edition,
                 itemRefKey = mViewModel.productDisplayModel?.refKey.toString(),
-                imageUrl = mViewModel.productDisplayModel?.forsaleItemNodel?.frontImageURL
+                imageUrl = if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.COLLECT)
+                    mViewModel.mFrontImageDownloadUrl
+                else
+                    mViewModel.productDisplayModel?.forsaleItemNodel?.frontImageURL
             )
         else
             ReceiptDomainModel(
@@ -636,7 +646,9 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         const val STRIPE_AUTH_KEY = "AUTH"
         const val STRIPE_AUTH_CODE = "AUTH_CODE"
         const val STRIPE_URL = "url"
-        const val stripeAccCreatingURL= "https://connect.stripe.com/express/oauth/authorize?client_id=ca_H0t1jArVq47Fpzm3txMvm0v8lVszMewb&state=sv_53124&redirect_uri=https://gthrcollect.page.link/redirect"
+        const val stripeAccCreatingURL =
+            "https://connect.stripe.com/express/oauth/authorize?client_id=ca_H0t1jArVq47Fpzm3txMvm0v8lVszMewb&state=sv_53124&redirect_uri=https://gthrcollect.page.link/redirect"
+
         fun getReturnIntent(shippingAddressDomainModel: ShippingAddressDomainModel) =
             Intent().apply {
                 putExtra(KEY_ADDRESS, shippingAddressDomainModel)
