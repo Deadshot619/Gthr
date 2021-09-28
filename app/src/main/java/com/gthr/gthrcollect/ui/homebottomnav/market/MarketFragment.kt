@@ -10,6 +10,7 @@ import com.gthr.gthrcollect.data.repository.FeedRepository
 import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.MarketFragmentBinding
 import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
@@ -200,7 +201,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
 
     private fun setUpLowestAsk() {
         // Fetching Lowest Ask
-        mViewModel.searchLowestAsk(isAscending = 0, limit = 10)
+        mViewModel.searchLowestAsk(isAscending = 0, limit = 10,sortBy = PRICE)
 
 
           /*  layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
@@ -211,7 +212,17 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
                     LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
                 mLowestAskAdapter =
-                    AskAdapter(CustomProductCell.State.FOR_SALE) {}
+                    AskAdapter(CustomProductCell.State.FOR_SALE) {
+
+                        startActivity(
+                            AskFlowActivity.getInstance(
+                                requireContext(),
+                                AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
+                                it
+                            )
+                        )
+
+                    }
                 mRvLowestAsk.adapter = mLowestAskAdapter
 
             }
@@ -220,7 +231,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
     }
 
     private fun setUpHighestAsk() {
-        mViewModel.searchHeightsAsk(isAscending = 1, limit = 10)
+        mViewModel.searchHeightsAsk(isAscending = 1, limit = 10,sortBy = PRICE)
 
                /*   layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
             adapter = ProductAdapter(ProductTypeOld.FUNKO,CustomProductCell.State.FOR_SALE)*/
@@ -230,7 +241,16 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
                     LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
                 mHighestAskAdapter =
-                    AskAdapter(CustomProductCell.State.FOR_SALE) { }
+                    AskAdapter(CustomProductCell.State.FOR_SALE) {
+                        startActivity(
+                            AskFlowActivity.getInstance(
+                                requireContext(),
+                                AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
+                                it
+                            )
+                        )
+
+                    }
                 mRvHighestAsk.adapter = mHighestAskAdapter
 
             }
@@ -243,23 +263,22 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
             mCurrentMarketType = MarketType.ALL
             mAll.selectView()
 
-
-            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = null, limit = 10)
-            mViewModel.searchLowestAsk(isAscending = 0,productCategory = null,limit = 10)
+            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = null, limit = 10,sortBy = PRICE)
+            mViewModel.searchLowestAsk(isAscending = 0,productCategory = null,limit = 10,sortBy = PRICE)
         }
 
         mCards.setOnClickListener {
             mCurrentMarketType = MarketType.CARDS
             mCards.selectView()
-            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = ProductCategory.CARDS.title,limit = 10)
-            mViewModel.searchLowestAsk(isAscending = 0,productCategory = ProductCategory.CARDS.title,limit = 10)
+            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = ProductCategory.CARDS.title,limit = 10,sortBy = PRICE)
+            mViewModel.searchLowestAsk(isAscending = 0,productCategory = ProductCategory.CARDS.title,limit = 10,sortBy = PRICE)
         }
 
         mSealed.setOnClickListener {
             mCurrentMarketType = MarketType.SEALED
             mSealed.selectView()
-            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = ProductCategory.SEALED.title,limit = 10)
-            mViewModel.searchLowestAsk(isAscending = 0,productCategory = ProductCategory.SEALED.title,limit = 10)
+            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = ProductCategory.SEALED.title,limit = 10,sortBy = PRICE)
+            mViewModel.searchLowestAsk(isAscending = 0,productCategory = ProductCategory.SEALED.title,limit = 10,sortBy = PRICE)
 
 
         }
@@ -267,8 +286,8 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
         mFunko.setOnClickListener {
             mCurrentMarketType = MarketType.FUNKO
             mFunko.selectView()
-            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = ProductCategory.TOYS.title,limit = 10)
-            mViewModel.searchLowestAsk(isAscending = 0,productCategory = ProductCategory.TOYS.title,limit = 10)
+            mViewModel.searchHeightsAsk(isAscending = 1,productCategory = ProductCategory.TOYS.title,limit = 10,sortBy = PRICE)
+            mViewModel.searchLowestAsk(isAscending = 0,productCategory = ProductCategory.TOYS.title,limit = 10,sortBy = PRICE)
 
 
         }
@@ -316,5 +335,9 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
 
     enum class MarketType{
         ALL,CARDS,SEALED,FUNKO
+    }
+
+    companion object{
+        const val PRICE="price"
     }
 }
