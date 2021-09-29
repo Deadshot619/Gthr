@@ -105,12 +105,13 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         setUpProductType()
 
         mViewModel.fetchUpForSale(
-            null,
-            20,
-            0,
-            "price",
-            1,
-            null,
+            searchTerm = null,
+            limit = 20,
+            page = 0,
+            sortBy = "price",
+            isAscending = 1,
+            productType = mProductType.title,
+            productCategory = getProductCategory(mProductType)?.title,
             objectId = mProductDisplayModel.objectID
         )
 
@@ -231,7 +232,13 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                         showToast(it.message)
                     }
                     is State.Success -> {
-                        mUpForSaleAdapter.submitList(it.data.take(10))
+                        if(it.data.size>0){
+                            mGroupUpForSell.visible()
+                            mUpForSaleAdapter.submitList(it.data.take(10))
+                        }
+                        else{
+                            mGroupUpForSell.gone()
+                        }
                         showProgressBar(false)
                     }
                 }

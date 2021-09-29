@@ -247,12 +247,12 @@ class SearchRepository {
             CloudFunctions.SORT_BY to (sortBy),
             CloudFunctions.PRODUCT_CATEGORY to (productCategory ?: ""),
             CloudFunctions.PRODUCT_TYPE to (productType ?: ""),
-            CloudFunctions.OBJECT_ID to (objectId ?: "")
+            CloudFunctions.ITEM_OBJECT_ID to (objectId ?: "")
         )
 
-        Log.d("filterData", data.toString())
-        val askData =
-            fetchData<List<HashMap<String, *>>>(CloudFunctions.SEARCH_ASK, data).await()
+        Log.d("filterDatasabdjs", data.toString())
+
+        val askData = fetchData<List<HashMap<String, *>>>(CloudFunctions.SEARCH_ASK, data).await()
         val searchCollectionList = mutableListOf<ProductDisplayModel>()
         val priceList = mutableListOf<String>()
 
@@ -267,7 +267,7 @@ class SearchRepository {
 
                 println(saleItem?.price.toString()+" "+isAscending.toString())
 
-                GthrLogger.d("filterData",saleItem?.price.toString()+" "+isAscending)
+                GthrLogger.d("filterDatasabdjs",saleItem?.productType.toString()+" "+isAscending)
 
                 saleItem?.let {
                     GthrLogger.e("sdhbsd", "index $index ${it.productType}")

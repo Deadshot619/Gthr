@@ -23,6 +23,7 @@ object CloudFunctions {
     const val SORT_BY = "sortBy"
     const val IS_ASCENDING = "isAscending"
     const val OBJECT_ID = "objectId"
+    const val ITEM_OBJECT_ID = "itemObjectID"
     const val UPDATED_PAYOUT_LINK = "getUpdatePayoutLink"
     const val NEW_PAYOUT_URL = "url"
     const val CREATE_STRIPE_ACC = "createStripeAccount"
