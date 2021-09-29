@@ -78,4 +78,7 @@ fun BidItemDomainModel.toRealtimeDatabaseModel() = BidItemModel(
     productCategory = getProductCategory(getProductType(productType?.title!!)!!)?.title,
     productType = productType?.title,
     totalCost = totalCost,
+    edition = edition?.title,
+    condition = condition?.toRealtimeDatabaseModel(),
+    language = language?.toRealtimeDatabaseModel(),
 )

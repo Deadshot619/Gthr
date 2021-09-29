@@ -8,6 +8,7 @@ import com.gthr.gthrcollect.model.network.cloudfunction.SearchBidsModel
 import com.gthr.gthrcollect.model.network.cloudfunction.SearchProductModel
 import com.gthr.gthrcollect.utils.getProductCategoryFromRaw
 import com.gthr.gthrcollect.utils.getProductType
+import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
 
 fun SearchProductModel.toSearchProductDomainModel() =
     SearchProductDomainModel(
@@ -67,7 +68,7 @@ fun SearchBidsModel.toSearchBidsDomainModel() = SearchBidsDomainModel(
     condition = condition?.toConditionDomainModel(),
     createdAt = createdAt,
     creatorUID = creatorUID,
-    edition = edition,
+    edition = edition?.let { getEditionTypeFromRowType(it) },
     firebaseRef = firebaseRef,
     id = id,
     itemObjectID = itemObjectID,

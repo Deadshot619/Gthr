@@ -1,6 +1,7 @@
 package com.gthr.gthrcollect.model.domain
 
 import android.os.Parcelable
+import com.gthr.gthrcollect.utils.enums.EditionType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import kotlinx.parcelize.Parcelize
@@ -19,7 +20,7 @@ data class SearchBidsDomainModel(
     val condition: ConditionDomainModel? = null,
     val createdAt: String? = null,
     val creatorUID: String? = null,
-    val edition: String? = null,
+    val edition: EditionType? = null,
     val firebaseRef: String? = null,
     val id: Int? = null,
     val itemObjectID: String? = null,

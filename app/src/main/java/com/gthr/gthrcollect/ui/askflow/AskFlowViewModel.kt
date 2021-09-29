@@ -645,7 +645,10 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                 productType = productType,
                 productCategory = getProductCategory(productType!!),
                 itemRefKey = productDisplayModel?.refKey,
-                totalCost = buyListPrice.value.toString()
+                totalCost = buyListPrice.value.toString(),
+                language = selectedLanguage.value?.peekContent(),
+                condition = selectedCondition.value?.peekContent(),
+                edition = selectedEdition.value?.peekContent()
             )
             repository.insertBid(data.toRealtimeDatabaseModel()).collect {
                 _insertBidRDB.value = Event(it)

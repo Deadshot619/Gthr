@@ -15,14 +15,23 @@ data class BidItemModel(
     var itemObjectID : String ? = "",
     @set:PropertyName(FirebaseRealtimeDatabase.ITEM_REF_KEY)
     @get:PropertyName(FirebaseRealtimeDatabase.ITEM_REF_KEY)
-    var itemRefKey : String ? = "",
+    var itemRefKey: String? = "",
     @set:PropertyName(FirebaseRealtimeDatabase.PRODUCT_CATEGORY)
     @get:PropertyName(FirebaseRealtimeDatabase.PRODUCT_CATEGORY)
-    var productCategory : String ? = "",
+    var productCategory: String? = "",
     @set:PropertyName(FirebaseRealtimeDatabase.PRODUCT_TYPE)
     @get:PropertyName(FirebaseRealtimeDatabase.PRODUCT_TYPE)
-    var productType : String ? = "",
+    var productType: String? = "",
     @set:PropertyName(FirebaseRealtimeDatabase.TOTAL_COST)
     @get:PropertyName(FirebaseRealtimeDatabase.TOTAL_COST)
-    var totalCost : String ? = "",
+    var totalCost: String? = "",
+    @set:PropertyName(FirebaseRealtimeDatabase._EDITION)
+    @get:PropertyName(FirebaseRealtimeDatabase._EDITION)
+    var edition: String?,
+    @set:PropertyName(FirebaseRealtimeDatabase._CONDITION)
+    @get:PropertyName(FirebaseRealtimeDatabase._CONDITION)
+    var condition: ConditionModel?,
+    @set:PropertyName(FirebaseRealtimeDatabase._LANGUAGE)
+    @get:PropertyName(FirebaseRealtimeDatabase._LANGUAGE)
+    var language: LanguageModel?,
 )

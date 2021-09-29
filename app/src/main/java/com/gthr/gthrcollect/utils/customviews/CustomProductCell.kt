@@ -210,22 +210,22 @@ class CustomProductCell @JvmOverloads constructor(
                 setType(Type.CARDS)
                 setProductName(model.product_productName)
                 setProductNumber(model.product_productNumber.toString() ?: "-")
-                setEdition(model.edition ?: "-")
+                setEdition(model.edition?.title ?: "-")
                 setLanguage(model.language?.abbreviatedName ?: "-")
                 setConditionTitle(model.condition?.type?.title ?: "-")
                 setConditionValue(model.condition?.abbreviatedName ?: "-")
             }
             ProductType.FUNKO, ProductCategory.TOYS -> {
                 setType(Type.FUNKO)
-                setProductName(model.product_productName)
-                setProductNumber(model.product_productNumber.toString() ?: "-")
+                setProductName(model.product_productName ?: "-")
+                setProductNumber(model.product_productNumber?.toString() ?: "-")
             }
             ProductType.SEALED_YUGIOH,
             ProductType.SEALED_POKEMON,
             ProductType.SEALED_MTG,
             ProductCategory.SEALED -> {
                 setType(Type.SEALED)
-                setProductName(model.product_productName)
+                setProductName(model.product_productName ?: "-")
                 setProductNumber(model.product_group ?: "-")
             }
         }
