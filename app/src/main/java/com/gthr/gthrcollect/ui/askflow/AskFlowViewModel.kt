@@ -10,7 +10,6 @@ import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.mapper.toRealtimeDatabaseModel
 import com.gthr.gthrcollect.model.network.cloudfunction.StripePaymentModel
-import com.gthr.gthrcollect.model.network.firebaserealtimedb.ReceiptModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
 import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.enums.ConditionType
@@ -545,9 +544,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                     returnState = mAddress?.state,
                     returnZipCode = mAddress?.postalCode,
                     returnCountry = mAddress?.country,
-                    frontImageURL = null,
-                    backImageURL = null,
-                    addresskey =mAddress?.addresKey
+                    frontImageURL = mFrontImageDownloadUrl,
+                    backImageURL = mBackImageDownloadUrl,
+                    addresskey = mAddress?.addresKey
                 )
             } else
                 when (productType) {
@@ -572,9 +571,9 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                             returnState = mAddress?.state,
                             returnZipCode = mAddress?.postalCode,
                             returnCountry = mAddress?.country,
-                        frontImageURL = null,
-                        backImageURL = null,
-                        addresskey = mAddress?.addresKey
+                            frontImageURL = mFrontImageDownloadUrl,
+                            backImageURL = mBackImageDownloadUrl,
+                            addresskey = mAddress?.addresKey
                         )
                 }
                 ProductType.FUNKO, ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
@@ -598,8 +597,8 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                         returnState = mAddress?.state,
                         returnZipCode = mAddress?.postalCode,
                         returnCountry = mAddress?.country,
-                        frontImageURL = null,
-                        backImageURL = null,
+                        frontImageURL = mFrontImageDownloadUrl,
+                        backImageURL = mBackImageDownloadUrl,
                         addresskey = mAddress?.addresKey
                     )
                 }
