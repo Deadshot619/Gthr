@@ -541,8 +541,8 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                     returnState = mAddress?.state,
                     returnZipCode = mAddress?.postalCode,
                     returnCountry = mAddress?.country,
-                    frontImageURL = null,
-                    backImageURL = null
+                    frontImageURL = mFrontImageDownloadUrl,
+                    backImageURL = mBackImageDownloadUrl
                 )
             } else
                 when (productType) {
@@ -566,10 +566,10 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                             returnCity = mAddress?.city,
                             returnState = mAddress?.state,
                             returnZipCode = mAddress?.postalCode,
-                        returnCountry = mAddress?.country,
-                        frontImageURL = null,
-                        backImageURL = null
-                    )
+                            returnCountry = mAddress?.country,
+                            frontImageURL = mFrontImageDownloadUrl,
+                            backImageURL = mBackImageDownloadUrl
+                        )
                 }
                 ProductType.FUNKO, ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {
                     AskItemDomainModel(
@@ -592,8 +592,8 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                         returnState = mAddress?.state,
                         returnZipCode = mAddress?.postalCode,
                         returnCountry = mAddress?.country,
-                        frontImageURL = null,
-                        backImageURL = null,
+                        frontImageURL = mFrontImageDownloadUrl,
+                        backImageURL = mBackImageDownloadUrl
                     )
                 }
                 else -> null
@@ -856,10 +856,6 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
                 _editBid.value = Event(it)
             }
         }
-    }
-
-    fun editCollection(collectionItemRefKey: String) {
-
     }
 
     override fun onCleared() {
