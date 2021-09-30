@@ -112,7 +112,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
-                        showProgressBar(false)
+//                        showProgressBar(false)
                         var price = 0.0
                         it.data.forEach{
                             price += it
@@ -155,12 +155,18 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                     is State.Success -> {
                         showProgressBar(false)
                         setData(it.data)
-                        if(it.data.collectionList!=null&&it.data.collectionList.size>0){
+                        if (it.data.collectionList != null && it.data.collectionList.size > 0) {
                             mCccvSize.setValue(it.data.collectionList.size.toString())
                             mViewModel.getCollectionProduct(it.data.collectionList)
-                        }
-                        else
+                        } else
                             mCccvSize.setValue("0")
+                        mViewModel.fetchBidProducts(
+                            otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString()
+                        )
+                        if (!isOtherUser())
+                            mViewModel.getTotalSellPriceList(
+                                GthrCollect.prefs?.getUserCollectionId().toString()
+                            )
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -177,11 +183,10 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                         showProgressBar(false)
                         GthrLogger.i("sdkcnsdknc","product :  ${it.data}")
                         GthrLogger.i("sdkcnsdknc","product size :  ${it.data.size}")
-                        if(it.data!=null&& it.data.isNotEmpty()){
+                        if (it.data != null && it.data.isNotEmpty()) {
                             mViewModel.setAllCollectionProductList(it.data)
                             mViewModel.setDisplayCollectionProducts(it.data)
                         }
-                        mViewModel.fetchBidProducts(otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString())
                     }
                     is State.Failed -> {
                         showProgressBar(false)
@@ -196,7 +201,6 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         showProgressBar(false)
-                        mViewModel.getTotalSellPriceList(GthrCollect.prefs?.getUserCollectionId().toString())
                         GthrLogger.i("sdkcnsdknc","product :  ${it.data}")
                         GthrLogger.i("sdkcnsdknc","product size :  ${it.data.size}")
                         if(it.data!=null&& it.data.isNotEmpty()){
