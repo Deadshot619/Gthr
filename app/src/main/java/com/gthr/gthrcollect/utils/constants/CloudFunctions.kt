@@ -1,7 +1,9 @@
 package com.gthr.gthrcollect.utils.constants
 
+import com.gthr.gthrcollect.BuildConfig
+
 object CloudFunctions {
-    const val FIREBASE_FUN_BASE_URL = "https://us-central1-dlc-db-staging.cloudfunctions.net/"
+    const val FIREBASE_FUN_BASE_URL = BuildConfig.LINK_CLOUD_FUNCTION
     const val SEARCH_PRODUCT = "searchProducts"
     const val SEARCH_BIDS = "searchBids"
     const val FUN_DELETE_ASK = "onAskDelete"

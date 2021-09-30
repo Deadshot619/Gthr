@@ -8,75 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:100558314645:android:97a519998e06985c618f9c",
-        "android_client_info": {
-          "package_name": "com.gthr.gthrcollect"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "100558314645-5irn4hr6010ehlmmv9etbg6ncn0duros.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.gthr.gthrcollect",
-            "certificate_hash": "4148c25b399f492fce71f813d836d210c26b07c4"
-          }
-        },
-        {
-          "client_id": "100558314645-c2n7m759g4tfkm50nm1m83nd014p0g9v.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.gthr.gthrcollect",
-            "certificate_hash": "79c61da8e7b56c225f639175d63efc8ac48123ce"
-          }
-        },
-        {
-          "client_id": "100558314645-pp0jcj7u00ucdbba6pgvlkq4eao9316o.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.gthr.gthrcollect",
-            "certificate_hash": "d48948b4bbd70d42ec04deb22219a14e8ef70564"
-          }
-        },
-        {
-          "client_id": "100558314645-rfot4k7tfil7rbq7g7lhnd3l3bcb752m.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.gthr.gthrcollect",
-            "certificate_hash": "6da1d7b55f24e94558822315089f49a0038c1b71"
-          }
-        },
-        {
-          "client_id": "100558314645-lnnj4s59e5q36q5ul95t7b2ac7vcltj7.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDj3hgK2DizHPLMWRzgKsNwMKds4vbrbps"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "100558314645-lnnj4s59e5q36q5ul95t7b2ac7vcltj7.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "100558314645-e23bl1hjo4u7mebobokhnifroa52d2mn.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.dlc.coreapp.coreapp-dev",
-                "app_store_id": "1496435786"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:100558314645:android:8d56354625575add618f9c",
         "android_client_info": {
           "package_name": "com.gthr.gthrcollect.dev"
@@ -84,11 +15,35 @@
       },
       "oauth_client": [
         {
+          "client_id": "100558314645-jk3ndb20ekq72k4bf0bkghneon3ika74.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gthr.gthrcollect.dev",
+            "certificate_hash": "6da1d7b55f24e94558822315089f49a0038c1b71"
+          }
+        },
+        {
+          "client_id": "100558314645-jk64vn9k2bsildn3d08ofuqc6ckp2gnq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gthr.gthrcollect.dev",
+            "certificate_hash": "d48948b4bbd70d42ec04deb22219a14e8ef70564"
+          }
+        },
+        {
           "client_id": "100558314645-m95ocj9k3d5aqc496uov5ed8reromk4k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.gthr.gthrcollect.dev",
             "certificate_hash": "79c61da8e7b56c225f639175d63efc8ac48123ce"
+          }
+        },
+        {
+          "client_id": "100558314645-u2v9hucf7b7865oaeo33dqk9ch6j19hq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gthr.gthrcollect.dev",
+            "certificate_hash": "4148c25b399f492fce71f813d836d210c26b07c4"
           }
         },
         {

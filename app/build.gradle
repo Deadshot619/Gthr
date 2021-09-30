@@ -45,22 +45,35 @@ android {
             dimension "env"
             applicationIdSuffix '.dev'
             versionNameSuffix '-dev'
-
-            copy {
-                from 'src/dev/'
-                include '*.json'
-                into '.'
-            }
         }
         prod {
             dimension "env"
+            applicationIdSuffix '.prod'
             versionNameSuffix '-prod'
+        }
+    }
 
-            copy {
-                from 'src/prod/'
-                include '*.json'
-                into '.'
-            }
+    applicationVariants.all { variant ->
+        switch (variant.getName()) {
+            case "devDebug" :
+            case "devRelease" :
+                buildConfigField "String", "LINK_CLOUD_FUNCTION", "\"https://us-central1-dlc-db-staging.cloudfunctions.net/\""
+                copy {
+                    from 'src/dev/'
+                    include '*.json'
+                    into '.'
+                }
+                break
+
+            case "prodDebug" :
+            case "prodRelease" :
+                buildConfigField "String", "LINK_CLOUD_FUNCTION", "\"https://us-central1-dlc-db.cloudfunctions.net/\""
+                copy {
+                    from 'src/prod/'
+                    include '*.json'
+                    into '.'
+                }
+                break
         }
     }
 
