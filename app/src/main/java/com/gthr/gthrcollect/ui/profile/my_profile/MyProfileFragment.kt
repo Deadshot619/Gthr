@@ -393,24 +393,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         }
 
         mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) {
-            if (it.isForSale == true)
-                startActivity(
-                    AskFlowActivity.getInstance(
-                        requireContext(),
-                        AskFlowType.SELL,
-                        it,
-                        true
-                    )
-                )
-            else
-                startActivity(
-                    AskFlowActivity.getInstance(
-                        requireContext(),
-                        AskFlowType.COLLECT,
-                        it,
-                        true
-                    )
-                )
+            goToAskFlow(it)
         }
     }
 
@@ -518,29 +501,13 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             when {
                 mAll.mIsActive || mCards.mIsActive || mToys.mIsActive -> {
                     mAdapter = CollectionsAdapter(CustomProductCell.State.FOR_SALE) {
-                        if (it.isForSale == true)
-                            startActivity(
-                                AskFlowActivity.getInstance(
-                                    requireContext(),
-                                    AskFlowType.SELL,
-                                    it,
-                                    true
-                                )
-                            )
-                        else
-                            startActivity(
-                                AskFlowActivity.getInstance(
-                                    requireContext(),
-                                    AskFlowType.COLLECT,
-                                    it,
-                                    true
-                                )
-                            )
+                        goToAskFlow(it)
                     }
                     mRvMain.adapter = mAdapter
                 }
                 mBuyList.mIsActive -> {
                     mAdapter = CollectionsAdapter(CustomProductCell.State.WANT) {
+                        if (isOtherUser()) return@CollectionsAdapter
                         startActivity(
                             AskFlowActivity.getInstance(
                                 requireContext(),
@@ -559,6 +526,28 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 searchProduct()
             }
         }
+    }
+
+    private fun goToAskFlow(model: ProductDisplayModel) {
+        if (isOtherUser()) return
+        if (model.isForSale == true)
+            startActivity(
+                AskFlowActivity.getInstance(
+                    requireContext(),
+                    AskFlowType.SELL,
+                    model,
+                    true
+                )
+            )
+        else
+            startActivity(
+                AskFlowActivity.getInstance(
+                    requireContext(),
+                    AskFlowType.COLLECT,
+                    model,
+                    true
+                )
+            )
     }
 
     //Method to check if current user is Other User i.e. viewing other's profile

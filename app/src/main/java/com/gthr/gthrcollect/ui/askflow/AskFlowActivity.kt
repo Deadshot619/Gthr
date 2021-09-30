@@ -59,7 +59,8 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
     override fun onBinding() {
         mAskFlowType = intent?.getSerializableExtra(KEY_ASK_FLOW_TYPE) as AskFlowType
-        mProductDisplayModel = intent.getParcelableExtra<ProductDisplayModel>(KEY_PRODUCT_DISPLAY_MODEL)!!
+        mProductDisplayModel =
+            intent.getParcelableExtra<ProductDisplayModel>(KEY_PRODUCT_DISPLAY_MODEL)!!
         mProductType = mProductDisplayModel.productType!!
         mProductCategory = mProductDisplayModel.productCategory!!
 
@@ -91,6 +92,9 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
             GthrLogger.i("sdhbsd", "${mProductDisplayModel.forsaleItemNodel}")
             mProductDisplayModel.forsaleItemNodel?.backImageURL?.let {
                 mViewModel.setBackImageDownloadUrl(it)
+                if (it.isEmpty()) return
+                mCvBackImage.visible()
+                mIvBackImage.setProductImage(it)
             }
             mViewModel.setBuyingDirFromSomeOneProPrice(mProductDisplayModel.forsaleItemNodel?.price!!)
             mViewModel.getUserImage(mProductDisplayModel.forsaleItemNodel?.collectionFirebaseRef!!)
@@ -134,8 +138,14 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
         mTvUserName.setOnClickListener {
             mProductDisplayModel.forsaleItemNodel?.collectionFirebaseRef?.let {
-                if(it != GthrCollect.prefs?.getUserCollectionId())
-                    startActivity(ProfileActivity.getInstance(this, ProfileNavigationType.PROFILE,it))
+                if (it != GthrCollect.prefs?.getUserCollectionId())
+                    startActivity(
+                        ProfileActivity.getInstance(
+                            this,
+                            ProfileNavigationType.PROFILE,
+                            it
+                        )
+                    )
             }
         }
 
@@ -363,10 +373,13 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
 
     private fun setUpClickListeners() {
         mProductItem.setOnClickListener {
+
             startActivity(
                 FullProductImage.getInstance(
                     this,
-                    (mViewModel.frontImageUrl.value ?: mProductDisplayModel.firImageURL)
+                    (mViewModel.frontImageUrl.value
+                        ?: mViewModel.productDisplayModel?.forsaleItemNodel?.frontImageURL
+                        ?: mProductDisplayModel.firImageURL)
                 )
             )
         }
@@ -380,9 +393,17 @@ class AskFlowActivity : BaseActivity<AskFlowViewModel, ActivityAskFlowBinding>()
                     )
                 )
             else
-                mViewModel.backImageUrl.value?.let {
-                    startActivity(FullProductImage.getInstance(this, it))
-                }
+                if (mAskFlowType == AskFlowType.BUY_DIRECTLY_FROM_SOMEONE)
+                    startActivity(
+                        FullProductImage.getInstance(
+                            this,
+                            mProductDisplayModel.forsaleItemNodel?.backImageURL
+                        )
+                    )
+                else
+                    mViewModel.backImageUrl.value?.let {
+                        startActivity(FullProductImage.getInstance(this, it))
+                    }
         }
     }
 
