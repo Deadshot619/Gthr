@@ -1,5 +1,6 @@
 package com.gthr.gthrcollect.model.mapper
 
+import com.gthr.gthrcollect.model.domain.FeedDomainModel
 import com.gthr.gthrcollect.model.domain.ForSaleItemDomainModel
 import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
 import com.gthr.gthrcollect.model.domain.SearchBidsDomainModel
@@ -8,6 +9,10 @@ import com.gthr.gthrcollect.model.network.cloudfunction.ForSaleItemModel
 import com.gthr.gthrcollect.model.network.cloudfunction.SearchBidsModel
 import com.gthr.gthrcollect.model.network.cloudfunction.SearchProductModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.ReceiptModel
+import com.gthr.gthrcollect.model.network.firebaserealtimedb.FeedModel
+import com.gthr.gthrcollect.utils.enums.FeedType
+import com.gthr.gthrcollect.utils.getFeedType
+import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.getProductCategoryFromRaw
 import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
@@ -90,6 +95,58 @@ fun SearchBidsModel.toSearchBidsDomainModel() = SearchBidsDomainModel(
     product_rarity = product_rarity,
     updatedAt = updatedAt,
 )
+
+fun FeedModel.toFeedDomainModel() = FeedDomainModel(
+    id = id?:-1,
+    collectionRefId = collectionRefId?:"",
+    bidPrice = bidPrice?:-1,
+    price = price?:0,
+    product_numberOfFavorites = product_numberOfFavorites?:-1,
+    productRefId = productRefId?:-1,
+
+    askRefKey = askRefKey?:"",
+    backImageURL = backImageURL?:"",
+    condition = condition?.toConditionDomainModel(),
+    language = language?.toLanguageDomainModel(),
+    createdAt = createdAt?:"",
+    creatorProfileURL = creatorProfileURL?:"",
+    creatorUID = creatorUID?:"",
+    edition = edition?:"",
+    collection_firebaseRef = collection_firebaseRef?:"",
+    itemRefKey =  itemRefKey?:"",
+    itemObjectID =  itemObjectID?:"",
+    frontImageURL =  frontImageURL?:"",
+
+    collection_collectionDisplayName =  collection_collectionDisplayName?:"",
+    collection_collectionRawName = collection_collectionRawName?:"",
+    collection_id = collection_id?:"",
+    collection_profileImageURL = collection_profileImageURL?:"",
+    collection_userRefKey = collection_userRefKey?:"",
+    collectionDisplayName = collection_collectionDisplayName?:"",
+    collectionID = collectionID?:"",
+    collectionRawName = collectionRawName?:"",
+    cretorUID = cretorUID?:"",
+    firebaseRef = firebaseRef?:"",
+    product_firebaseRef = product_firebaseRef?:"",
+    product_firImageURL = product_firImageURL?:"",
+    product_group = product_group?:"",
+    product_id = product_id?:"",
+    product_prodObjectID = product_prodObjectID?:"",
+    product_productCategory = product_productCategory?:"",
+    product_productName = product_productName?:"",
+    product_productNumber = product_productNumber?:"",
+    product_rarity = product_rarity?:"",
+    profileImageURL = profileImageURL?:"",
+    updatedAt = updatedAt?:"",
+    userRefKey = userRefKey?:"",
+
+    productCategory = getProductCategoryFromRaw(productCategory?:product_productCategory.toString()) ,
+    productType = if(productType!=null&&productType.isNotEmpty()) getProductType(productType) else null,
+    feedType = getFeedType(feedType?:""),
+
+)
+
+
 
 fun ReceiptModel.toReceiptDomainModel() =
     ReceiptDomainModel(

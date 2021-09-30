@@ -1,17 +1,17 @@
-package com.gthr.gthrcollect.model.domain
+package com.gthr.gthrcollect.model.network.firebaserealtimedb
 
-import com.gthr.gthrcollect.utils.enums.AdapterViewType
+
 import com.gthr.gthrcollect.utils.enums.FeedType
-import com.gthr.gthrcollect.utils.enums.ProductCategory
-import com.gthr.gthrcollect.utils.enums.ProductType
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-data class FeedDomainModel(
+data class FeedModel(
     //ask
     val askRefKey: String? = null,
     val backImageURL: String? = null,
     val collectionRefId: String? = "",
-    val condition: ConditionDomainModel? = null,
-    val language: LanguageDomainModel? = null,
+    val condition: ConditionModel? = null,
+    val language: LanguageModel? = null,
     val createdAt: String? = null,
     val creatorProfileURL: String? = null,
     val creatorUID: String? = null,
@@ -23,9 +23,9 @@ data class FeedDomainModel(
     val itemRefKey: String? = null,
 
     val price: Int? = 0,
-
+    val productCategory: String? = null,
     val productRefId: Int? = -1,
-
+    val productType: String? = null,
     val updatedAt: String? = null,
 
     //Bid
@@ -55,10 +55,5 @@ data class FeedDomainModel(
     val cretorUID : String? = "",
     val collectionID : String? = "",
 
-    val productType: ProductType? = null,
-    val feedType : FeedType? = FeedType.ASK,
-    val productCategory: ProductCategory? = null,
-    val viewType: AdapterViewType = AdapterViewType.VIEW_TYPE_ITEM
-
-) {
-}
+    var feedType : String? = "",
+)
