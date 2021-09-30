@@ -8,14 +8,13 @@ import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.google.gson.JsonElement
-import com.gthr.gthrcollect.GthrCollect
+import com.google.gson.GsonBuilder
 import com.gthr.gthrcollect.data.remote.fetchData
 import com.gthr.gthrcollect.data.remote.fetchDataWithoutParameter
 import com.gthr.gthrcollect.model.State
+import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
 import com.gthr.gthrcollect.model.domain.ShippingInfoDomainModel
 import com.gthr.gthrcollect.model.mapper.*
-import com.gthr.gthrcollect.model.network.cloudfunction.ForSaleItemModel
 import com.gthr.gthrcollect.model.network.cloudfunction.StripePaymentModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
 import com.gthr.gthrcollect.utils.constants.AlgoliaConstants
@@ -23,10 +22,6 @@ import com.gthr.gthrcollect.utils.constants.CloudFunctions
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.enums.ProductType
-import com.gthr.gthrcollect.utils.extensions.fromJsonString
-import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
-import com.gthr.gthrcollect.utils.extensions.gson
-import com.gthr.gthrcollect.utils.extensions.toJsonElement
 import com.gthr.gthrcollect.utils.helper.getFbRtModelNameFromProduct
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.CoroutineScope
@@ -37,12 +32,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
 import java.io.File
-import com.google.gson.Gson
-import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
-import com.google.gson.GsonBuilder
-
-
-
 
 
 class AskFlowRepository {
@@ -571,19 +560,18 @@ class AskFlowRepository {
             val responseData =
                 fetchData<HashMap<String, String>>(CloudFunctions.BUY_NOW, data).await()
 
-            GthrLogger.d("BuyNowResponse", "${responseData}")
+            GthrLogger.d("BuyNowResponse", responseData.toString())
             val reciept = responseData[CloudFunctions.RECIEPT] as HashMap<String, String>
 
             try {
                 val gsonn = GsonBuilder().create()
                 val json = gsonn.toJson(reciept)
-                val dataRec: ReceiptModel = gsonn.fromJson(json, ReceiptModel::class.java)
-                dataRec.orderStatus=reciept["order_status"].toString()
+                val dataRec: ReceiptModel = gsonn.fromJson(json, ReceiptModel::class.java).apply {
+                    orderStatus = responseData["order_status"].toString()
+                }
                 emit(State.success(dataRec.toReceiptDomainModel()))
 
             } catch (ex: Exception) {
-                ex.printStackTrace()
-                println(ex.printStackTrace())
                 emit(State.failed("${ex.message}"))
                 GthrLogger.d("BuyNowResponse", "${ex.message}}")
             }

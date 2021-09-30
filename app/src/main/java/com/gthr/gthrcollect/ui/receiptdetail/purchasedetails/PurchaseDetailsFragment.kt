@@ -1,5 +1,7 @@
 package com.gthr.gthrcollect.ui.receiptdetail.purchasedetails
 
+import android.content.Intent
+import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -29,8 +31,6 @@ import com.gthr.gthrcollect.utils.helper.*
 import io.ktor.util.*
 import java.text.SimpleDateFormat
 import java.util.*
-import android.content.Intent
-import android.net.Uri
 
 
 class PurchaseDetailsFragment :
@@ -264,9 +264,9 @@ class PurchaseDetailsFragment :
                         0, 0, R.drawable.ic_next_arrow, 0
                     )
                 } else {
-                    mCdbOrderStatus.setType(CustomDeliveryButton.OrderStatus.DELIVERED)
-                    mBtnConfirmReceived.text =
-                        getString(R.string.text_btn_purchase_detail_confirm_received)
+                    mCdbOrderStatus.setType(mOrderStatus)
+                    mBtnConfirmReceived.text = getString(R.string.dialog_confirm_shipped_title)
+
                 }
             }
             ReceiptType.SOLD -> {
