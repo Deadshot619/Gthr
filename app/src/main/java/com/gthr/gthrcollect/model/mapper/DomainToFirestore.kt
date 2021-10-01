@@ -5,13 +5,15 @@ import com.gthr.gthrcollect.model.domain.EditAccInfoDomainModel
 import com.gthr.gthrcollect.model.domain.ShippingAddressDomainModel
 import com.gthr.gthrcollect.model.domain.UserInfoDomainModel
 import com.gthr.gthrcollect.model.network.firestore.AddressFirestoreModel
+import com.gthr.gthrcollect.utils.extensions.formatMobileNo
 
 fun UserInfoDomainModel.toFirestoreModel(collectionId: String) =
     com.gthr.gthrcollect.model.network.firestore.UserInfoFirestoreModel(
         firstName = firstName,
         lastName = lastName,
         email = emailId,
-        phoneNumber = "+$countryCode-$mobile",
+        //  phoneNumber = "+$countryCode-{$mobile}",
+        phoneNumber = "+$countryCode${mobile.formatMobileNo()}",
         birthDate = "$mm/$dd/$yyyy",
         uid = GthrCollect.prefs?.signedInUser!!.uid,
         creationDate = "",
