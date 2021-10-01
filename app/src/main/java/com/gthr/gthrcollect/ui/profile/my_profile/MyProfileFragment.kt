@@ -163,6 +163,21 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                         mViewModel.fetchBidProducts(
                             otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString()
                         )
+                        mViewModel.getSoldCount(it.data.userRefKey)
+                    }
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                }
+            }
+        }
+        mViewModel.mSoldCount.observe(viewLifecycleOwner) { it ->
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        mSold.setCount("${it.data}")
                         if (!isOtherUser())
                             mViewModel.getTotalSellPriceList(
                                 GthrCollect.prefs?.getUserCollectionId().toString()
@@ -411,7 +426,7 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                 goToProfilePage(ProfileNavigationType.FOLLOWING)
         }
         mSold.setOnClickListener {
-            goToProfilePage(ProfileNavigationType.SOLD,otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString())
+//            goToProfilePage(ProfileNavigationType.SOLD,otherUserId ?: GthrCollect.prefs?.getUserCollectionId().toString())
         }
         mFavourites.setOnClickListener {
             goToProfilePage(ProfileNavigationType.FAVOURITES)
@@ -463,7 +478,6 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
             else
                 data.favoriteCollectionList?.size.toString()
         )
-        mSold.setCount(data.sellList?.size.toString())
         imageURl = data.profileImage
         mProfilePic.setProfileImage(imageURl)
 

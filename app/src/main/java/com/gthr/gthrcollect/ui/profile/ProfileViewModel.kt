@@ -64,6 +64,10 @@ class ProfileViewModel(private val mProfileRepository: ProfileRepository, privat
     val mTotalSellPrice: MutableLiveData<Event<State<List<Double>>>>
         get() = _mTotalSellPrice
 
+    private val _mSoldCount = MutableLiveData<Event<State<Long>>>()
+    val mSoldCount: MutableLiveData<Event<State<Long>>>
+        get() = _mSoldCount
+
     var mAllCollectionProductList = listOf<ProductDisplayModel>()
         private set
 
@@ -157,6 +161,15 @@ class ProfileViewModel(private val mProfileRepository: ProfileRepository, privat
             }
         }
     }
+     fun getSoldCount(userRef : String){
+        viewModelScope.launch {
+            mProfileRepository.getSoldCount(userRef).collect {
+                _mSoldCount.value = Event(it)
+            }
+        }
+    }
+
+
 
 
     override fun onCleared() {

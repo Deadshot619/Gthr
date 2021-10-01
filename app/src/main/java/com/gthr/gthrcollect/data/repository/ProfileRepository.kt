@@ -722,4 +722,16 @@ class ProfileRepository {
     }.flowOn(Dispatchers.IO)
 
 
+    fun getSoldCount(userRef : String) = flow<State<Long>> {
+        emit(State.loading())
+        val data = mFirebaseRD.child(FirebaseRealtimeDatabase.RECIEPT_MODEL).orderByChild(FirebaseRealtimeDatabase.SELLER_UID).equalTo(userRef).get().await().childrenCount
+        emit(State.success(data))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+
+
+
 }
