@@ -298,7 +298,7 @@ fun ReceiptModel.toReceiptDomainModel(key: String? = null) = ReceiptDomainModel(
     sellerShippingZipCode = sellerShippingZipCode,
     sellerShippingCountry = sellerShippingCountry,
     edition = edition,
-    lang = (lang ?: "0").toInt(),
+    lang = if (lang.isNullOrEmpty()) 0 else lang?.toInt(),
     condition = condition,
 )
 
