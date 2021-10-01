@@ -459,7 +459,7 @@ class AskFlowRepository {
         emit(State.loading())
         val dataSnapshot =
             mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionID)
-                .child(FirebaseRealtimeDatabase.DISPLAY_NAME).get().await()
+                .child(FirebaseRealtimeDatabase.COLLECTION_DISPLAY_NAME).get().await()
         emit(State.success(dataSnapshot.value.toString()))
     }.catch {
         emit(State.failed(it.message.toString()))

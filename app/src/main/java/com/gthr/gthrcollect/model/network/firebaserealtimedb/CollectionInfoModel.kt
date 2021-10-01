@@ -12,8 +12,8 @@ data class CollectionInfoModel(
     @get:PropertyName(FirebaseRealtimeDatabase.BUY_LIST)
     @set:PropertyName(FirebaseRealtimeDatabase.BUY_LIST)
     var buyList: HashMap<String, String>? = hashMapOf(),
-    @get:PropertyName(FirebaseRealtimeDatabase.DISPLAY_NAME)
-    @set:PropertyName(FirebaseRealtimeDatabase.DISPLAY_NAME)
+    @get:PropertyName(FirebaseRealtimeDatabase.COLLECTION_DISPLAY_NAME)
+    @set:PropertyName(FirebaseRealtimeDatabase.COLLECTION_DISPLAY_NAME)
     var collectionDisplayName: String = "",
     @get:PropertyName(FirebaseRealtimeDatabase.COLLECTION_RAW_NAME)
     @set:PropertyName(FirebaseRealtimeDatabase.COLLECTION_RAW_NAME)
