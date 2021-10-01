@@ -229,72 +229,15 @@ class AfBuyDirectlyPlaceFragment :
         }
 
         mBtnNext.setOnClickListener {
-
-             if (mClientSecret.isNullOrEmpty()) {
-                 mViewModel.generateClientSecret(getAskRefKey(), getShippingTeirKey())
-             } else {
-                 showBottomSheet(mClientSecret!!)
-             }
-
-
-/*
-            mViewModel.productDisplayModel?.forsaleItemNodel?.let {
-
-                val aa = ReceiptDomainModel(
-                    imageUrl = it.productFirImageURL,
-                    totalAskPrice = it.price,
-                    shippingReimbursement = 1.23,
-                    refKey = it.askRefKey,
-                    itemRefKey = it.itemRefKey,
-                    productType = it.productType,
-                    objectID = it.itemObjectID,
-                    buyerCharge = mViewModel.totalPaymentRate.toString(),
-                    sellerPayout = "52.27",
-                    appFee = "11.72",
-                    paymentID = "123",
-                    buyerUID = "123",
-                    sellerUID = "123",
-                    date = "9/29/2021",
-                    saleID = "123",
-                    trackingNumber = "123",
-                    abbrevaitedPaymentNumber = "123",
-                    paymentProvider = "123",
-                    trackingLink = "123",
-                    orderStatus = "123",
-                    "Tier",
-                    "Name",
-                    "Address1",
-                    "Address2",
-                    "123",
-                    "Owings Mills 2",
-                    "113233",
-                    "123",
-                    "123",
-                    "123",
-                    "123",
-                    "Owings Mills",
-                    "MD",
-                    "21117",
-                    "Country",
-                    edition = it.edition,
-                    lang = it.language?.key,
-                    condition = it.condition?.displayName,
-                    "DELIVERED"
-                )
-
-                startActivity(
-                    ReceiptDetailActivity.getInstance(
-                        requireContext(),
-                        ReceiptType.PURCHASED,
-                        aa,
-                        CustomDeliveryButton.OrderStatus.DELIVERED
-                    )
-                )
-
+            if(mViewModel.mAddress?.addresKey==null){
+                showToast("please select address")
+            }else{
+                if (mClientSecret.isNullOrEmpty()) {
+                    mViewModel.generateClientSecret(getAskRefKey(), getShippingTeirKey())
+                } else {
+                    showBottomSheet(mClientSecret!!)
+                }
             }
-*/
-
-
         }
 
         mTvTermsAndConditions.setOnClickListener {
@@ -318,19 +261,21 @@ class AfBuyDirectlyPlaceFragment :
         }
 
         mPayout.setOnClickListener {
-            //     mViewModel.generateClientSecret("-MkVqcXil5KoYq7JA_-3", "0")
 
-            if (!isTnCCheked){
-               showToast(getString(R.string.term_condition_note))
-                return@setOnClickListener
-            }
-            if (mClientSecret.isNullOrEmpty()) {
-                mViewModel.generateClientSecret(getAskRefKey(), getShippingTeirKey())
-            } else {
-                showBottomSheet(mClientSecret!!)
+            if(mViewModel.mAddress?.addresKey==null){
+                showToast("Please select address!")
+            }else{
+                if (!isTnCCheked){
+                    showToast(getString(R.string.term_condition_note))
+                    return@setOnClickListener
+                }
+                if (mClientSecret.isNullOrEmpty()) {
+                    mViewModel.generateClientSecret(getAskRefKey(), getShippingTeirKey())
+                } else {
+                    showBottomSheet(mClientSecret!!)
+                }
             }
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

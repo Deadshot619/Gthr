@@ -253,6 +253,8 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:id="@+id/tv_language"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -290,6 +292,8 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:id="@+id/tv_condition_value"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -316,6 +320,8 @@
                     app:layout_constraintTop_toTopOf="@+id/ll_language">
 
                     <TextView
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:id="@+id/tv_edition_value"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
