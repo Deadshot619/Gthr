@@ -20,6 +20,7 @@ import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.getProductTypeFromObjectId
+import com.gthr.gthrcollect.utils.helper.getFbRtModelNameFromProduct
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -699,23 +700,36 @@ class ProfileRepository {
     }
 
 
-    fun getTotalSellPriceList(collectionID: String) = flow<State<List<Double>>> {
-        GthrLogger.e("ProductList", "id: ${collectionID}")
+    fun getMarketAverageValue(collectionID: String) = flow<State<List<Double>>> {
         emit(State.loading())
-        val data = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionID).child(FirebaseRealtimeDatabase.SELL_LIST).get().await()
-        val priceList = mutableListOf<Double>()
-        if (data.hasChildren()) {
-            val ProductList = data.value as List<String>
-            GthrLogger.e("ProductList", "ProductList: ${ProductList}")
-            ProductList.forEach { saleHistoryModelRef ->
-                val await = mFirebaseRD.child(FirebaseRealtimeDatabase.SALE_HISTORY_MODEL).child(saleHistoryModelRef).child(FirebaseRealtimeDatabase.PRICE).get().await()
-                if(await.exists()){
-                    val price = await.getValue(Double::class.java)
-                    priceList.add(price!!)
-                }
+
+        //Get collection model
+        val collectionInfoModel =
+            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionID)
+                .get().await().getValue(CollectionInfoModel::class.java)
+                ?.toCollectionInfoDomainModel()
+
+        var totalMarketPrice = 0.0
+
+        collectionInfoModel?.collectionList?.forEach { (t, u) ->
+            try {
+                val productType = getProductType(u.productType.toString())!!
+                val fbRtModelName = getFbRtModelNameFromProduct(productType)
+                //Goto each itemModel & calculate market price
+                totalMarketPrice += mFirebaseRD.child(fbRtModelName)
+                    .orderByChild(FirebaseRealtimeDatabase.OBJECT_ID)
+                    .equalTo(u.objectID.toString()).get().await().children.first()
+                    .child(FirebaseRealtimeDatabase.LOWEST_ASK_COST).getValue(Double::class.java)
+                    ?: 0.0
+            } catch (e: Exception) {
+                GthrLogger.e("Market Price", e.message.toString())
             }
-        }
-        emit(State.success(priceList))
+        } ?: State.success(0.0)
+
+        val averagePrice =
+            totalMarketPrice / (collectionInfoModel?.collectionList?.size?.toDouble() ?: 1.0)
+
+        emit(State.success(listOf(totalMarketPrice, averagePrice)))
     }.catch {
         // If exception is thrown, emit failed state along with message.
         emit(State.failed(it.message.toString()))

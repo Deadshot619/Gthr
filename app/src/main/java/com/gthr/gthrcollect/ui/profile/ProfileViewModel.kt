@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
+import com.gthr.gthrcollect.data.repository.ProfileRepository
 import com.gthr.gthrcollect.model.Event
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
-import com.gthr.gthrcollect.ui.base.BaseViewModel
-import com.gthr.gthrcollect.data.repository.ProfileRepository
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.CollectionItemModel
+import com.gthr.gthrcollect.ui.base.BaseViewModel
 import com.gthr.gthrcollect.utils.extensions.getUserCollectionId
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -154,14 +154,15 @@ class ProfileViewModel(private val mProfileRepository: ProfileRepository, privat
         }
     }
 
-    fun getTotalSellPriceList(collectionId : String){
+    fun getMarketAverageValue(collectionId: String) {
         viewModelScope.launch {
-            mProfileRepository.getTotalSellPriceList(collectionId).collect {
+            mProfileRepository.getMarketAverageValue(collectionId).collect {
                 _mTotalSellPrice.value = Event(it)
             }
         }
     }
-     fun getSoldCount(userRef : String){
+
+    fun getSoldCount(userRef: String) {
         viewModelScope.launch {
             mProfileRepository.getSoldCount(userRef).collect {
                 _mSoldCount.value = Event(it)

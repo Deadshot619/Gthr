@@ -110,19 +110,23 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         mViewModel.mTotalSellPrice.observe(viewLifecycleOwner) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
-                    is State.Loading -> showProgressBar()
+                    is State.Loading -> {
+                    }
                     is State.Success -> {
-//                        showProgressBar(false)
-                        var price = 0.0
-                        it.data.forEach{
-                            price += it
-                        }
-                        val averagePrice = if(price==0.0) 0.0 else (price/it.data.size)
-                        mCccvMarketValue.setValue(String.format(getString(R.string.rate_common),price))
-                        mCccvAveragePrice.setValue(String.format(getString(R.string.rate_common),averagePrice))
+                        mCccvMarketValue.setValue(
+                            String.format(
+                                getString(R.string.rate_common),
+                                it.data[0]
+                            )
+                        )
+                        mCccvAveragePrice.setValue(
+                            String.format(
+                                getString(R.string.rate_common),
+                                it.data[1]
+                            )
+                        )
                     }
                     is State.Failed -> {
-                        showProgressBar(false)
                         showToast(it.message)
                     }
                 }
@@ -158,6 +162,10 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                         if (it.data.collectionList != null && it.data.collectionList.size > 0) {
                             mCccvSize.setValue(it.data.collectionList.size.toString())
                             mViewModel.getCollectionProduct(it.data.collectionList)
+                            if (!isOtherUser())
+                                mViewModel.getMarketAverageValue(
+                                    GthrCollect.prefs?.getUserCollectionId().toString()
+                                )
                         } else
                             mCccvSize.setValue("0")
                         mViewModel.fetchBidProducts(
@@ -178,10 +186,6 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         mSold.setCount("${it.data}")
-                        if (!isOtherUser())
-                            mViewModel.getTotalSellPriceList(
-                                GthrCollect.prefs?.getUserCollectionId().toString()
-                            )
                     }
                     is State.Failed -> {
                         showProgressBar(false)
