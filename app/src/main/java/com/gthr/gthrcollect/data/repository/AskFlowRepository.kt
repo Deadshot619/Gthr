@@ -157,9 +157,23 @@ class AskFlowRepository {
             FirebaseRealtimeDatabase.BACK_IMAGE_URL to backImageUrl,
             FirebaseRealtimeDatabase.ASK_REF_KEY to askId!!,
         )
-        mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionInfoId)
-            .child(FirebaseRealtimeDatabase.COLLECTION_LIST).child(collectionKey)
+        val collectionInfoLink = mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL)
+            .child(collectionInfoId)
+        //Add AskRefKey to User's CollectionList
+        collectionInfoLink.child(FirebaseRealtimeDatabase.COLLECTION_LIST).child(collectionKey)
             .updateChildren(map).await()
+        //Add AskRefKey to User's SellList
+        val sellList = collectionInfoLink.child(FirebaseRealtimeDatabase.SELL_LIST).get().await()
+            .getValue(object : GenericTypeIndicator<List<String>>() {})
+        val newSellList = mutableListOf<String>()
+        if (sellList.isNullOrEmpty())
+            newSellList.add(askId)
+        else {
+            newSellList.addAll(sellList)
+            newSellList.add(askId)
+        }
+        collectionInfoLink.child(FirebaseRealtimeDatabase.SELL_LIST).setValue(newSellList).await()
+
         emit(State.success(true))
     }.catch {
         emit(State.failed(it.message.toString()))
@@ -589,18 +603,28 @@ class AskFlowRepository {
     fun deleteAsk(collectionId: String, askRefKey: String) = flow<State<Boolean>> {
         emit(State.loading())
 
-        val deleteAskFromAskModel =
-            mFirebaseRD.child(FirebaseRealtimeDatabase.ASK_ITEM_MODEL).child(askRefKey)
-                .removeValue().await()
+        //Delete AskItemModel
+        mFirebaseRD.child(FirebaseRealtimeDatabase.ASK_ITEM_MODEL).child(askRefKey)
+            .removeValue().await()
         val collectionListLink =
             mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionId)
                 .child(FirebaseRealtimeDatabase.COLLECTION_LIST)
+        //Delete AskRefKey from CollectionList item
         val collectListRefKey =
             collectionListLink.orderByChild(FirebaseRealtimeDatabase.ASK_REF_KEY).equalTo(askRefKey)
                 .get().await().children.first().key
+        collectionListLink.child(collectListRefKey.toString())
+            .child(FirebaseRealtimeDatabase.ASK_REF_KEY).removeValue().await()
 
-        val deleteAskFromCollectionList =
-            collectionListLink.child(collectListRefKey.toString()).removeValue().await()
+        //Remove AskRefKey from User's SellList
+        val sellList = collectionListLink.child(FirebaseRealtimeDatabase.SELL_LIST).get().await()
+            .getValue(object : GenericTypeIndicator<List<String>>() {})
+        val newSellList = mutableListOf<String>()
+        if (!sellList.isNullOrEmpty()) {
+            newSellList.addAll(sellList)
+            newSellList.remove(askRefKey)
+        }
+        collectionListLink.child(FirebaseRealtimeDatabase.SELL_LIST).setValue(newSellList).await()
 
         emit(State.success(true))
     }.catch {
