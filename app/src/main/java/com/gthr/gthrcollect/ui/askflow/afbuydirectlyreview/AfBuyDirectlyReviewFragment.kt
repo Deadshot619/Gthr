@@ -6,14 +6,17 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.AfBuyDirectlyReviewFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
+import com.gthr.gthrcollect.utils.extensions.isUserLoggedIn
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.helper.getTier
 
@@ -71,16 +74,28 @@ class AfBuyDirectlyReviewFragment :
     private fun setUpClickListeners() {
         mViewBinding.run {
             mBtnNext.setOnClickListener {
-                mViewModel.mBuyingDirFromSomeOneProPrice.value?.let {
-                    val tier = getTier(mViewModel.productDisplayModel!!, it).toString()
-                    if (tier.isEmpty())
-                        mViewModel.getTierByRef(
-                            mViewModel.productType!!,
-                            mViewModel.productDisplayModel?.refKey!!
+
+                if (GthrCollect.prefs?.isUserLoggedIn() == true){
+                    mViewModel.mBuyingDirFromSomeOneProPrice.value?.let {
+                        val tier = getTier(mViewModel.productDisplayModel!!, it).toString()
+                        if (tier.isEmpty())
+                            mViewModel.getTierByRef(
+                                mViewModel.productType!!,
+                                mViewModel.productDisplayModel?.refKey!!
+                            )
+                        else
+                            mViewModel.getShippingTierInfo(tier)
+                    }
+
+                }else{
+                    startActivity(
+                        HomeBottomNavActivity.getInstance(
+                            requireContext(),
+                            goToProfileSignUp = true
                         )
-                    else
-                        mViewModel.getShippingTierInfo(tier)
+                    )
                 }
+
             }
         }
     }

@@ -28,7 +28,7 @@ object FirebaseRealtimeDatabase {
     const val PROFILE_URL_KEY = "profileImageURL"
     const val PRODUCT_IMAGE = "productImage"
 
-    const val DISPLAY_NAME="collectionDisplayName"
+    const val DISPLAY_NAME="displayName"
     const val RARITY = "rarity"
     const val NAME = "name"
     const val SET = "set"

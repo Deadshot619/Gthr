@@ -10,7 +10,7 @@ data class UserInfoFirestoreModel(
     var birthDate: String = "",
     @PropertyName(Firestore.COLLECTION_ID)
     var collectionID: String = "",
-    @PropertyName(Firestore.CREATION_DATE)
+    @PropertyName(Firestore.CREATION__DATE)
     var creationDate: String = "",
     @PropertyName(Firestore.EMAIL)
     var email: String = "",      //corresponds to the firebaseAuth email used in account creation, updating this should also update the firebase Auth email variable and vice versa
