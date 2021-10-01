@@ -54,7 +54,7 @@ class FeedAdapter(val listener: FeedListener) : ListAdapter<FeedDomainModel, Rec
                         setCard(binding)
                         if(item.condition!=null){
                             binding.tvCondition.text = binding.root.context?.getConditionTitle(item.condition.type)
-                            binding.tvConditionValue.text = item.condition.abbreviatedName
+                            binding.tvConditionValue.text = item.condition.displayName
                         }
                         else{
                             binding.tvCondition.text = "-"
@@ -64,21 +64,23 @@ class FeedAdapter(val listener: FeedListener) : ListAdapter<FeedDomainModel, Rec
                         binding.tvRow1Colum2.text = if(item.product_group.isNullOrEmpty()) "-" else item.product_group
                         binding.tvHashValue.text = if(item.product_productNumber.isNullOrEmpty()) "-" else item.product_productNumber
                         binding.tvEditionValue.text = if(item.edition.isNullOrEmpty()) "-" else item.edition
+                        binding.tvProductType.text = if(item.product_rarity.isNullOrEmpty()) "-" else item.product_rarity
                     }
                     ProductCategory.SEALED -> {
                         setSealed(binding)
                         binding.tvSealedSet.text = if(item.product_group.isNullOrEmpty()) "-" else item.product_group
+                        binding.tvProductType.text = if(item.productType?.title.isNullOrEmpty()) "-" else item.productType?.title
                     }
                     ProductCategory.TOYS -> {
                         setToy(binding)
                         binding.tvToyLicense.text = "-"
+                        binding.tvProductType.text = if(item.productType?.title.isNullOrEmpty()) "-" else item.productType?.title
                         binding.tvToyHash.text = if(item.product_productNumber.isNullOrEmpty()) "-" else item.product_productNumber
                     }
                 }
             }
 
             binding.tvUserName.text = if(item.collectionDisplayName.isNullOrEmpty()) "-" else item.collectionDisplayName
-            binding.tvProductType.text = if(item.product_rarity.isNullOrEmpty()) "-" else item.product_rarity
             binding.tvTitle.text = if(item.product_productName.isNullOrEmpty()) "-" else item.product_productName
             binding.tvPrice.text = item?.price?.let { String.format(binding.tvPrice.context.getString(R.string.rate_common),it.toDouble()) }
 

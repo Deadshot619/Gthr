@@ -56,7 +56,7 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
     private var mProductCategory: ProductCategory? = null
     private var mCreatorUID: String? = null
 
-    private var mLimit : Int = 60
+    private var mLimit : Int = 30
     private var mPage: Int = 0
 
     //Paging
@@ -192,13 +192,13 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
                     if (!mIsLoading) {
                         if (total > 0)
                             if ((total-1) == lastVisibleItemCount) {
-//                                mIsLoading = true
-//                                when {
-//                                    mAll.mIsActive -> getFeed(mPage,null,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null)
-//                                    mCards.mIsActive -> getFeed(mPage,ProductCategory.CARDS,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null)
-//                                    mSealed.mIsActive -> getFeed(mPage,ProductCategory.SEALED,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null)
-//                                    mFunko.mIsActive -> getFeed(mPage,ProductCategory.TOYS,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null)
-//                                }
+                                mIsLoading = true
+                                when {
+                                    mAll.mIsActive -> getFeed(mPage,null,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null)
+                                    mCards.mIsActive -> getFeed(mPage,ProductCategory.CARDS,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null)
+                                    mSealed.mIsActive -> getFeed(mPage,ProductCategory.SEALED,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null)
+                                    mFunko.mIsActive -> getFeed(mPage,ProductCategory.TOYS,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null)
+                                }
                             }
                     }
                 }

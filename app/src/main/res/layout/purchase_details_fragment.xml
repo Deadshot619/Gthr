@@ -173,6 +173,8 @@
                                 android:text="@string/text_product_set" />
 
                             <TextView
+                                android:maxLines="1"
+                                android:ellipsize="end"
                                 android:id="@+id/tv_set_value"
                                 style="@style/ProductBlueTextValue"
                                 android:layout_width="0dp"
@@ -255,6 +257,8 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:id="@+id/tv_rarity_value"
                                     style="@style/ProductBlueTextValue"
                                     android:layout_width="0dp"
@@ -293,6 +297,8 @@
                                 android:text="@string/text_product_conditon" />
 
                             <TextView
+                                android:maxLines="1"
+                                android:ellipsize="end"
                                 android:id="@+id/tv_condition_value"
                                 style="@style/ProductBlueTextValue"
                                 android:layout_width="0dp"
@@ -337,14 +343,14 @@
                                     android:src="@drawable/ic_glob" />
 
                                 <TextView
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:id="@+id/tv_lang_value"
                                     style="@style/ProductBlueTextValue"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/margin_extra_small"
                                     android:layout_weight="7"
-                                    android:ellipsize="end"
-                                    android:maxLines="1"
                                     android:text="Chinese (T)"
                                     android:textAlignment="center" />
 
@@ -375,6 +381,8 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:id="@+id/tv_card_condition_value"
                                     style="@style/ProductBlueTextValue"
                                     android:layout_width="0dp"
@@ -397,6 +405,8 @@
                                 app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
                                 <TextView
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:id="@+id/tv_edition"
                                     style="@style/ProductBlueTextValue"
                                     android:layout_width="0dp"

@@ -371,8 +371,7 @@ class PurchaseDetailsFragment :
                     ).abbreviatedName
                 }
                 val condition = getConditionFromDisplayName(receiptDomainModel.condition.toString())
-                mTvCardConditionTitle.text =
-                    if (condition.type == ConditionType.UG) getString(R.string.raw) else condition.type.title.toUpperCase()
+                mTvCardConditionTitle.text = if (condition.type == ConditionType.UG) getString(R.string.raw) else condition.type.title.toUpperCase()
                 mTvCardConditionValue.text = condition.abbreviatedName
                 mTvCardEdition.text = receiptDomainModel.edition
             }
