@@ -10,6 +10,7 @@ data class UserInfoFirestoreModel(
     var birthDate: String = "",
     @PropertyName(Firestore.COLLECTION_ID)
     var collectionID: String = "",
+    @field:JvmField
     @PropertyName(Firestore.CREATION__DATE)
     var creationDate: String = "",
     @PropertyName(Firestore.EMAIL)
