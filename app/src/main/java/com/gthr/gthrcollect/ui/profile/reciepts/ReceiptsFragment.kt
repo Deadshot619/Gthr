@@ -4,18 +4,14 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.GthrCollect
-import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.ReceiptRepository
 import com.gthr.gthrcollect.databinding.ReceiptsFragmentBinding
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.ReceiptDisplayModel
-import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.profile.reciepts.adapter.ReceiptAdapter
 import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
-import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
-import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.enums.ReceiptType
 import com.gthr.gthrcollect.utils.extensions.getUserUID
 import com.gthr.gthrcollect.utils.extensions.showToast
@@ -51,7 +47,7 @@ class ReceiptsFragment : BaseFragment<ReceiptsViewModel, ReceiptsFragmentBinding
         setUpOnClickListener()
         setUpRecyclerView()
         setUpObservers()
-        mViewModel.fetchSaleReceipts(GthrCollect.prefs?.getUserUID()!!)
+//        mViewModel.fetchSaleReceipts(GthrCollect.prefs?.getUserUID()!!)
     }
 
     private fun setUpObservers() {

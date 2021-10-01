@@ -23,19 +23,16 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.askflow.afplaceyourask.AfPlaceYourAskFragment
 import com.gthr.gthrcollect.ui.base.BaseFragment
-import com.gthr.gthrcollect.ui.receiptdetail.ReceiptDetailActivity
 import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.constants.StripeConstants
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-import com.gthr.gthrcollect.utils.enums.ReceiptType
 import com.gthr.gthrcollect.utils.enums.SettingFlowType
 import com.gthr.gthrcollect.utils.enums.WebViewType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.isValidPrice
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.extensions.visible
-import com.gthr.gthrcollect.utils.helper.getOrderStatusFromRaw
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.Stripe
@@ -159,14 +156,14 @@ class AfBuyDirectlyPlaceFragment :
                         //  showToast(it.data.toString())
                         GthrLogger.e("buyNowData", it.data.toString())
 
-                        startActivity(
+/*                        startActivity(
                             ReceiptDetailActivity.getInstance(
                                 requireContext(),
                                 ReceiptType.PURCHASED,
                                 it.data,
                                 getOrderStatusFromRaw(it.data.orderStatus.toString())
                             )
-                        )
+                        )*/
                         activity?.finish()
                     }
                     is State.Failed -> {
