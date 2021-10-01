@@ -297,9 +297,9 @@ fun ReceiptModel.toReceiptDomainModel(key: String? = null) = ReceiptDomainModel(
     sellerShippingState = sellerShippingState,
     sellerShippingZipCode = sellerShippingZipCode,
     sellerShippingCountry = sellerShippingCountry,
-    edition = edition?.toString(),
-    lang = lang?.toString()?.toInt(),
-    condition = condition?.toString(),
+    edition = edition,
+    lang = (lang ?: "0").toInt(),
+    condition = condition,
 )
 
 fun SaleHistoryModel.toSaleHistoryDomainModel() = SaleHistoryDomainModel(

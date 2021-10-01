@@ -1,18 +1,12 @@
 package com.gthr.gthrcollect.model.mapper
 
-import com.gthr.gthrcollect.model.domain.FeedDomainModel
-import com.gthr.gthrcollect.model.domain.ForSaleItemDomainModel
-import com.gthr.gthrcollect.model.domain.ReceiptDomainModel
-import com.gthr.gthrcollect.model.domain.SearchBidsDomainModel
-import com.gthr.gthrcollect.model.domain.SearchProductDomainModel
+import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.model.network.cloudfunction.ForSaleItemModel
 import com.gthr.gthrcollect.model.network.cloudfunction.SearchBidsModel
 import com.gthr.gthrcollect.model.network.cloudfunction.SearchProductModel
-import com.gthr.gthrcollect.model.network.firebaserealtimedb.ReceiptModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.FeedModel
-import com.gthr.gthrcollect.utils.enums.FeedType
+import com.gthr.gthrcollect.model.network.firebaserealtimedb.ReceiptModel
 import com.gthr.gthrcollect.utils.getFeedType
-import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.getProductCategoryFromRaw
 import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
@@ -162,7 +156,7 @@ fun ReceiptModel.toReceiptDomainModel() =
         sellerUID = sellerUID,
         sellerPayout = sellerPayout,
         trackingNumber = trackingNumber,
-        lang = lang?.toInt(),
+        lang = (lang ?: "0").toInt(),
         sellerShippingAddressLine1 = sellerShippingAddressLine1,
         sellerShippingCity = sellerShippingCity,
         sellerShippingAddressLine2 = sellerShippingAddressLine2,
