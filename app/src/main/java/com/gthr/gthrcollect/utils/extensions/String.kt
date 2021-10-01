@@ -12,15 +12,15 @@ import java.util.*
 fun String.removeSlash() = this.replace("\\", "").replace("\"{", "{").replace("}\"", "}")
 
 fun String.toMobileNumber() : String{
-    val splitPhoneNumber = this.split("-")
+    val splitPhoneNumber = this.split("(")
     return if(splitPhoneNumber.size==2){
-        splitPhoneNumber[1]
+        splitPhoneNumber[1].removeRange(3..4).replace("-", "")
     } else ""
 }
 
 fun String.toCountryCode() : Int{
     return try {
-        val splitPhoneNumber = this.split("-")
+        val splitPhoneNumber = this.split("(")
         if(splitPhoneNumber.size==2){
             splitPhoneNumber[0].replace("+","").toInt()
         }
@@ -80,3 +80,8 @@ fun String.isValidPrice(): String {
 }
 
 fun String.urlToBitmap(): Bitmap? = BitmapFactory.decodeFile(this)
+
+fun String.formatMobileNo() : String {
+  val number= String.format("(%s) %s-%s", this.substring(0, 3), this.substring(3, 6), this.substring(6, 10))
+    return number
+}
