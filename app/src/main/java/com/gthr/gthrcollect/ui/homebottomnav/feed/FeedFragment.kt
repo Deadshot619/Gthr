@@ -1,7 +1,6 @@
 package com.gthr.gthrcollect.ui.homebottomnav.feed
 
 import android.content.Intent
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,14 +14,11 @@ import com.gthr.gthrcollect.model.domain.ForSaleItemDomainModel
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
-import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
-import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragment
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.enums.*
-import com.gthr.gthrcollect.utils.extensions.isUserGovIdVerified
 import com.gthr.gthrcollect.utils.extensions.isUserLoggedIn
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.getProductTypeFromObjectId
@@ -170,11 +166,14 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
             }
 
             override fun share(feedDomainModel: FeedDomainModel) {
-                if(feedDomainModel.feedType==FeedType.BID&&feedDomainModel.feedType==FeedType.ASK)
-                    if(feedDomainModel.product_prodObjectID!=null&&feedDomainModel.productType!=null)
-                        mViewModel.getProductDynamicLink(feedDomainModel.product_prodObjectID,feedDomainModel.productType)
-                if(feedDomainModel.feedType==FeedType.COLLECTION)
-                    if(feedDomainModel.collection_firebaseRef!=null)
+                if (feedDomainModel.feedType == FeedType.BID || feedDomainModel.feedType == FeedType.ASK)
+                    if (feedDomainModel.product_prodObjectID != null && feedDomainModel.productType != null)
+                        mViewModel.getProductDynamicLink(
+                            feedDomainModel.product_prodObjectID,
+                            feedDomainModel.productType
+                        )
+                if (feedDomainModel.feedType == FeedType.COLLECTION)
+                    if (feedDomainModel.collection_firebaseRef != null)
                         mViewModel.getCollectionsDynamicLink(feedDomainModel.collection_firebaseRef)
             }
         })
