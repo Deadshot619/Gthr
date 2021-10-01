@@ -17,6 +17,7 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
+import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragment
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
@@ -24,6 +25,7 @@ import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.isUserGovIdVerified
 import com.gthr.gthrcollect.utils.extensions.isUserLoggedIn
 import com.gthr.gthrcollect.utils.extensions.showToast
+import com.gthr.gthrcollect.utils.getProductTypeFromObjectId
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -147,15 +149,20 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
 
     private fun setUpFeedRecyclerView() {
         mAdapter = FeedAdapter(object : FeedAdapter.FeedListener{
-            override fun onClick(feedDomainModel: FeedDomainModel) {
-                if(feedDomainModel.feedType==FeedType.ASK)
-                    if (GthrCollect.prefs?.isUserLoggedIn() == true)
+            override fun buyNow(feedDomainModel: FeedDomainModel) {
+                when {
+                    GthrCollect.prefs?.isUserLoggedIn() == true -> {
                         startActivity(AskFlowActivity.getInstance(requireContext(), AskFlowType.BUY_DIRECTLY_FROM_SOMEONE, ProductDisplayModel(ForSaleItemDomainModel(feedDomainModel))))
-                    else
-                        startActivity(HomeBottomNavActivity.getInstance(requireContext(), goToProfileSignUp = true))
+                    }
+                    else -> {
+                        (activity as HomeBottomNavActivity).goToProfileSignUp()
+                    }
+                }
+            }
 
-                else if (feedDomainModel.feedType==FeedType.COLLECTION)
-                    startActivity(ProfileActivity.getInstance(requireContext(), ProfileNavigationType.PROFILE,feedDomainModel.collection_firebaseRef))
+            override fun goToProductDetail(feedDomainModel: FeedDomainModel) {
+                if(!feedDomainModel.product_prodObjectID.isNullOrEmpty())
+                    startActivity(ProductDetailActivity.getInstance(requireContext(),feedDomainModel.product_prodObjectID, getProductTypeFromObjectId(feedDomainModel.product_prodObjectID)))
             }
 
             override fun goToProfile(feedDomainModel: FeedDomainModel) {
@@ -169,7 +176,6 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
                 if(feedDomainModel.feedType==FeedType.COLLECTION)
                     if(feedDomainModel.collection_firebaseRef!=null)
                         mViewModel.getCollectionsDynamicLink(feedDomainModel.collection_firebaseRef)
-
             }
         })
         val linearLayoutManager = LinearLayoutManager(requireContext())

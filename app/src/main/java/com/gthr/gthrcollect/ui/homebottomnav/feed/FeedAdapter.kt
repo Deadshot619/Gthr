@@ -1,27 +1,21 @@
 package com.gthr.gthrcollect.ui.homebottomnav.feed
 
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
-import com.gthr.gthrcollect.databinding.ItemCollectionBinding
 import com.gthr.gthrcollect.databinding.ItemFeedBinding
 import com.gthr.gthrcollect.databinding.ItemLoadMoreBinding
-import com.gthr.gthrcollect.databinding.ItemTestProductBinding
 import com.gthr.gthrcollect.model.domain.FeedDomainModel
-import com.gthr.gthrcollect.model.domain.ReceiptDisplayModel
-import com.gthr.gthrcollect.ui.homebottomnav.search.adapter.ProductAdapter
 import com.gthr.gthrcollect.utils.enums.AdapterViewType
 import com.gthr.gthrcollect.utils.enums.FeedType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.helper.getConditionTitle
 import com.gthr.gthrcollect.utils.helper.getPokemonLanguageDomainModel
-import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class FeedAdapter(val listener: FeedListener) : ListAdapter<FeedDomainModel, RecyclerView.ViewHolder>(DiffCallback){
 
@@ -91,12 +85,24 @@ class FeedAdapter(val listener: FeedListener) : ListAdapter<FeedDomainModel, Rec
             else
                 item.frontImageURL?.let { binding.ivProduct.setProductImage(it) }
 
-            binding.root.setOnClickListener {
-                listener.onClick(item)
+            binding.ivProduct.setOnClickListener {
+                listener.goToProductDetail(item)
             }
 
             binding.ivShare.setOnClickListener {
                 listener.share(item)
+            }
+
+            binding.btnBuyNow.setOnClickListener{
+                listener.buyNow(item)
+            }
+
+            binding.ivUser.setOnClickListener {
+                listener.goToProfile(item)
+            }
+
+            binding.tvUserName.setOnClickListener {
+                listener.goToProfile(item)
             }
 
         }
@@ -162,7 +168,8 @@ class FeedAdapter(val listener: FeedListener) : ListAdapter<FeedDomainModel, Rec
     }
 
     interface FeedListener {
-        fun onClick(feedDomainModel: FeedDomainModel)
+        fun buyNow(feedDomainModel: FeedDomainModel)
+        fun goToProductDetail(feedDomainModel: FeedDomainModel)
         fun share(feedDomainModel: FeedDomainModel)
         fun goToProfile(feedDomainModel: FeedDomainModel)
     }
