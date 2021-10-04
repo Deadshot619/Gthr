@@ -4,7 +4,6 @@ import android.os.Parcelable
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.getProductCategory
-import com.gthr.gthrcollect.utils.getProductCategoryFromRaw
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -207,12 +206,13 @@ data class ForSaleItemDomainModel(
         //collectionItemRefKey = collectionItemRefKey,
 
 
-       // productGroup = feedDomainModel.license,
+        // productGroup = feedDomainModel.license,
         productProductNumber = feedDomainModel.product_productNumber,
         productProductName = feedDomainModel.product_productName,
         productFirebaseRef = feedDomainModel.product_firebaseRef,
         productCategory = feedDomainModel.productCategory,
         productType = feedDomainModel.productType,
+        productGroup = feedDomainModel.product_group,
         productNumberOfFavorites = feedDomainModel.product_numberOfFavorites,
         productRarity = feedDomainModel.product_rarity,
         productProdObjectID = feedDomainModel.product_prodObjectID,
