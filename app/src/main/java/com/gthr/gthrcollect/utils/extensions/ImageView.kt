@@ -11,12 +11,13 @@ fun ImageView.setImage(url: String) {
 }
 
 fun ImageView.setProfileImage(url: String){
-    Glide.with(this).load(url).error(R.drawable.profile_pic).into(this)
+    Glide.with(this).load(url).error(R.drawable.user_image).into(this)
 }
 
 fun ImageView.setProductImage(url: String){
     Glide.with(this).load(url).error(R.drawable.ic_product_error).into(this)
 }
+
 
 fun ImageView.setCollectionProductImage(url: String){
 

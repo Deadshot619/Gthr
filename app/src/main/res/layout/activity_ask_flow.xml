@@ -87,7 +87,7 @@
                     android:layout_height="@dimen/size_user_image_search_collection_cell"
                     android:layout_marginStart="@dimen/margin_start_search_collection_image"
                     android:elevation="@dimen/elevation_search_collection_cell"
-                    android:src="@drawable/user"
+                    android:src="@drawable/user_image"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@id/cpc_product_item"
                     app:layout_constraintTop_toTopOf="@id/cpc_product_item"
