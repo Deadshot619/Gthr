@@ -1,6 +1,8 @@
 package com.gthr.gthrcollect.model.domain
 
 import android.os.Parcelable
+import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
+import com.gthr.gthrcollect.utils.enums.EditionType
 import com.gthr.gthrcollect.utils.enums.ProductType
 import kotlinx.parcelize.Parcelize
 
@@ -26,7 +28,7 @@ data class ReceiptDomainModel(
     var abbrevaitedPaymentNumber: String? = null,
     var paymentProvider: String? = null,
     var trackingLink: String? = null,
-    var orderStatus: String? = null,
+    var orderStatus: CustomDeliveryButton.OrderStatus? = null,
     var shippingTierKey: String? = null,
     var buyerShippingName: String? = null,
     var buyerShippingAddressLine1: String? = null,
@@ -42,8 +44,7 @@ data class ReceiptDomainModel(
     var sellerShippingState: String? = null,
     var sellerShippingZipCode: String? = null,
     var sellerShippingCountry: String? = null,
-    var edition: String? = null,
-    var lang: Int? = null,
-    var condition: String? = null,
-    var order_status: String? = null,
+    var edition: EditionType? = null,
+    var lang: LanguageDomainModel? = null,
+    var condition: ConditionDomainModel? = null
 ) : Parcelable

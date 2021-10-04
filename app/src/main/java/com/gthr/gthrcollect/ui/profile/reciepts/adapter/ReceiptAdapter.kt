@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ItemReceiptBinding
 import com.gthr.gthrcollect.model.domain.ReceiptDisplayModel
+import com.gthr.gthrcollect.utils.enums.ConditionType
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.setProductImage
@@ -58,25 +59,12 @@ class ReceiptAdapter(val callback : ReceiptListener) : ListAdapter<ReceiptDispla
 
             when(item.productDisplayModel.productType){
                 ProductType.MAGIC_THE_GATHERING, ProductType.POKEMON, ProductType.YUGIOH -> {
-
-                    mTvLanguage.text =  when (item.productDisplayModel.productType) {
-                        ProductType.MAGIC_THE_GATHERING -> getMTGLanguage(item.receiptDomainModel.lang!!).abbreviatedName
-                        ProductType.POKEMON -> getPokemonLanguageDomainModel(item.receiptDomainModel.lang!!).abbreviatedName
-                        ProductType.YUGIOH -> getYugiohLanguageDomainModel(item.receiptDomainModel.lang!!).abbreviatedName
-                        else -> ""
-                    }
-                    mTvEdition.text = when (item.productDisplayModel.productType) {
-                        ProductType.MAGIC_THE_GATHERING -> getSelectedMTGEdition(item.receiptDomainModel.lang!!).title
-                        ProductType.POKEMON -> getPokemonSelectedEdition(item.receiptDomainModel.lang!!).title
-                        ProductType.YUGIOH -> getYugiohSelectedEdition(item.receiptDomainModel.lang!!).title
-                        else -> ""
-                    }
-
+                    mTvLanguage.text = item.receiptDomainModel.lang?.abbreviatedName
+                    mTvEdition.text = item.receiptDomainModel.edition?.title
                     GthrLogger.i("dbjdbf","${item.receiptDomainModel.condition}")
-
-                    val condition = getCondition(item.receiptDomainModel.condition?.toInt()!!)
-                    mTvConditionValue.text = condition.abbreviatedName
-                    mTvConditionTitle.text = binding.root.context?.getConditionTitle(condition.type)
+                    val condition = item.receiptDomainModel.condition
+                    mTvConditionValue.text = condition?.abbreviatedName
+                    mTvConditionTitle.text = binding.root.context?.getConditionTitle(condition?.type?:ConditionType.NEW)
 
                 }
                 ProductType.FUNKO, ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG -> {

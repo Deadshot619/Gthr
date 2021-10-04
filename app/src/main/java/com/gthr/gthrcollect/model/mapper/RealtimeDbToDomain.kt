@@ -7,8 +7,7 @@ import com.gthr.gthrcollect.utils.extensions.toDate
 import com.gthr.gthrcollect.utils.extensions.toRecentSaleDate
 import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.getProductType
-import com.gthr.gthrcollect.utils.helper.getConditionFromRaw
-import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
+import com.gthr.gthrcollect.utils.helper.*
 
 fun CollectionInfoModel.toCollectionInfoDomainModel(collectionId: String = "") =
     CollectionInfoDomainModel(
@@ -281,7 +280,6 @@ fun ReceiptModel.toReceiptDomainModel(key: String? = null) = ReceiptDomainModel(
     abbrevaitedPaymentNumber = abbrevaitedPaymentNumber,
     paymentProvider = paymentProvider,
     trackingLink = trackingLink,
-    orderStatus = orderStatus,
     shippingTierKey = shippingTierKey?.toString(),
     buyerShippingName = buyerShippingName,
     buyerShippingAddressLine1 = buyerShippingAddressLine1,
@@ -297,9 +295,10 @@ fun ReceiptModel.toReceiptDomainModel(key: String? = null) = ReceiptDomainModel(
     sellerShippingState = sellerShippingState,
     sellerShippingZipCode = sellerShippingZipCode,
     sellerShippingCountry = sellerShippingCountry,
-    edition = edition,
-    lang = if (lang.isNullOrEmpty()) 0 else lang?.toInt(),
-    condition = condition,
+    edition =  getEditionDomainModelFromKey(if (edition.isNullOrEmpty()) 0 else edition?.toInt()!! ,getProductType(productType.toString())?:ProductType.POKEMON),
+    lang = getLanguageDomainModelFromKey(if (lang.isNullOrEmpty()) 0 else lang?.toInt()!! ,getProductType(productType.toString())?:ProductType.POKEMON),
+    condition = getCondition(if(condition.isNullOrEmpty()) -1 else condition?.toInt()!! ),
+    orderStatus = getOrderStatusFromRaw(orderStatus?:"")
 )
 
 fun SaleHistoryModel.toSaleHistoryDomainModel() = SaleHistoryDomainModel(

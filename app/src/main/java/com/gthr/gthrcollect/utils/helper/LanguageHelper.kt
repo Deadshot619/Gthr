@@ -136,3 +136,10 @@ fun getMTGLanguage(key: Int): LanguageDomainModel {
         else -> LanguageDomainModel(key = key, displayName = "", abbreviatedName = "")
     }
 }
+
+fun getLanguageDomainModelFromKey(key : Int, productType: ProductType) : LanguageDomainModel? = when (productType) {
+    ProductType.MAGIC_THE_GATHERING -> getMTGLanguage(key)
+    ProductType.POKEMON -> getPokemonLanguageDomainModel(key)
+    ProductType.YUGIOH -> getYugiohLanguageDomainModel(key)
+    else -> null
+}
