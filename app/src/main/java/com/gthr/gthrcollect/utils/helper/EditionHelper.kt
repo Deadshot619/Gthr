@@ -3,6 +3,7 @@ package com.gthr.gthrcollect.utils.helper
 import com.gthr.gthrcollect.model.domain.PokemonDomainModel
 import com.gthr.gthrcollect.model.domain.YugiohDomainModel
 import com.gthr.gthrcollect.utils.enums.EditionType
+import com.gthr.gthrcollect.utils.enums.ProductType
 
 fun getYugiohEditionKey(langKey: Int, yugiohCard: YugiohDomainModel): Int {
     return when (langKey) {
@@ -113,4 +114,11 @@ fun getYugiohSelectedEdition(key: Int) : EditionType {
         3 -> EditionType.UNLIMITED
         else -> EditionType.NOTHING
     }
+}
+
+fun getEditionDomainModelFromKey(key : Int, productType: ProductType) : EditionType? = when (productType) {
+    ProductType.MAGIC_THE_GATHERING -> getSelectedMTGEdition(key)
+    ProductType.POKEMON -> getPokemonSelectedEdition(key)
+    ProductType.YUGIOH -> getYugiohSelectedEdition(key)
+    else -> null
 }

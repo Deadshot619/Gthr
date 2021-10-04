@@ -149,7 +149,7 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
         get() = _conditionList
 
     init {
-        setSelectedConditionTitle(ConditionType.UG)  //Default selection UG i.e. Raw
+        //setSelectedConditionTitle(ConditionType.UG)  //Default selection UG i.e. Raw
         val addressList = GthrCollect.prefs?.userInfoModel?.addressList
         addressList?.let {
             for (index in addressList.indices){

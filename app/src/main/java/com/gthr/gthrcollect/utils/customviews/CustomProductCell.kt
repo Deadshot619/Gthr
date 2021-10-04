@@ -17,6 +17,7 @@ import com.gthr.gthrcollect.utils.enums.ConditionType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.*
+import com.gthr.gthrcollect.utils.helper.getConditionTitle
 
 class CustomProductCell @JvmOverloads constructor(
     context: Context,
@@ -174,7 +175,7 @@ class CustomProductCell @JvmOverloads constructor(
                 setProductNumber(model.productProductNumber ?: "-")
                 setEdition(model.edition ?: "-")
                 setLanguage(model.language?.abbreviatedName ?: "-")
-                setConditionTitle(model.condition?.type?.title ?: "-")
+                setConditionTitle(context.getConditionTitle(model.condition?.type!!) ?: "-")
                 setConditionValue(model.condition?.abbreviatedName ?: "-")
             }
             ProductType.FUNKO, ProductCategory.TOYS -> {
@@ -212,7 +213,7 @@ class CustomProductCell @JvmOverloads constructor(
                 setProductNumber(model.product_productNumber.toString() ?: "-")
                 setEdition(model.edition?.title ?: "-")
                 setLanguage(model.language?.abbreviatedName ?: "-")
-                setConditionTitle(model.condition?.type?.title ?: "-")
+                setConditionTitle(context.getConditionTitle(model.condition?.type!!) ?: "-")
                 setConditionValue(model.condition?.abbreviatedName ?: "-")
             }
             ProductType.FUNKO, ProductCategory.TOYS -> {

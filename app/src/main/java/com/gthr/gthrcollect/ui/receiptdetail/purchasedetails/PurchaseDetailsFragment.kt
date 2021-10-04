@@ -359,21 +359,11 @@ class PurchaseDetailsFragment :
         when (type) {
             ProductCategory.CARDS -> {
                 llCondition.gone()
-                mTvCardLangValue.text = when (receiptDomainModel.productType) {
-                    ProductType.POKEMON -> getPokemonLanguageDomainModel(
-                        receiptDomainModel.lang ?: 0
-                    ).abbreviatedName
-                    ProductType.MAGIC_THE_GATHERING -> getMTGLanguage(
-                        receiptDomainModel.lang ?: 0
-                    ).abbreviatedName
-                    /*ProductType.YUGIOH*/else -> getYugiohLanguageDomainModel(
-                        receiptDomainModel.lang ?: 0
-                    ).abbreviatedName
-                }
-                val condition = getConditionFromDisplayName(receiptDomainModel.condition.toString())
-                mTvCardConditionTitle.text = if (condition.type == ConditionType.UG) getString(R.string.raw) else condition.type.title.toUpperCase()
-                mTvCardConditionValue.text = condition.abbreviatedName
-                mTvCardEdition.text = receiptDomainModel.edition
+                mTvCardLangValue.text = receiptDomainModel.lang?.abbreviatedName
+                val condition = receiptDomainModel.condition
+                mTvCardConditionTitle.text = context?.getConditionTitle(condition?.type?:ConditionType.NEW)
+                mTvCardConditionValue.text = condition?.abbreviatedName
+                mTvCardEdition.text = receiptDomainModel.edition?.title
             }
             ProductCategory.SEALED -> {
                 llNumberRarity.gone()

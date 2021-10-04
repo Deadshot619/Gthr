@@ -6,10 +6,11 @@ import com.gthr.gthrcollect.model.network.cloudfunction.SearchBidsModel
 import com.gthr.gthrcollect.model.network.cloudfunction.SearchProductModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.FeedModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.ReceiptModel
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.getFeedType
 import com.gthr.gthrcollect.utils.getProductCategoryFromRaw
 import com.gthr.gthrcollect.utils.getProductType
-import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
+import com.gthr.gthrcollect.utils.helper.*
 
 fun SearchProductModel.toSearchProductDomainModel() =
     SearchProductDomainModel(
@@ -149,14 +150,14 @@ fun ReceiptModel.toReceiptDomainModel() =
         objectID = objectID,
         shippingTierKey = shippingTierKey.toString(),
         buyerCharge = buyerCharge,
-        edition = edition,
+        edition = getEditionDomainModelFromKey(if (edition.isNullOrEmpty()) 0 else edition?.toInt()!! ,getProductType(productType.toString())?:ProductType.POKEMON),
         buyerShippingState = buyerShippingState,
         buyerShippingCity = buyerShippingCity,
         itemRefKey = itemRefKey,
         sellerUID = sellerUID,
         sellerPayout = sellerPayout,
         trackingNumber = trackingNumber,
-        lang = if (lang.isNullOrEmpty()) 0 else lang?.toInt(),
+        lang = getLanguageDomainModelFromKey(if (lang.isNullOrEmpty()) 0 else lang?.toInt()!! ,getProductType(productType.toString())?:ProductType.POKEMON),
         sellerShippingAddressLine1 = sellerShippingAddressLine1,
         sellerShippingCity = sellerShippingCity,
         sellerShippingAddressLine2 = sellerShippingAddressLine2,
@@ -171,9 +172,9 @@ fun ReceiptModel.toReceiptDomainModel() =
         saleID = saleID,
         sellerShippingCountry = sellerShippingCountry,
         sellerShippingName = sellerShippingName,
-        condition = condition,
+        condition = getCondition(if(condition.isNullOrEmpty()) -1 else condition?.toInt()!! ),
         buyerUID = buyerUID,
         paymentID = paymentID,
-        sellerShippingState = sellerShippingState
-
+        sellerShippingState = sellerShippingState,
+        orderStatus = getOrderStatusFromRaw(orderStatus?:"")
         )

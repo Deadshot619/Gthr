@@ -27,11 +27,11 @@ import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-import com.gthr.gthrcollect.utils.enums.AskFlowType
-import com.gthr.gthrcollect.utils.enums.ReceiptType
-import com.gthr.gthrcollect.utils.enums.SettingFlowType
-import com.gthr.gthrcollect.utils.enums.WebViewType
+import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.*
+import com.gthr.gthrcollect.utils.getProductType
+import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
+import com.gthr.gthrcollect.utils.helper.getLanguageDomainModelFromKey
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFragmentBinding>() {
@@ -167,10 +167,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                         ) {
                             mViewModel.updateProductForAsk()
                         } else {
-                            goToReceiptPage(
-                                ReceiptType.ASK_PLACED,
-                                CustomDeliveryButton.OrderStatus.ASK_PLACED
-                            )
+                            goToReceiptPage()
                             (activity as AskFlowActivity)?.finish()
                         }
                     }
@@ -190,10 +187,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     }
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
-                        goToReceiptPage(
-                            ReceiptType.ASK_PLACED,
-                            CustomDeliveryButton.OrderStatus.ASK_PLACED
-                        )
+                        goToReceiptPage()
                         activity?.finish()
                     }
                     is State.Failed -> {
@@ -380,10 +374,7 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                     }
                     is State.Success -> {
                         (activity as AskFlowActivity)?.showProgressBar(false)
-                        goToReceiptPage(
-                            ReceiptType.ASK_PLACED,
-                            CustomDeliveryButton.OrderStatus.ASK_PLACED
-                        )
+                        goToReceiptPage()
                     }
                 }
             }
@@ -440,10 +431,6 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
                         )
                     else
                         mViewModel.insertBid()
-                }
-                AskFlowType.BUY_DIRECTLY_FROM_SOMEONE -> {
-                    goToReceiptPage(ReceiptType.PURCHASED, CustomDeliveryButton.OrderStatus.ORDERED)
-                    activity?.finish()
                 }
                 else -> {
                     if (mViewModel.mAddress != null)
@@ -593,19 +580,17 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         }
     }
 
-    private fun goToReceiptPage(
-        receiptType: ReceiptType,
-        orderStatus: CustomDeliveryButton.OrderStatus
-    ) {
+    private fun goToReceiptPage() {
         val receiptDomainModel = if (mViewModel.isEdit)
             ReceiptDomainModel(
+                orderStatus = CustomDeliveryButton.OrderStatus.ASK_PLACED,
                 totalAskPrice = mViewModel.askPrice.value,
                 shippingReimbursement = mViewModel.shippingProcessing,
                 objectID = mViewModel.productDisplayModel?.objectID,
                 productType = mViewModel.productType,
-                lang = mViewModel.productDisplayModel?.forsaleItemNodel?.language?.key,
-                condition = mViewModel.productDisplayModel?.forsaleItemNodel?.condition?.displayName,
-                edition = mViewModel.productDisplayModel?.forsaleItemNodel?.edition,
+                lang = mViewModel.productDisplayModel?.forsaleItemNodel?.language,
+                condition = mViewModel.productDisplayModel?.forsaleItemNodel?.condition,
+                edition = getEditionTypeFromRowType(mViewModel.productDisplayModel?.forsaleItemNodel?.edition?:""),
                 itemRefKey = mViewModel.productDisplayModel?.refKey.toString(),
                 imageUrl = if ((requireActivity() as AskFlowActivity).getAskFlowType() == AskFlowType.COLLECT)
                     mViewModel.mFrontImageDownloadUrl
@@ -614,13 +599,14 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
             )
         else
             ReceiptDomainModel(
+                orderStatus = CustomDeliveryButton.OrderStatus.ASK_PLACED,
                 totalAskPrice = mViewModel.askPrice.value,
                 shippingReimbursement = mViewModel.shippingProcessing,
                 objectID = mViewModel.productDisplayModel?.objectID,
                 productType = mViewModel.productType,
-                lang = mViewModel.selectedLanguage.value?.peekContent()?.key,
-                condition = mViewModel.selectedCondition.value?.peekContent()?.displayName,
-                edition = mViewModel.selectedEdition.value?.peekContent()?.title,
+                lang = mViewModel.selectedLanguage.value?.peekContent(),
+                condition = mViewModel.selectedCondition.value?.peekContent(),
+                edition = mViewModel.selectedEdition.value?.peekContent(),
                 itemRefKey = mViewModel.productDisplayModel?.refKey,
                 imageUrl = mViewModel.mFrontImageDownloadUrl
             )
@@ -628,9 +614,8 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         startActivity(
             ReceiptDetailActivity.getInstance(
                 requireContext(),
-                receiptType,
-                receiptDomainModel,
-                orderStatus
+                ReceiptType.ASK_PLACED,
+                receiptDomainModel
             )
         )
         activity?.finish()

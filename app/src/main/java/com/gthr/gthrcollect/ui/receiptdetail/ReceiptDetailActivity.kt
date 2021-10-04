@@ -37,7 +37,7 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
     override fun onBinding() {
         mReceiptType = intent.getSerializableExtra(KEY_RECEIPT_TYPE) as ReceiptType
         mReceiptModel = intent.getParcelableExtra<ReceiptDomainModel>(KEY_RECEIPT_MODEL)!!
-        mButtonType = intent.getSerializableExtra(KEY_BUTTON_TYPE) as CustomDeliveryButton.OrderStatus
+        mButtonType = mReceiptModel.orderStatus!!
 
         mViewModel.setReceiptModel(mReceiptModel)
         mViewModel.getProductDetailData(mReceiptModel.productType!!, mReceiptModel.objectID!!)
@@ -108,18 +108,15 @@ class ReceiptDetailActivity : BaseActivity<ReceiptDetailViewModel, ActivityRecei
     companion object {
         private const val KEY_RECEIPT_TYPE = "key_receipt_type"
         private const val KEY_RECEIPT_MODEL = "key_receipt_model"
-        private const val KEY_BUTTON_TYPE = "key_button_type"
 
         fun getInstance(
             context: Context,
             receiptType: ReceiptType,
-            receiptDomainModel: ReceiptDomainModel,
-            buttonType: CustomDeliveryButton.OrderStatus = CustomDeliveryButton.OrderStatus.DELIVERED
+            receiptDomainModel: ReceiptDomainModel
         ) =
             Intent(context, ReceiptDetailActivity::class.java).apply {
                 putExtra(KEY_RECEIPT_TYPE, receiptType)
                 putExtra(KEY_RECEIPT_MODEL, receiptDomainModel)
-                putExtra(KEY_BUTTON_TYPE, buttonType)
             }
     }
 }
