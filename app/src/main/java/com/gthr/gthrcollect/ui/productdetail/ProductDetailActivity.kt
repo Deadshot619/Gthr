@@ -25,11 +25,9 @@ import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
+import com.gthr.gthrcollect.utils.extensions.isUserLoggedIn
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.logger.GthrLogger
-import androidx.core.content.ContextCompat
-
-
 
 
 class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProductDetailBinding>() {
@@ -59,7 +57,8 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
         mObjectId = intent.getStringExtra(KEY_OBJECT_ID)
         mProductType = intent.getSerializableExtra(KEY_PRODUCT_TYPE) as ProductType
 
-        mViewModel.checkProductFavorite(mProductType!!, mObjectId!!)
+        if (GthrCollect.prefs?.isUserLoggedIn() == true)
+            mViewModel.checkProductFavorite(mProductType!!, mObjectId!!)
         initViews()
         setUpProductType()
         setUpObserver()
@@ -363,9 +362,14 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        val isFavorite = (mViewModel.isFavorite.value?.peekContent() as State.Success).data
+        val isFavorite = try {
+            (mViewModel.isFavorite.value?.peekContent() as State.Success).data
+        } catch (e: Exception) {
+            false
+        }
         val settingsItem = menu.findItem(com.gthr.gthrcollect.R.id.menu_favourite)
-        settingsItem.icon = getDrawable( if(isFavorite) com.gthr.gthrcollect.R.drawable.ic_solid_heart else com.gthr.gthrcollect.R.drawable.ic_heart )
+        settingsItem.icon =
+            getDrawable(if (isFavorite) com.gthr.gthrcollect.R.drawable.ic_solid_heart else com.gthr.gthrcollect.R.drawable.ic_heart)
         return super.onPrepareOptionsMenu(menu)
     }
 
