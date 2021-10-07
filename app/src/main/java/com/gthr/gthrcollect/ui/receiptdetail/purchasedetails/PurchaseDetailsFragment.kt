@@ -336,7 +336,8 @@ class PurchaseDetailsFragment :
                 mTvTotalValue.text = String.format(getString(R.string.rate_common), totalPayout)
 
                 mViewModel.setProductImage(mReceiptModel.imageUrl.toString())
-                mProductImage.setImage(mReceiptModel.imageUrl.toString())
+                mProductImage.setProductImage(mReceiptModel.imageUrl.toString())
+                mViewModel.setProductImage(mReceiptModel.imageUrl.toString())
                 mTvPaymentTitle.text = getString(R.string.text_payout)
                 mTvPaymentId.text = GthrCollect.prefs?.userInfoModel?.emailId.toString()
                 mIvPaymentLogo.gone()
@@ -415,7 +416,8 @@ class PurchaseDetailsFragment :
                             mViewModel.getCollectionInfo(mReceiptModel.sellerUID!!)
 
                         it.data?.let {
-                            it.firImageURL?.let {
+                            it.firImageURL?.let label@{
+                                if (mReceiptType == ReceiptType.ASK_PLACED) return@label
                                 mProductImage.setProductImage(it)
                                 mViewModel.setProductImage(it)
                             }
