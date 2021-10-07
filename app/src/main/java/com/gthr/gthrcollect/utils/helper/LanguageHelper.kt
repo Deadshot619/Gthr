@@ -114,7 +114,7 @@ fun isPromo(productModel: ProductDisplayModel, pokemonModel: PokemonDomainModel)
 
 fun getMTGLangList(): List<LanguageDomainModel> {
     val languageList = arrayListOf<LanguageDomainModel>()
-    for (i in 1..10) {
+    for (i in 0..10) {
         languageList.add(getMTGLanguage(i))
     }
     return languageList

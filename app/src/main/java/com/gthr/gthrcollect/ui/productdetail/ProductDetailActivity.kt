@@ -14,7 +14,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.gthr.gthrcollect.GthrCollect
-import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.data.repository.ProductDetailsRepository
 import com.gthr.gthrcollect.data.repository.SearchRepository
@@ -28,6 +27,10 @@ import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.logger.GthrLogger
+import androidx.core.content.ContextCompat
+
+
+
 
 class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProductDetailBinding>() {
     override fun getViewBinding() = ActivityProductDetailBinding.inflate(layoutInflater)
@@ -107,6 +110,7 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
                 }
             }
         }
+
         mViewModel.mFunkoProductDetails.observe(this) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
@@ -125,6 +129,7 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
                 }
             }
         }
+
         mViewModel.mPokemonProductDetails.observe(this) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
@@ -143,6 +148,7 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
                 }
             }
         }
+
         mViewModel.mSealedProductDetails.observe(this) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
@@ -161,6 +167,7 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
                 }
             }
         }
+
         mViewModel.mYugiohProductDetails.observe(this) { it ->
             it.contentIfNotHandled?.let {
                 when (it) {
@@ -192,6 +199,22 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
                         showProgressBar(false)
                         showToast("Added!")
                         mViewModel.checkProductFavorite(mProductType!!, mObjectId!!)
+                    }
+                }
+            }
+        })
+
+        mViewModel.isFavorite.observe(this, {
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Failed -> {
+                        showProgressBar(false)
+                        showToast(it.message)
+                    }
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+                        showProgressBar(false)
+                        invalidateOptionsMenu()
                     }
                 }
             }
@@ -279,9 +302,9 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
     }
 
     private fun setUpNavGraph(mProductDisplayModel : ProductDisplayModel ) { //Setting NavGraph manually so that we can pass data to start destination
-        findNavController(R.id.nav_host_fragment)
+        findNavController(com.gthr.gthrcollect.R.id.nav_host_fragment)
             .setGraph(
-                R.navigation.product_detail_nav_graph,
+                com.gthr.gthrcollect.R.navigation.product_detail_nav_graph,
                 ProductDetailFragmentArgs(productDisplayModel = mProductDisplayModel).toBundle()
             )
     }
@@ -295,7 +318,7 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
     }
 
     private fun setUpNavigationAndActionBar() {
-        mNavController = this.findNavController(R.id.nav_host_fragment)
+        mNavController = this.findNavController(com.gthr.gthrcollect.R.id.nav_host_fragment)
         mAppBarConfiguration = /*AppBarConfiguration(navController.graph)*/
             AppBarConfiguration.Builder().build()   //To show up button in start destination
 
@@ -304,10 +327,10 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
         mNavController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
             mToolbar.title = ""     //Set Title as empty as we have used custom title
             upButtonVisibility(isVisible = true)
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_up_button) //Set up button as <
+            supportActionBar?.setHomeAsUpIndicator(com.gthr.gthrcollect.R.drawable.ic_up_button) //Set up button as <
 
             when (nd.id) {
-                R.id.productDetailFragment -> {
+                com.gthr.gthrcollect.R.id.productDetailFragment -> {
                     setToolbarTitle("")
                 }
             }
@@ -335,16 +358,27 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.product_detail_menu, menu)
+        menuInflater.inflate(com.gthr.gthrcollect.R.menu.product_detail_menu, menu)
         return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        val isFavorite = (mViewModel.isFavorite.value?.peekContent() as State.Success).data
+        val settingsItem = menu.findItem(com.gthr.gthrcollect.R.id.menu_favourite)
+        settingsItem.icon = getDrawable( if(isFavorite) com.gthr.gthrcollect.R.drawable.ic_solid_heart else com.gthr.gthrcollect.R.drawable.ic_heart )
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun invalidateOptionsMenu() {
+        super.invalidateOptionsMenu()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_share -> {
+            com.gthr.gthrcollect.R.id.menu_share -> {
                 mViewModel.getProductDynamicLink(mObjectId!!,mProductType!!)
             }
-            R.id.menu_favourite -> {
+            com.gthr.gthrcollect.R.id.menu_favourite -> {
                 if(isUserLoggedIn())
                     addRemoveFavourite()
                 else
