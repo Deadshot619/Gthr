@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.gthr.gthrcollect.databinding.CardFollowBinding
 import com.gthr.gthrcollect.model.domain.CollectionInfoDomainModel
+import com.gthr.gthrcollect.utils.extensions.setProfileImage
 
 class FollowUserAdapter(
     val callback: FollowUserListener
@@ -39,11 +39,13 @@ class FollowUserAdapter(
     inner class FollowUserViewHolder(var binding: CardFollowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: CollectionInfoDomainModel, callback: FollowUserListener) {
-            binding.root.setOnClickListener {
-                callback.onClick(data)
+            binding.run {
+                root.setOnClickListener {
+                    callback.onClick(data)
+                }
+                btnEditAccountInfo.mTvTitle.text = data.collectionDisplayName
+                userImage.setProfileImage(data.profileImage)
             }
-            binding.btnEditAccountInfo.mTvTitle.setText(data.collectionDisplayName)
-            Glide.with(binding.root.context).load(data.profileImage).into(binding.userImage)
         }
     }
 
