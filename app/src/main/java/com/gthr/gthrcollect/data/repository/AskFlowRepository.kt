@@ -431,7 +431,26 @@ class AskFlowRepository {
         scope.await()
     }
 
-    //  "acct_1IIPTp2a5NtXmrBn"
+    fun getUserDisplayName(collectionID: String) = flow<State<String>> {
+        emit(State.loading())
+        val dataSnapshot =
+            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionID)
+                .child(FirebaseRealtimeDatabase.COLLECTION_DISPLAY_NAME).get().await()
+        emit(State.success(dataSnapshot.value.toString()))
+    }.catch {
+        emit(State.failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    fun getUserImage(collectionID: String) = flow<State<String>> {
+        emit(State.loading())
+        val ref = mStorageRef.child(FirebaseStorage.PROFILE_IMAGE).child(collectionID)
+        val url = ref.downloadUrl.await()
+        emit(State.success(url.toString()))
+    }.catch {
+        emit(State.failed(it.message.toString()))
+
+    }.flowOn(Dispatchers.IO)
+
     fun authStripeAccount(userId: String? = null) = flow<State<Boolean>> {
         emit(State.loading())
         val dataSnapshot =
@@ -453,26 +472,6 @@ class AskFlowRepository {
 
     }.catch {
         emit(State.failed(it.message.toString()))
-    }.flowOn(Dispatchers.IO)
-
-    fun getUserDisplayName(collectionID: String) = flow<State<String>> {
-        emit(State.loading())
-        val dataSnapshot =
-            mFirebaseRD.child(FirebaseRealtimeDatabase.COLLECTION_INFO_MODEL).child(collectionID)
-                .child(FirebaseRealtimeDatabase.COLLECTION_DISPLAY_NAME).get().await()
-        emit(State.success(dataSnapshot.value.toString()))
-    }.catch {
-        emit(State.failed(it.message.toString()))
-    }.flowOn(Dispatchers.IO)
-
-    fun getUserImage(collectionID: String) = flow<State<String>> {
-        emit(State.loading())
-        val ref = mStorageRef.child(FirebaseStorage.PROFILE_IMAGE).child(collectionID)
-        val url = ref.downloadUrl.await()
-        emit(State.success(url.toString()))
-    }.catch {
-        emit(State.failed(it.message.toString()))
-
     }.flowOn(Dispatchers.IO)
 
     fun getStripePayoutLink() =
