@@ -13,7 +13,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.User
-import com.gthr.gthrcollect.model.mapper.*
+import com.gthr.gthrcollect.model.mapper.toAlgoliaCollectionModel
+import com.gthr.gthrcollect.model.mapper.toUser
 import com.gthr.gthrcollect.model.network.algolia.AlgoliaCollectionModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.CollectionInfoModel
 import com.gthr.gthrcollect.model.network.firestore.UserInfoFirestoreModel
@@ -110,6 +111,13 @@ class EditAccountInfoRepository {
         val file = Uri.fromFile(File(url))
         val ref = mStorageRef.child(GOVERNMENT_ID).child(imageSide).child(uid)
         ref.putFile(file).await()
+
+        //Make IDs underReview to true to indicate ID is under review
+        val underReview = mapOf<String, Boolean>(
+            Firestore.UNDER_REVIEW to true
+        )
+        mFirestore.collection(Firestore.COLLECTION_USER_INFO)
+            .document(uid).update(Firestore.UNDER_REVIEW, true).await()
 
         emit(State.success(true))
 

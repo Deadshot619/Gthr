@@ -12,6 +12,7 @@
     <string name="rate_negative">-%.2f</string>
     <string name="rate_positive">+%.2f</string>
     <string name="rate_common">$%.2f</string>
+    <string name="text_id_under_review">Your ID is under review, it might take up to 24 hours to be verified.</string>
 
     <!-- Send Email-->
     <string name="intent_email_chooser_title">Send Email…</string>

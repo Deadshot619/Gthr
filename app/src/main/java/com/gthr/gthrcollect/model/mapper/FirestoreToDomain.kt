@@ -32,7 +32,7 @@ fun UserInfoFirestoreModel.toUserInfoDomainModel() =
         yyyy = this.birthDate.toYYYY(),
         addressList = this.addressList.toShippingAddressDomainModelList(),
         collectionId = this.collectionID,
-        isVerified = /*this.isVerified*/true
+        isVerified = this.isVerified
     )
 
 

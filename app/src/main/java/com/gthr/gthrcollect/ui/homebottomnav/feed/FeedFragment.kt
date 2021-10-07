@@ -1,10 +1,14 @@
 package com.gthr.gthrcollect.ui.homebottomnav.feed
 
+import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.gthr.gthrcollect.GthrCollect
+import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.DynamicLinkRepository
 import com.gthr.gthrcollect.data.repository.FeedRepository
 import com.gthr.gthrcollect.databinding.FeedFragmentBinding
@@ -14,6 +18,7 @@ import com.gthr.gthrcollect.model.domain.ForSaleItemDomainModel
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
+import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
@@ -22,12 +27,11 @@ import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.isUserLoggedIn
 import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.getProductTypeFromObjectId
+import com.gthr.gthrcollect.utils.helper.isUserVerified
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 
 
 class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
@@ -172,7 +176,27 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
             override fun buyNow(feedDomainModel: FeedDomainModel) {
                 when {
                     GthrCollect.prefs?.isUserLoggedIn() == true -> {
-                        startActivity(AskFlowActivity.getInstance(requireContext(), AskFlowType.BUY_DIRECTLY_FROM_SOMEONE, ProductDisplayModel(ForSaleItemDomainModel(feedDomainModel))))
+                        lifecycleScope.launch {
+                            showProgressBar()
+                            activity?.isUserVerified(runEverytime = {
+                                showProgressBar(false)
+                            }, verified = {
+                                startActivity(
+                                    AskFlowActivity.getInstance(
+                                        requireContext(),
+                                        AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
+                                        ProductDisplayModel(ForSaleItemDomainModel(feedDomainModel))
+                                    )
+                                )
+                            }, notVerified = {
+                                startActivityForResult(
+                                    EditAccountInfoActivity.getInstance(
+                                        requireContext(),
+                                        EditAccountInfoFlow.GOV_ID
+                                    ), REQUEST_CODE_ID_VERIFICATION_BUY
+                                )
+                            })
+                        }
                     }
                     else -> {
                         (activity as HomeBottomNavActivity).goToProfileSignUp()
@@ -280,8 +304,16 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
         mainJob?.cancel()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (data != null && resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_CODE_ID_VERIFICATION_BUY)
+                showToast(getString(R.string.text_id_under_review))
+        }
+    }
+
     companion object {
         private const val REQUEST_CODE_ID_VERIFICATION_BUY = 69
-        private const val REQUEST_CODE_ID_VERIFICATION_SELL = 420
     }
 }

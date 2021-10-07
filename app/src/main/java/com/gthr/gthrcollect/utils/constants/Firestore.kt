@@ -28,7 +28,10 @@ object Firestore {
     const val CREATION__DATE = "creation_date"
     const val EMAIL = "email"      //corresponds to the firebaseAuth email used in account creation, updating this should also update the firebase Auth email variable and vice versa
     const val IS_SELLER = "isSeller"       //(Legacy) defaults to true
-    const val IS_VERIFIED = "isVerified"        //once id is verified it is set to true, default to false
+    const val IS_VERIFIED =
+        "isVerified"        //once id is verified it is set to true, default to false
+    const val UNDER_REVIEW =
+        "underReview"        //once id is verified it is set to true, default to false
     const val PHONE_NUMBER = "phoneNumber"        //includes country code and phone number
 
 

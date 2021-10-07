@@ -21,6 +21,8 @@ data class UserInfoFirestoreModel(
     @field:JvmField
     @PropertyName(Firestore.IS_VERIFIED)
     var isVerified: Boolean = false,        //once id is verified it is set to true, default to false
+    @PropertyName(Firestore.UNDER_REVIEW)
+    var underReview: Boolean = false,        //Indicates whether ID verification is under review or not
     @PropertyName(Firestore.FIRST_NAME)
     var firstName: String = "",
     @PropertyName(Firestore.LAST_NAME)

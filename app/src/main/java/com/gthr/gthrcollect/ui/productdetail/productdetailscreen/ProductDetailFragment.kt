@@ -2,12 +2,12 @@ package com.gthr.gthrcollect.ui.productdetail.productdetailscreen
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,7 +43,9 @@ import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.getProductCategory
+import com.gthr.gthrcollect.utils.helper.isUserVerified
 import com.gthr.gthrcollect.utils.logger.GthrLogger
+import kotlinx.coroutines.launch
 
 class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetailFragmentBinding>() {
 
@@ -289,23 +291,29 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
                 )
         }
         mBtnSell.setOnClickListener {
-            if (GthrCollect.prefs?.isUserLoggedIn() == true)
-                if (GthrCollect.prefs?.isUserGovIdVerified() == true)
-                    startActivity(
-                        AskFlowActivity.getInstance(
-                            requireContext(),
-                            AskFlowType.SELL,
-                            mProductDisplayModel
+            if (GthrCollect.prefs?.isUserLoggedIn() == true) {
+                lifecycleScope.launch {
+                    showProgressBar()
+                    activity?.isUserVerified(runEverytime = {
+                        showProgressBar(false)
+                    }, verified = {
+                        startActivity(
+                            AskFlowActivity.getInstance(
+                                requireContext(),
+                                AskFlowType.SELL,
+                                mProductDisplayModel
+                            )
                         )
-                    )
-                else
-                    startActivityForResult(
-                        EditAccountInfoActivity.getInstance(
-                            requireContext(),
-                            EditAccountInfoFlow.GOV_ID
-                        ), REQUEST_CODE_ID_VERIFICATION_SELL
-                    )
-            else{
+                    }, notVerified = {
+                        startActivityForResult(
+                            EditAccountInfoActivity.getInstance(
+                                requireContext(),
+                                EditAccountInfoFlow.GOV_ID
+                            ), REQUEST_CODE_ID_VERIFICATION_SELL
+                        )
+                    })
+                }
+            } else {
                 startActivity(
                     HomeBottomNavActivity.getInstance(
                         requireContext(),
@@ -501,7 +509,6 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
     }
 
     private fun setViewData(data: YugiohDomainModel) {
-        Log.i("dschjds", "setViewData: "+data.firImageURL)
         mIvProduct.setProductImage(data.firImageURL)
         mTvDescription.text = data.firstDescription
         mLayoutProductDetailMainDetailsBinding.run {
@@ -546,28 +553,12 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         super.onActivityResult(requestCode, resultCode, data)
 
         if (data != null && resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_CODE_ID_VERIFICATION_BUY)
-                startActivity(
-                    AskFlowActivity.getInstance(
-                        requireContext(),
-                        AskFlowType.BUY,
-                        mProductDisplayModel
-                    )
-                )
-
             if (requestCode == REQUEST_CODE_ID_VERIFICATION_SELL)
-                startActivity(
-                    AskFlowActivity.getInstance(
-                        requireContext(),
-                        AskFlowType.SELL,
-                        mProductDisplayModel
-                    )
-                )
+                showToast(getString(R.string.text_id_under_review))
         }
     }
 
     companion object {
-        private const val REQUEST_CODE_ID_VERIFICATION_BUY = 69
         private const val REQUEST_CODE_ID_VERIFICATION_SELL = 420
     }
 }

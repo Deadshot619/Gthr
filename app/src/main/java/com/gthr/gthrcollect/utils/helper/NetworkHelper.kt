@@ -1,9 +1,19 @@
 package com.gthr.gthrcollect.utils.helper
 
+import android.content.Context
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.gthr.gthrcollect.GthrCollect
+import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.model.mapper.*
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.*
+import com.gthr.gthrcollect.model.network.firestore.UserInfoFirestoreModel
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
+import com.gthr.gthrcollect.utils.constants.Firestore
 import com.gthr.gthrcollect.utils.enums.ProductType
+import com.gthr.gthrcollect.utils.extensions.getUserUID
+import com.gthr.gthrcollect.utils.extensions.showToast
+import kotlinx.coroutines.tasks.await
 
 fun getFbRtModelNameFromProduct(productType: ProductType): String = when (productType) {
     ProductType.MAGIC_THE_GATHERING -> FirebaseRealtimeDatabase.MTG_MODEL
@@ -36,4 +46,26 @@ fun <T> getDomainModelFromNetworkModel(
     ProductType.FUNKO -> (networkModel as FunkoModel).toFunkoDomainModel(referenceKey ?: "") as T
     ProductType.SEALED_POKEMON, ProductType.SEALED_YUGIOH, ProductType.SEALED_MTG ->
         (networkModel as SealedModel).toSealedDomainModel(referenceKey ?: "") as T
+}
+
+/**
+ * Method to check if user is verified or not, Should be run on [Dispatchers.Main] thread.
+ */
+suspend fun Context.isUserVerified(
+    runEverytime: () -> Unit,
+    verified: () -> Unit,
+    notVerified: () -> Unit
+) {
+    val userId = GthrCollect.prefs?.getUserUID()
+    if (userId.isNullOrEmpty()) return
+    val userModel = Firebase.firestore.collection(Firestore.COLLECTION_USER_INFO)
+        .document(userId).get().await().toObject(UserInfoFirestoreModel::class.java)
+    userModel?.let {
+        when {
+            it.isVerified -> verified()
+            it.underReview -> this.showToast(this.getString(R.string.text_id_under_review))
+            else -> notVerified()
+        }
+    }
+    runEverytime()
 }
