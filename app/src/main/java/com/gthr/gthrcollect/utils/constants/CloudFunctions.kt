@@ -48,6 +48,7 @@ object CloudFunctions {
     const val PAYMENT_ID = "paymentId"
     const val RECIEPT = "reciept"
     const val ORDER_STATUS = "order_status"
+    const val FIR_IMAGE_URL = "firImageURL"
 
 
 }

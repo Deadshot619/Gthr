@@ -19,6 +19,8 @@ import com.gthr.gthrcollect.utils.extensions.fromJsonString
 import com.gthr.gthrcollect.utils.extensions.gson
 import com.gthr.gthrcollect.utils.extensions.toJsonElement
 import com.gthr.gthrcollect.utils.getProductType
+import com.gthr.gthrcollect.utils.getProductTypeFromObjectId
+import com.gthr.gthrcollect.utils.helper.getFbRtModelNameFromProduct
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -190,19 +192,38 @@ class SearchRepository {
             collectionData.forEachIndexed { index, it ->
                 try {
                     val profileImage: String? =
-                        (collectionData[index][FirebaseRealtimeDatabase.PROFILE_URL_KEY]
-                            ?: "") as String
+                        (collectionData[index][FirebaseRealtimeDatabase.PROFILE_URL_KEY] ?: "") as String
                     val userName: String? =
                         (collectionData[index][FirebaseRealtimeDatabase.COLLECTION_DISPLAY_NAME]
                             ?: "") as String
-                    val objectId: String? =
-                        (collectionData[index][FirebaseRealtimeDatabase.OBJECT_ID] ?: "") as String
+                    val objectId: String? = (collectionData[index][FirebaseRealtimeDatabase.OBJECT_ID] ?: "") as String
+
+              //      val productType: String? = (collectionData[index][FirebaseRealtimeDatabase.PRODUCT_TYPE] ?: "") as String
 
                     var frontImage: String? = null
-                    collectionData[index][FirebaseRealtimeDatabase.COLLECTION_LIST]?.let label@{
+
+                    collectionData[index][FirebaseRealtimeDatabase.COLLECTION_LIST]?.let label@{ it ->
 
                         val collectionItemList = it as HashMap<String, HashMap<String, String>>
-                        frontImage = collectionItemList.entries.iterator().next().value[FirebaseRealtimeDatabase.FRONT_IMAGE_URL] ?: ""
+                        if (collectionItemList.size > 0){
+                            frontImage = collectionItemList.entries.iterator().next().value[FirebaseRealtimeDatabase.FRONT_IMAGE_URL] ?: ""
+
+                            if (frontImage==null || frontImage.isNullOrEmpty()){
+
+                                val objId= collectionItemList.entries.iterator().next().value[FirebaseRealtimeDatabase.OBJECT_ID] ?: ""
+                                val productTypeFromObjectId: ProductType = getProductTypeFromObjectId(objId)
+                                //  val pType: ProductType? =getProductType(productTypeFromObjectId.title.toString())
+
+                                val productNode=getFbRtModelNameFromProduct(productTypeFromObjectId)
+
+                                val firImageURL =
+                                    mFirebaseRD.child(productNode.toString()).orderByChild(FirebaseRealtimeDatabase.OBJECT_ID).equalTo(objId).get().await().children.first().child(CloudFunctions.FIR_IMAGE_URL).value
+
+                                if (firImageURL!=null || !firImageURL.toString().isNullOrEmpty()){
+                                    frontImage=firImageURL.toString()
+                                }
+                            }
+                        }
                     }
 
                     GthrLogger.d("FRONT_IMAGE_URL","it-> ${it["userRefKey"]} ) $frontImage")
