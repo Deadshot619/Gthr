@@ -94,6 +94,11 @@ class AfBuyDirectlyPlaceFragment :
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        mViewModel.checkAddress()
+    }
+
     private fun setUpObserve() {
         mViewModel.mBuyingDirFromSomeOneProPrice.observe(this) {
             mTvRateValue.text = String.format(getString(R.string.rate_common), it)

@@ -78,6 +78,11 @@ class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFrag
         setUpObserve()
     }
 
+    override fun onResume() {
+        super.onResume()
+        mViewModel.checkAddress()
+    }
+
     private fun setUpObserve() {
 
         mViewModel.insertCollectionRDB.observe(viewLifecycleOwner) {

@@ -21,15 +21,15 @@ import kotlinx.coroutines.launch
 
 class FeedViewModel(private val feedRepository: FeedRepository,private val dynamicLinkRepository : DynamicLinkRepository) : ViewModel() {
 
-    private var fetchFeed: Job? = null
+    private var fetchFeedJob: Job? = null
 
     private val _mFeedList = MutableLiveData<Event<State<List<FeedDomainModel>>>>()
     val mFeedList: LiveData<Event<State<List<FeedDomainModel>>>>
         get() = _mFeedList
 
     fun fetchFeed(limit: Int?, page: Int?, productCategory: ProductCategory?, creatorUID: String?){
-        fetchFeed?.cancel()
-        fetchFeed = viewModelScope.launch {
+        fetchFeedJob?.cancel()
+        fetchFeedJob = viewModelScope.launch {
             feedRepository.fetchFeed(limit,page,productCategory,creatorUID).collect {
                 _mFeedList.value = Event(it)
             }
@@ -79,6 +79,6 @@ class FeedViewModel(private val feedRepository: FeedRepository,private val dynam
 
     override fun onCleared() {
         super.onCleared()
-        fetchFeed?.cancel()
+        fetchFeedJob?.cancel()
     }
 }

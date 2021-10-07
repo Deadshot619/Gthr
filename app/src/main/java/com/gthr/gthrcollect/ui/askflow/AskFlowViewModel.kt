@@ -150,19 +150,25 @@ class AskFlowViewModel(private val repository: AskFlowRepository) : BaseViewMode
 
     init {
         //setSelectedConditionTitle(ConditionType.UG)  //Default selection UG i.e. Raw
+        checkUserStripeAccId(GthrCollect.prefs?.getUserUID())
+    }
+
+    fun checkAddress(){
         val addressList = GthrCollect.prefs?.userInfoModel?.addressList
+        var flag = true
         addressList?.let {
             for (index in addressList.indices){
                 val address= addressList[index]
                 address.addresKey=index
                 if (address.isSelected) {
                     mAddress = address
+                    flag = false
                     break
                 }
             }
         }
-
-        checkUserStripeAccId(GthrCollect.prefs?.getUserUID())
+        if(addressList==null||flag)
+            mAddress = null
     }
 
     fun setProductType(productType: ProductType) {
