@@ -256,20 +256,12 @@ class ProductDetailFragment : BaseFragment<ProductDetailsViewModel, ProductDetai
         }
         mBtnBuy.setOnClickListener {
             if (GthrCollect.prefs?.isUserLoggedIn() == true)
-                if (GthrCollect.prefs?.isUserGovIdVerified() == true)
                     startActivity(
                         AskFlowActivity.getInstance(
                             requireContext(),
                             AskFlowType.BUY,
                             mProductDisplayModel
                         )
-                    )
-                else
-                    startActivityForResult(
-                        EditAccountInfoActivity.getInstance(
-                            requireContext(),
-                            EditAccountInfoFlow.GOV_ID
-                        ), REQUEST_CODE_ID_VERIFICATION_BUY
                     )
             else
                 startActivity(
