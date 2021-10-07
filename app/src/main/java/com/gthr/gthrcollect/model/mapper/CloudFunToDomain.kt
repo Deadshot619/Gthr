@@ -8,6 +8,7 @@ import com.gthr.gthrcollect.model.network.firebaserealtimedb.FeedModel
 import com.gthr.gthrcollect.model.network.firebaserealtimedb.ReceiptModel
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.getFeedType
+import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.getProductCategoryFromRaw
 import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.helper.*
@@ -135,7 +136,7 @@ fun FeedModel.toFeedDomainModel() = FeedDomainModel(
     updatedAt = updatedAt?:"",
     userRefKey = userRefKey?:"",
 
-    productCategory = getProductCategoryFromRaw(productCategory?:product_productCategory.toString()) ,
+    productCategory = if (!productCategory.isNullOrEmpty()) getProductCategoryFromRaw(productCategory) else getProductCategory(getProductType(product_productType.toString())!!),
     productType = if(productType!=null&&productType.isNotEmpty()) getProductType(productType) else null,
     feedType = getFeedType(feedType?:""),
 

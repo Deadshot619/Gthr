@@ -60,31 +60,36 @@ class FeedRepository {
         val list = mutableListOf<FeedDomainModel>()
         feeds.forEach {
             GthrLogger.i("dhcjsdf","list $it")
-            when{
-                it.containsKey(FirebaseRealtimeDatabase.BID) -> {
-                    val jsonElement: JsonElement = gson.toJsonElement(it[FirebaseRealtimeDatabase.BID])
-                    val feed: FeedModel? = gson.fromJsonElement(jsonElement)
-                    feed?.let {
-                        feed.feedType = "bid"
-                        list.add(feed.toFeedDomainModel())
+            try{
+                when{
+                    it.containsKey(FirebaseRealtimeDatabase.BID) -> {
+                        val jsonElement: JsonElement = gson.toJsonElement(it[FirebaseRealtimeDatabase.BID])
+                        val feed: FeedModel? = gson.fromJsonElement(jsonElement)
+                        feed?.let {
+                            feed.feedType = "bid"
+                            list.add(feed.toFeedDomainModel())
+                        }
+                    }
+                    it.containsKey(FirebaseRealtimeDatabase.ASK) -> {
+                        val jsonElement: JsonElement = gson.toJsonElement(it[FirebaseRealtimeDatabase.ASK])
+                        val feed: FeedModel? = gson.fromJsonElement(jsonElement)
+                        feed?.let {
+                            feed.feedType = "ask"
+                            list.add(feed.toFeedDomainModel())
+                        }
+                    }
+                    it.containsKey(FirebaseRealtimeDatabase.COLLECTION) -> {
+                        val jsonElement: JsonElement = gson.toJsonElement(it[FirebaseRealtimeDatabase.COLLECTION])
+                        val feed: FeedModel? = gson.fromJsonElement(jsonElement)
+                        feed?.let {
+                            feed.feedType = "collection"
+                            list.add(feed.toFeedDomainModel())
+                        }
                     }
                 }
-                it.containsKey(FirebaseRealtimeDatabase.ASK) -> {
-                    val jsonElement: JsonElement = gson.toJsonElement(it[FirebaseRealtimeDatabase.ASK])
-                    val feed: FeedModel? = gson.fromJsonElement(jsonElement)
-                    feed?.let {
-                        feed.feedType = "ask"
-                        list.add(feed.toFeedDomainModel())
-                    }
-                }
-                it.containsKey(FirebaseRealtimeDatabase.COLLECTION) -> {
-                    val jsonElement: JsonElement = gson.toJsonElement(it[FirebaseRealtimeDatabase.COLLECTION])
-                    val feed: FeedModel? = gson.fromJsonElement(jsonElement)
-                    feed?.let {
-                        feed.feedType = "collection"
-                        list.add(feed.toFeedDomainModel())
-                    }
-                }
+            }
+            catch (e : Exception){
+                GthrLogger.e("dfjcndf", "failed. "+e.message.toString())
             }
         }
 

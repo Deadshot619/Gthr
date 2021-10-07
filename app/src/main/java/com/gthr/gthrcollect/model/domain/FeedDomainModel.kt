@@ -21,6 +21,7 @@ data class FeedDomainModel(
     val id: Int? = -1,
     val itemObjectID: String? = null,
     val itemRefKey: String? = null,
+    val product_productType: String? = null,
 
     val price: Int? = 0,
 
