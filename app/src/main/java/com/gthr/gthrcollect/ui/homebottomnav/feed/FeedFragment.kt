@@ -26,6 +26,9 @@ import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+
 
 class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
 
@@ -43,6 +46,7 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
     private lateinit var mCards: CustomCollectionTypeView
     private lateinit var mSealed: CustomCollectionTypeView
     private lateinit var mFunko: CustomCollectionTypeView
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
     private lateinit var mRvMain : RecyclerView
     private lateinit var mAdapter: FeedAdapter
@@ -66,7 +70,23 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
         setUpClickListeners()
         setUpFeedRecyclerView()
         setUpObserver()
+        setUpSwipeRefresh()
         getFeed(0,null,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null)
+    }
+
+    private fun setUpSwipeRefresh() {
+        mSwipeRefreshLayout.setOnRefreshListener {
+            loadFeed()
+        }
+    }
+
+    private fun loadFeed() {
+        when{
+            mAll.mIsActive-> getFeed(0,null,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null,true)
+            mCards.mIsActive-> getFeed(0,ProductCategory.CARDS,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null,true)
+            mSealed.mIsActive-> getFeed(0,ProductCategory.SEALED,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null,true)
+            mFunko.mIsActive-> getFeed(0,ProductCategory.TOYS,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null,true)
+        }
     }
 
     private fun getFeed(page: Int, productCategory: ProductCategory?, creatorUID: String?,setReset: Boolean = false){
@@ -113,12 +133,15 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> {
-                        if (mPage == 0)
-                            showProgressBar()
+                        if (mPage == 0){
+                            if(!mSwipeRefreshLayout.isRefreshing)
+                                showProgressBar()
+                        }
                         else
                             mViewModel.addFeedDisplayListLoadMore()
                     }
                     is State.Failed -> {
+                        mSwipeRefreshLayout.isRefreshing = false;
                         showProgressBar(false)
                         showToast(it.message)
                         mIsLoading = false
@@ -128,6 +151,7 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
                             mViewModel.removeFeedDisplayListLoadMore()
                     }
                     is State.Success -> {
+                        mSwipeRefreshLayout.isRefreshing = false;
                         showProgressBar(false)
                         mViewModel.setFeedDisplayList(it.data)
                         if (it.data.size < mLimit) {
@@ -218,6 +242,7 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
             mSealed = cctSealed
             mFunko = cctFunko
             mRvMain = rvMain
+            mSwipeRefreshLayout = swipeRefreshItems
             mCctvList = listOf(mAll, mCards, mSealed, mFunko)
             initProgressBar(mViewBinding.layoutProgress)
         }
@@ -240,12 +265,7 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
             mCctvList.forEach {
                 it.setActive(it == this@selectView)
             }
-            when{
-                mAll.mIsActive-> getFeed(0,null,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null,true)
-                mCards.mIsActive-> getFeed(0,ProductCategory.CARDS,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null,true)
-                mSealed.mIsActive-> getFeed(0,ProductCategory.SEALED,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null,true)
-                mFunko.mIsActive-> getFeed(0,ProductCategory.TOYS,GthrCollect.prefs?.collectionInfoModel?.userRefKey?:null,true)
-            }
+            loadFeed()
         }
     }
 

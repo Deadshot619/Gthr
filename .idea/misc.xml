@@ -10,18 +10,15 @@
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_buylist_details_fragment.xml" value="0.17543859649122806" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_place_your_ask_fragment.xml" value="0.4" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_review_your_ask_fragment.xml" value="0.4" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/card_profile_header.xml" value="0.20394736842105263" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/ea_id_verification_fragment.xml" value="0.16799999999999998" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/ea_profile_fragment.xml" value="0.20394736842105263" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/edit_account_info_fragment.xml" value="0.2" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/image_preview.xml" value="0.14479166666666668" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/item_feed.xml" value="0.20394736842105263" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/layout_custom_product_cell.xml" value="0.17543859649122806" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/layout_ea_section_selection.xml" value="0.264" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/market_fragment.xml" value="0.16798245614035087" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/my_profile.xml" value="0.3051948051948052" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/receipts_fragment.xml" value="0.2012987012987013" />
-        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.11666666666666667" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_btn_price_blue.xml" value="0.24739583333333334" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_btn_secondary_blue.xml" value="0.24739583333333334" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/drawable/bg_custum_legality_blue.xml" value="0.24739583333333334" />
@@ -33,6 +30,7 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_add_pic_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buy_directly_review_fragment.xml" value="0.4" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buy_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buying_directly_place_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_buylist_details_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_card_condition_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_card_edition_fragment.xml" value="0.23125" />
@@ -41,6 +39,7 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/af_review_your_ask_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/card_profile_header.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/ea_otp_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/edit_profile_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/fav_sold_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/feed_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/follow_fragment.xml" value="0.23125" />
@@ -64,17 +63,15 @@
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/recent_sell_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/search_fragment.xml" value="0.23125" />
         <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/layout/up_for_sell_fragment.xml" value="0.23125" />
+        <entry key="..\:/NeoSoft/Code/gthrAndroid/app/src/main/res/menu/product_detail_menu.xml" value="0.23125" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/activity_ask_flow.xml" value="0.1" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/activity_product_detail.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/activity_receipt_detail.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/af_buy_directly_review_fragment.xml" value="0.5" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/af_buying_directly_place_fragment.xml" value="0.33" />
-        <entry key="..\:/gthrAndroid/app/src/main/res/layout/af_place_your_ask_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/layout_progress_bar.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/product_detail_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/purchase_details_fragment.xml" value="0.4083333333333333" />
-        <entry key="..\:/gthrAndroid/app/src/main/res/layout/settings_fragment.xml" value="0.20416666666666666" />
-        <entry key="..\:/gthrAndroid/app/src/main/res/layout/stripe_bottomsheet.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>
