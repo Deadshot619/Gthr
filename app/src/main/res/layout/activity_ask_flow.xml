@@ -102,6 +102,7 @@
                     android:background="@drawable/bg_search_collection_username"
                     android:elevation="@dimen/elevation_user_name_search_collection_cell"
                     android:ellipsize="end"
+                    android:maxLines="1"
                     android:paddingVertical="@dimen/padding_vertical_search_collection_cell"
                     android:paddingStart="@dimen/padding_start_search_collection_cell"
                     android:text="-"
