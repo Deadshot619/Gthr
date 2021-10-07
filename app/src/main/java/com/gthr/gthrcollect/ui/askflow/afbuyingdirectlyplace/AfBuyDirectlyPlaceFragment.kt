@@ -29,10 +29,7 @@ import com.gthr.gthrcollect.utils.constants.StripeConstants
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
 import com.gthr.gthrcollect.utils.enums.SettingFlowType
 import com.gthr.gthrcollect.utils.enums.WebViewType
-import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.isValidPrice
-import com.gthr.gthrcollect.utils.extensions.showToast
-import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.Stripe
@@ -402,7 +399,8 @@ class AfBuyDirectlyPlaceFragment :
 
         mTvRow3.gone()
         mTvRow3Value.gone()
-        mBtnNext.text = getString(R.string.text_accept)
+        mPayout.invisible()
+        mBtnNext.text = getString(R.string.text_pay_now)
         mViewBinding.executePendingBindings()
 
     }
