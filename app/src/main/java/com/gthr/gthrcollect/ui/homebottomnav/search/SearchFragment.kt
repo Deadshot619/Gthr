@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,7 +33,6 @@ import com.gthr.gthrcollect.utils.extensions.showToast
 import com.gthr.gthrcollect.utils.extensions.visible
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 
@@ -309,7 +309,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             }
         }
 
-        val gridLayoutManager = GridLayoutManager(requireContext(), spanCount)
+        val gridLayoutManager = GridLayoutManager(requireContext(), SPAN_COUNT)
         object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int = when {
                 mCctProduct.mIsActive || mCctForSale.mIsActive -> when (mProductAdapter.getItemViewType(position)) {
@@ -801,7 +801,7 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
 
         mSearchBar.setTextChangeListener {
             mSearchTypingJob?.cancel()
-            mSearchTypingJob = MainScope().launch {
+            mSearchTypingJob = lifecycleScope.launch {
                 ticker(SEARCH_DELAY).receive()  //Add some delay before an api call
                 if (mCctCollections.mIsActive) searchCollection(mLimit, true)
 
@@ -1218,8 +1218,13 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mSearchTypingJob?.cancel()
+    }
+
     companion object {
-        private const val spanCount = 2
+        private const val SPAN_COUNT = 2
         private const val SEARCH_DELAY = 1000L
         private const val SORT_BY_SALE = "price"
     }

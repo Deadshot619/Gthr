@@ -253,10 +253,8 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, EditProfileFragme
         val userdata = UserInfoDomainModel()
         userdata.bio = mEtBio.text.toString().trim()
         userdata.displayName = mEt_display_name.mEtMain.text.toString().trim()
-        if (userdata.bio.isEmpty()) {
-            mEtBio.setError(getString(R.string.required_field))
-        } else if (userdata.displayName.isEmpty()) {
-            mEt_display_name.mEtMain.setError((getString(R.string.required_field)))
+        if (userdata.displayName.isEmpty()) {
+            mEt_display_name.mEtMain.error = (getString(R.string.required_field))
         } else {
             mViewModel.addCollectionInfoModel(userdata)
         }

@@ -159,6 +159,7 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
     }
 
     private fun clearJobs() {
+        searchAskJob?.cancel()
         searchProductJob?.cancel()
         searchCollectionJob?.cancel()
     }
