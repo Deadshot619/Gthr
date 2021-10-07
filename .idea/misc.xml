@@ -6,6 +6,7 @@
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/drawable/ic_coming_soon.xml" value="0.21754385964912282" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/activity_ask_flow.xml" value="0.20833333333333334" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/activity_edit_account_info.xml" value="0.13712737127371274" />
+        <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/activity_settings.xml" value="0.18728070175438596" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_buy_directly_review_fragment.xml" value="0.20833333333333334" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_buylist_details_fragment.xml" value="0.17543859649122806" />
         <entry key="..\:/Documents/Android Projects/GthrCollect/app/src/main/res/layout/af_place_your_ask_fragment.xml" value="0.4" />
@@ -69,12 +70,9 @@
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/activity_receipt_detail.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/af_buy_directly_review_fragment.xml" value="0.5" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/af_buying_directly_place_fragment.xml" value="0.33" />
-        <entry key="..\:/gthrAndroid/app/src/main/res/layout/af_place_your_ask_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/layout_progress_bar.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/product_detail_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/purchase_details_fragment.xml" value="0.4083333333333333" />
-        <entry key="..\:/gthrAndroid/app/src/main/res/layout/settings_fragment.xml" value="0.20416666666666666" />
-        <entry key="..\:/gthrAndroid/app/src/main/res/layout/stripe_bottomsheet.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

@@ -4,27 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.algolia.search.client.ClientSearch
-import com.algolia.search.model.APIKey
-import com.algolia.search.model.ApplicationID
-import com.algolia.search.model.IndexName
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.databinding.ActivitySettingsBinding
-import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
-import com.gthr.gthrcollect.ui.askflow.afcardlanguage.AfCardLanguageFragmentArgs
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.settings.settingsscreen.SettingsFragmentDirections
-import com.gthr.gthrcollect.utils.constants.AlgoliaConstants
-import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.SettingFlowType
-import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
 
 class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding>() {
     override val mViewModel: SettingsViewModel by viewModels()
@@ -38,6 +27,7 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
 
     override fun onBinding() {
         mSettingsType = intent?.getSerializableExtra(GOTO) as SettingFlowType
+        initProgressBar(mViewBinding.layoutProgress)
         setUpNavGraph()
         setSupportActionBar(mViewBinding.toolbar)
         setUpNavigationAndActionBar()
@@ -45,7 +35,6 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
         if (mSettingsType == SettingFlowType.SHIPPING_ADDRESS){
             mNavController.navigate(SettingsFragmentDirections.actionSettingsFragmentToEditShippingAddressFragment(true))
         }
-
     }
 
     private fun setUpNavigationAndActionBar() {
