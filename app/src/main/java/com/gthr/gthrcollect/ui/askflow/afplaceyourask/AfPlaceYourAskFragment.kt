@@ -27,11 +27,12 @@ import com.gthr.gthrcollect.ui.settings.SettingsActivity
 import com.gthr.gthrcollect.ui.termsandfaq.TermsAndFaqActivity
 import com.gthr.gthrcollect.utils.customviews.CustomDeliveryButton
 import com.gthr.gthrcollect.utils.customviews.CustomSecondaryButton
-import com.gthr.gthrcollect.utils.enums.*
+import com.gthr.gthrcollect.utils.enums.AskFlowType
+import com.gthr.gthrcollect.utils.enums.ReceiptType
+import com.gthr.gthrcollect.utils.enums.SettingFlowType
+import com.gthr.gthrcollect.utils.enums.WebViewType
 import com.gthr.gthrcollect.utils.extensions.*
-import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.helper.getEditionTypeFromRowType
-import com.gthr.gthrcollect.utils.helper.getLanguageDomainModelFromKey
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 
 class AfPlaceYourAskFragment : BaseFragment<AskFlowViewModel, AfPlaceYourAskFragmentBinding>() {

@@ -67,9 +67,11 @@
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/activity_receipt_detail.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/af_buy_directly_review_fragment.xml" value="0.5" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/af_buying_directly_place_fragment.xml" value="0.33" />
+        <entry key="..\:/gthrAndroid/app/src/main/res/layout/af_place_your_ask_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/layout_progress_bar.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/product_detail_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/gthrAndroid/app/src/main/res/layout/purchase_details_fragment.xml" value="0.4083333333333333" />
+        <entry key="..\:/gthrAndroid/app/src/main/res/layout/settings_fragment.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>
