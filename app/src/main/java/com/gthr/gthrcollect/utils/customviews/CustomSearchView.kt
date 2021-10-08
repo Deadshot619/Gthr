@@ -73,7 +73,7 @@ class CustomSearchView @JvmOverloads constructor(
 //            val DRAWABLE_BOTTOM = 3
 
                 if (event.action == MotionEvent.ACTION_UP)
-                    if (event.rawX >= this.right - this.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
+                    if (event.rawX >= this.right - this.compoundDrawables[DRAWABLE_RIGHT].bounds.width() - this.paddingRight) {
                         this.setText("")
                         return@OnTouchListener true
                     }

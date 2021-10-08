@@ -22,6 +22,8 @@ import com.gthr.gthrcollect.ui.editaccountinfo.EditAccountInfoActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
+import com.gthr.gthrcollect.utils.constants.DynamicLinkConstants
+import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.customviews.CustomCollectionTypeView
 import com.gthr.gthrcollect.utils.enums.*
 import com.gthr.gthrcollect.utils.extensions.isUserLoggedIn
@@ -32,10 +34,6 @@ import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import com.gthr.gthrcollect.utils.constants.DynamicLinkConstants
-import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 
 
 class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
