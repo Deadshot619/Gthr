@@ -34,7 +34,7 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
     override val mViewModel: MarketViewModel by viewModels {
             MarketViewModelFactory(
                 feedRepository,searchRepository
-        )
+            )
     }
 
     private var mainJob: Job? = null
@@ -220,7 +220,6 @@ class MarketFragment : BaseFragment<MarketViewModel, MarketFragmentBinding>() {
                                 it
                             )
                         )
-
                     }
                 mRvLowestAsk.adapter = mLowestAskAdapter
 

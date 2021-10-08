@@ -110,8 +110,8 @@ data class ForSaleItemDomainModel(
     ) : this(
         price = price,
         itemObjectID = model.objectID,
-        productFirImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.imageUris else collectionItem.frontImageURL,
-        frontImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.imageUris else collectionItem.frontImageURL,
+        productFirImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
+        frontImageURL = if (collectionItem.frontImageURL.isNullOrEmpty()) model.firImageURL else collectionItem.frontImageURL,
         backImageURL = collectionItem.backImageURL,
         language = collectionItem.language,
         condition = collectionItem.condition,

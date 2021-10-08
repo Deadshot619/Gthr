@@ -189,14 +189,14 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/csv_search"
+            app:layout_constraintTop_toBottomOf="@id/csv_search"
             app:layout_constraintBottom_toBottomOf="parent"
             app:spanCount="2"
             tools:listitem="@layout/item_collection" />
 
         <!--Progress Bar-->
         <include
-            android:id="@+id/layout_progress"
+            android:id="@id/layout_progress"
             layout="@layout/layout_progress_bar"/>
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

@@ -17,7 +17,8 @@
         <activity android:name=".ui.productdetail.ProductDetailActivity" />
         <activity android:name=".ui.receiptdetail.ReceiptDetailActivity" />
         <activity android:name=".ui.editprofile.EditProfileActivity" />
-        <activity android:name=".ui.profile.ProfileActivity" />
+        <activity android:name=".ui.profile.ProfileActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.test.TestProductActivity" />
         <activity android:name=".ui.test.TestActivity" />
         <activity android:name=".ui.termsandfaq.TermsAndFaqActivity" />
