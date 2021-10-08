@@ -139,14 +139,15 @@ class ProfileViewModel(private val mProfileRepository: ProfileRepository, privat
         }
     }
 
-    fun getCollectionProduct(map : Map<String, CollectionItemModel>){
+    fun getCollectionProduct(map: Map<String, CollectionItemModel>, collectionId: String) {
         viewModelScope.launch {
-            mProfileRepository.getCollectionProduct(map).collect {
+            mProfileRepository.getCollectionProduct(map, collectionId).collect {
                 _mAllCollectionProduct.value = Event(it)
             }
         }
     }
-    fun fetchBidProducts(collectionId : String){
+
+    fun fetchBidProducts(collectionId: String) {
         viewModelScope.launch {
             mProfileRepository.fetchBidProducts(collectionId).collect {
                 _mAllBidProduct.value = Event(it)

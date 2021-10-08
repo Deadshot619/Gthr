@@ -49,7 +49,8 @@ data class ForSaleItemDomainModel(
         model: SealedDomainModel,
         collectionItem: CollectionItemDomainModel,
         price: Double,
-        collectionItemRefKey: String
+        collectionItemRefKey: String,
+        collectionId: String
     ) : this(
         price = price,
         itemObjectID = model.objectID,
@@ -61,6 +62,7 @@ data class ForSaleItemDomainModel(
         backImageURL = collectionItem.backImageURL,
         askRefKey = collectionItem.askRefKey,
         collectionItemRefKey = collectionItemRefKey,
+        collectionFirebaseRef = collectionId,
 
         productProductNumber = null,
 
@@ -78,7 +80,8 @@ data class ForSaleItemDomainModel(
         model: PokemonDomainModel,
         collectionItem: CollectionItemDomainModel,
         price: Double,
-        collectionItemRefKey: String
+        collectionItemRefKey: String,
+        collectionId: String
     ) : this(
         price = price,
         itemObjectID = model.objectID,
@@ -90,6 +93,7 @@ data class ForSaleItemDomainModel(
         edition = collectionItem.edition?.title,
         askRefKey = collectionItem.askRefKey,
         collectionItemRefKey = collectionItemRefKey,
+        collectionFirebaseRef = collectionId,
 
         productGroup = model.set,
         productProductNumber = model.number,
@@ -106,7 +110,8 @@ data class ForSaleItemDomainModel(
         model: MTGDomainModel,
         collectionItem: CollectionItemDomainModel,
         price: Double,
-        collectionItemRefKey: String
+        collectionItemRefKey: String,
+        collectionId: String
     ) : this(
         price = price,
         itemObjectID = model.objectID,
@@ -118,6 +123,7 @@ data class ForSaleItemDomainModel(
         edition = collectionItem.edition?.title,
         askRefKey = collectionItem.askRefKey,
         collectionItemRefKey = collectionItemRefKey,
+        collectionFirebaseRef = collectionId,
 
 
         productGroup = model.setName,
@@ -135,7 +141,8 @@ data class ForSaleItemDomainModel(
         model: YugiohDomainModel,
         collectionItem: CollectionItemDomainModel,
         price: Double,
-        collectionItemRefKey: String
+        collectionItemRefKey: String,
+        collectionId: String
     ) : this(
         price = price,
         itemObjectID = model.objectID,
@@ -147,6 +154,7 @@ data class ForSaleItemDomainModel(
         edition = collectionItem.edition?.title,
         askRefKey = collectionItem.askRefKey,
         collectionItemRefKey = collectionItemRefKey,
+        collectionFirebaseRef = collectionId,
 
 
         productGroup = model.set,
@@ -164,7 +172,8 @@ data class ForSaleItemDomainModel(
         model: FunkoDomainModel,
         collectionItem: CollectionItemDomainModel,
         price: Double,
-        collectionItemRefKey: String
+        collectionItemRefKey: String,
+        collectionId: String
     ) : this(
         price = price,
         itemObjectID = model.objectID,
@@ -176,6 +185,7 @@ data class ForSaleItemDomainModel(
         edition = collectionItem.edition?.title,
         askRefKey = collectionItem.askRefKey,
         collectionItemRefKey = collectionItemRefKey,
+        collectionFirebaseRef = collectionId,
 
 
         productGroup = model.license,

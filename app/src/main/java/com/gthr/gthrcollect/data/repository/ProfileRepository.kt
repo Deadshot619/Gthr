@@ -575,7 +575,7 @@ class ProfileRepository {
     }
 
 
-    fun getCollectionProduct(map: Map<String, CollectionItemModel>) =
+    fun getCollectionProduct(map: Map<String, CollectionItemModel>, collectionId: String) =
         flow<State<List<ProductDisplayModel>>> {
             val productList = mutableListOf<ProductDisplayModel>()
             map.keys.forEach { key ->
@@ -601,7 +601,8 @@ class ProfileRepository {
                                 data,
                                 collectionItemModel.toCollectionItemDomainModel(),
                                 price,
-                                key
+                                key,
+                                collectionId
                             )
                             val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
                             productList.add(prodDisplay)
@@ -617,7 +618,8 @@ class ProfileRepository {
                                 data,
                                 collectionItemModel.toCollectionItemDomainModel(),
                                 price,
-                                key
+                                key,
+                                collectionId
                             )
                             val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
                             productList.add(prodDisplay)
@@ -633,7 +635,8 @@ class ProfileRepository {
                                 data,
                                 collectionItemModel.toCollectionItemDomainModel(),
                                 price,
-                                key
+                                key,
+                                collectionId
                             )
                             val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
                             productList.add(prodDisplay)
@@ -649,7 +652,8 @@ class ProfileRepository {
                                 data,
                                 collectionItemModel.toCollectionItemDomainModel(),
                                 price,
-                                key
+                                key,
+                                collectionId
                             )
                             val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
                             productList.add(prodDisplay)
@@ -670,7 +674,8 @@ class ProfileRepository {
                                 data,
                                 collectionItemModel.toCollectionItemDomainModel(),
                                 price,
-                                key
+                                key,
+                                collectionId
                             )
                             val prodDisplay = ProductDisplayModel(forSaleItem, isForSale)
                             productList.add(prodDisplay)

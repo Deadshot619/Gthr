@@ -174,7 +174,10 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                         setData(it.data)
                         if (it.data.collectionList != null && it.data.collectionList.size > 0) {
                             mCccvSize.setValue(it.data.collectionList.size.toString())
-                            mViewModel.getCollectionProduct(it.data.collectionList)
+                            mViewModel.getCollectionProduct(
+                                it.data.collectionList,
+                                it.data.collectionId
+                            )
                             if (!isOtherUser())
                                 mViewModel.getMarketAverageValue(
                                     GthrCollect.prefs?.getUserCollectionId().toString()
@@ -563,6 +566,13 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
         if (isOtherUser()) {
             if (model.isForSale == true) {
                 //When item is For Sale
+                startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.BUY_DIRECTLY_FROM_SOMEONE,
+                        model
+                    )
+                )
             } else
                 startActivity(
                     ProductDetailActivity.getInstance(
