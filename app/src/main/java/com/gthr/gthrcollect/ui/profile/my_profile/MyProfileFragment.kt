@@ -23,6 +23,7 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowActivity
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.ui.editprofile.EditProfileActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
+import com.gthr.gthrcollect.ui.productdetail.ProductDetailActivity
 import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.ui.profile.ProfileViewModel
@@ -559,25 +560,37 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
     }
 
     private fun goToAskFlow(model: ProductDisplayModel) {
-        if (isOtherUser()) return
-        if (model.isForSale == true)
-            startActivity(
-                AskFlowActivity.getInstance(
-                    requireContext(),
-                    AskFlowType.SELL,
-                    model,
-                    true
+        if (isOtherUser()) {
+            if (model.isForSale == true) {
+                //When item is For Sale
+            } else
+                startActivity(
+                    ProductDetailActivity.getInstance(
+                        requireContext(),
+                        model.objectID,
+                        model.productType
+                    )
                 )
-            )
-        else
-            startActivity(
-                AskFlowActivity.getInstance(
-                    requireContext(),
-                    AskFlowType.COLLECT,
-                    model,
-                    true
+        } else {
+            if (model.isForSale == true)
+                startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.SELL,
+                        model,
+                        true
+                    )
                 )
-            )
+            else
+                startActivity(
+                    AskFlowActivity.getInstance(
+                        requireContext(),
+                        AskFlowType.COLLECT,
+                        model,
+                        true
+                    )
+                )
+        }
     }
 
     //Method to check if current user is Other User i.e. viewing other's profile
