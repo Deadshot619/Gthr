@@ -98,6 +98,9 @@ class AfCardLanguageFragment : BaseFragment<AskFlowViewModel, AfCardLanguageFrag
                             val navigationOptions =
                                 NavOptions.Builder().setPopUpTo(R.id.afCardLanguageFragment, true)
                                     .build()
+                            mViewModel.setSelectedLanguage(
+                                mViewModel.languageList.value?.peekContent()?.get(0)!!
+                            )
                             findNavController().navigate(
                                 AfCardLanguageFragmentDirections.actionAfCardLanguageFragmentToAfEditionFragment(),
                                 navigationOptions

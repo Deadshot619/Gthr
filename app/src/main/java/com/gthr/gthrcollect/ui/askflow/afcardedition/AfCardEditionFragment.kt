@@ -12,6 +12,7 @@ import com.gthr.gthrcollect.ui.askflow.AskFlowViewModel
 import com.gthr.gthrcollect.ui.askflow.AskFlowViewModelFactory
 import com.gthr.gthrcollect.ui.base.BaseFragment
 import com.gthr.gthrcollect.utils.enums.EditionType
+import com.gthr.gthrcollect.utils.extensions.gone
 
 class AfCardEditionFragment : BaseFragment<AskFlowViewModel, AfCardEditionFragmentBinding>() {
     override val mViewModel: AskFlowViewModel by activityViewModels{
@@ -79,6 +80,9 @@ class AfCardEditionFragment : BaseFragment<AskFlowViewModel, AfCardEditionFragme
             mIvBack = ivBack
             mRvMain = rvMain
         }
+        //If this fragment is start destination, then hide back button
+        if (findNavController().previousBackStackEntry == null)
+            mIvBack.gone()
     }
 
 
