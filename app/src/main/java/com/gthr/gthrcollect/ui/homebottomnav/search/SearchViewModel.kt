@@ -148,10 +148,10 @@ class SearchViewModel(private val repository: SearchRepository) : BaseViewModel(
         }
     }
 
-    fun searchAsk(searchTerm: String? = null, limit: Int? = null, page: Int? = null, sortBy:String?=null,isAscending:Int?=null,productCategory:String?=null,productType:String?=null) {
+    fun searchAsk(searchTerm: String? = null, limit: Int? = null, page: Int? = null, sortBy:String?=null,isAscending:Int?=null,productCategory:String?=null,productType:String?=null,creatorUID: String? = null) {
         clearJobs()
         searchAskJob = viewModelScope.launch {
-            repository.fetchSearchAsk(searchTerm, limit, page,sortBy,isAscending,productCategory,productType).collect {
+            repository.fetchSearchAsk(searchTerm, limit, page,sortBy,isAscending,productCategory,productType,creatorUID = creatorUID).collect {
                 _forSaleListList.value = Event(it)
             }
         }

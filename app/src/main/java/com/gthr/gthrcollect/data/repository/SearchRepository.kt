@@ -253,7 +253,8 @@ class SearchRepository {
         isAscending: Int? = null,
         productCategory: String? = null,
         productType: String? = null,
-        objectId: String? = null
+        objectId: String? = null,
+        creatorUID: String? = null,
     ) = flow<State<List<ProductDisplayModel>>> {
         // Emit loading state
         emit(State.loading())
@@ -266,7 +267,8 @@ class SearchRepository {
             CloudFunctions.SORT_BY to (sortBy),
             CloudFunctions.PRODUCT_CATEGORY to (productCategory ?: ""),
             CloudFunctions.PRODUCT_TYPE to (productType ?: ""),
-            CloudFunctions.ITEM_OBJECT_ID to (objectId ?: "")
+            CloudFunctions.ITEM_OBJECT_ID to (objectId ?: ""),
+            CloudFunctions.CREATOR_UID to (creatorUID ?: "")
         )
 
         Log.d("filterDatasabdjs", data.toString())

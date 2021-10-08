@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gthr.gthrcollect.GthrCollect
 import com.gthr.gthrcollect.R
 import com.gthr.gthrcollect.data.repository.SearchRepository
 import com.gthr.gthrcollect.databinding.SearchFragmentBinding
@@ -27,10 +28,7 @@ import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.utils.constants.FirebaseRealtimeDatabase
 import com.gthr.gthrcollect.utils.customviews.*
 import com.gthr.gthrcollect.utils.enums.*
-import com.gthr.gthrcollect.utils.extensions.animateVisibility
-import com.gthr.gthrcollect.utils.extensions.gone
-import com.gthr.gthrcollect.utils.extensions.showToast
-import com.gthr.gthrcollect.utils.extensions.visible
+import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ticker
@@ -1196,7 +1194,8 @@ class SearchFragment : BaseFragment<SearchViewModel, SearchFragmentBinding>() {
             isAscending = ascending,
             productCategory = pCategory?.title,
             productType = pType?.title,
-            sortBy = sortBy
+            sortBy = sortBy,
+            creatorUID = GthrCollect.prefs?.getUserUID()
         )
     }
 

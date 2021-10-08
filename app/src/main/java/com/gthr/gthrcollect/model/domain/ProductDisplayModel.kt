@@ -75,7 +75,7 @@ data class ProductDisplayModel(
         productType = model.productType,
         productCategory = ProductCategory.CARDS,
         refKey = model.refKey,
-        firImageURL = model.imageUris,
+        firImageURL = model.firImageURL,
         name = model.name,
         description = model.setName,
         lowestAskCost = model.lowestAskCost,

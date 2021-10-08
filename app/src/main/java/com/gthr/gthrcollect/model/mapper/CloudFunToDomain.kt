@@ -135,7 +135,7 @@ fun FeedModel.toFeedDomainModel() = FeedDomainModel(
     profileImageURL = profileImageURL?:"",
     updatedAt = updatedAt?:"",
     userRefKey = userRefKey?:"",
-
+    product_productType = product_productType,
     productCategory = if (!productCategory.isNullOrEmpty()) getProductCategoryFromRaw(productCategory) else getProductCategory(getProductType(product_productType.toString())!!),
     productType = if(productType!=null&&productType.isNotEmpty()) getProductType(productType) else null,
     feedType = getFeedType(feedType?:""),

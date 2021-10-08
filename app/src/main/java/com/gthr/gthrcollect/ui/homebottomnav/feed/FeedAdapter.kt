@@ -13,10 +13,14 @@ import com.gthr.gthrcollect.model.domain.FeedDomainModel
 import com.gthr.gthrcollect.utils.enums.AdapterViewType
 import com.gthr.gthrcollect.utils.enums.FeedType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
+import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.*
 import com.gthr.gthrcollect.utils.getProductCategory
+import com.gthr.gthrcollect.utils.getProductType
 import com.gthr.gthrcollect.utils.helper.getConditionTitle
+import com.gthr.gthrcollect.utils.helper.getMTGLanguage
 import com.gthr.gthrcollect.utils.helper.getPokemonLanguageDomainModel
+import com.gthr.gthrcollect.utils.helper.getYugiohLanguageDomainModel
 
 class FeedAdapter(val listener: FeedListener) : ListAdapter<FeedDomainModel, RecyclerView.ViewHolder>(DiffCallback){
 
@@ -55,7 +59,14 @@ class FeedAdapter(val listener: FeedListener) : ListAdapter<FeedDomainModel, Rec
                             binding.tvCondition.text = "-"
                             binding.tvConditionValue.text = "-"
                         }
-                        binding.tvLanguage.text = if(item.language!=null) getPokemonLanguageDomainModel(item.language.key).displayName  else "-"
+                        binding.tvLanguage.text = if(item.language!=null&&(item.productType!=null||item.product_productType!=null)) {
+                            val type = item.productType?: getProductType(item.product_productType!!)
+                            when(type){
+                                ProductType.MAGIC_THE_GATHERING -> getMTGLanguage(item.language.key).displayName
+                                ProductType.YUGIOH -> getYugiohLanguageDomainModel(item.language.key).displayName
+                                else -> getPokemonLanguageDomainModel(item.language.key).displayName
+                            }
+                        }  else "-"
                         binding.tvRow1Colum2.text = if(item.product_group.isNullOrEmpty()) "-" else item.product_group
                         binding.tvHashValue.text = if(item.product_productNumber.isNullOrEmpty()) "-" else item.product_productNumber
                         binding.tvEditionValue.text = if(item.edition.isNullOrEmpty()) "-" else item.edition
@@ -71,13 +82,14 @@ class FeedAdapter(val listener: FeedListener) : ListAdapter<FeedDomainModel, Rec
                     }
                     ProductCategory.TOYS -> {
                         setToy(binding)
-                        binding.tvToyLicense.text = "-"
+                        binding.tvToyLicense.text = if(item.product_group.isNullOrEmpty()) "-" else item.product_group
                         binding.tvToyHash.text = if(item.product_productNumber.isNullOrEmpty()) "-" else item.product_productNumber
                         binding.tvRarity.text = ProductCategory.SEALED?.title.replaceFirstChar{ it.uppercaseChar() }
-                        binding.tvRarity.text = if(item.productType?.title.isNullOrEmpty()) "-" else{
-                            val category = item.productType?.title?:""
-                            category.replaceFirstChar{ it.uppercaseChar() } //Capitalize the first character
-                        }
+                        binding.tvRarity.text = if((item.productType!=null||item.product_productType!=null)){
+                            val type = item.productType?: getProductType(item.product_productType!!)
+                            val category = type?.title?:""
+                            category.replaceFirstChar{ it.uppercaseChar() }
+                        } else "-"
                     }
                 }
             }
