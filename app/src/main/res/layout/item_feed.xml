@@ -77,7 +77,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/iv_user" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_product_type"
+                    android:id="@+id/tv_rarity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_extra_small"

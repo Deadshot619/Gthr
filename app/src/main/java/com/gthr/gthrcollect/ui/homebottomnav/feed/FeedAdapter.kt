@@ -14,6 +14,7 @@ import com.gthr.gthrcollect.utils.enums.AdapterViewType
 import com.gthr.gthrcollect.utils.enums.FeedType
 import com.gthr.gthrcollect.utils.enums.ProductCategory
 import com.gthr.gthrcollect.utils.extensions.*
+import com.gthr.gthrcollect.utils.getProductCategory
 import com.gthr.gthrcollect.utils.helper.getConditionTitle
 import com.gthr.gthrcollect.utils.helper.getPokemonLanguageDomainModel
 
@@ -54,36 +55,43 @@ class FeedAdapter(val listener: FeedListener) : ListAdapter<FeedDomainModel, Rec
                             binding.tvCondition.text = "-"
                             binding.tvConditionValue.text = "-"
                         }
-                        binding.tvLanguage.text = if(item.language!=null) getPokemonLanguageDomainModel(item.language?.key).displayName  else "-"
+                        binding.tvLanguage.text = if(item.language!=null) getPokemonLanguageDomainModel(item.language.key).displayName  else "-"
                         binding.tvRow1Colum2.text = if(item.product_group.isNullOrEmpty()) "-" else item.product_group
                         binding.tvHashValue.text = if(item.product_productNumber.isNullOrEmpty()) "-" else item.product_productNumber
                         binding.tvEditionValue.text = if(item.edition.isNullOrEmpty()) "-" else item.edition
-                        binding.tvProductType.text = if(item.product_rarity.isNullOrEmpty()) "-" else item.product_rarity
+                        binding.tvRarity.text = if(item.product_rarity.isNullOrEmpty()) "-" else {
+                            val rarity = item.product_rarity?:""
+                            rarity.replaceFirstChar{ it.uppercaseChar() } //Capitalize the first character
+                        }
                     }
                     ProductCategory.SEALED -> {
                         setSealed(binding)
                         binding.tvSealedSet.text = if(item.product_group.isNullOrEmpty()) "-" else item.product_group
-                        binding.tvProductType.text = if(item.productType?.title.isNullOrEmpty()) "-" else item.productType?.title
+                        binding.tvRarity.text = ProductCategory.SEALED?.title.replaceFirstChar{ it.uppercaseChar() }
                     }
                     ProductCategory.TOYS -> {
                         setToy(binding)
                         binding.tvToyLicense.text = "-"
-                        binding.tvProductType.text = if(item.productType?.title.isNullOrEmpty()) "-" else item.productType?.title
                         binding.tvToyHash.text = if(item.product_productNumber.isNullOrEmpty()) "-" else item.product_productNumber
+                        binding.tvRarity.text = ProductCategory.SEALED?.title.replaceFirstChar{ it.uppercaseChar() }
+                        binding.tvRarity.text = if(item.productType?.title.isNullOrEmpty()) "-" else{
+                            val category = item.productType?.title?:""
+                            category.replaceFirstChar{ it.uppercaseChar() } //Capitalize the first character
+                        }
                     }
                 }
             }
 
             binding.tvUserName.text = if(item.collectionDisplayName.isNullOrEmpty()) "-" else item.collectionDisplayName
             binding.tvTitle.text = if(item.product_productName.isNullOrEmpty()) "-" else item.product_productName
-            binding.tvPrice.text = item?.price?.let { String.format(binding.tvPrice.context.getString(R.string.rate_common),it.toDouble()) }
+            binding.tvPrice.text = if(item.feedType==FeedType.BID) item?.bidPrice?.let { String.format(binding.tvPrice.context.getString(R.string.rate_common),it.toDouble()) } else item?.price?.let { String.format(binding.tvPrice.context.getString(R.string.rate_common),it.toDouble()) }
 
             item.collection_profileImageURL?.let { binding.ivUser.setProfileImage(it) }
 
             if(item.frontImageURL.isNullOrEmpty())
                 item.product_firImageURL?.let { binding.ivProduct.setProductImage(it) }
             else
-                item.frontImageURL?.let { binding.ivProduct.setProductImage(it) }
+                item.frontImageURL.let { binding.ivProduct.setProductImage(it) }
 
             binding.ivProduct.setOnClickListener {
                 listener.goToProductDetail(item)
