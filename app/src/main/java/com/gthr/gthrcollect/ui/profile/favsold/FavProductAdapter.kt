@@ -26,12 +26,17 @@ class FavProductAdapter(val callback : (data: ProductDisplayModel) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavSoldViewHolder {
 
-        val binding= ItemTestProductBinding.inflate(
+       /* val binding= ItemTestProductBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
 
         binding.root.layoutParams.width = (((binding.root.context.getScreenWidth()) - (2*binding.root.context.resources.getDimensionPixelOffset(
-            R.dimen.dp_14))) / 2) /// THIS LINE WILL DIVIDE OUR VIEW INTO NUMBERS OF PARTS
+            R.dimen.dp_14))) / 2)*/
+
+        val binding = ItemTestProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+
+        /// THIS LINE WILL DIVIDE OUR VIEW INTO NUMBERS OF PARTS
         return FavSoldViewHolder(binding)
     }
 

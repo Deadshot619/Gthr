@@ -26,6 +26,8 @@ import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.profile.MyProfileViewModelFactory
 import com.gthr.gthrcollect.ui.profile.ProfileActivity
 import com.gthr.gthrcollect.ui.profile.ProfileViewModel
+import com.gthr.gthrcollect.utils.constants.DynamicLinkConstants
+import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.customviews.*
 import com.gthr.gthrcollect.utils.enums.AskFlowType
 import com.gthr.gthrcollect.utils.enums.ProductType
@@ -139,9 +141,19 @@ class MyProfileFragment : BaseFragment<ProfileViewModel, MyProfileBinding>() {
                     is State.Success -> {
                         showProgressBar(false)
                         val intent = Intent()
+
+                        var imageUrl=""
+                        if (imageURl.isNullOrEmpty()){
+                             imageUrl = FirebaseStorage.APP_ICON_URL
+                        }else{
+                            imageUrl=imageURl
+                        }
+
+                        val textData = DynamicLinkConstants.CHECK_OUT+" "+mDisplayName.text.toString().trim()+" "+ DynamicLinkConstants.PROFILE_ON_GTHR+" \n\n"+imageUrl+ "\n\n"+it.data
+
                         // val msg = "Click and install this application $shortLink Refer code : mayankbaba"
                         intent.action = Intent.ACTION_SEND
-                        intent.putExtra(Intent.EXTRA_TEXT, it.data)
+                        intent.putExtra(Intent.EXTRA_TEXT,textData)
                         intent.type = "text/plain"
                         startActivity(intent)
                     }

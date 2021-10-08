@@ -8,7 +8,6 @@ import com.gthr.gthrcollect.model.Event
 import com.gthr.gthrcollect.model.State
 import com.gthr.gthrcollect.model.domain.ProductDisplayModel
 import com.gthr.gthrcollect.model.domain.SearchCollection
-import com.gthr.gthrcollect.model.network.cloudfunction.ForSaleItemModel
 import com.gthr.gthrcollect.ui.base.BaseViewModel
 import com.gthr.gthrcollect.utils.extensions.*
 import kotlinx.coroutines.Job

@@ -44,6 +44,10 @@ class FeedViewModel(private val feedRepository: FeedRepository,private val dynam
     val mDynamicLink: LiveData<Event<State<String>>>
         get() = _mDynamicLink
 
+    private val _mProductDynamicLink = MutableLiveData<Event<State<String>>>()
+    val mProductDynamicLink: LiveData<Event<State<String>>>
+        get() = _mProductDynamicLink
+
     // For Feed
     fun setFeedDisplayList(list : List<FeedDomainModel>){
         _mFeedDisplayList.addAllFeed(list)
@@ -64,7 +68,7 @@ class FeedViewModel(private val feedRepository: FeedRepository,private val dynam
     fun getProductDynamicLink(value : String, type: ProductType){
         viewModelScope.launch {
             dynamicLinkRepository.getProductDynamicLink(value, type).collect {
-                _mDynamicLink.value = Event(it)
+                _mProductDynamicLink.value = Event(it)
             }
         }
     }

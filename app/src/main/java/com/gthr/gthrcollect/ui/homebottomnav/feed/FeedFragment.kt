@@ -32,6 +32,10 @@ import com.gthr.gthrcollect.utils.logger.GthrLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import com.gthr.gthrcollect.utils.constants.DynamicLinkConstants
+import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 
 
 class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
@@ -69,6 +73,8 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
     private var mIsLoading = false
     private var mHasNext = true
 
+    private lateinit var feedModel: FeedDomainModel
+
     override fun onBinding() {
         initViews()
         setUpClickListeners()
@@ -104,17 +110,25 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
     }
 
     private fun setUpObserver() {
-
         mViewModel.mDynamicLink.observe(this){
             it.contentIfNotHandled?.let {
                 when (it) {
                     is State.Loading -> showProgressBar()
                     is State.Success -> {
                         showProgressBar(false)
+
+                        var imageUrl = ""
+                        if (feedModel.profileImageURL.isNullOrEmpty()){
+                            imageUrl=FirebaseStorage.APP_ICON_URL
+                        }else{
+                            imageUrl=feedModel.profileImageURL.toString()
+                        }
+
+                        val textData = DynamicLinkConstants.CHECK_OUT+" "+feedModel.collectionDisplayName+" "+DynamicLinkConstants.PROFILE_ON_GTHR+" \n\n"+imageUrl + "\n\n"+it.data
                         val intent = Intent()
                         // val msg = "Click and install this application $shortLink Refer code : mayankbaba"
                         intent.action = Intent.ACTION_SEND
-                        intent.putExtra(Intent.EXTRA_TEXT, it.data)
+                        intent.putExtra(Intent.EXTRA_TEXT, textData)
                         intent.type = "text/plain"
                         startActivity(intent)
                     }
@@ -122,6 +136,37 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
                 }
             }
         }
+
+        mViewModel.mProductDynamicLink.observe(this){
+            it.contentIfNotHandled?.let {
+                when (it) {
+                    is State.Loading -> showProgressBar()
+                    is State.Success -> {
+
+                        showProgressBar(false)
+
+                        var imageUrl= ""
+                        if (feedModel.product_firImageURL.isNullOrEmpty()){
+                            imageUrl=FirebaseStorage.APP_ICON_URL
+                        }else{
+                            imageUrl=feedModel.product_firImageURL.toString()
+                        }
+
+
+                        val textData = DynamicLinkConstants.CHECK_OUT+" "+feedModel.product_productName+" "+DynamicLinkConstants.ON_GTHR+" \n\n"+imageUrl + "\n\n"+it.data
+
+                        val intent = Intent()
+                        // val msg = "Click and install this application $shortLink Refer code : mayankbaba"
+                        intent.action = Intent.ACTION_SEND
+                        intent.putExtra(Intent.EXTRA_TEXT, textData)
+                        intent.type = "text/plain"
+                        startActivity(intent)
+                    }
+                    is State.Failed -> showProgressBar(false)
+                }
+            }
+        }
+
 
         mViewModel.mFeedDisplayList.observe(this){
             val list = it.map { it.copy() }
@@ -157,6 +202,7 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
                     is State.Success -> {
                         mSwipeRefreshLayout.isRefreshing = false;
                         showProgressBar(false)
+
                         mViewModel.setFeedDisplayList(it.data)
                         if (it.data.size < mLimit) {
                             mHasNext = false
@@ -205,8 +251,9 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
             }
 
             override fun goToProductDetail(feedDomainModel: FeedDomainModel) {
-                if(!feedDomainModel.product_prodObjectID.isNullOrEmpty())
+                if(!feedDomainModel.product_prodObjectID.isNullOrEmpty()){
                     startActivity(ProductDetailActivity.getInstance(requireContext(),feedDomainModel.product_prodObjectID, getProductTypeFromObjectId(feedDomainModel.product_prodObjectID)))
+                }
             }
 
             override fun goToProfile(feedDomainModel: FeedDomainModel) {
@@ -221,8 +268,11 @@ class FeedFragment : BaseFragment<FeedViewModel, FeedFragmentBinding>() {
                             feedDomainModel.productType
                         )
                 if (feedDomainModel.feedType == FeedType.COLLECTION)
-                    if (feedDomainModel.collection_firebaseRef != null)
+                    if (feedDomainModel.collection_firebaseRef != null){
+                        feedModel=feedDomainModel
                         mViewModel.getCollectionsDynamicLink(feedDomainModel.collection_firebaseRef)
+                    }
+
             }
         })
         val linearLayoutManager = LinearLayoutManager(requireContext())

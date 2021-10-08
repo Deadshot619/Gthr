@@ -23,6 +23,8 @@ import com.gthr.gthrcollect.model.domain.*
 import com.gthr.gthrcollect.ui.base.BaseActivity
 import com.gthr.gthrcollect.ui.homebottomnav.HomeBottomNavActivity
 import com.gthr.gthrcollect.ui.productdetail.productdetailscreen.ProductDetailFragmentArgs
+import com.gthr.gthrcollect.utils.constants.DynamicLinkConstants
+import com.gthr.gthrcollect.utils.constants.FirebaseStorage
 import com.gthr.gthrcollect.utils.enums.ProductType
 import com.gthr.gthrcollect.utils.extensions.gone
 import com.gthr.gthrcollect.utils.extensions.isUserLoggedIn
@@ -43,6 +45,7 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
     private lateinit var mNavController: NavController
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var mToolbar: Toolbar
+    private lateinit var productModel : ProductDisplayModel
 
     private var mObjectId : String? = null
     private var mProductType: ProductType? = null
@@ -73,8 +76,17 @@ class ProductDetailActivity : BaseActivity<ProductDetailsViewModel, ActivityProd
                         showProgressBar(false)
                         val intent = Intent()
                        // val msg = "Click and install this application $shortLink Refer code : mayankbaba"
+
+                        var imageUrl = ""
+                        if (productModel.firImageURL.isNullOrEmpty()){
+                            imageUrl =FirebaseStorage.APP_ICON_URL
+                        }else{
+                            imageUrl =  productModel.firImageURL.toString()
+                        }
+                        val textData = DynamicLinkConstants.CHECK_OUT+" "+productModel.name+" "+ DynamicLinkConstants.ON_GTHR+" \n\n"+imageUrl+ "\n\n"+it.data
+
                         intent.action = Intent.ACTION_SEND
-                        intent.putExtra(Intent.EXTRA_TEXT, it.data)
+                        intent.putExtra(Intent.EXTRA_TEXT,textData)
                         intent.type = "text/plain"
                         startActivity(intent)
                     }

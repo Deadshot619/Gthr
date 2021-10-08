@@ -22,6 +22,7 @@ class DynamicLinkRepository {
         emit(State.loading())
         val await = dynamicLink.createDynamicLink()
             .setLink(Uri.parse(DynamicLinkConstants.PRODUCT_URL+DynamicLinkConstants.OBJECT_ID+"="+objectID+"&"+DynamicLinkConstants.PRODUCT_TYPE+"="+productType.title))
+              // DomainUriPrefix => Check out $productName on gthr + productImage URL
             .setDomainUriPrefix(DynamicLinkConstants.DOMAIN_URI_PREFIX)
             .setAndroidParameters(DynamicLink.AndroidParameters.Builder().build()) // Open links with this app on Android/
             //.setIosParameters(IosParameters.Builder("com.appinventiv.ios").build()) / Open links with com.example.ios on iOS
@@ -41,7 +42,9 @@ class DynamicLinkRepository {
             .setAndroidParameters(DynamicLink.AndroidParameters.Builder().build()) // Open links with this app on Android/
             //.setIosParameters(IosParameters.Builder("com.appinventiv.ios").build()) / Open links with com.example.ios on iOS
             .buildShortDynamicLink().await()
+
         val shortLink: Uri = await.shortLink!!
+
         emit (State.Success(shortLink.toString()))
     }.catch {
         emit(State.failed(it.message.toString()))

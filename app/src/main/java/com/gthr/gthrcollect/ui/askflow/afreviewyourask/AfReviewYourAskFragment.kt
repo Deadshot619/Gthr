@@ -68,6 +68,14 @@ class AfReviewYourAskFragment : BaseFragment<AskFlowViewModel, AfReviewYourAskFr
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        if (getAskValue()!=null){
+            mBtnNext.setState(CustomSecondaryButton.State.BLUE)
+        }
+    }
+
     private fun initViews() {
         mViewBinding.run {
             mBtnNext = btnNext

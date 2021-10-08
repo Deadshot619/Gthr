@@ -48,6 +48,7 @@ class CustomSearchView @JvmOverloads constructor(
         } else {
             this.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_round_close, 0)
             this.background = getImageDrawable(R.drawable.bg_search_edit_text_blue)
+           // this.setPadding(20,20,20,20)
         }
     }
 

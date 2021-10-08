@@ -533,8 +533,8 @@ class AskFlowRepository {
     fun buyNow(
         askId: String? = null,
         buyerCharge: String? = null,
-        buyerAddressKey: String? = null,
-        sellerAddressKey: String? = null,
+        buyerAddressKey: String? = "0",
+        sellerAddressKey: String? = "0",
         shippingTierKey: String? = null,
         appFee: String? = null,
         paymentId: String? = null,
