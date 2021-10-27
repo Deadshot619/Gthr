@@ -372,7 +372,6 @@ class AfBuyDirectlyPlaceFragment :
             mIvTermsAndConditions = ivTermsAndConditions
             mTvTermsAndConditions = tvTermsAndConditions
             mGroup = group
-            mGroupBuy = groupBuy
             mTvRate = tvRate
             mTvRateValue = tvRateValue
             mTvRow1 = tvSellingFee
@@ -394,7 +393,6 @@ class AfBuyDirectlyPlaceFragment :
         )
 
         mGroup.visible()
-        mGroupBuy.gone()
         mTvRate.text = getString(R.string.text_price)
         mTvRow1.text = getString(R.string.text_purchase_shipping)
         mTvRow2.text = getString(R.string.text_sales_tax)

@@ -353,15 +353,6 @@
                     android:layout_height="wrap_content"
                     app:constraint_referenced_ids="cv_ask_type,iv_terms_and_conditions,ll_total,tv_payout,tv_address,tv_terms_and_conditions,tv_agree_to,tv_payment_processing_value,tv_selling_fee,tv_selling_fee_value,tv_payment_processing,tv_shipping_reimbursement,tv_shipping_reimbursement_value" />
 
-                <androidx.constraintlayout.widget.Group
-                    android:visibility="visible"
-                    tools:visibility="visible"
-                    android:id="@+id/group_buy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="ll_buy_total,cv_buy" />
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
